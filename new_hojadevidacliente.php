@@ -168,20 +168,15 @@ case "datosfacturacion":
 	$FB->llena_texto("Novedades de Factura:",5, 1, $DB, "", "", "$rw[18]", 1, 0);
 
   
-  
   if ($rw[19]!="") {
     
   }
 
-	$caso='documentos';
+$caso='documentos';
 break;
 case "documentos":
 
 	include('subirarchivohojas.php');
-
-/* echo "<td><button id='imagen1' class='btn btn-success' onclick='subirimagen(param101)' >Gurdar</button></td>";
-echo "</tr>";  */
-             
 
 $caso='documentos';
 

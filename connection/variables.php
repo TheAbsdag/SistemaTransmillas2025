@@ -13,7 +13,7 @@ $host="localhost";
 $user="u713516042_jose";
 $pass="0?jBMSc4GUcN";
 $Usu_ses="vive";
-$salt = "transmi2344fsdfd"; 
+$salt = "transmi2344fsdfd";  
 
 
 //REMOTO PRUEBAS
