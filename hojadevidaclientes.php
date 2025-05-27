@@ -101,7 +101,7 @@ $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar);
 			echo "</select></div></td>";
 
 		 $DB1->editar("new_hojadevidacliente.php",$id_p, "hojadevidacliente", 1,'datospersonales');
-	}
+	} 
 
  //Operacion matematica para boton siguiente y atras 
 	$IncrimentNum =(($compag +1)<=$TotalRegistro)?($compag +1):1;

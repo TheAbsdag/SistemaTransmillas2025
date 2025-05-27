@@ -23,7 +23,7 @@ else {
 	
 }
 echo "</tr>";
-$FB->titulo_azul1("Documentos clienntes",9,0,7);  
+$FB->titulo_azul1("Documentos clientes",9,0,7);  
 echo "</tr>";
 
 
@@ -45,48 +45,66 @@ echo "</tr>";
 // $FB->titulo_azul1("Imagenes de Documentos",9,0,7);  
 // echo "</tr>";
 
-echo "<tr class='text'><td>CAMARA DE COMERCIO:</td>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>CAMARA DE COMERCIO:</td>";
 echo "<td></td>";
 echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 1, 35, 'Ver Imagen');
 echo "<td></td>";
 echo "</tr>"; 
 
-echo "<tr class='text'><td>Rut:</td>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Rut:</td>";
 echo "<td></td>";
 echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 2, 35, 'Ver Imagen');
 echo "<td></td>";
 echo "</tr>"; 
 
-echo "<tr class='text'><td>Poliza:</td>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Poliza:</td>";
 echo "<td></td>";
 echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 3, 35, 'Ver Imagen');
 echo "<td></td>";
 echo "</tr>"; 
 
-echo "<tr class='text'><td>Contrato:</td>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Contrato:</td>";
 echo "<td></td>";
 echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 4, 35, 'Ver Imagen');
 echo "<td></td>";
 echo "</tr>"; 
 
-echo "<tr class='text'><td>Certificacion cuenta bancaria:</td>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Certificacion cuenta bancaria:</td>";
 echo "<td></td>";
 echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 5, 35, 'Ver Imagen');
 echo "<td></td>";
 echo "</tr>"; 
 
-echo "<tr class='text'><td>Cedula representante legal:</td>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>><td>Cedula representante legal:</td>";
 echo "<td></td>";
 echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 6, 35, 'Ver Imagen');
 echo "<td></td>";
-echo "</tr>"; 
+echo "</tr>";
 
-// $FB->llena_texto("Cedula representante legal:", 106, 6, $DB, "", "", "",1, 0);
-// echo "<td></td>";
-// echo $LT->llenadocs3($DB1, "hojadevidacliente",$id_p, 6, 35, 'Ver Imagen');
-// echo "<td><button type='submit' class='btn btn-success' onclick='enviar_formulario(param106)' >Subir</button></td>";
-// echo "<td></td>";
-// echo "</tr>"; 
+$sql = "SELECT iddoccliente, docl_nombre, docl_documento, docl_idhvc, docl_fecha_venc FROM doc_hoja_clientes WHERE docl_idhvc = '$idhojadevida'";
+$DB->Execute($sql); 
+$va = (($compag - 1) * $CantidadMostrar); 
+
+while ($rw1 = mysqli_fetch_row($DB->Consulta_ID)) {
+    $id_p = $rw1[0];
+    $va++; 
+    $p = $va % 2;
+    $color = ($p == 0) ? "#FFFFFF" : "#EFEFEF";
+
+    echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+    echo "<td>".$rw1[1]."</td>"; 
+    echo "<td>".$rw1[4]."</td>"; 
+
+    if (!empty($rw1[2])) {
+        $ruta = "./img_docHVC/" . $rw1[2]; 
+        echo "<td style='text-align: center;'><a href='$ruta' target='_blank'>Ver Imagen</a></td>";
+    } else {
+        echo "<td style='text-align: center;'>Sin archivo</td>";
+    }
+
+    echo "</tr>";
+}
+
 
 echo '<input type="hidden" name="param7" id="param7" value="'.$idhojadevida.'">';
 echo '<input type="hidden" name="param8" id="param8" value="1">';

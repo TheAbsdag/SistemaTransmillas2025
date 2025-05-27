@@ -25,9 +25,9 @@ $id=$_POST["idhv"];
                     $sql2="INSERT INTO `doc_hoja_clientes`(`docl_nombre`, `docl_documento`, `docl_idhvc`, `docl_fecha_venc`) VALUES ('$nombre','$documento','$id','$fecha')";
 					$vinculo=$DB->Executeid($sql2);
 					if ($vinculo) {
-                        echo"ok";
+                        echo"Documento guardado exitosamente";
                     }else{
-                        echo"No";
+                        echo"Hubo algun error al momento de subir tu documento";
                     }
 						
 
