@@ -22,7 +22,7 @@ class UsuarioModel {
         }
 
         $sql .= " ORDER BY usu_nombre ASC";
-        echo "Consulta SQL: " . $sql;
+        
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
