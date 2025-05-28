@@ -58,7 +58,7 @@
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     ajax: {
-      url: '../../controller/UsuarioController.php',
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
       type: 'POST',
       data: function (d) {
         d.ajax = true;
