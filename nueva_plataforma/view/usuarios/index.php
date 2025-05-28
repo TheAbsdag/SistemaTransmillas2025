@@ -52,7 +52,8 @@
   </table>
 </div>
 
-
+  <!-- ✅ DataTables desde CDN -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <script>
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
