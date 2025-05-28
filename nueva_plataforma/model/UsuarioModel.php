@@ -23,7 +23,7 @@ class UsuarioModel {
 
         // $sql .= " ORDER BY usu_nombre ASC";
             // ✅ Guardar consulta en archivo
-    // file_put_contents("../debug_sql.log", $sql . PHP_EOL, FILE_APPEND);
+    file_put_contents("../debug_sql.log", $sql . PHP_EOL, FILE_APPEND);
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
