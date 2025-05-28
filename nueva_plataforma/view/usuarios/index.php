@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Usuarios</title>
+  <!-- ✅ jQuery primero -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- ✅ Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
  <!-- ✅ Bootstrap 5 desde CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
