@@ -81,6 +81,7 @@ $(document).ready(function () {
       { data: 'usu_nivelacademico' },
       { data: 'usu_tipocontrato' },
       // 🔁 Interactivo: usu_filtro → Ver en sistema
+         // 🔁 Interactivo: usu_filtro → Ver en sistema
         {
           data: 'usu_filtro',
           render: function (data, type, row) {
