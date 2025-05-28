@@ -1,0 +1,116 @@
+
+    .btn-with-bancolombia,
+    .btn-with-davivienda {
+        width: 150px; /* Ajusta según sea necesario */
+        height: 40px; /* Ajusta según sea necesario */
+        background-size: cover;
+    }
+
+    .btn-with-bancolombia {
+        background-image: url('../img/botonbancolombia.jpg');
+    }
+
+    .btn-with-davivienda {
+        background-image: url('../img/botondavivienda.jpg');
+    }
+
+
+
+
+
+        .container-left {
+            float: left;
+            margin-right: 10px; /* Espacio entre botones */
+        }
+
+        .container-right {
+            float: right;
+            margin-left: 10px; /* Espacio entre botones */
+        }
+        .email-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #2196F3; /* Color de fondo */
+            color: white; /* Color del texto */
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+			width: 150px; /* Ajusta según sea necesario */
+            height: 40px; /* Ajusta según sea necesario */
+        }
+        .file-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #4CAF50; /* Color de fondo */
+            color: white; /* Color del texto */
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .email-button i {
+            margin-right: 8px; /* Espacio entre el icono y el texto */
+        }
+
+        .file-button i {
+            margin-right: 8px; /* Espacio entre el icono y el texto */
+        }
+
+
+
+        .file-button {
+            background-color: #4CAF50;
+        }
+        #loading {
+            display: none; /* Ocultar inicialmente */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; /* Asegurarse de que está por encima de otros elementos */
+        }
+                /* Estilos específicos para la tabla de preguntas */
+        .tabla-preguntas {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .tabla-preguntas th, .tabla-preguntas td {
+            border: 1px solid gray;
+            
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .tabla-preguntas th {
+            background-color: #003366; /* Azul oscuro */
+            color: white; /* Letra blanca */
+        }
+        #loading {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; /* Asegurarse de que está por encima de otros elementos */
+        }
+        .search-box {
+            position: relative;
+            width: 300px;
+            justify-content: flex-end; /* Alinear a la derecha */
+        }
+        .search-box input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            padding-left: 40px; /* Espacio para el icono */
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+

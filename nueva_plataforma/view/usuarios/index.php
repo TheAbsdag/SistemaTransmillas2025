@@ -15,7 +15,6 @@
       <label for="rol">Rol</label>
       <select id="filtroRol" class="form-control">
         <option value="">Seleccionar...</option>
-        <!-- Opciones cargadas desde PHP -->
         <?php foreach ($roles as $rol): ?>
           <option value="<?= $rol['idroles'] ?>"><?= $rol['rol_nombre'] ?></option>
         <?php endforeach; ?>
@@ -31,7 +30,7 @@
     </div>
   </div>
 
-  <table id="tablaUsuarios" class="table table-striped">
+  <table id="tablaUsuarios" class="table table-bordered">
     <thead>
       <tr>
         <th>Rol</th>
@@ -41,38 +40,43 @@
         <th>Contrato</th>
         <th>Ver en sistema</th>
         <th>Ver en nómina</th>
-        <th>Acciones</th>
       </tr>
     </thead>
-    <tbody>
-      <?php foreach ($usuarios as $usuario): ?>
-        <tr>
-          <td><?= $usuario['rol_nombre'] ?></td>
-          <td><?= $usuario['usu_nombre'] ?></td>
-          <td><?= $usuario['usu_usuario'] ?></td>
-          <td><?= $usuario['usu_nivelacademico'] ?></td>
-          <td><?= $usuario['usu_tipocontrato'] ?></td>
-          <td><?= $usuario['usu_filtro'] == '1' ? 'Activo' : 'Inactivo' ?></td>
-          <td><?= $usuario['usu_ver_nomina'] == '1' ? 'Activo' : 'Inactivo' ?></td>
-          <td>
-            <a href="#" class="btn btn-sm btn-primary">Editar</a>
-          </td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
+    <tbody></tbody>
   </table>
 </div>
 
 <script src="../../assets/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="../../assets/datatables/datatables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-    $('#tablaUsuarios').DataTable();
-
-    $('#filtroRol, #filtroEstado').on('change', function() {
-      // podrías hacer filtrado local aquí o recargar con AJAX
-    });
+$(document).ready(function () {
+  const tabla = $('#tablaUsuarios').DataTable({
+    ajax: {
+      url: '../../controller/UsuarioController.php',
+      type: 'POST',
+      data: function (d) {
+        d.ajax = true;
+        d.rol = $('#filtroRol').val();
+        d.estado = $('#filtroEstado').val();
+      },
+      dataSrc: ''
+    },
+    columns: [
+      { data: 'rol_nombre' },
+      { data: 'usu_nombre' },
+      { data: 'usu_usuario' },
+      { data: 'usu_nivelacademico' },
+      { data: 'usu_tipocontrato' },
+      { data: 'usu_filtro', render: d => d == '1' ? 'Activo' : 'Inactivo' },
+      { data: 'usu_ver_nomina', render: d => d == '1' ? 'Activo' : 'Inactivo' }
+    ]
   });
+
+  $('#filtroRol, #filtroEstado').on('change', function () {
+    tabla.ajax.reload();
+  });
+});
 </script>
 </body>
 </html>
