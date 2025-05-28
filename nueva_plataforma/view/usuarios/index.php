@@ -80,10 +80,51 @@ $(document).ready(function () {
       { data: 'usu_usuario' },
       { data: 'usu_nivelacademico' },
       { data: 'usu_tipocontrato' },
-      { data: 'usu_filtro', render: d => d == '1' ? 'Activo' : 'Inactivo' },
-      { data: 'usu_ver_nomina', render: d => d == '1' ? 'Activo' : 'Inactivo' },
-      { data: 'usu_estado', render: d => d == '1' ? 'Activo' : 'Inactivo' }
-    ]
+      // 🔁 Interactivo: usu_filtro → Ver en sistema
+        {
+          data: 'usu_filtro',
+          render: function (data, type, row) {
+            return `
+              <select class="form-select form-select-sm cambiar-campo" 
+                      data-id="${row.idusuarios}" 
+                      data-campo="usu_filtro">
+                <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+                <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+              </select>
+            `;
+          }
+        },
+
+        // 🔁 Interactivo: usu_ver_nomina → Ver en nómina
+        {
+          data: 'usu_ver_nomina',
+          render: function (data, type, row) {
+            return `
+              <select class="form-select form-select-sm cambiar-campo" 
+                      data-id="${row.idusuarios}" 
+                      data-campo="usu_ver_nomina">
+                <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+                <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+              </select>
+            `;
+          }
+        },
+
+        // 🔁 Interactivo: usu_estado → Estado
+        {
+          data: 'usu_estado',
+          render: function (data, type, row) {
+            return `
+              <select class="form-select form-select-sm cambiar-campo" 
+                      data-id="${row.idusuarios}" 
+                      data-campo="usu_estado">
+                <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+                <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+              </select>
+            `;
+          }
+        }
+      ]
   });
 
   $('#filtroRol, #filtroEstado').on('change', function () {
