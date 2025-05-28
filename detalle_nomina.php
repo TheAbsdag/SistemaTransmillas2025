@@ -122,7 +122,10 @@ if($param37!=''){
 
 if($param37=="Prestacion de Servicios"){
 
-	$FB->titulo_azul1("",1,0,7);
+	echo "<table class='table table-hover'><tr bgcolor='#074F91' class='tittle3' >";
+	$FB->titulo_azul1("Id",1,0,0);
+	echo "<td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' onclick='seleccionarTodos()' ></td>";
+
 	$FB->titulo_azul1("Trabajador",1,0,0);
 
 	$FB->titulo_azul1("Tipo Contrato",1,0,0);
@@ -158,6 +161,7 @@ if($param37=="Prestacion de Servicios"){
 
 	$FB->titulo_azul1("Inicio contrato",1,'5%',0);
 	$FB->titulo_azul1("Termina contrato",1,'5%',0);
+	$FB->titulo_azul1("Seleccion",1,'5%',0);
 
 
 
@@ -228,9 +232,9 @@ $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipoc
 				echo "<td>".$idusuario."</td>";
 				
 				$nombreCompleto=$rw1[1]." ".$rw1[2];
-				echo "<td>".$rw1[1]." ".$rw1[2]."</td>";
-				echo "<td>".$rw1[4]."</td>";
-				echo "<td>".$rw1[5]."</td>";
+				echo "<td>".$rw1[1]." ".$rw1[2]."</td>";//Trabajador
+				echo "<td>".$rw1[4]."</td>";//Tipo Contrato
+				echo "<td>".$rw1[5]."</td>";//Cedula
 				$valordediastrabajados=0;
 				$sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida FROM `cargo` WHERE idcargo='$rw1[3]'";
 				$DB1->Execute($sql2);
@@ -507,14 +511,14 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 			$totalQuincena=($valordediastrabajados+$valorTotalHora+$valorRecogidas+$totalOtrosDias)-($TotalPagoQuincena+$descuentoReteGarantia);
 
-
+			//Cargo
 			echo "<td>".$cargosaldo[1]."</td>
-			<td>".$cargosaldo[2]."</td>";
-			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajo Dias </td>"; //Ingreso?
+			<td>".$cargosaldo[2]."</td>";//Salario por dia
+			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajo Dias </td>"; //Dias Trabajados
 
-			echo "<td>".$valordediastrabajados."</td>";
-			echo "<td>".$rw6[0]."</td>";
-			echo "<td>".$valorTotalHora_formateado."</td>";
+			echo "<td>".$valordediastrabajados."</td>";//Valor dias trabajados
+			echo "<td>".$rw6[0]."</td>";//Horas trabajadas
+			echo "<td>".$valorTotalHora_formateado."</td>";//Valor Horas trabajadas
 
 			  echo "<td  >$cantRecogidas </td>";//Recogidas
 			  echo "<td  >$ $valorRecogidas_formateado</td>";//Valor recogidas
@@ -523,7 +527,7 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 			  echo "<td>$".$totalOtrosDias_formateado."</td>"; //Valor otros hasta la fecha
 
 
-			echo "<td>$".$TotalDebe."</td>"; //DEUDAS
+			echo "<td>$".$TotalDebe."</td>"; //Prestamos y Descuadres
 
 		    echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Abono_A_Deuda\",\"$rw1[13]\")';  title='Click para agregar un abono' >$TotalPagoQuincena_formateado +</a></td>";//abonos a deudas
 		
@@ -637,7 +641,7 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 				$ajustessumB=0;
 				$ajustesresB=$valorAjusteB;
 			}
-						// }
+						
 						echo "<td  >$ReteGarantiaMostrar  </td>";//ReteGarantia
 
 						echo "<td>";
@@ -650,12 +654,12 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 						}
 
-						echo "</td>";//abonos a deudas//Retefuente devolver
+						echo "</td>";//Devolver retegarantia
 
 
 $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$valordiasConSancion);
 						$totalQuincena_formateado = number_format($totalQuincena, 0, ',', '.');
-						echo "<td style='background-color:#F4D03F' >$totalQuincena_formateado</td>";
+						echo "<td style='background-color:#F4D03F' >$totalQuincena_formateado</td>";//Valor quincena
 						$valorAjusteB=$Nomina[10];
 						$tipoAjusteB=$Nomina[11];
 						$descripcionAjusteB=$Nomina[12];
@@ -669,11 +673,11 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 				<p>$confirmado1<p/>
 	        </details>
 			</label>
-			</td>";//IMPRIMIR
+			</td>";//Cuenta de cobro
 
-			echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+			echo "<td>".$validado.$Observacion."</td>";//Confirmacion Usuario
 
-		    echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$rw1[13]\")';  title='Click para agregar un abono' >Agregar +</a></td>";//abonos a deudas
+		    echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$rw1[13]\")';  title='Click para agregar un abono' >Agregar +</a></td>";//ajustes
 
 			echo "<td><div id='campo'>";
 			echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Basico' onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Basico\")' class='borrar' required>";
@@ -683,7 +687,8 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 
 
 			echo"</select>";
-		  //   if ($si=="selected") {
+		  
+			//Comprobante
 			  if ($imagencompr=="") {
 				  echo "<td><a id='Basico".$idusuario."' style='pointer-events: ".$linkbasico.";' onclick='pop_dis16($idusuario,\"Comprobante_nomina_basico\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cargar</td>";
 				}else{
@@ -696,37 +701,23 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 			
 
 
-			echo "<td>$rw1[6]</td>";
-			echo "<td>$rw1[13]</td>";
+			echo "<td>$rw1[6]</td>";//Inicio contrato
+			echo "<td>$rw1[13]</td>";//Termina contrato
 			$totalDevengPres=$totalDevengPres+$totalQuincena;
-			echo"<td><input type='checkbox'  onchange='selecionado1(
+			echo"<td><input type='checkbox'  onchange='selecionado2(
 				$idusuario,
 				\"$nombreCompleto\",
 				\"$rw1[5]\",
-				\"$diassitrabajoParaMostrar\",
-				\"$diasDescanso\",
-				\"$valordediastrabajados_formateado\",
-				\"$totalauxilio\",
-				\"$diasnotrabajo\",
-				\"$diasincapacidad\",
-				\"$valorDiasIncapadidad_formateado\",
-				\"$diasVacaciones\",
-				\"$valorDiasVacaciones_formateado\",
-				\"$permisosLic\",
-				\"$diasPerLicBasValortotalfinal_formateado\",
-				\"$valorSalud_formateado\",
-				\"$valorPension_formateado\",
-				\"$TotalDebe\",
-				\"$restaABasico\",
-				\"$TotalDevengado_formateado\",
-				\"$valorHorasDomini_formateado\",
-				\"$cargosaldo[4]\",
-				\"$totalOtrosDias_formateado\",
-				\"$rw10[0]\",
+				\"$diassitrabajo\",
+				\"$valordediastrabajados\",
+				\"$valorTotalHora_formateado\",
 				\"$valorRecogidas_formateado\",
-				\"$restaAOtros\",
-				\"$totalOtrosAPagar_formateado\",
-				\"$TotalDevengoyOtros_formateado\")' class='checkbox' id='".$idusuario."s1' value='$idusuario'></td>";
+				\"$otropordia\",
+				\"$totalOtrosDias_formateado\",
+				\"$TotalDebe\",
+				\"$TotalPagoQuincena_formateado\",
+				\"$ReteGarantiaMostrar \",
+				\"$totalQuincena_formateado\")' class='check_hijo' id='".$idusuario."s1' value='$idusuario'></td>";
 		  }
 
 		}
@@ -797,7 +788,7 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 // $FB->titulo_azul1("Trabajador",1,0,7);
 echo "<table class='table table-hover'><tr bgcolor='#074F91' class='tittle3' >";
 $FB->titulo_azul1("Id",1,0,0);
-echo "<td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' ></td>";
+echo "<td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' onclick='seleccionarTodos()' ></td>";
 
 $FB->titulo_azul1("Tipo Contrato",1,0,0);
 $FB->titulo_azul1("Cedula",1,0,0);
@@ -860,7 +851,7 @@ $FB->titulo_azul1("Comprobante",1,'5%',0);
 // $FB->titulo_azul1("Paz y Salvo Vehiculo",1,'5%',0);
 $FB->titulo_azul1("Inicio contrato",1,'5%',0);
 $FB->titulo_azul1("Termina contrato",1,'5%',0);
-$FB->titulo_azul1("",1,0,0);
+	$FB->titulo_azul1("Seleccion",1,'5%',0);
 
 
 
@@ -1856,10 +1847,9 @@ ORDER BY hoj_nombre ASC";
 					$tabla.="<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$fechaactual\")';  title='Click para agregar un abono' >Agregar +</a></td>";//abonos a deudas
 
 					$tabla.="<td><div id='campo'>";
-					$tabla.="<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Otros'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Otros\")' class='borrar' required>";
-					// $LT->llenaselect_ar("Selecccione...",$estadosguiasinfin);
-					$tabla."<option value='no' $no>NO</option>";
-					$tabla."<option value='Si'$si>SI</option>";
+					$tabla.="<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Otros'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Otros\")' class='borrar' required>
+					<option value='no' $no>NO</option>
+					<option value='Si'$si>SI</option>";
 
 
 					$tabla."</select>";
@@ -1928,34 +1918,8 @@ ORDER BY hoj_nombre ASC";
 					\"$valorRecogidas_formateado\",
 					\"$restaAOtros\",
 					\"$totalOtrosAPagar_formateado\",
-					\"$TotalDevengoyOtros_formateado\")' class='checkbox' id='".$idusuario."s1' value='$idusuario'></td>";
-					// id,
-					// \"trabajador\",
-					// \"cedula\",
-					// \"dias\",
-					// \"descanso\",
-					// \"valortdiasbase\",
-					// \"valorDiasAux\",
-					// \"diasNoTrabajo\",
-					// \"diasIncapEmpresa\",
-					// \"valorIncapempresa\",
-					// \"valorDiasIncapa\",
-					// \"diasVacacion\",
-					// \"diasLicePermisos\",
-					// \"valorLice\",
-					// \"descuentoSalud\",
-					// \"descueentoPensi\",
-					// \"prestamosDescuadres\",
-					// \"abonoDeudas\",
-					// \"valorQuincena\",
-					// \"valoHorasDomFes\",
-					// \"otrosValoresMes\",
-					// \"valorTotalOtros\",
-					// \"recogidas\",
-					// \"valorRecogidas\",
-					// \"abonosDeudas\",
-					// \"valorTotalOtros\",
-					// \"TotalTodo\")'
+					\"$TotalDevengoyOtros_formateado\")' class='check_hijo' id='".$idusuario."s1' value='$idusuario'></td>";
+
 					
 			 }
 			 
