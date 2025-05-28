@@ -43,4 +43,11 @@ class UsuarioModel {
         $stmt->execute();
         $stmt->close();
     }
+    public function eliminarUsuario($id) {
+        $sql = "DELETE FROM usuarios WHERE idusuarios = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $stmt->close();
+    }
 }

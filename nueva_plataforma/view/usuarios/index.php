@@ -9,6 +9,14 @@
 <!-- DataTables Bootstrap 5 CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+thead.azul-blanco th {
+  background-color: #01468c; /* Tu azul exacto */
+  color: white;
+}
+</style>
 <body>
 <div class="container mt-4">
   <h2 class="mb-4">Usuarios</h2>
@@ -33,17 +41,20 @@
     </div>
   </div>
 
-  <table id="tablaUsuarios" class="table table-bordered">
-    <thead>
+  <table id="tablaUsuarios" class="table table-bordered" >
+    <thead class="azul-blanco">
       <tr>
         <th>Rol</th>
         <th>Nombre</th>
+        <th>Cedula</th>
         <th>Usuario</th>
         <th>Profesión</th>
         <th>Contrato</th>
         <th>Ver en sistema</th>
         <th>Ver en nómina</th>
         <th>Estado</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -60,12 +71,13 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
   <!-- ✅ DataTables desde CDN -->
+   
 
 <script>
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     ajax: {
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
+      url: '/nueva_plataforma/controller/UsuarioController.php',
       type: 'POST',
       data: function (d) {
         d.ajax = true;
@@ -77,6 +89,7 @@ $(document).ready(function () {
     columns: [
       { data: 'rol_nombre' },
       { data: 'usu_nombre' },
+       { data: 'usu_identificacion' },
       { data: 'usu_usuario' },
       { data: 'usu_nivelacademico' },
       { data: 'usu_tipocontrato' },
@@ -123,6 +136,33 @@ $(document).ready(function () {
             </select>
           `;
         }
+      },
+      {
+        data: null,
+        orderable: false,
+        searchable: false,
+        render: function (data, type, row) {
+          return `
+            <a href="../../cambio_admin.php?id_param=${row.idusuarios}&tabla=Usuario&condecion=" 
+              class="btn btn-sm btn-outline-primary" title="Editar" target="_blank">
+              <i class="fas fa-edit"></i>
+            </a>
+          `;
+        }
+      },
+      {
+        data: null,
+        orderable: false,
+        searchable: false,
+        render: function (data, type, row) {
+          return `
+            <button class="btn btn-sm btn-danger eliminar-usuario"
+                    title="Eliminar"
+                    data-id="${row.idusuarios}">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          `;
+        }
       }
       ]
   });
@@ -139,7 +179,7 @@ $('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
   const valor = $(this).val();
 
   $.ajax({
-    url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
+    url: '/nueva_plataforma/controller/UsuarioController.php',
     type: 'POST',
     data: {
       actualizar_campo: true,
@@ -154,6 +194,26 @@ $('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
       alert("Hubo un error al actualizar.");
     }
   });
+});
+$('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {
+  const id = $(this).data('id');
+
+  if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+    $.ajax({
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
+      type: 'POST',
+      data: {
+        eliminar_usuario: true,
+        id: id
+      },
+      success: function (res) {
+        $('#tablaUsuarios').DataTable().ajax.reload(null, false);
+      },
+      error: function () {
+        alert('Error al eliminar el usuario.');
+      }
+    });
+  }
 });
 </script>
 </body>
