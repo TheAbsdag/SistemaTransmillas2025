@@ -9,7 +9,7 @@ class UsuarioModel {
     }
 
     public function obtenerUsuarios($filtroRol = '', $filtroEstado = '') {
-        $sql = "SELECT u.*, r.rol_nombre FROM usuarios u
+        $sql = "SELECT `idusuarios`, `rol_nombre` , `usu_nombre` , `usu_mail`, `usu_usuario` ,`usu_nivelacademico` ,`usu_identificacion`, `usu_estado` , `idroles`,`usu_tipocontrato`,usu_filtro,usu_ver_nomina, r.rol_nombre FROM usuarios u
                 INNER JOIN roles r ON r.idroles = u.roles_idroles
                 WHERE idusuarios != 1";
 
