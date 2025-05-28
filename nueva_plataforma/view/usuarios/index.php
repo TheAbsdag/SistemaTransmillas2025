@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Usuarios</title>
-  <!-- ✅ jQuery primero -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
- <!-- ✅ Bootstrap 5 desde CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- ✅ DataTables desde CDN -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-</head>
+<!-- DataTables JS + Bootstrap integration -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script></head>
 <body>
 <div class="container mt-4">
   <h2 class="mb-4">Usuarios</h2>
