@@ -81,6 +81,7 @@ $(document).ready(function () {
       { data: 'usu_tipocontrato' },
       { data: 'usu_filtro', render: d => d == '1' ? 'Activo' : 'Inactivo' },
       { data: 'usu_ver_nomina', render: d => d == '1' ? 'Activo' : 'Inactivo' }
+      { data: 'usu_estado', render: d => d == '1' ? 'Activo' : 'Inactivo' }
     ]
   });
 
