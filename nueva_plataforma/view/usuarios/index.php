@@ -82,49 +82,48 @@ $(document).ready(function () {
       { data: 'usu_tipocontrato' },
       // 🔁 Interactivo: usu_filtro → Ver en sistema
          // 🔁 Interactivo: usu_filtro → Ver en sistema
-        {
-          data: 'usu_filtro',
-          render: function (data, type, row) {
-            return `
-              <select class="form-select form-select-sm cambiar-campo" 
-                      data-id="${row.idusuarios}" 
-                      data-campo="usu_filtro">
-                <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-                <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-              </select>
-            `;
-          }
-        },
-
-        // 🔁 Interactivo: usu_ver_nomina → Ver en nómina
-        {
-          data: 'usu_ver_nomina',
-          render: function (data, type, row) {
-            return `
-              <select class="form-select form-select-sm cambiar-campo" 
-                      data-id="${row.idusuarios}" 
-                      data-campo="usu_ver_nomina">
-                <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-                <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-              </select>
-            `;
-          }
-        },
-
-        // 🔁 Interactivo: usu_estado → Estado
-        {
-          data: 'usu_estado',
-          render: function (data, type, row) {
-            return `
-              <select class="form-select form-select-sm cambiar-campo" 
-                      data-id="${row.idusuarios}" 
-                      data-campo="usu_estado">
-                <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-                <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-              </select>
-            `;
-          }
+      {
+        data: 'usu_filtro',
+        render: function (data, type, row) {
+          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
+          return `
+            <select class="form-select form-select-sm cambiar-campo ${clase}"
+                    data-id="${row.idusuarios}"
+                    data-campo="usu_filtro">
+              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+            </select>
+          `;
         }
+      },
+      {
+        data: 'usu_ver_nomina',
+        render: function (data, type, row) {
+          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
+          return `
+            <select class="form-select form-select-sm cambiar-campo ${clase}"
+                    data-id="${row.idusuarios}"
+                    data-campo="usu_ver_nomina">
+              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+            </select>
+          `;
+        }
+      },
+      {
+        data: 'usu_estado',
+        render: function (data, type, row) {
+          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
+          return `
+            <select class="form-select form-select-sm cambiar-campo ${clase}"
+                    data-id="${row.idusuarios}"
+                    data-campo="usu_estado">
+              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+            </select>
+          `;
+        }
+      }
       ]
   });
 
