@@ -131,6 +131,30 @@ $(document).ready(function () {
     tabla.ajax.reload();
   });
 });
+
+// 🔁 Detectar cambios en cualquier campo editable
+$('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
+  const id = $(this).data('id');
+  const campo = $(this).data('campo');
+  const valor = $(this).val();
+
+  $.ajax({
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
+    type: 'POST',
+    data: {
+      actualizar_campo: true,
+      id: id,
+      campo: campo,
+      valor: valor
+    },
+    success: function (res) {
+      $('#tablaUsuarios').DataTable().ajax.reload(null, false);
+    },
+    error: function () {
+      alert("Hubo un error al actualizar.");
+    }
+  });
+});
 </script>
 </body>
 </html>

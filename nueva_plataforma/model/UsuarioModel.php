@@ -32,4 +32,15 @@ class UsuarioModel {
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
+    
+    public function actualizarCampo($id, $campo, $valor) {
+    $permitidos = ['usu_filtro', 'usu_ver_nomina', 'usu_estado'];
+    if (!in_array($campo, $permitidos)) return;
+
+    $sql = "UPDATE usuarios SET $campo = ? WHERE idusuarios = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bind_param("ii", $valor, $id);
+    $stmt->execute();
+    $stmt->close();
+}
 }
