@@ -43,6 +43,7 @@
         <th>Contrato</th>
         <th>Ver en sistema</th>
         <th>Ver en nómina</th>
+        <th>Estado</th>
       </tr>
     </thead>
     <tbody></tbody>
