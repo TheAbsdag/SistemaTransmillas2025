@@ -1,5 +1,5 @@
 <?php
-require_once '../models/ValidarGuiaModel.php';
+require_once '../model/ValidarGuiaModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     $model = new ValidarGuiaModel();
