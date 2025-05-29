@@ -68,7 +68,7 @@
                 param2: $('#param2').val(),
             };
 
-            $.post("../../controller/ValidarGuiaController.php", data, function (respuesta) {
+            $.post("/testSistemaTransmillas/controller/ValidarGuiaController.php", data, function (respuesta) {
                 const datos = JSON.parse(respuesta);
                 const tabla = $('#tablaGuias').DataTable();
                 tabla.clear();
@@ -93,7 +93,7 @@
         }
 
         function validarGuia(guia, valor) {
-            $.post("../../controller/ValidarGuiaController.php", {
+            $.post("/testSistemaTransmillas/controller/ValidarGuiaController.php", {
                 actualizar_validacion: true,
                 guia: guia,
                 valor: valor
