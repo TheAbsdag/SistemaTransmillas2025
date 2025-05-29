@@ -178,6 +178,11 @@ $('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
   const campo = $(this).data('campo');
   const valor = $(this).val();
 
+  // if(id == "usu_estado" and valor==0){
+  //   alert('Está apunto de desactivar al usuario, recuerde colocar fecha de finalizacion en la hoja de vida si aun no lo ha hecho');
+
+  // }
+
   $.ajax({
     url: '/nueva_plataforma/controller/UsuarioController.php',
     type: 'POST',
