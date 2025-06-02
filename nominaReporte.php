@@ -4,6 +4,11 @@ if (isset($_POST['datosusertabla'])) {
     $datosJSON = $_POST['datosusertabla'];
     $datos = json_decode($datosJSON, true);
 }
+$datos2 = [];
+if (isset($_POST['datosusertablaP'])) {
+    $datosJSON2 = $_POST['datosusertablaP'];
+    $datos2 = json_decode($datosJSON2, true);
+}
 
 // $fechaactual=$_POST['param33'];
 $mes=$_POST['param34'];
@@ -107,6 +112,42 @@ $fechaactual=date($año.'-'.$mes.'-'.$dia)
                 <p class="text-center text-muted">No se recibieron datos o el arreglo está vacío.</p>
             <?php endif; ?>
         </div>
+        <div class="card-body table-responsive" id="tablaNomina2">
+            <?php if (is_array($datos2) && count($datos2) > 0): ?>
+                <table class="table table-hover table-bordered align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <?php
+                            $encabezados = [
+                                "id", "trabajador", "cedula", "dias", "", "valortdiasbase",
+                                "valorHoras", "valorRecogidas", "otropordia", "valorOtros",
+                                "prestamosDescuadres", "abonoDeudas", "retegarantias", "valorquicena"
+
+                            ];
+                            foreach ($encabezados as $col) {
+                                
+                                echo "<th>" . htmlspecialchars($col) . "</th>";
+                            }
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($datos2 as $fila): ?>
+                            <tr>
+                                <?php $ids[] = $fila['id'];
+                                 foreach ($encabezados as $col): ?>
+                                    <td><?= htmlspecialchars($fila[$col]) ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p class="text-center text-muted">No se recibieron datos o el arreglo está vacío.</p>
+            <?php endif; ?>
+        </div>
+
+        
         
         <div class="card mt-3 shadow-sm" id="imagenCargadaContainer" style="display:none;">
             <div class="card-header">
@@ -139,7 +180,10 @@ $fechaactual=date($año.'-'.$mes.'-'.$dia)
     // Captura completa de tabla e imagen cargada (sin cortes)
     function guardarImagenCompleta() {
         const tabla = document.getElementById("tablaNomina");
+        const tabla2 = document.getElementById("tablaNomina2");
+
         const imagenContainer = document.getElementById("imagenCargadaContainer");
+        
 
         const contenedor = document.createElement("div");
         contenedor.style.position = "absolute";
@@ -149,7 +193,10 @@ $fechaactual=date($año.'-'.$mes.'-'.$dia)
         contenedor.style.padding = "20px";
 
         const tablaClon = tabla.cloneNode(true);
+        const tablaClon2 = tabla2.cloneNode(true);
+
         contenedor.appendChild(tablaClon);
+        contenedor.appendChild(tablaClon2);
 
         if (imagenContainer.style.display !== "none") {
             const imagenClon = imagenContainer.cloneNode(true);

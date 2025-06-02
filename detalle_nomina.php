@@ -122,7 +122,10 @@ if($param37!=''){
 
 if($param37=="Prestacion de Servicios"){
 
-	$FB->titulo_azul1("",1,0,7);
+	echo "<table class='table table-hover'><tr bgcolor='#074F91' class='tittle3' >";
+	$FB->titulo_azul1("Id",1,0,0);
+	echo "<td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' onclick='seleccionarTodos()' ></td>";
+
 	$FB->titulo_azul1("Trabajador",1,0,0);
 
 	$FB->titulo_azul1("Tipo Contrato",1,0,0);
@@ -158,6 +161,7 @@ if($param37=="Prestacion de Servicios"){
 
 	$FB->titulo_azul1("Inicio contrato",1,'5%',0);
 	$FB->titulo_azul1("Termina contrato",1,'5%',0);
+	$FB->titulo_azul1("Seleccion",1,'5%',0);
 
 
 
@@ -186,7 +190,7 @@ if($param37=="Prestacion de Servicios"){
 
 
 
-  //echo$sql="SELECT  `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado` FROM `hojadevida`  inner join sedes on hoj_sede=idsedes   where idhojadevida>0  and hoj_estado='Activo'   order by hoj_nombre asc ";
+ 
 $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado`,hoj_fechatermino,hoj_sede,hoj_retegarantia,hoj_firma,hoj_valorRetegarantia FROM hojadevida
   INNER JOIN sedes ON hoj_sede = idsedes
   WHERE  idhojadevida > 0  and(hoj_fechatermino IS NULL OR hoj_fechatermino = '' OR ('$fechaactualSinTiempo' BETWEEN hoj_fechaingreso AND hoj_fechatermino ) OR (hoj_fechaingreso BETWEEN '$fechaactualSinTiempo' AND '$fechafinalSinTiempo'AND hoj_fechatermino BETWEEN '$fechaactualSinTiempo' AND '$fechafinalSinTiempo')) $conde5 $conde4 $conde
@@ -198,7 +202,7 @@ $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipoc
 
 			$fechafin=$fechafinal;
 			if($rw1[6]>=$fechaactual and $rw1[6]<=$fechafinal){
-				// echo$rw1[6].$rw1[1];
+				
 				$mesdeingreso=true;
 				$fechaAhora=$rw1[6];
 			}else{
@@ -226,111 +230,94 @@ $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipoc
 				
 				echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 				echo "<td>".$idusuario."</td>";
-				// echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
-				echo "
-				<td>".$rw1[1]." ".$rw1[2]."</td>";
-				echo "<td>".$rw1[4]."</td>";
-				echo "<td>".$rw1[5]."</td>";
-			$valordediastrabajados=0;
-			$sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida FROM `cargo` WHERE idcargo='$rw1[3]'";
-			$DB1->Execute($sql2);
-			$cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
-			if($idusuario>=1){
-			  // echo$slq3="SELECT  sum(`deu_valor`) FROM `duedapromotor` WHERE `deu_fecha`>='$fechaactual' and `deu_fecha`<='$fechafinal' and deu_idpromotor='$idusuario' and deu_tipo in ('Prestamos','Descuadre')";
-			  $prestamo=0;
-			  $descuadre=0;
-			  $pago=0;
-			  $slq3="SELECT deu_tipo, deu_valor FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario'  ";
-			  $DB1->Execute($slq3);
-			  // $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
-			  while($prestamostotal=mysqli_fetch_row($DB1->Consulta_ID))
-			  {
-				  if ($prestamostotal[0]=="Prestamos") {
-					  $prestamo =$prestamo+$prestamostotal[1];
-				  }elseif ($prestamostotal[0]=="Descuadre") {
-					  $descuadre =$descuadre+$prestamostotal[1];
-				  }elseif ($prestamostotal[0]=="Pagos") {
-					  $pago =$pago+$prestamostotal[1];
-				  }
+				
+				$nombreCompleto=$rw1[1]." ".$rw1[2];
+				echo "<td>".$rw1[1]." ".$rw1[2]."</td>";//Trabajador
+				echo "<td>".$rw1[4]."</td>";//Tipo Contrato
+				echo "<td>".$rw1[5]."</td>";//Cedula
+				$valordediastrabajados=0;
+				$sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida FROM `cargo` WHERE idcargo='$rw1[3]'";
+				$DB1->Execute($sql2);
+				$cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
+				if($idusuario>=1){
+				$prestamo=0;
+				$descuadre=0;
+				$pago=0;
+				$slq3="SELECT deu_tipo, deu_valor FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario'  ";
+				$DB1->Execute($slq3);
+				while($prestamostotal=mysqli_fetch_row($DB1->Consulta_ID))
+				{
+					if ($prestamostotal[0]=="Prestamos") {
+						$prestamo =$prestamo+$prestamostotal[1];
+					}elseif ($prestamostotal[0]=="Descuadre") {
+						$descuadre =$descuadre+$prestamostotal[1];
+					}elseif ($prestamostotal[0]=="Pagos") {
+						$pago =$pago+$prestamostotal[1];
+					}
 
-			  }
+				}
 
 
 
-//Prestamos
-$prestamoTotal=0;
-$prestamo=0;
-$descuadre=0;
-$pago=0;
-$malenviados=0;
-$slq3="SELECT deu_tipo, deu_valor FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario'  ";
-$DB1->Execute($slq3);
-// $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
-while($prestamostotal=mysqli_fetch_row($DB1->Consulta_ID))
-{
-	if ($prestamostotal[0]=="Prestamos") {
-		$prestamo =$prestamo+$prestamostotal[1];
-	}elseif ($prestamostotal[0]=="Descuadre") {
-		$descuadre =$descuadre+$prestamostotal[1];
-	}elseif ($prestamostotal[0]=="Pagos") {
-		$pago =$pago+$prestamostotal[1];
-	}elseif ($prestamostotal[0]=="MalEnviados") {
-		$malenviados =$malenviados+$prestamostotal[1];
-	}
+				//Prestamos
+				$prestamoTotal=0;
+				$prestamo=0;
+				$descuadre=0;
+				$pago=0;
+				$malenviados=0;
+				$slq3="SELECT deu_tipo, deu_valor FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario'  ";
+				$DB1->Execute($slq3);
 
-}
+				while($prestamostotal=mysqli_fetch_row($DB1->Consulta_ID))
+				{
+					if ($prestamostotal[0]=="Prestamos") {
+						$prestamo =$prestamo+$prestamostotal[1];
+					}elseif ($prestamostotal[0]=="Descuadre") {
+						$descuadre =$descuadre+$prestamostotal[1];
+					}elseif ($prestamostotal[0]=="Pagos") {
+						$pago =$pago+$prestamostotal[1];
+					}elseif ($prestamostotal[0]=="MalEnviados") {
+						$malenviados =$malenviados+$prestamostotal[1];
+					}
 
-
-// echo"Pagado".$pago;
-$prestamoTotal= $prestamo+$descuadre+$malenviados;
-$TotalDebe = $prestamoTotal-$pago;
-
-//Pagos a la 15na, de prestamos
-$pago1=0;
-$restaAOtros=0;
-$restaABasico=0;
-$descripcionBasico="";
-$slq7="SELECT deu_tipo, deu_valor,deu_pago_de,due_descripcion  FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario' and deu_fecha>='$fechaAhora' and deu_fecha<='$fechafin' and deu_pago_de in ('Basico','otros') ";
-$DB1->Execute($slq7);
-// $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
-while($prestamostotal7=mysqli_fetch_row($DB1->Consulta_ID))
-{
-	if ($prestamostotal7[0]=="Pagos") {
-		$pago1 =$pago1+$prestamostotal7[1];
-		$descripcionBasico=$descripcionBasico.", $prestamostotal7[3]";
-		// if ($prestamostotal7[2]=="Basico") {
-		// 	$restaABasico=$restaABasico+$prestamostotal7[1];
-		// }elseif($prestamostotal7[2]=="Otros"){
-
-		// 	$restaAOtros=$restaAOtros+$prestamostotal7[1];
-		// }
-	}
-
-}
+				}
 
 
-$diassitrabajo=0;
-$TotalPagoQuincena = $pago1;
-$TotalPagoQuincena_formateado = number_format($TotalPagoQuincena, 0, ',', '.');
+				
+				$prestamoTotal= $prestamo+$descuadre+$malenviados;
+				$TotalDebe = $prestamoTotal-$pago;
 
-			  $sitrabajo="SELECT COUNT(*) FROM `seguimiento_user`  where seg_motivo ='Ingreso' and seg_fechaingreso>='$fechaactual' and seg_fechaingreso<='$fechafinal'  and seg_idusuario='$idusuario' ";
-			  $DB1->Execute($sitrabajo);
-			//   $rw4=mysqli_fetch_row($DB1->Consulta_ID);
-			//   if(empty($rw4)){
+				//Pagos a la 15na, de prestamos
+				$pago1=0;
+				$restaAOtros=0;
+				$restaABasico=0;
+				$descripcionBasico="";
+				$slq7="SELECT deu_tipo, deu_valor,deu_pago_de,due_descripcion  FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario' and deu_fecha>='$fechaAhora' and deu_fecha<='$fechafin' and deu_pago_de in ('Basico','otros') ";
+				$DB1->Execute($slq7);
 
-			// 	  $diassitrabajo=0;
-			//   }else{
-			// 	  $diassitrabajo=$rw4[0];
-			//   }
-			  while($rw4=mysqli_fetch_row($DB1->Consulta_ID))
-			  {
-				// if ($rw4[0]=="") {
-					$diassitrabajo=$rw4[0];
-					// $diassitrabajo=$diassitrabajo+1;
+				while($prestamostotal7=mysqli_fetch_row($DB1->Consulta_ID))
+				{
+					if ($prestamostotal7[0]=="Pagos") {
+						$pago1 =$pago1+$prestamostotal7[1];
+						$descripcionBasico=$descripcionBasico.", $prestamostotal7[3]";
 
-				// }
 
-			  }
+					}
+
+				}
+
+
+				$diassitrabajo=0;
+				$TotalPagoQuincena = $pago1;
+				$TotalPagoQuincena_formateado = number_format($TotalPagoQuincena, 0, ',', '.');
+
+				$sitrabajo="SELECT COUNT(*) FROM `seguimiento_user`  where seg_motivo ='Ingreso' and seg_fechaingreso>='$fechaactual' and seg_fechaingreso<='$fechafinal'  and seg_idusuario='$idusuario' ";
+				$DB1->Execute($sitrabajo);
+				while($rw4=mysqli_fetch_row($DB1->Consulta_ID))
+				{
+						$diassitrabajo=$rw4[0];
+						$diassitrabajoParaMostrar=$rw4[0];
+				}
 
 
 			  $diasvalor=($cargosaldo[2]/30);
@@ -399,17 +386,14 @@ $TotalPagoQuincena_formateado = number_format($TotalPagoQuincena, 0, ',', '.');
 				  $valorRecogidas=0;
 				  $cantRecogidas=0;
 				}
-				// $valorRecogidas=$rw10[0]*$cargosaldo[6];
+
 				$valorRecogidas_formateado = number_format($valorRecogidas, 0, ',', '.');
 //Otros
-  			// $otrosPorDia=$cargosaldo[4]/30;
+
 			$totalOtromes_formateado = number_format($cargosaldo[4], 0, ',', '.');
 
-			// if ($idusuario== "1733") {
-			// 	$diasparaotros=15;
-			// }else {
 			 	$diasparaotros=$diassitrabajo;
-			// }
+
 			$totalOtrosDias=($cargosaldo[4]*($diasparaotros));
 
 			$totalOtrosDias_formateado = number_format($totalOtrosDias, 0, ',', '.');
@@ -446,7 +430,7 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 
 
-	// $fecha_actual = date("d-m-Y");
+	
 
 
 
@@ -470,16 +454,15 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 	$fecha_resultante = date("$año-$mes-$findeRetegar"); // Crear la fecha resultante
 
-	// if ($fechafinalSinTiempo>=$rw1[6]  and  $fechafinalSinTiempo<=$fecha_resultante ) {
-	// 	$descuentoReteGarantia=$cargosaldo[2];
+
 
 	$descRete="SELECT nom_retedes from nomina where nom_id_usu='$idusuario'  and nom_tipo_pago='Basico'  and 	nom_fecha_inicio='$fechaactual' ";
 	$DB1->Execute($descRete);
-	// $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
+
 	$descRete1=mysqli_fetch_row($DB1->Consulta_ID);
 
-	// // echo"QUincenas".$total_quincenas."bueno";
-	// }else
+
+
 
 	if($rw1[17]==300000){
 
@@ -507,46 +490,35 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 	$retegarantiaTotal=$total_quincenas*$cargosaldo[2];
 
-	// if ($retegarantiaTotal>=300000) {
-	// 	$retegarantiaTotal=300000;
-
-
-
-	// }else{
-	// 	$retegarantiaTotal=$retegarantiaTotal;
-
-	// }
+	
 
 	if ($rw1[17]==$retegarantiaTotal) {
 		# code...
 	}else {
-		// echo$sql11="UPDATE `hojadevida` SET `hoj_valorRetegarantia`='$retegarantiaTotal' WHERE idhojadevida='$rw1[0]' ";
-		// $DB1->Execute($sql11);
+		
 	}
 
 
-	// $retegarantiaTotal_formateado = number_format($retegarantiaTotal, 0, ',', '.');
+	
 	$descuentoReteGarantia_formateado = number_format($descuentoReteGarantia, 0, ',', '.');
 	$ReteGarantiaMostrar=" $descuentoReteGarantia_formateado <br> <button class='btn btn-primary' onclick='pop_Retegarantiaresta($rw1[5],$idusuario,\"$fechaactual\",$rw1[17])' id='enviarIds'>Descontar</button>";
 }
 
-			// $totalOtrosAPagar=($totalOtrosDias+$valorTotalHorasDomini+$valorRecogidas)-$restaAOtros;
 
-			// $totalOtrosAPagar_formateado = number_format($totalOtrosAPagar, 0, ',', '.');
 //TOTAL QUINCENA
 			$totalQuincenaParaCuenta=$valordediastrabajados;
-			// echo"Quincena $totalQuincena=($valordediastrabajados+$valorTotalHora+$valorRecogidas+$totalOtrosDias)-($TotalPagoQuincena+$descuentoReteGarantia);";
+			
 
 			$totalQuincena=($valordediastrabajados+$valorTotalHora+$valorRecogidas+$totalOtrosDias)-($TotalPagoQuincena+$descuentoReteGarantia);
 
-
+			//Cargo
 			echo "<td>".$cargosaldo[1]."</td>
-			<td>".$cargosaldo[2]."</td>";
-			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajo Dias </td>"; //Ingreso?
+			<td>".$cargosaldo[2]."</td>";//Salario por dia
+			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajo Dias </td>"; //Dias Trabajados
 
-			echo "<td>".$valordediastrabajados."</td>";
-			echo "<td>".$rw6[0]."</td>";
-			echo "<td>".$valorTotalHora_formateado."</td>";
+			echo "<td>".$valordediastrabajados."</td>";//Valor dias trabajados
+			echo "<td>".$rw6[0]."</td>";//Horas trabajadas
+			echo "<td>".$valorTotalHora_formateado."</td>";//Valor Horas trabajadas
 
 			  echo "<td  >$cantRecogidas </td>";//Recogidas
 			  echo "<td  >$ $valorRecogidas_formateado</td>";//Valor recogidas
@@ -555,15 +527,15 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 			  echo "<td>$".$totalOtrosDias_formateado."</td>"; //Valor otros hasta la fecha
 
 
-			echo "<td>$".$TotalDebe."</td>"; //DEUDAS
+			echo "<td>$".$TotalDebe."</td>"; //Prestamos y Descuadres
 
 		    echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Abono_A_Deuda\",\"$rw1[13]\")';  title='Click para agregar un abono' >$TotalPagoQuincena_formateado +</a></td>";//abonos a deudas
-			// echo"año de ingreso".$rw1[6];
-
+		
+			$TotalDevengado_formateado=$TotalPagoQuincena_formateado;
 
 			$seledevolvioR="SELECT nom_devolRetegara,nom_retedes from nomina where nom_id_usu='$idusuario'  and nom_tipo_pago='Basico'  and nom_devolRetegara>0 ";
 			$DB1->Execute($seledevolvioR);
-			// $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
+			
 			$devuelR=mysqli_fetch_row($DB1->Consulta_ID);
 			if(empty($devuelR)){
 
@@ -597,7 +569,7 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 			$tablaNomina="SELECT nom_confirma,nom_img_compro,nom_cuentaCobro,nom_confirmaUsu,nom_motivoObser,nom_fechaconfirmaUsus,`nom_confiAdmi`,`nom_fechaConfiAdmi`,nom_confirmaAdmin,nom_devolRetegara,nom_valor_ajuste1,nom_tipo_ajuste1,nom_ajuste_descripcion1,nom_id from nomina where nom_id_usu='$idusuario' and nom_fecha_inicio='$fechaactual' and nom_tipo_pago='Basico'  ";
 			$DB1->Execute($tablaNomina);
-			// $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
+			
 			while($Nomina=mysqli_fetch_row($DB1->Consulta_ID))
 			{
 				$Nomina[13];
@@ -605,7 +577,7 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 				$tipoAjusteB=$Nomina[11];
 				$descripcionAjusteB=$Nomina[12];
 				$devretegarantia=$Nomina[9];
-			  // echo"AAAAAAAAAAAAAA".$Nomina[0];
+			 
 			  $imagencompr=$Nomina[1];
 			  if ($Nomina[0]=="Si") {
 				  $colorselect="#28B463";
@@ -669,7 +641,7 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 				$ajustessumB=0;
 				$ajustesresB=$valorAjusteB;
 			}
-						// }
+						
 						echo "<td  >$ReteGarantiaMostrar  </td>";//ReteGarantia
 
 						echo "<td>";
@@ -682,12 +654,12 @@ if ($rw1[14]==1 and $rw1[15]=="si" and $diassitrabajo >=5 ) {
 
 						}
 
-						echo "</td>";//abonos a deudas//Retefuente devolver
+						echo "</td>";//Devolver retegarantia
 
-// echo"$totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$valordiasConSancion);";
+
 $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$valordiasConSancion);
 						$totalQuincena_formateado = number_format($totalQuincena, 0, ',', '.');
-						echo "<td style='background-color:#F4D03F' >$totalQuincena_formateado</td>";
+						echo "<td style='background-color:#F4D03F' >$totalQuincena_formateado</td>";//Valor quincena
 						$valorAjusteB=$Nomina[10];
 						$tipoAjusteB=$Nomina[11];
 						$descripcionAjusteB=$Nomina[12];
@@ -701,21 +673,22 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 				<p>$confirmado1<p/>
 	        </details>
 			</label>
-			</td>";//IMPRIMIR
+			</td>";//Cuenta de cobro
 
-			echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+			echo "<td>".$validado.$Observacion."</td>";//Confirmacion Usuario
 
-		    echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$rw1[13]\")';  title='Click para agregar un abono' >Agregar +</a></td>";//abonos a deudas
+		    echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$rw1[13]\")';  title='Click para agregar un abono' >Agregar +</a></td>";//ajustes
 
 			echo "<td><div id='campo'>";
 			echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Basico' onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Basico\")' class='borrar' required>";
-			// $LT->llenaselect_ar("Selecccione...",$estadosguiasinfin);
+
 			echo"<option value='no' $no>NO</option>";
 			echo"<option value='Si'$si>SI</option>";
 
 
 			echo"</select>";
-		  //   if ($si=="selected") {
+		  
+			//Comprobante
 			  if ($imagencompr=="") {
 				  echo "<td><a id='Basico".$idusuario."' style='pointer-events: ".$linkbasico.";' onclick='pop_dis16($idusuario,\"Comprobante_nomina_basico\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cargar</td>";
 				}else{
@@ -725,40 +698,26 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 				}
 
 
-			// echo "<td><a href='desprendibleOtros.php?cedula=".$rw1[5]."&nombre=".$rw1[1].$rw1[2]."&valor=".$totalQuincenaParaCuenta."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."' target='_blank'>Cuenta de cobro</a></td>";//IMPRIMIR
+			
 
 
-			echo "<td>$rw1[6]</td>";
-			echo "<td>$rw1[13]</td>";
+			echo "<td>$rw1[6]</td>";//Inicio contrato
+			echo "<td>$rw1[13]</td>";//Termina contrato
 			$totalDevengPres=$totalDevengPres+$totalQuincena;
-			echo"<td><input type='checkbox'  onchange='selecionado1(
+			echo"<td><input type='checkbox'  onchange='selecionado2(
 				$idusuario,
 				\"$nombreCompleto\",
 				\"$rw1[5]\",
-				\"$diassitrabajoParaMostrar\",
-				\"$diasDescanso\",
-				\"$valordediastrabajados_formateado\",
-				\"$totalauxilio\",
-				\"$diasnotrabajo\",
-				\"$diasincapacidad\",
-				\"$valorDiasIncapadidad_formateado\",
-				\"$diasVacaciones\",
-				\"$valorDiasVacaciones_formateado\",
-				\"$permisosLic\",
-				\"$diasPerLicBasValortotalfinal_formateado\",
-				\"$valorSalud_formateado\",
-				\"$valorPension_formateado\",
-				\"$TotalDebe\",
-				\"$restaABasico\",
-				\"$TotalDevengado_formateado\",
-				\"$valorHorasDomini_formateado\",
-				\"$cargosaldo[4]\",
-				\"$totalOtrosDias_formateado\",
-				\"$rw10[0]\",
+				\"$diassitrabajo\",
+				\"$valordediastrabajados\",
+				\"$valorTotalHora_formateado\",
 				\"$valorRecogidas_formateado\",
-				\"$restaAOtros\",
-				\"$totalOtrosAPagar_formateado\",
-				\"$TotalDevengoyOtros_formateado\")' class='checkbox' id='".$idusuario."s1' value='$idusuario'></td>";
+				\"$otropordia\",
+				\"$totalOtrosDias_formateado\",
+				\"$TotalDebe\",
+				\"$TotalPagoQuincena_formateado\",
+				\"$ReteGarantiaMostrar \",
+				\"$totalQuincena_formateado\")' class='check_hijo' id='".$idusuario."s1' value='$idusuario'></td>";
 		  }
 
 		}
@@ -829,7 +788,7 @@ $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$val
 // $FB->titulo_azul1("Trabajador",1,0,7);
 echo "<table class='table table-hover'><tr bgcolor='#074F91' class='tittle3' >";
 $FB->titulo_azul1("Id",1,0,0);
-echo "<td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' ></td>";
+echo "<td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' onclick='seleccionarTodos()' ></td>";
 
 $FB->titulo_azul1("Tipo Contrato",1,0,0);
 $FB->titulo_azul1("Cedula",1,0,0);
@@ -892,7 +851,7 @@ $FB->titulo_azul1("Comprobante",1,'5%',0);
 // $FB->titulo_azul1("Paz y Salvo Vehiculo",1,'5%',0);
 $FB->titulo_azul1("Inicio contrato",1,'5%',0);
 $FB->titulo_azul1("Termina contrato",1,'5%',0);
-$FB->titulo_azul1("",1,0,0);
+	$FB->titulo_azul1("Seleccion",1,'5%',0);
 
 
 
@@ -1888,10 +1847,9 @@ ORDER BY hoj_nombre ASC";
 					$tabla.="<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$fechaactual\")';  title='Click para agregar un abono' >Agregar +</a></td>";//abonos a deudas
 
 					$tabla.="<td><div id='campo'>";
-					$tabla.="<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Otros'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Otros\")' class='borrar' required>";
-					// $LT->llenaselect_ar("Selecccione...",$estadosguiasinfin);
-					$tabla."<option value='no' $no>NO</option>";
-					$tabla."<option value='Si'$si>SI</option>";
+					$tabla.="<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Otros'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Otros\")' class='borrar' required>
+					<option value='no' $no>NO</option>
+					<option value='Si'$si>SI</option>";
 
 
 					$tabla."</select>";
@@ -1960,34 +1918,8 @@ ORDER BY hoj_nombre ASC";
 					\"$valorRecogidas_formateado\",
 					\"$restaAOtros\",
 					\"$totalOtrosAPagar_formateado\",
-					\"$TotalDevengoyOtros_formateado\")' class='checkbox' id='".$idusuario."s1' value='$idusuario'></td>";
-					// id,
-					// \"trabajador\",
-					// \"cedula\",
-					// \"dias\",
-					// \"descanso\",
-					// \"valortdiasbase\",
-					// \"valorDiasAux\",
-					// \"diasNoTrabajo\",
-					// \"diasIncapEmpresa\",
-					// \"valorIncapempresa\",
-					// \"valorDiasIncapa\",
-					// \"diasVacacion\",
-					// \"diasLicePermisos\",
-					// \"valorLice\",
-					// \"descuentoSalud\",
-					// \"descueentoPensi\",
-					// \"prestamosDescuadres\",
-					// \"abonoDeudas\",
-					// \"valorQuincena\",
-					// \"valoHorasDomFes\",
-					// \"otrosValoresMes\",
-					// \"valorTotalOtros\",
-					// \"recogidas\",
-					// \"valorRecogidas\",
-					// \"abonosDeudas\",
-					// \"valorTotalOtros\",
-					// \"TotalTodo\")'
+					\"$TotalDevengoyOtros_formateado\")' class='check_hijo' id='".$idusuario."s1' value='$idusuario'></td>";
+
 					
 			 }
 			 

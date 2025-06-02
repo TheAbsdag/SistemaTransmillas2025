@@ -120,6 +120,9 @@ for ($year = $startYear; $year <= $currentYear; $year++){
 	
 }
 
+
+
+
 $FB->llena_texto("A&ntildeo:", 39, 82, $DB, $años, "", "$añoA", 1, 0);
 $FB->llena_texto("Mes:", 34, 82, $DB, $mesd, "", "$mes", 4, 0);
 $FB->llena_texto("Quincena", 36, 82, $DB, $quincena, "", "$quincena1", 1, 0);
@@ -149,18 +152,6 @@ include("footer.php");
 
 
 <script>
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const checkTodos = document.getElementById('check_todos');
-    const checkboxes = document.querySelectorAll('.check_individual');
-
-    checkTodos.addEventListener('change', function() {
-      checkboxes.forEach(function(c) {
-        c.checked = checkTodos.checked;
-      });
-    });
-  });
 
 
 function confirmarPago(idusuario,fechaactual,fechafinal,confirmarPago,confirma,tipo){
@@ -415,7 +406,7 @@ let idsSeleccionados = [];
 			valorTotalOtros,
 			TotalTodo) {
 		var checkbox = document.getElementById(id + "s1");
-		
+		var contrato = "Prestacion";
 		const data = {
 			id: id,
 			trabajador: trabajador,
@@ -443,7 +434,8 @@ let idsSeleccionados = [];
 			valorRecogidas: valorRecogidas,
 			abonosDeudas: abonosDeudas,
 			valorTotalOtros: valorTotalOtros,
-			TotalTodo: TotalTodo
+			TotalTodo: TotalTodo,
+			contrato: contrato
 		};
 
 		if (checkbox.checked) {
@@ -457,27 +449,62 @@ let idsSeleccionados = [];
 		console.log("Datos User tabla:", datosusertabla);
 	}
 
-    // // Obtener todos los checkboxes y agregar un event listener para manejar los clics
-    // const checkboxes = document.querySelectorAll('.checkbox');
-    // checkboxes.forEach(checkbox => {
-    //     checkbox.addEventListener('click', manejarClicCheckbox);
-    // });
+
+	let datosusertablaP = [];
+
+	// Función para manejar los clics en los checkboxes
+	function selecionado2(
+			id,
+			trabajador,
+			cedula,
+			dias,
+			valortdiasbase,
+			valorHoras,
+			valorRecogidas,
+			otropordia,
+			valorOtros,
+			prestamosDescuadres,
+			abonoDeudas,
+			retegarantias,
+			valorquicena,
+			contrato
+		){
+		var checkbox = document.getElementById(id + "s1");
+		var contrato = "Prestacion";
+		const data = {
+			id: id,
+			trabajador: trabajador,
+			cedula: cedula,
+			dias: dias,
+			valortdiasbase: valortdiasbase,
+			valorHoras: valorHoras,
+			valorRecogidas: valorRecogidas,
+			otropordia: otropordia,
+			valorOtros: valorOtros,
+			prestamosDescuadres: prestamosDescuadres,
+			abonoDeudas: abonoDeudas,
+			retegarantias: retegarantias,
+			valorquicena: valorquicena,
+			contrato: contrato
+		};
+
+		if (checkbox.checked) {
+			// Agregar el objeto con los parámetros al array
+			datosusertablaP.push(data);
+		} else {
+			// Buscar el objeto en el array y eliminarlo
+			datosusertablaP = datosusertablaP.filter(item => item.id !== id);
+		}
+
+		console.log("Datos User tablaP:", datosusertablaP);
+	}
+
+
 
 
 
 	document.getElementById('enviarIds').addEventListener('click', function() {
-
-		// const imagenInput = document.getElementById('comproPago');
-        // const imagen = imagenInput.files[0];
-        // const idsSeleccionados = [1, 2, 3]; // Tu array de IDs seleccionados
-
-
-
-
-
-		
 		const imagenInput = document.getElementById('comproPago').files[0];
-        // const idsSeleccionados = [1, 2, 3]; // Tu array de IDs seleccionados
         const fechaHoraini = document.getElementById('fechaactual').value;
         const fechaHorafin = document.getElementById('fechafin').value;
 
@@ -509,15 +536,7 @@ let idsSeleccionados = [];
 
 
 	function pop_Retegarantia(idusuario, tabla, fechaactual, aux1){
-		// var checkbox = document.getElementById(tipo+idusuario+funcion+aux1);
 		var funcion = "devolverRetegarantia";
-
-
-					// if (checkbox.checked) {
-					// 	var confirma ="si";
-					// } else {
-					// 	var confirma ="no";
-					// }
 
 		alert("Devolver "+aux1+" ?");
 		
@@ -529,25 +548,10 @@ let idsSeleccionados = [];
 					data: datos
 				}).done(function(respuesta){
 					
-
-
-					// if (checkbox.checked) {
-					// 	boton.style.display = "inline-block"; // Muestra el botón si el checkbox está marcado
-					// } else {
-					// 	boton.style.display = "none"; // Oculta el botón si el checkbox no está marcado
-					// }
 				});
      }
 	 function pop_Retegarantiaresta(idusuario, tabla, fechaactual, aux1){
-		// var checkbox = document.getElementById(tipo+idusuario+funcion+aux1);
 		var funcion = "restarRetegarantia";
-
-
-					// if (checkbox.checked) {
-					// 	var confirma ="si";
-					// } else {
-					// 	var confirma ="no";
-					// }
 
 
 		
@@ -562,16 +566,11 @@ let idsSeleccionados = [];
 					data: datos
 				}).done(function(respuesta){
 					
-					// if (respuesta=="ok") {
+
 						alert("Valor descontado");
-					// }
-					// Cambia el contenido del div
+
 					div.innerHTML = "$"+respuesta;
-					// if (checkbox.checked) {
-					// 	boton.style.display = "inline-block"; // Muestra el botón si el checkbox está marcado
-					// } else {
-					// 	boton.style.display = "none"; // Oculta el botón si el checkbox no está marcado
-					// }
+
 				});
      }
 
@@ -614,9 +613,32 @@ let idsSeleccionados = [];
 		inputDatos.value = JSON.stringify(datosusertabla); // Enviar como JSON
 		form.appendChild(inputDatos);
 
+				// Convertir el arreglo completo a JSON
+		let inputDatos2 = document.createElement("input");
+		inputDatos2.type = "hidden";
+		inputDatos2.name = "datosusertablaP";
+		inputDatos2.value = JSON.stringify(datosusertablaP); // Enviar como JSON
+		form.appendChild(inputDatos2);
+
 		document.body.appendChild(form);
 		form.submit();
 		form.remove();
+		
+		datosusertabla = [];
+		datosusertablaP = [];
 	}
+
+
+function seleccionarTodos() {
+  const estado = document.getElementById('check_todos').checked;
+  const checkboxes = document.querySelectorAll('.check_hijo');
+
+  checkboxes.forEach(chk => {
+    chk.checked = estado;
+
+    // Forzar que se dispare el evento onchange original
+    chk.dispatchEvent(new Event('change'));
+  });
+}
 
 </script>
