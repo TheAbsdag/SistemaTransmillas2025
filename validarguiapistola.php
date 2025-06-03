@@ -15,6 +15,10 @@ $(function () {
 		var piezasg=document.getElementById("piezasg_"+$(this).attr('name')).value;
 		var guia=document.getElementById("guia_"+$(this).attr('name')).value;
 
+		var piezanumero=document.getElementById("npiez_"+$(this).attr('name')).value;
+		var paquete=document.getElementById("paque_"+$(this).attr('name')).value;
+
+
 		event.preventDefault();
 		$(this).closest('tr').remove();
       	datos = {"tipoguia":"validar","servicio":idservicio,"descripcion":descripcion,"llego":valor,"piezasg":piezasg,"guia":guia};
@@ -23,6 +27,22 @@ $(function () {
 				type: "POST",
 				data: datos
 			}).done(function(respuesta){
+							// Crear nueva fila
+							let nuevaFila = `
+								<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"#FFFFFF\"'>
+								<td>${guia}</td>
+								<td>${paquete}</td>
+								<td>${piezanumero}</td>
+								</tr>
+							`;
+						// Agregar al tbody
+						// let yaExiste = $("#tablaGuias tbody td:first-child").filter(function() {
+						// 	return $(this).text().trim() === guia;
+						// }).length > 0;
+
+						// if (!yaExiste) {
+							$("#tablaGuias tbody").append(nuevaFila);
+						// }
 				
 			});
 
@@ -93,7 +113,7 @@ var ciudado= document.getElementById("param6").value;
 								</tr>
 							`;
 						// Agregar al tbody
-						$("#tablaGuias tbody").append(nuevaFila);
+						// $("#tablaGuias tbody").append(nuevaFila);
 
 					}else if(guia==3) {
 					/* 	$("#enviarmensaje").modal("show"); 
@@ -219,9 +239,11 @@ if($param2!="" and $param1!=""){
 		echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:#074f91;color:#f9f9f9;font-size:15px'  name='$va' id='$va'   class='borrar' required>";
 		$LT->llenaselect_ar("Selecccione...",$estadosguia);
 		echo "</select></div><input name='servicio_$va' id='servicio_$va' type='hidden'  value='$rw1[0]'></td>";
-		echo "<input name='piezasg_$va' id='piezasg_$va' type='hidden'  value='$rw1[3]'>";
+		echo "<input name='piezasg_$va' id='piezasg_$va' type='hidden'  value='$rw1[4]'>";
 		echo "<input name='guia_$va' id='guia_$va' type='hidden'  value='$rw1[1]'>";
 		echo "<input name='des_$va' id='des_$va'  type='hidden'  value=''>";
+		echo "<input name='paque_$va' id='paque_$va'  type='hidden'  value='$rw1[2]'>";
+		echo "<input name='npiez_$va' id='npiez_$va'  type='hidden'  value='$rw1[4]'>";
 
 	 }
 
@@ -235,7 +257,7 @@ echo '</table></td></tr></table></div>
 	//   $FB->titulo_azul1("Imprimir",1,0,0); 
 
 
-	   $sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`, ser_piezas,numeropieza
+	  $sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`, ser_piezas,numeropieza
 			  FROM serviciosdia inner join piezasguia on ser_consecutivo=numeroguia  where ser_estado in ('8') and guiallega=1 $conde1 $conde  $conde3 ORDER BY ser_fechaguia desc ";
 	 
 	 $DB->Execute($sql); $va=0; 
@@ -250,13 +272,14 @@ echo '</table></td></tr></table></div>
 			 <td>".$rw1[1]."</td>
 			 <td>".$rw1[2]."</td>
 			 <td>".$rw1[4]."</td>
+			 </tr>
 			 ";
 			//  echo "<td align='center' >";
 			//  echo "<a href='ticketfactura.php?id_param=$id_p&pagina2=validarguiapistola.php' target='_blank'><img src='img/imprimir.png'></a></td>";	
 	 
 
 		 }
-   echo ' </tbody></table></td></tr></table></div>
+   echo ' </tbody></table></td></table></div>
 
    <div id="cuarto" style="width: 20%; float:left;">';
 
