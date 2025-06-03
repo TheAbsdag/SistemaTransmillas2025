@@ -1162,8 +1162,9 @@ ORDER BY hoj_nombre ASC";
 
 												}
 												if(($mesiniciocontrato==$month and $añoiniciocontrato==$year and $diainiciocontrato>=16 and $diasnotrabajo<=0)){
-													if ($diainiciocontrato>=16 and $diainiciocontrato!=31) {
+													if ($diainiciocontrato==16 and $diainiciocontrato!=31) {
 														$dia31=1;
+														echo"1";
 													}else {
 														$dia31=0;
 													}
@@ -1178,10 +1179,12 @@ ORDER BY hoj_nombre ASC";
 														$dia31=0;
 													}else {
 														$dia31=1;
+														echo"2";
 													}
 
 												}else{
 													$dia31=1;
+													echo"3";
 												}
 
 
@@ -1271,7 +1274,10 @@ ORDER BY hoj_nombre ASC";
 								$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
 					}
 
-
+ if ($rw1[1]=="EDGAR EDUARDO CONDUC") {
+	$diassitrabajoParaSumar=$diassitrabajoParaSumar-1;
+	$diassitrabajoParaMostrar=$diassitrabajoParaMostrar-1;
+ }
 
 				}
 
