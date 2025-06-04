@@ -764,7 +764,14 @@ Full screen Modal
     </div>
   </div>
 </div>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- Bootstrap Icons (opcional para el ícono de advertencia) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Modal -->
 <div id="myModalPendientes" class="modal fade" tabindex="-1" aria-labelledby="modalPendientesLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
