@@ -7,31 +7,6 @@ if(isset($_REQUEST["ord"])){ $ord=$_REQUEST["ord"]; } else { $ord="1"; }
 if(isset($_REQUEST["asc"])){ $asc=$_REQUEST["asc"]; } else {$asc="ASC"; } $asc2="ASC"; if($asc=="ASC"){ $asc2="DESC";}
 ?>
 	<style type="text/css">
-            #popup {
-                display: none;
-                position: fixed;
-                top: 0; left: 0; right: 0; bottom: 0;
-                background-color: rgba(0,0,0,0.6);
-                justify-content: center;
-                align-items: center;
-                }
-            #popup-content {
-                background: white;
-                padding: 30px;
-                border-radius: 10px;
-                text-align: center;
-                max-width: 400px;
-                box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            }
-            #popup button {
-                padding: 10px 20px;
-                margin-top: 20px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 6px;
-                cursor: pointer;
-            }
 
 
 
@@ -1067,11 +1042,7 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
         }
     }
 
-    function pagosPendientes(){
 
-        $("#myModamensaje").modal("show"); 
-        MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
-    }
 
     </script>
 

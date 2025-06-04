@@ -333,6 +333,12 @@ function pop_close(){
 	$('.popup-overlay').fadeOut('slow');
 }
 
+function pagosPendientes(){
+
+    $("#myModamensaje").modal("show"); 
+    MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
+}
+
 </script>
 
 <style type="text/css">
