@@ -335,7 +335,7 @@ function pop_close(){
 
 function pagosPendientes(){
 
-    $("#myModalinicio").modal("show"); 
+    $("#myModalPendientes").modal("show"); 
     MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
 }
 
@@ -759,6 +759,20 @@ Full screen Modal
        </div>
       <!-- dialog buttons -->
              <img src="img/medidascovid19.png" width="100%" height="170%">
+
+      <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="myModalPendientes" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- dialog body -->
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       </div>
+      <!-- dialog buttons -->             
 
       <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>
     </div>
