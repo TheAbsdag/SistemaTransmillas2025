@@ -773,32 +773,13 @@ Full screen Modal
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Modal -->
-<div id="myModalPendientes" class="modal fade" tabindex="-1" aria-labelledby="modalPendientesLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-4">
-
-      <!-- Header -->
-      <div class="modal-header bg-gradient bg-warning bg-opacity-75 text-dark rounded-top-4">
-        <h5 class="modal-title fw-bold fs-4" id="modalPendientesLabel">
-          <i class="bi bi-exclamation-triangle-fill me-2 text-danger"></i>Atención
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-
-      <!-- Body -->
-      <div class="modal-body text-center py-4 px-5">
-        <p class="fs-5 fw-semibold mb-2">🔔 Tienes <span class="text-danger">pagos de nómina pendientes</span> por validar.</p>
-        <p class="text-muted fs-6">Por favor revísalos y valídalos lo antes posible. Es importante para continuar con el proceso correctamente.</p>
-      </div>
-
-      <!-- Footer -->
-      <div class="modal-footer border-0 justify-content-center pb-4">
-        <button type="button" class="btn btn-primary px-4 py-2 rounded-pill fs-6" data-bs-dismiss="modal">
-          Entendido
-        </button>
-      </div>
-
-    </div>
+<!-- HTML del modal -->
+<div id="modalPendientes" class="modal-overlay">
+  <div class="modal-box">
+    <h2>⚠️ Atención</h2>
+    <p class="mensaje-principal">Tienes <strong>pagos de nómina pendientes</strong> por validar.</p>
+    <p class="mensaje-secundario">Por favor revísalos y valídalos lo antes posible. Es importante para el pago de la quicena.</p>
+    <button onclick="cerrarModal()" class="btn-modal">Entendido</button>
   </div>
 </div>
 
