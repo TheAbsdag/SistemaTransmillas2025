@@ -5158,6 +5158,8 @@ echo"</tr>";
     echo '</div>';
     
 
+}elseif ($tabla == "pagosPendientes") {
+    echo "Tienje pagos pendientes";
 }
 
 
