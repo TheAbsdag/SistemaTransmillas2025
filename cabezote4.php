@@ -335,7 +335,7 @@ function pop_close(){
 
 function pagosPendientes(){
 
-    $("#myModamensaje").modal("show"); 
+    $("#myModalinicio").modal("show"); 
     MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
 }
 
