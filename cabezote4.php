@@ -766,27 +766,29 @@ Full screen Modal
 </div>
 
 <!-- Modal -->
-<div id="myModalPendientes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalPendientesLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content shadow-lg border-0 rounded-3">
-      
-      <!-- Encabezado del modal -->
-      <div class="modal-header bg-warning text-dark">
-        <h5 class="modal-title font-weight-bold" id="modalPendientesLabel">Atención</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-          <span aria-hidden="true">&times;</span>
+<div id="myModalPendientes" class="modal fade" tabindex="-1" aria-labelledby="modalPendientesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+
+      <!-- Header -->
+      <div class="modal-header bg-gradient bg-warning bg-opacity-75 text-dark rounded-top-4">
+        <h5 class="modal-title fw-bold fs-4" id="modalPendientesLabel">
+          <i class="bi bi-exclamation-triangle-fill me-2 text-danger"></i>Atención
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body text-center py-4 px-5">
+        <p class="fs-5 fw-semibold mb-2">🔔 Tienes <span class="text-danger">pagos de nómina pendientes</span> por validar.</p>
+        <p class="text-muted fs-6">Por favor revísalos y valídalos lo antes posible. Es importante para continuar con el proceso correctamente.</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer border-0 justify-content-center pb-4">
+        <button type="button" class="btn btn-primary px-4 py-2 rounded-pill fs-6" data-bs-dismiss="modal">
+          Entendido
         </button>
-      </div>
-
-      <!-- Cuerpo del modal -->
-      <div class="modal-body text-center">
-        <p class="mb-3 fs-5">🔔 Tienes <strong>pagos de nómina pendientes por validar</strong>.</p>
-        <p class="text-muted">Por favor, revisa y valida estos pagos lo antes posible. Es importante para continuar con el proceso.</p>
-      </div>
-
-      <!-- Pie del modal -->
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-primary px-4" data-dismiss="modal">Entendido</button>
       </div>
 
     </div>
