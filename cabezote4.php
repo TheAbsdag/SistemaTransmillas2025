@@ -765,13 +765,31 @@ Full screen Modal
   </div>
 </div>
 
-<!-- HTML del modal -->
-<div id="modalPendientes" class="modal-overlay">
-  <div class="modal-box">
-    <h2>⚠️ Atención</h2>
-    <p class="mensaje-principal">Tienes <strong>pagos de nómina pendientes</strong> por validar.</p>
-    <p class="mensaje-secundario">Por favor revísalos y valídalos lo antes posible. Es importante para el pago de la quicena.</p>
-    <button onclick="cerrarModal()" class="btn-modal">Entendido</button>
+<!-- Modal -->
+<div id="myModalPendientes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalPendientesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content shadow-lg border-0 rounded-3">
+      
+      <!-- Encabezado del modal -->
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title font-weight-bold" id="modalPendientesLabel">Atención</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Cuerpo del modal -->
+      <div class="modal-body text-center">
+        <p class="mb-3 fs-5">🔔 Tienes <strong>pagos de nómina pendientes por validar</strong>.</p>
+        <p class="text-muted">Por favor, revisa y valida estos pagos lo antes posible. Es importante para continuar con el proceso.</p>
+      </div>
+
+      <!-- Pie del modal -->
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary px-4" data-dismiss="modal">Entendido</button>
+      </div>
+
+    </div>
   </div>
 </div>
 
