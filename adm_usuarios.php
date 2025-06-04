@@ -2,6 +2,7 @@
 <?php 
 require("login_autentica.php"); 
 include("layout.php");
+if($rcrear==1) { $FB->nuevo("Usuario", $condecion, "configuracion.php?idmen=138"); } 
 ?>
   <style>
     body, html {
@@ -14,6 +15,7 @@ include("layout.php");
       border: none;
     }
   </style>
+
 <iframe src="/nueva_plataforma/controller/UsuarioController.php" width="100%"
         style="border: none;"></iframe>
 <script>
