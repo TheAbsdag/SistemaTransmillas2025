@@ -772,7 +772,7 @@ Full screen Modal
       
       <!-- Encabezado del modal -->
       <div class="modal-header bg-warning text-dark">
-        <h5 class="modal-title font-weight-bold" id="modalPendientesLabel">Atención</h5>
+        <h5 class="modal-title font-weight-bold" id="modalPendientesLabel"><h1>Atención</h1></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -780,7 +780,7 @@ Full screen Modal
 
       <!-- Cuerpo del modal -->
       <div class="modal-body text-center">
-        <p class="mb-3 fs-5">🔔 Tienes <strong>pagos de nómina pendientes por validar</strong>.</p>
+        <p class="mb-3 fs-5"><h1>🔔 Tienes <strong>pagos de nómina pendientes por validar</strong>.</h1></p>
         <p class="text-muted">Por favor, revisa y valida estos pagos lo antes posible. Es importante para continuar con el proceso.</p>
       </div>
 
