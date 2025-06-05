@@ -43,17 +43,7 @@ else{
 if($param9!=''){  $conde4=" and  fac_nit='$param9' ";}
 if($param10!=''){  $conde5=" and  fac_numerofactura='$param10' ";}
 
-// $sql20="SELECT count(*) FROM `facturascreditos` WHERE   $conde2 $conde1 $conde3 $conde4 $conde5 ORDER BY fac_numeroref $asc ";
-// $DB1->Execute($sql20); 
-// $cantdatos=$DB1->recogedato(0);
-// $total_paginas =ceil($cantdatos / 50);
-// echo "<section class='paginacion' id='mostrarPor'><ul ><li>Mostrar <select onChange='cambiarPagina(1,this.value)' ><option value='50' $s50 >50</option><option value='200' $s200>200</option><option value='500' $s500>500</option><option value='10000' $todos>Todos..</option></select></li><li><a>Total Registros: $cantdatos </a></li><li ></li>";
-// for($i=1; $i<=$total_paginas; $i++){
 
-// 		  echo "<li><a href='javascript:llena_datos(2, $nivel_acceso, \"id_nombre\", \"ASC\");' id='$i'  >".$i."</a></li>";
-
-// }
-// echo "<li class=\"active\"></li></ul>";
 $sql="SELECT `idfacturascreditos`, `fac_fechafactura`,`fac_credito`, `fac_numerofactura`, `fac_fechaprefac`,`fac_idservicios`, `fac_iduserpre`,`fac_numeroref`, `fac_fechafacturado`, `fac_fechavencimiento`, `fac_estado`,`fac_tipopago`,`fac_iduserfac`,fac_precio,`fac_fecharadicado`,fac_fechapago,fac_notacredito,fac_fecharafacturado,fac_pagoconfir,fac_userconfirmo,fac_fechacomfir,fac_valorpendiente,fac_preciofinal,fac_correoven, fac_nit,fac_correofac FROM `facturascreditos` WHERE   $conde2 $conde1 $conde3 $conde4 $conde5 ORDER BY fac_numeroref $asc ";
 $html="";
 $DB->Execute($sql); $va=0; 
