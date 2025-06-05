@@ -14,7 +14,7 @@ if($param5!=''){  $fechaactual=$param5;}
 
 if($param1==""){ $param1="ser_prioridad"; } 
 if($param2!=''){ $conde2 =" and ser_numerofactura like '%$param2%'";  }
-if($param3!=''){ $conde3 =" and (rel_nom_credito like '%$param3%')";  }
+if($param3!=''){ $conde3 =" and (rel_nom_credito like '%$param3%')";  }else if($param13!=''){$conde3 =" and (rel_nom_credito like '%$param13%')";}
 
 if($param6=='Sin Facturar'){
 	$conde4=' and ser_numerofactura is null';
@@ -25,9 +25,9 @@ if($param6=='Sin Facturar'){
 }
 
 
- echo$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_consecutivo,ser_guiare,cli_idciudad,ser_valorprestamo,ser_valor,rel_nom_credito,ser_numerofactura,ser_valorseguro
+$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_consecutivo,ser_guiare,cli_idciudad,ser_valorprestamo,ser_valor,rel_nom_credito,ser_numerofactura,ser_valorseguro
  FROM  servicios s inner join rel_sercli  on idservicios=ser_idservicio 
-inner join clientesservicios on idclientesdir=ser_idclientes inner join ciudades on idciudades=cli_idciudad   inner join rel_sercre rs on rs.idservicio=idservicios where date(ser_fecharegistro)>='$fechainicio' and  date(ser_fecharegistro)<='$fechaactual' and ser_clasificacion=2  and ser_estado>=3 and ser_estado!=100  $conde1 $conde2 $conde3  $conde4 ORDER BY idrelsercre $asc ";
+inner join clientesservicios on idclientesdir=ser_idclientes inner join ciudades on idciudades=cli_idciudad   inner join rel_sercre rs on rs.idservicio=idservicios where date(ser_fecharegistro)>='$fechainicio' and  date(ser_fecharegistro)<='$fechaactual' and ser_clasificacion=2  and ser_estado>=3 and ser_estado!=100  $conde1 $conde2 $conde3  $conde4 ORDER BY idrelsercre $asc  ";
 $contsinpesar=0;
 $idguias='';
 $html1= "";

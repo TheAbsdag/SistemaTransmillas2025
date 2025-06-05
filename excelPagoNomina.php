@@ -728,7 +728,6 @@ function diasSegundaQuince($year, $month) {
 
                                 $totalQuincena=($totalQuincena+$devretegarantia+$ajustessumB)-($ajustesresB+$valordiasConSancion);
                                 $totalQuincena_formateado = number_format($totalQuincena, 0, ',', '.');	
-                                //   echo "<td style='background-color:#F4D03F' >$totalQuincena_formateado</td>";
                                 $valorAjusteB=$Nomina[10];
                                 $tipoAjusteB=$Nomina[11];
                                 $descripcionAjusteB=$Nomina[12];
@@ -766,10 +765,7 @@ function diasSegundaQuince($year, $month) {
   
   
   
-                      // echo "<td>$rw11[6]</td>";//Codigo del Banco
-                      // echo "<td>$rw11[13]</td>";//Tipo de producto o servicio
-                      // echo "<td>$rw11[6]</td>";//Numero del Producto o Servicio
-                      // echo "<td>$rw11[13]</td>";//Valor del Pago o de la Recarga
+
                       echo "</tr>";//tipo identificacion
 
 
@@ -908,12 +904,7 @@ function diasSegundaQuince($year, $month) {
                       }else{
             
             
-                        // echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
-                     
-                        // echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
-                        // echo "<td>".$rw16[1]." ".$rw16[2]."</td>";
-                        // echo "<td>".$rw16[4]."</td>";
-                        // echo "<td>".$rw16[5]."</td>";
+
                         $va++; $p=$va%2;
                       
                         $valordediastrabajados=0;
@@ -1275,14 +1266,7 @@ function diasSegundaQuince($year, $month) {
                         $pensionPorDia=28470/15;
             
                         if ($terminaContrato=="" and $mesdeingreso==false) {
-                            // if($param36=='Completo'){
-            
-                            //     $valorSalud=$saludPorDia*30;	
-                            //     $valorPension=$pensionPorDia*30;
-                            // }elseif($param36=='Primera' or $param36=='Segunda'){
-                            //     $valorSalud=$saludPorDia*15;	
-                            //     $valorPension=$pensionPorDia*15;
-                            // }
+
                             if ($diasVacaciones>0) {
                                 $valorSalud=$saludPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicSalud+$diasincapacidad);	
                                 $valorPension=$pensionPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicPension+$diasincapacidad);
@@ -1302,12 +1286,7 @@ function diasSegundaQuince($year, $month) {
             
                             
                         }
-            // // excepcion con usuario 423 andres 
-            // 			if ($idusuario== "423") {
-            // 				$valorSalud=0;	
-            // 				$valorPension=0;
-            // 			}
-            
+
                         $valorSalud_formateado = number_format($valorSalud, 0, ',', '.');
             
             
@@ -1515,30 +1494,7 @@ function diasSegundaQuince($year, $month) {
                             
                           }
                           
-                        //   echo "<td><div id='campo'>";
-                        //   echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Basico' onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Basico\")' class='borrar' required>";
-                        //   echo"<option value='no' $no>NO</option>";
-                        //   echo"<option value='Si'$si>SI</option>";
-                         
-                  
-                        //   echo"</select>";
-                        
-                        // 	if ($imagencompr=="") {
-                        // 		echo "<td><a id='Basico".$idusuario."' style='pointer-events: ".$linkbasico.";' onclick='pop_dis16($idusuario,\"Comprobante_nomina_basico\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cargar</td>";
-                        // 	  }else{  
-                        // 		echo "<td><a href='https://sistema.transmillas.com/img_nomina/$imagencompr' style='display: block;' target='_blank' title='Ver comprovante de pago de nomina' >Ver</a>";
-                        // 		echo "<a id='Basico".$idusuario."' style=' display: block; pointer-events: ".$linkbasico.";' onclick='pop_dis16($idusuario,\"Comprobante_nomina_basico\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cambiar</a></td>";
-            
-                        // 	  }
-                        // $valorAjusteB=
-                        // $tipoAjusteB=
-                        // $descripcionAjusteB
-            
-                        // if ($tipoAjusteB=="suma") {
-                        // 	$ajustessumB=$valorAjusteB;
-                        // }else if($tipoAjusteB=="descuento"){
-                        // 	$ajustesresB=$valorAjusteB;
-                        // }
+
                         $ajustessumB=0;
                         $ajustesresB=0;
                         if ($tipoAjusteB=="suma") {
@@ -1559,29 +1515,11 @@ function diasSegundaQuince($year, $month) {
                         $totaldevengado=$valordediastrabajados+$totalauxilio+$valorDiasIncapadidad+$valorDiasVacaciones;
                         $totaldeduccion=$valorSalud+$valorPension+$restaABasico+$totaldeduccion;
                         $rutaDeComproBas="desprendibleBasico.php?cedula=".$rw16[5]."&nombre=".$rw16[1]." ".$rw16[2]."&cargo=$cargosaldo[1]&fechaini=$fechaactual&fechafin=$fechafinal&cuenta=&diastrabajados=$diassitrabajoParaMostrar&sueldo=$valordediastrabajados&auxilitrans=$totalauxilio&pagdiasinca=$valorDiasIncapadidad&totaldeveng=$totaldevengado&salud=$valorSalud&pension=$valorPension&prestamos=$restaABasico&totaldeduccion=$totaldeduccion&confirmado=$validadoDesprendible&diasIncapacidad=$diasincapacidad&firma=$rw16[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=$diasVacaciones&sede=$rw16[7]&valorAjuste=$valorAjusteB&tipoAjuste=$tipoAjusteB&descripcionAjuste=$descripcionAjusteB&descriprestamos=$descripcionBasico";
-                        // echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
-                        // <button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarCuenCobro\",\"Basico\")' id='Basico".$idusuario."guardarCuenCobro'>$textEnviar</button>
-                        // <input  type='checkbox' id='Basico".$idusuario."confirmaAdmin1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdmin\",\"Basico\",1)' $cheked1>
-                        // <label for='miCheckbox'>			
-                        // <details>
-                        // <summary>Confirmado</summary>
-                        //     <p>$confirmado1<p/>
-                        // </details>	
-                        // </label></td>";//IMPRIMIR
-                        // echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+
             
             
                         $valorHorasDomini_formateado = number_format($valorTotalHorasDomini, 0, ',', '.');
-                        // echo "<td>$rw6[0]</td>";//Horas dominicales
-                        // echo "<td>$valorHorasDomini_formateado</td>";//Valor Horas dominicales
-            
-                        // echo "<td>$".$cargosaldo[4]."</td>";//Otros
-                        // echo "<td  >$".$totalOtrosDias_formateado."</td>";//total otros segun dias 
-            
-                        //   echo "<td  >$rw10[0]</td>";//Recogidas 
-            
-                        //   echo "<td  >$ $valorRecogidas_formateado</td>";//Valor recogidas
-                        //   echo "<td  >$".$restaAOtros."</td>";//Deudas descontadas a otros 
+ 
             
                           $colorselect1="#8B0000";
                           $si1="";
@@ -1691,69 +1629,16 @@ function diasSegundaQuince($year, $month) {
                         $totalOtrosAPagar=($totalOtrosDias+$valorTotalHorasDomini+$valorRecogidas+$ajustessumO)-($restaAOtros+$ajustesresO);
             
                         $totalOtrosAPagar_formateado = number_format($totalOtrosAPagar, 0, ',', '.');
-                        // echo "<td  style='background-color:#F4D03F'>$".$totalOtrosAPagar_formateado."</td>";//total otros 
-                       
                         $totalOtrosConHD=$totalOtrosDias+$valorTotalHorasDomini;
             
                         $totalOtrosConHD_formateado = number_format($totalOtrosConHD, 0, ',', '.');
                         $rutaDeComp="desprendibleOtros.php?cedula=".$rw16[5]."&nombre=".$rw16[1].$rw16[2]."&valor=".$totalOtrosConHD."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."&recogidas=".$cantRecogidas."&valorRecogidas=".$valorRecogidas."&otrosdeve=0&confirmado=$validadoDesprendible1&firma=$rw16[17]&valorAjuste=$valorAjusteO&tipoAjuste=$tipoAjusteO&descripcionAjuste=$descripcionAjusteO&descripcionOtros=$descripcionOtros";
-                        // echo "<td><a  target='_blank' href='desprendibleOtros.php?cedula=".$rw16[5]."&nombre=".$rw16[1].$rw16[2]."&valor=".$totalOtrosConHD."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."&recogidas=".$cantRecogidas."&valorRecogidas=".$valorRecogidas."&otrosdeve=0&confirmado=$validadoDesprendible1&firma=$rw16[17]&valorAjuste=$valorAjusteO&tipoAjuste=$tipoAjusteO&descripcionAjuste=$descripcionAjusteO&descriprestamos=$descripcionOtros'>ver</a>
-                        // <button style='display: $botonEnviar2; width:120px;border:1px solid #f9f9f9;background-color:".$colorEnviar1.";color:#f9f9f9;font-size:15px' id='Otros".$idusuario."guardarCuenCobro' onclick='enviarDesprendible(\"$rutaDeComp\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarCuenCobro\",\"Otros\")'>$textEnviar1</button>
-                        // <input  type='checkbox' id='Otros".$idusuario."confirmaAdmin2' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdmin\",\"Otros\",2)' $cheked2>
-                        // <label for='miCheckbox'>			
-                        // <details>
-                        // <summary>Confirmado</summary>
-                        //     <p>$confirmado<p/>
-                        // </details>	
-                        // </label><br>
-            
-                        // </td>";//IMPRIMIR
-                        
-                        // echo "<td>".$validado1.$Observacion1."</td>";//Confirmado?
-                        // echo "<td><a href='desprendibleOtros.php?cedula=".$rw16[5]."&nombre=".$rw16[1].$rw16[2]."&valor=".$totalOtrosConHD."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."' target='_blank'>Cuenta de cobro</a></td>";//IMPRIMIR
-                        
+
                         $TotalDevengoyOtros=$TotalDevengado+$totalOtrosAPagar;
                         $TotalDevengoyOtros_formateado = number_format($TotalDevengoyOtros, 0, ',', '.');
-                        // echo "<td>Agregar</td>";
-            
-                        // echo "<td>".$TotalDevengoyOtros_formateado."</td>";
-                        // echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Ajustes_nomina\",\"$fechaactual\")';  title='Click para agregar un abono' >Agregar +</a></td>";//abonos a deudas
-            
-                        // echo "<td><div id='campo'>";
-                        // echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."Otros'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPago\",this.value,\"Otros\")' class='borrar' required>";
-                        // // $LT->llenaselect_ar("Selecccione...",$estadosguiasinfin);
-                        // echo"<option value='no' $no>NO</option>";
-                        // echo"<option value='Si'$si>SI</option>";
+
                        
                 
-                        // echo"</select>";
-            
-                        
-            
-            
-            
-            
-            
-            
-                      //   if ($si1=="selected") {
-                        //   if ($imagencompr1=="" and $imagencompr=="") {
-                        //     echo "<td><a id='Otros".$idusuario."' style='pointer-events: ".$linkotros."; color: gray;' onclick='pop_dis16($idusuario,\"Comprobante_nomina_otros\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cargar</td>";
-            
-            
-                          
-                        //     }elseif ($imagencompr1!=""){  
-                        //       echo "<td><a href='https://sistema.transmillas.com/img_nomina/$imagencompr1' style='display: block;' target='_blank' title='Ver comprovante de pago de nomina' >Ver</a>";
-                        //       echo "<a id='Otros".$idusuario."' style='display: block;  pointer-events: ".$linkotros."; ' onclick='pop_dis16($idusuario,\"Comprobante_nomina_otros\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cambiar</a></td>";
-            
-                        //     }elseif ($imagencompr!=""){  
-                        //         echo "<td><a href='https://sistema.transmillas.com/img_nomina/$imagencompr' style='display: block;' target='_blank' title='Ver comprovante de pago de nomina' >Ver</a>";
-                        //         echo "<a id='Otros".$idusuario."' style='display: block;  pointer-events: ".$linkotros."; ' onclick='pop_dis16($idusuario,\"Comprobante_nomina_otros\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cambiar</a></td>";
-              
-                        //       }
-                        // echo "<td></td>";
-                        // echo "<td></td>";
-                        // echo "<td>$rw16[6]</td>";
-                        // echo "<td>$terminaContrato</td>";
                         
                         $totalDevengTodos=$totalDevengTodos+$TotalDevengado;
             
@@ -1766,20 +1651,21 @@ function diasSegundaQuince($year, $month) {
                       echo "<td>$rw16[5]</td>";//Numero identificacion
                       echo "<td>$rw16[1]</td>";//Nombre
                       echo "<td>$rw16[2]</td>";//Apellido
-  
+                        $tipoCuenta="";
+                        $codigoBanco="";  
                       if ($rw1[16]=="DAVIPLATA") {
                           $tipoCuenta="DP";
+                           $codigoBanco="51";
                       }else if ($rw1[16]=="AHORROS") {
                           $tipoCuenta="CA";
                       }
-                      echo'if ('.$rw1[17].'=="DAVIVIENDA" or '.$rw1[17].'=="DAVIPLATA") {';
                       if ($rw1[17]=="DAVIVIENDA" or $rw1[17]=="DAVIPLATA") {
                           $codigoBanco="51";
                       }
                       echo "<td>$codigoBanco</td>";
                       
                       echo "<td>$tipoCuenta</td>";
-                      // $numero_formateado = number_format($numero_largo, 0, '.', '');
+
                       $numeroCuenta_formateado = number_format($rw1[15], 0, '', '');
                       echo "<td>".$rw1[15]."</td>";
                       echo "<td>".$TotalDevengoyOtros_formateado."\t</td>";
@@ -1788,10 +1674,7 @@ function diasSegundaQuince($year, $month) {
   
   
   
-                      // echo "<td>$rw11[6]</td>";//Codigo del Banco
-                      // echo "<td>$rw11[13]</td>";//Tipo de producto o servicio
-                      // echo "<td>$rw11[6]</td>";//Numero del Producto o Servicio
-                      // echo "<td>$rw11[13]</td>";//Valor del Pago o de la Recarga
+
                       echo "</tr>";//tipo identificacion
 
             

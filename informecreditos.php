@@ -8,123 +8,7 @@ $FB->abre_form("form1","","post");
 // $fechainicial=date("01/m/Y");
 $fechados= date("d-m-Y",strtotime($fechaactual."- 2 week"));
 ?>
-<style>
-    .btn-with-bancolombia,
-    .btn-with-davivienda {
-        width: 150px; /* Ajusta según sea necesario */
-        height: 40px; /* Ajusta según sea necesario */
-        background-size: cover;
-    }
-
-    .btn-with-bancolombia {
-        background-image: url('img/botonbancolombia.jpg');
-    }
-
-    .btn-with-davivienda {
-        background-image: url('img/botondavivienda.jpg');
-    }
-
-
-
-
-
-        .container-left {
-            float: left;
-            margin-right: 10px; /* Espacio entre botones */
-        }
-
-        .container-right {
-            float: right;
-            margin-left: 10px; /* Espacio entre botones */
-        }
-        .email-button {
-            display: inline-flex;
-            align-items: center;
-            background-color: #2196F3; /* Color de fondo */
-            color: white; /* Color del texto */
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-			width: 150px; /* Ajusta según sea necesario */
-            height: 40px; /* Ajusta según sea necesario */
-        }
-        .file-button {
-            display: inline-flex;
-            align-items: center;
-            background-color: #4CAF50; /* Color de fondo */
-            color: white; /* Color del texto */
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .email-button i {
-            margin-right: 8px; /* Espacio entre el icono y el texto */
-        }
-
-        .file-button i {
-            margin-right: 8px; /* Espacio entre el icono y el texto */
-        }
-
-
-
-        .file-button {
-            background-color: #4CAF50;
-        }
-        #loading {
-            display: none; /* Ocultar inicialmente */
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000; /* Asegurarse de que está por encima de otros elementos */
-        }
-                /* Estilos específicos para la tabla de preguntas */
-        .tabla-preguntas {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .tabla-preguntas th, .tabla-preguntas td {
-            border: 1px solid gray;
-            
-            padding: 8px;
-            text-align: left;
-        }
-        
-        .tabla-preguntas th {
-            background-color: #003366; /* Azul oscuro */
-            color: white; /* Letra blanca */
-        }
-        #loading {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000; /* Asegurarse de que está por encima de otros elementos */
-        }
-        .search-box {
-            position: relative;
-            width: 300px;
-            justify-content: flex-end; /* Alinear a la derecha */
-        }
-        .search-box input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            padding-left: 40px; /* Espacio para el icono */
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-</style>
+<link href="css/informecreditos.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <script>
@@ -219,6 +103,7 @@ function llena_datos(ex, nivel, ordby, asc)
 	p1=document.getElementById('param7').value;
     p9=document.getElementById('param9').value;
     p10=document.getElementById('param10').value;
+    p13=document.getElementById('param13').value;
 	if(ex==3){
 		if(p3=='' || p3==null){
 			alert('Por favor Seleccione un Cliente');
@@ -252,7 +137,7 @@ function llena_datos(ex, nivel, ordby, asc)
 
 	}
 	else {
-		destino="detalle_creditos.php?param1="+p1+"&param2="+p2+"&param3="+p3+"&param4="+p4+"&param5="+p5+"&param6="+p6+"&pagina="+pagina+"&idfactura="+ordby+"&preguia="+ex;
+		destino="detalle_creditos.php?param1="+p1+"&param2="+p2+"&param3="+p3+"&param4="+p4+"&param5="+p5+"&param6="+p6+"&param13="+p13+"&pagina="+pagina+"&idfactura="+ordby+"&preguia="+ex;
 		MostrarConsulta4(destino, "destino_vesr");
 	}
 }
@@ -292,7 +177,7 @@ echo "<tr>
 	$FB->llena_texto("Estado Creditos:",6,82,$DB,$estadocreditos,"","",17,0);
 	$FB->llena_texto("# Factura:", 2, 1, $DB, "", "","$param2", 4,0);
     $FB->llena_texto("# Pre-Factura:", 10, 1, $DB, "", "","$param2", 4,0);
-	$FB->llena_texto("Cliente sin facturar:",3, 2, $DB, "(SELECT `cre_nombre`,`cre_nombre` FROM `creditos` WHERE cre_nombre not in (SELECT CAST(fac_credito AS CHAR ) AS Credito FROM facturascreditos WHERE MONTH(fac_fechaprefac) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) and fac_credito!='EXTERNOS'))", "", "$param9",17,1);
+	$FB->llena_texto("Cliente sin facturar:",13, 2, $DB, "(SELECT DISTINCT rs.rel_nom_credito,rs.rel_nom_credito  FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$fechainicio' AND '$fechaactual' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito)", "", "$param9",17,1);
 	$FB->llena_texto("# Nit:", 9, 1, $DB, "", "","$param2", 4,0);
 		
 
@@ -319,39 +204,21 @@ echo "<td><button type='button' class='btn btn-warning' onclick='llena_datos(2, 
 <td><button type='button' class='btn btn-primary' onclick='crearfaactura();'>Crear Factura Externa</button>
 <button type='button' class='btn btn-success' onclick='llena_datos(3, $nivel_acceso, \"id_nombre\", \"ASC\");'>Crear PRE-Factura</button></td></tr>";
 
-
-//echo "<tr><td><input type='file' name='excelFile' id='excelFile' accept='.xls, .xlsx'> <button type='button' onclick='enviarFormulario(Davivienda)'>Cargar Davivienda.</button> <button type='button' onclick='enviarFormulario(Bancolombia)'>Cargar Bancolombia.</button></td></tr>";
-//echo "<tr><td><input type='file' name='excelFile' id='excelFile' accept='.xls, .xlsx'> <button type='button' onclick=\"enviarFormulario('Davivienda')\">Cargar Davivienda</button> <button type='button' onclick=\"enviarFormulario('Bancolombia')\">Cargar Bancolombia</button></td> </tr>";
-
-
-
-
-
-
-
+$sqlalert="SELECT DISTINCT rs.rel_nom_credito FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '2025-05-01' AND '2025-05-31' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito";
+$DB1->Execute($sqlalert);
+while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
+                $sinfactura.=" ".$rw1[0];
+				$aumento++;
+}
+if ($aumento>0) {
+	echo '<div class="alert alert-danger" role="alert">
+			¡Hay '.$aumento.' Creditos Pendientes por facturar !
+		  </div>';
+}
 $FB->div_valores("destino_vesr",12); 
 
 $FB->cierra_form(); 
 
-
-
-/* echo '<div class="modal fade" id="miModalbancos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">';
-			include('datatable-master/bancolombia.php'); 
-		echo' </div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		</div>
-	</div>
-</div>
-</div>'; */
 
 include("footer.php");
 ?>
@@ -466,12 +333,6 @@ function enviarFormulario2($direccion) {
 function sendEmail(idfac){
 
 
-    
-            // const fileNames = 
-            // let arrayParam = encodeURIComponent(JSON.stringify(fileNames));
-            // console.log(fileNames);
-
-
             const email = document.getElementById('param2');
             const body = document.getElementById('param5');
             const formData = new FormData();
@@ -509,75 +370,69 @@ function sendEmail(idfac){
 
 function sendEmailfac (idfac){
 
-
-    
-// const fileNames = 
-// let arrayParam = encodeURIComponent(JSON.stringify(fileNames));
-// console.log(fileNames);
-
-var checkboxf = document.getElementById('param10');
-var param11   = document.getElementById('param11');
+    var checkboxf = document.getElementById('param10');
+    var param11   = document.getElementById('param11');
 
 
-const email = document.getElementById('param2');
-const body = document.getElementById('param5');
-var inputFile0 = document.getElementById('param3').files[0];
-var inputFile1 = document.getElementById('param6').files[0];
+    const email = document.getElementById('param2');
+    const body = document.getElementById('param5');
+    var inputFile0 = document.getElementById('param3').files[0];
+    var inputFile1 = document.getElementById('param6').files[0];
 
-const formData = new FormData();
+    const formData = new FormData();
 
-//agregar correo
-formData.append('correo', email.value);
-// formData.append('correos', idsSeleccionados.value);
-formData.append('correos', JSON.stringify(idsSeleccionados));
+    //agregar correo
+    formData.append('correo', email.value);
+    // formData.append('correos', idsSeleccionados.value);
+    formData.append('correos', JSON.stringify(idsSeleccionados));
 
-if (checkboxf.checked) {
-    console.log('chequeado');
-    
-            var linkFac = document.getElementById('linkfac');
-            formData.append('linkFac', linkFac.value);
-            // console.log("El checkbox está marcado.");
-        } else {
-            // console.log("El checkbox no está marcado.");
-        }
-if (param11.checked) {
-    console.log('chequeado');
-    
-            var linkFac1 = document.getElementById('linkfac1');
-            formData.append('linkfac1', linkfac1.value);
-            // console.log("El checkbox está marcado.");
-} else {
-            // console.log("El checkbox no está marcado.");
-}
-//agregar correo linkfac1
-formData.append('body', body.value);
-formData.append('idfac', idfac);
-formData.append('File0', inputFile0);
-formData.append('File1', inputFile1);
+    if (checkboxf.checked) {
+        console.log('chequeado');
+        
+                var linkFac = document.getElementById('linkfac');
+                formData.append('linkFac', linkFac.value);
+                // console.log("El checkbox está marcado.");
+            } else {
+                // console.log("El checkbox no está marcado.");
+            }
+    if (param11.checked) {
+        console.log('chequeado');
+        
+                var linkFac1 = document.getElementById('linkfac1');
+                formData.append('linkfac1', linkfac1.value);
+                // console.log("El checkbox está marcado.");
+    } else {
+                // console.log("El checkbox no está marcado.");
+    }
+    //agregar correo linkfac1
+    formData.append('body', body.value);
+    formData.append('idfac', idfac);
+    formData.append('File0', inputFile0);
+    formData.append('File1', inputFile1);
 
 
-const loadingElement = document.getElementById('loading');
+    const loadingElement = document.getElementById('loading');
 
-// Mostrar el GIF de carga
-loadingElement.style.display = 'block';
-// Enviar datos al servidor
-fetch('email_fac.php', {
-    method: 'POST',
-    body: formData
-})
-.then(response => response.text())
-.then(result => {
-    console.log(result);
-    alert(result);
-    // idsSeleccionados = [];
-})
-.catch(error => {
-    console.error('Error:', error);
-    alert('Error al enviar el correo');
-}).finally(() => {
-    // Ocultar el GIF de carga
-    loadingElement.style.display = 'none';
-});
+    // Mostrar el GIF de carga
+    loadingElement.style.display = 'block';
+    // Enviar datos al servidor
+    fetch('email_fac.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log(result);
+        alert(result);
+        // idsSeleccionados = [];
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al enviar el correo');
+    }).finally(() => {
+        // Ocultar el GIF de carga
+        loadingElement.style.display = 'none';
+    });
 
 }
 
@@ -603,47 +458,48 @@ function selecionado(iduser,correo) {
 
     console.log("IDs seleccionados:", idsSeleccionados);
 }
+
 function enviarEmail() {
     let p3 = document.getElementById('param3').value;
     let p2 = document.getElementById('param2').value;
     let p4 = document.getElementById('param4').value;
     let p5 = document.getElementById('param5').value;
-    
-if(p3==""){
-    alert('Debe seleccionar un cliente');
-}else{
-    let formData = new FormData();
-    formData.append("param3", p3);
-    formData.append("param2", p2);
-    formData.append("param4", p4);
-    formData.append("param5", p5);
-    
-	let loadingDiv = document.getElementById('loading'); // Obtener el div del GIF
+        
+    if(p3==""){
+        alert('Debe seleccionar un cliente');
+    }else{
+        let formData = new FormData();
+        formData.append("param3", p3);
+        formData.append("param2", p2);
+        formData.append("param4", p4);
+        formData.append("param5", p5);
+        
+        let loadingDiv = document.getElementById('loading'); // Obtener el div del GIF
 
-     // Mostrar el GIF antes de enviar la solicitud
-	 loadingDiv.style.display = "block";
+        // Mostrar el GIF antes de enviar la solicitud
+        loadingDiv.style.display = "block";
 
-	fetch("emailguiascliente_excel.php", {
-		method: "POST",
-		body: formData
-	})
-	.then(response => response.json())
-	.then(data => {
-		// Ocultar el GIF
-		loadingDiv.style.display = "none";
+        fetch("emailguiascliente_excel.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Ocultar el GIF
+            loadingDiv.style.display = "none";
 
-		if (data.status === "success") {
-            alert("Ok: " + data.message);
-		} else {
-			alert("Error: " + data.message);
-		}
-	})
-	.catch(error => {
-		// Ocultar el GIF en caso de error
-		loadingDiv.style.display = "none";
-		alert("Error en la solicitud: " + error);
-	});
-}
+            if (data.status === "success") {
+                alert("Ok: " + data.message);
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => {
+            // Ocultar el GIF en caso de error
+            loadingDiv.style.display = "none";
+            alert("Error en la solicitud: " + error);
+        });
+    }
     
 }
 </script>

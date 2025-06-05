@@ -333,6 +333,12 @@ function pop_close(){
 	$('.popup-overlay').fadeOut('slow');
 }
 
+function pagosPendientes(){
+
+    $("#myModalPendientes").modal("show"); 
+    MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
+}
+
 </script>
 
 <style type="text/css">
@@ -755,6 +761,34 @@ Full screen Modal
              <img src="img/medidascovid19.png" width="100%" height="170%">
 
       <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="myModalPendientes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalPendientesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content shadow-lg border-0 rounded-3">
+      
+      <!-- Encabezado del modal -->
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title font-weight-bold" id="modalPendientesLabel"><h1>Atención</h1></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Cuerpo del modal -->
+      <div class="modal-body text-center">
+        <p class="mb-3 fs-5"><h1>🔔 Tienes <strong>pagos de nómina pendientes por validar</strong>.</h1></p>
+        <p class="text-muted">Por favor, revisa y valida estos pagos lo antes posible. <br> Recuerde que para validarlos se debe dirigir a la parte superior "MIS PAGOS".</p>
+      </div>
+
+      <!-- Pie del modal -->
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary px-4" data-dismiss="modal">Entendido</button>
+      </div>
+
     </div>
   </div>
 </div>

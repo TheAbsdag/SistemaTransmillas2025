@@ -10,15 +10,6 @@ if(isset($_REQUEST["asc"])){ $asc=$_REQUEST["asc"]; } else {$asc="ASC"; } $asc2=
 
 
 
-            /* .flotante {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: #f1f1f1;
-            width: 200px;
-            height: 200px;
-            cursor: move;
-            } */
             .chat2 {
             position: absolute;
             bottom: 0;
@@ -29,23 +20,11 @@ if(isset($_REQUEST["asc"])){ $asc=$_REQUEST["asc"]; } else {$asc="ASC"; } $asc2=
             cursor: move;
             }
 
-            /* Media query para tamaños de pantalla mayores a 768px */
+
             @media (min-width: 768px) {
 
 
-                /* .chat {
-                
-                position: fixed;
-                bottom: 0;
-                right: 0;
-                width: 400px;
-                height: 500px;
-                background-color: #fff;
-                border: 1px solid #ccc;
-                z-index: 9999;
-                margin-bottom: 20px;
-               background-color:  rgb(7, 79, 145);
-                } */
+
                 .chat {
                 
                     position: fixed;;
@@ -75,12 +54,6 @@ if(isset($_REQUEST["asc"])){ $asc=$_REQUEST["asc"]; } else {$asc="ASC"; } $asc2=
                 }
 
 
-            /* .flotante {
-          
-                background-color: #ccc;
-                width: 300px;
-                height: 300px;
-            } */
             #agrandar{
                 background-color: #fff;
                 /* float: right;   */
@@ -523,7 +496,11 @@ $activo=true;
                         $DB1->Execute($prima); 
                         $primareco=$DB1->recogedato(0);
                         $totalnomina=$nominaspendientes+$primareco;
+                        if ($totalnomina>0) {
+                            echo"<script>pagosPendientes();</script>";
+                        }
                         ?>
+
                         <li >
                             <a href="mispagos.php" ><i class="glyphicon glyphicon-usd"></i><span>Mis pagos
                                 <i id='mispagos' >
@@ -1066,48 +1043,13 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
     }
 
 
+
     </script>
 
-<?php
 
-///////////////////////////////////////////////////para las notificaciones en tiempo real de mensajes///////////////////////////////////
-
-$url  ='https://transmillas.com/chatPruebas/';
-?>
-
-   
-
-
-
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 </html>
 
 
-<script>
 
-
-
-
-
-
-
-
-function reproducirSonido() {
-  var audio = new Audio('img/msn-alert.mp3');
-  audio.play();
-}
-
-
-
-function goBack() {
-  history.back();
-}
-
-
-
-
-
-
-</script>

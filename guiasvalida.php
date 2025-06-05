@@ -75,7 +75,7 @@ if($param2!="" and $param1!=""){
  $conde2="and $param1 like '%$param2%' "; 
   }else { $conde2="  "; } 
 
-echo$sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,ser_piezas,`ser_guiare`,numeropieza,ser_estado,transporta,quien_escanea,fecha_escanea
+$sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,ser_piezas,`ser_guiare`,numeropieza,ser_estado,transporta,quien_escanea,fecha_escanea
  FROM serviciosdia inner join piezasguia on ser_consecutivo=numeroguia  where ser_estado in ('6','7')  and guiallega=0  $conde1  $conde2  $conde3  ORDER BY ser_fechafinal $asc ";
 
 $DB->Execute($sql); $va=0; 
