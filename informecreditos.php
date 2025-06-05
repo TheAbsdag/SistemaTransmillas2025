@@ -177,7 +177,7 @@ echo "<tr>
 	$FB->llena_texto("Estado Creditos:",6,82,$DB,$estadocreditos,"","",17,0);
 	$FB->llena_texto("# Factura:", 2, 1, $DB, "", "","$param2", 4,0);
     $FB->llena_texto("# Pre-Factura:", 10, 1, $DB, "", "","$param2", 4,0);
-	$FB->llena_texto("Cliente sin facturar:",13, 2, $DB, "(SELECT DISTINCT rs.rel_nom_credito,rs.rel_nom_credito  FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$fechainicio' AND '$fechaactual' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito)", "", "$param9",17,1);
+	$FB->llena_texto("Cliente sin facturar:",13, 2, $DB, "(SELECT DISTINCT rs.rel_nom_credito,rs.rel_nom_credito  FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '2025-05-01' AND '2025-05-31' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito)", "", "$param9",17,1);
 	$FB->llena_texto("# Nit:", 9, 1, $DB, "", "","$param2", 4,0);
 		
 

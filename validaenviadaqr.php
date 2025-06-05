@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <?php
 require("login_autentica.php"); //coneccion bade de datos
 $DB1 = new DB_mssql;
@@ -49,21 +50,17 @@ body {
             border-radius: 6px;
             margin-bottom: 20px;
         }
-        .status-error { background-color: #dc3545; color: white; }
-        .status-warning { background-color: #ffc107; color: black; }
-        .status-success { background-color: #28a745; color: white; }
-        .btn-custom {
-            font-size: 50px;
-            padding: 15px 30px;
-        }
-		.mb-3{
-            font-size: 50px;
-            padding: 15px 30px;
-        }
+
+		
+		.bg-orange {
+		background-color: #B20F08 !important;
+		color: white !important;
+		}
+
 </style>
 <body>
 
-<div class="container">
+
 	<?php
 	//Consultamos  informacion de la guia que se esta escaneando 
 	$sql="SELECT `ser_piezas`,idservicios,ser_estado,ser_desvaliguia,ser_ciudadentrega,ser_idverificadopeso,ciu_nombre,sed_color,sed_nombre FROM  `servicios` INNER JOIN ciudades on idciudades=ser_ciudadentrega inner join  sedes on inner_sedes=idsedes WHERE ser_consecutivo='$guia'  ";		
@@ -105,57 +102,59 @@ body {
 				if($estado==6 and $rw1[5]==1){
 
 						$estadog=7;
+?>
+<div class="container my-4">
+  <div class="card shadow border-0" >
+    <div class="card-body text-center py-5">
 
+	      <!-- GUÍA -->
+      <div class="mb-4">
+        <h1 class="fw-bold text-dark display-3">
+          <span class="badge bg-orange text-wrap" style="max-width: 100%; white-space: normal;">Debe esoger una opcion de lo contrario no sera efectivo el escaneo :</span>
+        </h1>
+      </div>
+      <!-- GUÍA -->
+      <div class="mb-4">
+        <h1 class="fw-bold text-dark display-5">
+          <span class="badge bg-warning text-dark">GUÍA:</span> <?php echo $guia; ?>
+        </h1>
+      </div>
 
-						echo "<table><tr style='font-size:32px;text-align:left;' bgcolor='$color' >";
-						echo "<td>";
-						echo "<div class='status-box status-success'>";
-						echo "<h1><span class='label label-warning'>GUIA:</span></h1>";
-						echo "<h1><span class='label label-warning'>$guia</span></h1>";
-						echo "<h1><span class='label label-warning'>DESTINO: </span></h1>";
-						echo "<h1><span class='label label-warning'>$rw1[8] </span></h1>";
-						echo "<h1><span class='label label-warning'>pieza $pieza</span></h1>";
-						echo "</div>";
-						echo'
-						<select class="form-select mb-3" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
-						<option value="">Seleccione el tipo de vehículo o situacion del paquete:</option>
-							<option value="Bus">Bus</option>
-							<option value="Jurgon">Jurgón</option>
-							<option value="En escala temporal"> En escala temporal</option>
-							<option value="Devuelto a centro de distribucion">Devuelto a centro de distribucion</option>
-						</select>';
-						echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
-						echo "</tr></table>"; 
+      <!-- DESTINO -->
+      <div class="mb-4">
+        <h1 class="fw-bold text-dark display-5">
+          <span class="badge bg-warning text-dark">DESTINO:</span> <?php echo $rw1[8]; ?>
+        </h1>
+      </div>
 
+      <!-- PIEZA -->
+      <div class="mb-5">
+        <h1 class="fw-bold text-dark display-5">
+          <span class="badge bg-warning text-dark">Pieza:</span> <?php echo $pieza; ?>
+        </h1>
+      </div>
 
+      <!-- SELECTOR DE TIPO DE VEHÍCULO -->
+      <div class="mb-4">
+        <label for="tipoVehiculo" class="form-label fs-4">Seleccione el tipo de vehículo o situación:</label>
+        <select class="form-select form-select-lg" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
+          <option value="">Seleccione una opción</option>
+          <option value="Bus">Bus</option>
+          <option value="Jurgon">Jurgón</option>
+          <option value="En escala temporal">En escala temporal</option>
+          <option value="Devuelto a centro de distribucion">Devuelto a centro de distribución</option>
+        </select>
+      </div>
 
+      <!-- BOTÓN -->
+      <div class="d-grid">
+        <button type="button" class="btn btn-primary btn-lg w-100" onclick="validarYCerrar();">ACEPTAR</button>
+      </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
+  </div>
+</div>
+<?php
 
 
 
@@ -244,32 +243,95 @@ body {
 
 			}else if($estado==7){
 				$color="#B20F08";
+?>
+			<div class="container my-4">
+			<div class="card shadow border-0" style="background-color: <?php echo $color; ?>;" 
+				onmouseover="this.style.backgroundColor='#C8C6F9'" 
+				onmouseout="this.style.backgroundColor='<?php echo $color; ?>'">
+				<div class="card-body text-center py-5">
 
-					echo "<table><tr bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
-				echo "<td>";
-				echo "<div class='status-box status-warning'>";
-				echo "<h1><span class='label label-warning'>LA GUIA YA FUE ENVIADA, </span></h1>";
-				echo "<h1><span class='label label-warning'> VERIFIQUE LA GUIA</span></h1>";
-				echo "</div>";
-				echo'
-				<select class="form-select mb-3" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
-				<option value="">Seleccione el tipo de vehículo o situacion del paquete:</option>
+				<!-- MENSAJE DE GUÍA YA ENVIADA -->
+				<div class="mb-4">
+					<h1 class="fw-bold text-dark display-6">
+					<span class="badge bg-warning text-dark">LA GUÍA YA FUE ENVIADA</span>
+					</h1>
+				</div>
+				<div class="mb-4">
+					<h1 class="fw-bold text-dark display-6">
+					<span class="badge bg-warning text-dark">VERIFIQUE LA GUÍA</span>
+					</h1>
+				</div>
+
+				<!-- SELECTOR DE TIPO DE VEHÍCULO -->
+				<div class="mb-4">
+					<label for="tipoVehiculo" class="form-label fs-4">Seleccione el tipo de vehículo o situación:</label>
+					<select class="form-select form-select-lg" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
+					<option value="">Seleccione una opción</option>
 					<option value="Bus">Bus</option>
 					<option value="Jurgon">Jurgón</option>
-					<option value="En escala temporal"> En escala temporal</option>
-					<option value="Devuelto a centro de distribucion">Devuelto a centro de distribucion</option>
-				</select>';
-				echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
-				echo "</td></tr></table>"; 
+					<option value="En escala temporal">En escala temporal</option>
+					<option value="Devuelto a centro de distribucion">Devuelto a centro de distribución</option>
+					</select>
+				</div>
+
+				<!-- BOTÓN -->
+				<div class="d-grid">
+					<button type="button" class="btn btn-primary btn-lg w-100" onclick="validarYCerrar();">ACEPTAR</button>
+				</div>
+
+				</div>
+			</div>
+			</div>
+<?php
+				// 	echo "<table><tr bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+				// echo "<td>";
+				// echo "<div class='status-box status-warning'>";
+				// echo "<h1><span class='label label-warning'>LA GUIA YA FUE ENVIADA, </span></h1>";
+				// echo "<h1><span class='label label-warning'> VERIFIQUE LA GUIA</span></h1>";
+				// echo "</div>";
+				// echo'
+				// <select class="form-select mb-3" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
+				// <option value="">Seleccione el tipo de vehículo o situacion del paquete:</option>
+				// 	<option value="Bus">Bus</option>
+				// 	<option value="Jurgon">Jurgón</option>
+				// 	<option value="En escala temporal"> En escala temporal</option>
+				// 	<option value="Devuelto a centro de distribucion">Devuelto a centro de distribucion</option>
+				// </select>';
+				// echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
+				// echo "</td></tr></table>"; 
 
 
 			}else{
 				$color="#B20F08";
+?>
+			<div class="container my-4">
+			<div class="card shadow border-0" style="background-color: <?php echo $color; ?>;">
+				<div class="card-body text-center py-5">
 
-					echo "<div class='status-box status-error' bgcolor='$color'>";
-					echo "LA GUIA NO ESTA EN ESTADO  DE ENVIO,  VERIFIQUE LA GUIA!";
-					echo "</div>";
-					echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
+				<!-- MENSAJE DE ERROR -->
+				<div class="mb-4">
+					<h1 class="fw-bold text-danger display-6">
+					<span class="badge bg-danger text-light px-4 py-2">
+						¡LA GUÍA NO ESTÁ EN ESTADO DE ENVÍO!<br>VERIFIQUE LA GUÍA
+					</span>
+					</h1>
+				</div>
+
+				<!-- BOTÓN ACEPTAR -->
+				<div class="d-grid">
+					<button type="button" class="btn btn-primary btn-lg w-100" onclick="validarYCerrar();">
+					ACEPTAR
+					</button>
+				</div>
+
+				</div>
+			</div>
+			</div>
+<?php
+					// echo "<div class='status-box status-error' bgcolor='$color'>";
+					// echo "LA GUIA NO ESTA EN ESTADO  DE ENVIO,  VERIFIQUE LA GUIA!";
+					// echo "</div>";
+					// echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
 					
 
 
@@ -279,18 +341,54 @@ body {
 			$idpieza=$rw5[0];
 			$color="#B20F08";
 
-					echo "<div class='status-box status-error' bgcolor='$color'>";
-					echo "ESTA PIEZA YA FUE ESCANEADA!";
-					echo "</div>";
-					echo'
-					<select class="form-select mb-3" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
-					<option value="">Seleccione el tipo de vehículo o situacion del paquete:</option>
+?>
+							<div class="container my-4">
+				<div class="card shadow border-0" style="background-color: <?php echo $color; ?>;">
+					<div class="card-body text-center py-5">
+
+					<!-- MENSAJE DE PIEZA ESCANEADA -->
+					<div class="mb-4">
+						<h1 class="fw-bold text-danger display-6">
+						<span class="badge bg-warning text-dark px-4 py-2">
+							¡ESTA PIEZA YA FUE ESCANEADA!
+						</span>
+						</h1>
+					</div>
+
+					<!-- SELECT TIPO DE VEHÍCULO -->
+					<div class="mb-4">
+						<select class="form-select form-select-lg" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
+						<option value="">Seleccione el tipo de vehículo o situación del paquete:</option>
 						<option value="Bus">Bus</option>
 						<option value="Jurgon">Jurgón</option>
-						<option value="En escala temporal"> En escala temporal</option>
-						<option value="Devuelto a centro de distribucion">Devuelto a centro de distribucion</option>
-					</select>';
-					echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
+						<option value="En escala temporal">En escala temporal</option>
+						<option value="Devuelto a centro de distribucion">Devuelto a centro de distribución</option>
+						</select>
+					</div>
+
+					<!-- BOTÓN ACEPTAR -->
+					<div class="d-grid">
+						<button type="button" class="btn btn-primary btn-lg w-100" onclick="validarYCerrar();">
+						ACEPTAR
+						</button>
+					</div>
+
+					</div>
+				</div>
+				</div>
+<?php
+					// echo "<div class='status-box status-error' bgcolor='$color'>";
+					// echo "ESTA PIEZA YA FUE ESCANEADA!";
+					// echo "</div>";
+					// echo'
+					// <select class="form-select mb-3" name="tipoVehiculo" id="tipoVehiculo" required onchange="enviarDatos()">
+					// <option value="">Seleccione el tipo de vehículo o situacion del paquete:</option>
+					// 	<option value="Bus">Bus</option>
+					// 	<option value="Jurgon">Jurgón</option>
+					// 	<option value="En escala temporal"> En escala temporal</option>
+					// 	<option value="Devuelto a centro de distribucion">Devuelto a centro de distribucion</option>
+					// </select>';
+					// echo '<center><input  name="button" type="button" class="btn btn-primary btn-custom" onclick="validarYCerrar();" value="ACEPTAR" /></center>';
 			
 		}
 	}
@@ -301,7 +399,7 @@ body {
 			
 
 
-</div>
+
 </body>
 </html>
 
@@ -356,4 +454,4 @@ function validarYCerrar() {
         window.close();
     }
 }
-</script>';
+</script>

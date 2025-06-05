@@ -10,8 +10,8 @@ $color="#B20F08";
 $cond="";
 
 $tipoVehiculo = $_POST["tipoVehiculo"];
-$guia = $_REQUEST["guia"];
-$pieza = $_REQUEST["pieza"];
+$guia = $_POST["guia"];
+$pieza = $_POST["pieza"];
 $variable2 = $_POST["variable2"];
 
 
@@ -19,8 +19,8 @@ date_default_timezone_set("America/Bogota");
 $date = date("Y-m-d H:i:s"); 
 
 
-	$sql="SELECT `ser_piezas`,idservicios,ser_estado,ser_desvaliguia,ser_ciudadentrega,ser_idverificadopeso,ciu_nombre,sed_color,sed_nombre FROM  `servicios` INNER JOIN ciudades on idciudades=ser_ciudadentrega inner join  sedes on inner_sedes=idsedes WHERE ser_consecutivo='$guia'  ";		
-	$DB1->Execute($sql);
+	$sqlm="SELECT `ser_piezas`,idservicios,ser_estado,ser_desvaliguia,ser_ciudadentrega,ser_idverificadopeso,ciu_nombre,sed_color,sed_nombre FROM  `servicios` INNER JOIN ciudades on idciudades=ser_ciudadentrega inner join  sedes on inner_sedes=idsedes WHERE ser_consecutivo='$guia'  ";		
+	$DB1->Execute($sqlm);
 	$rw1=mysqli_fetch_row($DB1->Consulta_ID);
 
     //Capturamos la informacion de la guia en las variables
@@ -95,7 +95,7 @@ $date = date("Y-m-d H:i:s");
         $DB->Execute($sql4);
         $respuesta.=" Enviada $por : $tipoVehiculo.";
     }
-
+echo$respuesta;
    
 
 
