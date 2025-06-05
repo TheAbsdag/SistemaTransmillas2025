@@ -1,6 +1,16 @@
 <?php 
-require("login_autentica.php"); 
+require("login_autentica.php");
+session_start();
+ 
 include("layout.php");
+
+echo '
+<style>
+.alerta-vencimiento td {
+  background-color: #ffcccc !important;
+}
+</style>
+';
 
 $FB->titulo_azul1("Hojas de Vida Clienetes",9,0,5);  
 $FB->abre_form("form1","hojadevidaclientes.php","post");
@@ -76,10 +86,40 @@ $FB->titulo_azul3("Acciones",2,0,2,$param_edicion);
 $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar); 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 	{
-		$id_p=$rw1[0];
-		$va++; $p=$va%2;
-		if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
-		echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+		$id_p = $rw1[0];
+		$hayVencido = false;
+		$sqlDocs = "SELECT `iddoccliente`, `docl_nombre`, `docl_documento`, `docl_idhvc`, `docl_fecha_venc` 
+					FROM `doc_hoja_clientes` WHERE docl_idhvc = $id_p";
+		$resDocs = $DB1->Execute($sqlDocs);
+
+		$cont = 0;
+		$color = ""; 
+		while ($row = mysqli_fetch_assoc($resDocs)) {
+			if ($cont < 1) {
+				$fecha_vencimiento = $row['docl_fecha_venc']; 
+				$fecha_actual = date("Y-m-d");
+				$dias_restantes = (strtotime($fecha_vencimiento) - strtotime($fecha_actual)) / (60 * 60 * 24);
+
+				if ($dias_restantes <= 30) {
+					$cont++;
+					$documento_por_vencer[$idhojadevida] = true;
+					$color = "#FFCCCC"; 
+				} else {
+					$color = ($p == 0) ? "#FFFFFF" : "#EFEFEF";
+				}
+			} else {
+				break;
+			}
+		}
+
+		if (!isset($color) || $color == "") {
+			$va++; 
+			$p = $va % 2;
+			$color = ($p == 0) ? "#FFFFFF" : "#EFEFEF";
+		}
+
+		echo "<tr class='$classFila' style='background-color: $color;' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+
 		//if($rw1[1]==0){$rw1[1]='NO';}
 		$telefonos=$rw1[6]." - ".$rw1[7];
 		echo "<td>".$va."</td>

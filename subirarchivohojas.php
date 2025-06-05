@@ -8,7 +8,9 @@
 </head>
 <body>
 
- <?php 
+ <?php
+session_start();
+$documento_por_vencer = []; 
 
  $fechaactual=date("Y-m-d");
  $nivel_acceso=$_SESSION['usuario_rol'];
@@ -90,7 +92,17 @@ while ($rw1 = mysqli_fetch_row($DB->Consulta_ID)) {
     $id_p = $rw1[0];
     $va++; 
     $p = $va % 2;
-    $color = ($p == 0) ? "#FFFFFF" : "#EFEFEF";
+
+    $fecha_vencimiento = $rw1[4];
+    $fecha_actual = date("Y-m-d");
+    $dias_restantes = (strtotime($fecha_vencimiento) - strtotime($fecha_actual)) / (60 * 60 * 24);
+
+    if ($dias_restantes <= 30) {
+    $documento_por_vencer[$idhojadevida] = true;
+        $color = "#FFCCCC"; 
+    } else {
+        $color = ($p == 0) ? "#FFFFFF" : "#EFEFEF";
+    }
 
     echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
     echo "<td>".$rw1[1]."</td>"; 
@@ -102,13 +114,15 @@ while ($rw1 = mysqli_fetch_row($DB->Consulta_ID)) {
     } else {
         echo "<td style='text-align: center;'>Sin archivo</td>";
     }
+
     echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento($id_p, \"$rw1[2]\")'>Eliminar</button></td>";
 
     echo "<td style='text-align: center;'>
-    <button type='button' class='btn btn-primary btn-sm' onclick=\"abrirEditarModal($id_p, '".htmlspecialchars($rw1[1], ENT_QUOTES)."', '$rw1[4]', '$rw1[2]')\">Editar</button></td>";
-
+        <button type='button' class='btn btn-primary btn-sm' onclick=\"abrirEditarModal($id_p, '".htmlspecialchars($rw1[1], ENT_QUOTES)."', '".$rw1[4]."', '".$rw1[2]."')\">Editar</button>
+      </td>";
     echo "</tr>";
 }
+
 
 
 echo '<input type="hidden" name="param7" id="param7" value="'.$idhojadevida.'">';
@@ -137,8 +151,7 @@ function enviar_formulario() {
     .then(response => response.text()) 
     .then(data => {
         alert(data);
-				row.find(".nombre").val(""); 
-                row.find(".fecha").val(""); 
+        location.reload();
 	
     })
     .catch(error => console.error("Error:", error));
@@ -238,7 +251,7 @@ function guardarEdicion() {
 
   <div style="margin-top:10px;">
     <button type="button" class="btn btn-success" onclick="guardarEdicion()">Guardar</button>
-    <button onclick="cerrarModal()" class="btn btn-secondary">Cancelar</button>
+    <button type="button" onclick="cerrarModal()" class="btn btn-secondary">Cancelar</button>
   </div>
 </div>
 
