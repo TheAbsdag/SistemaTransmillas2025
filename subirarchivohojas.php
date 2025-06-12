@@ -44,6 +44,7 @@ $FB->titulo_azul1("Fecha de vencimiento ",1,0,0);
 $FB->titulo_azul1("Documento",1,0,0); 
 $FB->titulo_azul1("Eliminar",1,0,0); 
 $FB->titulo_azul1("Editar", 1, 0, 0);
+$FB->titulo_azul1("Correo", 1, 0, 0);
 echo "</tr>";
 // $FB->titulo_azul1("Imagenes de Documentos",9,0,7);  
 // echo "</tr>";
@@ -120,6 +121,12 @@ while ($rw1 = mysqli_fetch_row($DB->Consulta_ID)) {
     echo "<td style='text-align: center;'>
         <button type='button' class='btn btn-primary btn-sm' onclick=\"abrirEditarModal($id_p, '".htmlspecialchars($rw1[1], ENT_QUOTES)."', '".$rw1[4]."', '".$rw1[2]."')\">Editar</button>
       </td>";
+
+    echo "<td style='text-align: center;'>
+        <button type='button' class='btn btn-warning btn-sm' onclick='enviarCorreo($id_p)'>Enviar</button>
+    </td>";
+
+
     echo "</tr>";
 }
 
@@ -227,6 +234,27 @@ function guardarEdicion() {
         alert("Ocurrió un error al guardar los cambios.");
     });
 }
+
+function enviarCorreo(id_doccliente) {
+    if (confirm("¿Deseas enviar el correo con la solicitud?")) {
+        fetch("enviar_correo.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "iddoccliente=" + encodeURIComponent(id_doccliente)
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+        })
+        .catch(error => {
+            console.error("Error al enviar el correo:", error);
+            alert("Hubo un error al intentar enviar el correo.");
+        });
+    }
+}
+
 
 </script>
 <div id="modalEditar" style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:2px solid #666; border-radius:10px; z-index:1000;">

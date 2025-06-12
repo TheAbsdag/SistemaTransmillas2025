@@ -54,10 +54,11 @@ $FB->titulo_azul1("Celular ",1,0,0);
 $FB->titulo_azul1("Correo",1,0,0); 
 $FB->titulo_azul1("Principal",1,0,0); 
 $FB->titulo_azul1("Correo automatico",1,0,0); 
+$FB->titulo_azul1("Actualizacion de datos",1,0,0); 
 $FB->titulo_azul1("Eliminar",1,0,0);
 
 
-$sql="SELECT `idcontactofacturacion`, `con_nombre`, `cont_telefono1`, `cont_ext1`, `cont_telefono2`, `cont_ext2`, `cont_celular`, `cont_correo`, `cont_fecharegistra`, con_principal,con_correo_automatico FROM `contactofacturacion` WHERE  cont_idhojavida=$idhojadevida";
+$sql="SELECT `idcontactofacturacion`, `con_nombre`, `cont_telefono1`, `cont_ext1`, `cont_telefono2`, `cont_ext2`, `cont_celular`, `cont_correo`, `cont_fecharegistra`, con_principal,con_correo_automatico, actualizacion_datos FROM `contactofacturacion` WHERE  cont_idhojavida=$idhojadevida";
 
 $DB->Execute($sql); 
 $va=0; 
@@ -88,6 +89,12 @@ $va=0;
 	
 					}else{
 					echo "<td><input type='checkbox' id='".$id_p."auto' name='".$id_p."auto' onclick='selecionado($id_p)'></td>";	
+				}
+
+				if ($rw1[11]=="si") {
+					echo "<td><input type='checkbox' id='".$id_p."_actualiza' name='".$id_p."_actualiza' checked onclick='marcarActualizacion($id_p)'></td>";	
+				} else {
+					echo "<td><input type='checkbox' id='".$id_p."_actualiza' name='".$id_p."_actualiza' onclick='marcarActualizacion($id_p)'></td>";	
 				}
 				$DB->edites($id_p, "contactofacturacion", 2,"$idhojadevida");
 	}
@@ -130,6 +137,29 @@ function selecionado(iduser) {
         console.error("Error al enviar el dato:", error);
     });
 }
+function marcarActualizacion(idContacto) {
+    var check = document.getElementById(idContacto + "_actualiza");
+    var id = idContacto;
+    var estado = check.checked ? "si" : "no";
+
+    let datos = new FormData();
+    datos.append("id_contacto", id);
+    datos.append("estado_actualizacion", estado);
+
+    fetch("confirmaciondecorreo.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(response => response.json())
+    .then(respuesta => {
+        console.log("Respuesta del servidor:", respuesta);
+        // Aquí puedes mostrar una notificación si deseas
+    })
+    .catch(error => {
+        console.error("Error al enviar el dato:", error);
+    });
+}
+
 
 </script>
 </body>
