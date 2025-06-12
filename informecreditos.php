@@ -164,8 +164,24 @@ echo "<tr>
     </td>
 </tr>";
 
-	// echo '<button type="button" class="btn btn-primary" onclick="abrirPopup()">Abrir Popup con Iframe</button>';
+    // Fecha actual
+    $hoy = new DateTime('now');
+    $dia = (int)$hoy->format('d');
 
+    if ($dia < 21) {
+        // Usar mes anterior
+        $fechaInicio = new DateTime('first day of last month');
+        $fechaFin = new DateTime('last day of last month');
+    } else {
+        // Usar mes actual
+        $fechaInicio = new DateTime('first day of this month');
+        $fechaFin = new DateTime('last day of this month');
+    }
+
+    $inicio = $fechaInicio->format('Y-m-d');
+    $fin = $fechaFin->format('Y-m-d');
+
+  
 
 	if($param4!=''){  $fechainicio=$param4;}
 	if($param5!=''){  $fechaactual=$param5;}
@@ -177,7 +193,7 @@ echo "<tr>
 	$FB->llena_texto("Estado Creditos:",6,82,$DB,$estadocreditos,"","",17,0);
 	$FB->llena_texto("# Factura:", 2, 1, $DB, "", "","$param2", 4,0);
     $FB->llena_texto("# Pre-Factura:", 10, 1, $DB, "", "","$param2", 4,0);
-	$FB->llena_texto("Cliente sin facturar:",13, 2, $DB, "(SELECT DISTINCT rs.rel_nom_credito,rs.rel_nom_credito  FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$fechainicio' AND '$fechaactual' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito)", "", "$param9",17,1);
+	$FB->llena_texto("Cliente sin facturar:",13, 2, $DB, "(SELECT DISTINCT rs.rel_nom_credito,rs.rel_nom_credito  FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$inicio' AND '$fin' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito)", "", "$param9",17,1);
 	$FB->llena_texto("# Nit:", 9, 1, $DB, "", "","$param2", 4,0);
 		
 
@@ -204,17 +220,32 @@ echo "<td><button type='button' class='btn btn-warning' onclick='llena_datos(2, 
 <td><button type='button' class='btn btn-primary' onclick='crearfaactura();'>Crear Factura Externa</button>
 <button type='button' class='btn btn-success' onclick='llena_datos(3, $nivel_acceso, \"id_nombre\", \"ASC\");'>Crear PRE-Factura</button></td></tr>";
 
-$sqlalert="SELECT DISTINCT rs.rel_nom_credito FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '2025-05-01' AND '2025-05-31' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito";
+$sqlalert="SELECT DISTINCT rs.rel_nom_credito FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$inicio' AND '$fin' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito";
 $DB1->Execute($sqlalert);
 while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
                 $sinfactura.=" ".$rw1[0];
 				$aumento++;
 }
 if ($aumento>0) {
-	echo '<div class="alert alert-danger" role="alert">
-			¡Hay '.$aumento.' Creditos Pendientes por facturar !
-		  </div>';
+        echo '<div style="display: flex; gap: 10px;">';
+        echo '<div class="alert alert-danger" role="alert">
+                ¡Hay '.$aumento.' Creditos Pendientes por facturar !
+            </div>';
+    }
+$sqlPre="SELECT `idfacturascreditos` FROM `facturascreditos` WHERE date(fac_fechafactura)>='2024-01-01' and date(fac_fechafactura)<='$fin' and fac_estado='Pre-Facturado' ORDER BY fac_numeroref ASC";
+$DB1->Execute($sqlPre);
+while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
+                    $preFacturasN.=" ".$rw1[0];
+                    $aumentoPre++;
 }
+    if ($aumentoPre>0) {
+        echo '<div class="alert alert-warning" role="alert">
+                ¡Hay '.$aumentoPre.' Pre facturas del 2024-01-01 a la fecha !
+            </div>';
+    }
+
+echo '</div>';
+
 $FB->div_valores("destino_vesr",12); 
 
 $FB->cierra_form(); 
