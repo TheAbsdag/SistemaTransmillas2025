@@ -149,7 +149,11 @@ if($param40=='' && $param41=''){
 		<td>$ ".$rw1[10]."</td>
 		<td>$ ".$rw1[11]."</td>
 		";
-		
+		$sql1="SELECT cli_idciudad FROM `serviciosdia` WHERE idservicios='$id_p'";
+		$DB1->Execute($sql1);
+		$rw2=mysqli_fetch_row($DB1->Consulta_ID);
+
+
 		$totalprestamos=$rw1[7]+$totalprestamos;
 		$totalporp=$rw1[8]+$totalporp;
 		$totalseguro=$rw1[9]+$totalseguro;
@@ -164,16 +168,23 @@ if($param40=='' && $param41=''){
 		// }else {
 		// 	$colorflete="";
 		// }
-
-		if ($rw1[17]<1 or ($totales<=1000 and $rw1[17]>=1 )) {
+		$texto="";
+		if ($rw1[17]<1 or ($totales<=1000 and $rw1[17]>=1 ) ) {
 			$colorflete="#e73c3c";
 			$contsinpesar=$contsinpesar+1;
+
 		}else {
 			$colorflete="";
 		}
+		if($rw2[0]==0 or $rw2[0]==""){
+			$colorflete="#e73c3c";
+			$texto.="Falta la ciudad de origen";
+			$contsinpesar=$contsinpesar+1;
+		}
 
 
-		echo "<td bgcolor='$colorflete'> $".$totales."</td><td> ".$rw1[12]."</td>
+
+		echo "<td bgcolor='$colorflete' title='$texto'> $".$totales."</td><td> ".$rw1[12]."</td>
 		";
 		$totalguias=$totales+$totalguias;
 		echo "<td> ".$rw1[15]."</td><td> ".$rw1[14]."</td>
