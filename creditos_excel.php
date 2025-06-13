@@ -147,7 +147,7 @@ $totalcontado=0;
 		}else {
 			if ($guiasi[3]<"2024-12-01") {
 				$colorfoto="";
-				$confoto="https://8b55-190-24-125-143.ngrok-free.app/SistemaTransmillas/$foto";
+				$confoto="https://4226-186-28-196-131.ngrok-free.app/SistemaTransmillas/$foto";
 				
 			}elseif ($guiasi[3]<="2025-02-13") {
 				$colorfoto="";
