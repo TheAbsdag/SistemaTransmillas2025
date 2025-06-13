@@ -106,7 +106,9 @@ if (strtolower($tipoPago) == "al cobro") {
     <h2 <?php echo $colorPago;?>>Pago: <?php echo $_GET['p']; ?>  <?php echo$textoPago;?></h2>
     <div class="content">
         <div id="canvas-container">
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas">
+              
+            </canvas>
         </div>
         <div class="buttons">
             <button class="btn btn-primary" style="background-color: #2e86c1; " id="fileBtn">
@@ -120,9 +122,25 @@ if (strtolower($tipoPago) == "al cobro") {
 </div>
 
 <script>
+ 
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+
+
 $(document).ready(function(){
+
+
+   
+
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+     // === MOSTRAR TEXTO CON VARIABLES PHP EN EL CANVAS ===
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "<?php echo $colorPago; ?>"; // Asegúrate de que esto devuelva un color válido como "green" o "#ff0000"
+    ctx.fillText("Pago: <?php echo $_GET['p']; ?>", 10, 30);
+    ctx.fillText("<?php echo $textoPago; ?>", 20, 50);
+
     var drawing = false;
     var prevX, prevY;
     var inputFile = document.getElementById('imagen-input');
