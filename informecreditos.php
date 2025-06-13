@@ -1,3 +1,4 @@
+
 <?php 
 require("login_autentica.php"); 
 include("layout.php");
@@ -130,13 +131,22 @@ function llena_datos(ex, nivel, ordby, asc)
 		destino="pdfcredit.php?param1="+p1+"&param2="+p2+"&param3="+p3+"&param4="+p4+"&param5="+p5+"&param6="+p6+"&pagina="+pagina+"&idfactura="+ordby+"&preguia="+ex;
 		location.href=destino;
 
-	}else if(ex==6){
+	}
+    else if(ex==6){
 		destino="pruebas_software.php?param1="+p1+"&param2="+p2+"&param3="+p3+"&param4="+p4+"&param5="+p5+"&param6="+p6+"&pagina="+pagina+"&idfactura="+ordby+"&preguia="+ex+"&ver=si&prefac="+asc;
 		// location.href=destino;
         window.open(destino, '_blank');
 
 	}
+    else if(ex==7){
+
+
+        destino="detalle_facturascreditos.php?param1=Pre-Facturado&param2="+p2+"&param3="+p3+"&param4=2024-01-01&param5="+p5+"&param6="+p6+"&pagina="+pagina+"&idfactura="+ordby+"&preguia="+ex+"&param9="+p9+"&param10="+p10;
+		MostrarConsulta4(destino, "destino_vesr");
+        
+	}
 	else {
+
 		destino="detalle_creditos.php?param1="+p1+"&param2="+p2+"&param3="+p3+"&param4="+p4+"&param5="+p5+"&param6="+p6+"&param13="+p13+"&pagina="+pagina+"&idfactura="+ordby+"&preguia="+ex;
 		MostrarConsulta4(destino, "destino_vesr");
 	}
@@ -239,9 +249,9 @@ while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
                     $aumentoPre++;
 }
     if ($aumentoPre>0) {
-        echo '<div class="alert alert-warning" role="alert">
-                ¡Hay '.$aumentoPre.' Pre facturas del 2024-01-01 a la fecha !
-            </div>';
+echo "<div class='alert alert-warning' role='alert' style='cursor:pointer;' onclick='llena_datos(7, $nivel_acceso, \"id_nombre\", \"ASC\");'>
+        ¡Hay ".$aumentoPre." Pre facturas del 2024-01-01 a la fecha !
+      </div>";
     }
 
 echo '</div>';
@@ -403,7 +413,7 @@ function sendEmailfac (idfac){
 
     var checkboxf = document.getElementById('param10');
     var param11   = document.getElementById('param11');
-
+    var numero   = document.getElementById('param12');
 
     const email = document.getElementById('param2');
     const body = document.getElementById('param5');
@@ -440,7 +450,7 @@ function sendEmailfac (idfac){
     formData.append('idfac', idfac);
     formData.append('File0', inputFile0);
     formData.append('File1', inputFile1);
-
+    formData.append('numero', numero.value);
 
     const loadingElement = document.getElementById('loading');
 
