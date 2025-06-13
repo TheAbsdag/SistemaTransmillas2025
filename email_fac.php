@@ -14,16 +14,7 @@ use PHPMailer\PHPMailer\Exception;
 $mail = new PHPMailer(true);
 
 try {
-    // Configuración del servidor SMTP
-    // $mail->isSMTP();
-    // $mail->Host = 'smtp.gmail.com';
-    // $mail->SMTPAuth = true;
-    // $mail->Username = 'jose523a@gmail.com'; // Reemplaza con tu correo de Gmail
-    // $mail->Password = 'joseNVD22'; // Reemplaza con tu contraseña de Gmail
-    // $mail->SMTPSecure = 'tls';
-    // $mail->Port = 587;
-    //Clave ventas transmillas  gega vsfg okti mpum 
-    //clave de pruebas jose R ngtz uiqb txff wbyy
+
 
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
@@ -33,12 +24,12 @@ try {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
-     $destinatario = $_POST['correo'];
+    $destinatario = $_POST['correo'];
     $correos = json_decode($_POST['correos'], true);
 
 
 
-    //   $destinatario = "jose523a@gmail.com";
+    // $destinatario = "jose523a@gmail.com";
 
     // Remitente y destinatarios
     $mail->setFrom('ventastransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.'); // Reemplaza con tu correo y nombre
@@ -52,7 +43,7 @@ try {
         }
     } else {
         echo "Error: 'correos' no es un array válido.";
-        exit;
+        // exit;
     }
 
     $contenido=$_POST['body'];
@@ -65,6 +56,7 @@ try {
     // Contenido del correo
     $mail->isHTML(true);
     $mail->Subject = 'Documentos de Facturacion';
+    // $mail->Subject = 'PRUEBAS SOFTWARE';
 
     $contenidoHTML = '
     <html>
@@ -81,7 +73,7 @@ try {
     </head>
     <body>
         <div>
-        <img src="cid:empresa_logo" alt="Logo de la empresa" style="width: 400px;">
+            <img src="cid:empresa_logo" alt="Logo de la empresa" style="width: 400px;">
             <p>' . $contenido . '</p>
             <div class="footer">
                 <p>Gracias por su atención.</p>
@@ -129,6 +121,53 @@ try {
 
     // Enviar el correo
     $mail->send();
+    if ($_POST['numero']!="") {
+        $numero=$_POST['numero'];
+        $link="https://sistema.transmillas.com/".$existingFileName;
+        enviarAlertaWhat($contenido,$numero,"33",$link);
+    }
+
+    // 1. Directorio donde vas a guardar las imágenes (debe ser público)
+    $uploadDir = __DIR__ . '/img_facturas/';
+    // URL pública base de ese directorio
+    $baseUrl   = 'https://sistema.transmillas.com/';
+
+    // Asegúrate de que exista la carpeta
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $uploadedLinks = [];
+
+    // 2. Procesar File0 y File1 en un mismo bucle
+    for ($i = 0; $i <= 1; $i++) {
+        $key = 'File' . $i;
+        if (isset($_FILES[$key]) && $_FILES[$key]['error'] === UPLOAD_ERR_OK) {
+            $tmpName = $_FILES[$key]['tmp_name'];
+            // Sanitiza y haz único el nombre: evita colisiones
+            $name = time() . '_' . preg_replace('/[^a-zA-Z0-9_\.\-]/', '', $_FILES[$key]['name']);
+            $dest = $uploadDir . $name;
+
+            if (move_uploaded_file($tmpName, $dest)) {
+                // 3. Guarda la URL pública
+                $uploadedLinks[] = $baseUrl . $name;
+                
+
+                if ($_POST['numero']!="") {
+                    $numero=$_POST['numero'];
+                    $link="https://sistema.transmillas.com/".$existingFileName;
+                    enviarAlertaWhat($contenido,$numero,"34",$link);
+                }                
+                // // 4. Adjunta al correo si quieres
+                // $mail->addAttachment($dest, $name);
+            }
+        }
+    }
+
+
+
+
+
     echo 'El mensaje ha sido enviado';
     require("login_autentica.php"); 
     $id_ciudad= $_SESSION['usu_idsede'];
@@ -155,6 +194,67 @@ try {
 }
 
 
+function enviarAlertaWhat($numguia,$telefono,$tipo,$text2){
+
+	// if (preg_match('/^\d{10}$/', $telefono)) {
+		// echo "La variable tiene exactamente 10 números.";
+
+			// URL de la API
+		$url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+
+		// Datos que enviarás en la solicitud
+		$data = array(
+			"numero_guia" => "$numguia", // Número de guía
+			"telefono" => "$telefono",  // Número de teléfono 3160490959
+			"tipo_alerta" => "$tipo",
+            "texto2" => "$text2"
+		);
+
+
+		// Convertir los datos a formato JSON
+		$data_json = json_encode($data);
+
+		// Iniciar una sesión cURL
+		$curl = curl_init();
+
+		// Configurar las opciones cURL
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => $url, // URL de la API
+			CURLOPT_RETURNTRANSFER => true, // Retorna el resultado como cadena
+			CURLOPT_POST => true, // Indica que la solicitud será POST
+			CURLOPT_POSTFIELDS => $data_json, // Los datos que se envían en la solicitud
+			CURLOPT_HTTPHEADER => array(
+				'Content-Type: application/json', // Tipo de contenido
+				'Authorization: Bearer MiSuperToken123' // Si la API requiere autenticación
+			),
+		));
+
+		// Ejecutar la solicitud y obtener la respuesta
+		$response = curl_exec($curl);
+
+		// Manejar errores cURL
+		if($response === false) {
+			$error = curl_error($curl);
+			echo "Error en la solicitud: $error";
+		} else {
+			// Decodificar la respuesta (si es JSON)
+			$response_data = json_decode($response, true);
+			
+			// Mostrar la respuesta
+			echo "Respuesta de la API: ";
+			print_r($response_data);
+		}
+
+		// Cerrar la sesión cURL
+		curl_close($curl);
+	// } else {
+	// 	echo "La variable no cumple con el formato.";
+	// }
+
+
+
+
+ }	
 
 
 

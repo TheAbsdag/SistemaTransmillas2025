@@ -44,7 +44,9 @@ function sendEmail(idfac,email,body,asunto){
 
 
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $bd="u713516042_transmillas2"; 
 $host="localhost";
@@ -95,7 +97,7 @@ $val=0;
                     echo$numero;
                     echo"Es externo Pendiente ".$id_p."-".$email."-".$mensaje."<br>";
                     // echo"<script>sendEmail($id_p,\"$email\",\"$mensaje\",\"$asunto\");</script>"; 
-                    // echo "<script>facturasVencidas.push({id: $id_p, email: '$email', mensaje: `$mensaje`, asunto: `$asunto`});</script>";
+                    echo "<script>facturasVencidas.push({id: $id_p, email: '$email', mensaje: `$mensaje`, asunto: `$asunto`});</script>";
                     $val++;
                     // echo"".$id_p.$email.$mensaje;
                     $resultado.="Factura $numero Vencida el $fechaVence Se envia al correo $email Alerta <br> \n";
@@ -106,8 +108,8 @@ $val=0;
                     $cuen=mysqli_fetch_row($result5);
                     
                     $nummensajes=$cuen[0]+1;
-                    $sqlsqlupdate = "UPDATE `facturascreditos` SET fac_correoven='$nummensajes'  WHERE idfacturascreditos='$id_p'";
-                    $update = mysqli_query($link, $sqlsqlupdate);
+                    // $sqlsqlupdate = "UPDATE `facturascreditos` SET fac_correoven='$nummensajes'  WHERE idfacturascreditos='$id_p'";
+                    // $update = mysqli_query($link, $sqlsqlupdate);
                 }else {
                     $resultado.="Factura $numero Vencida el $fechaVence No se encontro correo del credito $rw1[2]  <br> \n";
                 }
@@ -140,6 +142,8 @@ $val=0;
                         echo$numero;
                         echo$rw2[1]." Pendiente ".$id_p."-".$email."-".$mensaje."<br>";
                         // echo"<script>sendEmail($id_p,\"$email\",\"$mensaje\",\"$asunto\");</script>"; 
+                        echo "<script>facturasVencidas.push({id: $id_p, email: '$email', mensaje: `$mensaje`, asunto: `$asunto`});</script>";
+
                         // echo"".$id_p.$email.$mensaje;
                         $val++;
                         $resultado.="Factura $numero Vencida el $fechaVence Se envia al correo $email Alerta <br> \n";

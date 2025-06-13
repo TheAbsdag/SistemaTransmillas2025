@@ -2187,12 +2187,12 @@ print_r($pagadas);
       $excedente = $pago['excedente'];
    
      echo "<p>Detalles del Pago:</p>
-       <ul>
+        <ul>
          <li>Fecha de confirmacion del Pago: $fechaPago</li>
          <li>Valor Confirmado: $valorconfirmado</li>
          <li>Exedente: $excedente</li>
          <li>Confirmado por: $userconfir</li>
-       </ul>";
+        </ul>";
 
        $FB->llena_texto("confirmar pago $:", 1, 1, $DB, "", "", "$valorconfirmado", 2, 1);
        $FB->llena_texto("param9", 1, 13, $DB, "", "", $id_param, 5, 0);  
@@ -3430,24 +3430,24 @@ else if ($tabla == "Editar datos") {
 	$fechaactual=$_REQUEST["ide"];
    include("detalle_recorrido_ruta.php");
 
-}else if ($tabla == "Recogidas") {
+}else if ($tabla == "Recogidas"){
 
-    $sql = "SELECT `idclientes`, `cli_iddocumento`, `cli_nombre`,  `cli_telefono`, `cli_email`, `ciu_nombre`, `cli_direccion`, `cli_clasificacion`, `cli_idciudad`,  `cli_tipo`,
+$sql = "SELECT `idclientes`, `cli_iddocumento`, `cli_nombre`,  `cli_telefono`, `cli_email`, `ciu_nombre`, `cli_direccion`, `cli_clasificacion`, `cli_idciudad`,  `cli_tipo`,
 `idservicios`, `ser_destinatario`, `ser_telefonocontacto`,`ser_ciudadentrega`,`ser_direccioncontacto`, `ser_tipopaquete`,`ser_piezas`, `ser_paquetedescripcion`, 
-  `ser_horaentrega`,`ser_clasificacion`,`ser_valorprestamo`, `ser_valorseguro`,`ser_valorabono`, `ser_consecutivo`,`ser_idresponsable`, `ser_iduserverific`,
-  `ser_idasignacion`,`ser_peso`,`ser_guiare`,`ser_fechafinal`,`ser_valor`,  `ser_fechaentrega`, `ser_prioridad`,  `ser_recogida`, `ser_motivo`,  `ser_fecharegistro`,
-  `ser_fechaconfirmacion`, `ser_fechaasignacion`, `ser_estado`,ser_devolverreci,ser_volumen,ser_idverificadopeso,ser_descentrega,ser_pendientecobrar FROM serviciosdia  where idservicios=$id_param ";
-    $DB->Execute($sql);
-    $rw = mysqli_fetch_array($DB->Consulta_ID);
+`ser_horaentrega`,`ser_clasificacion`,`ser_valorprestamo`, `ser_valorseguro`,`ser_valorabono`, `ser_consecutivo`,`ser_idresponsable`, `ser_iduserverific`,
+`ser_idasignacion`,`ser_peso`,`ser_guiare`,`ser_fechafinal`,`ser_valor`,  `ser_fechaentrega`, `ser_prioridad`,  `ser_recogida`, `ser_motivo`,  `ser_fecharegistro`,
+`ser_fechaconfirmacion`, `ser_fechaasignacion`, `ser_estado`,ser_devolverreci,ser_volumen,ser_idverificadopeso,ser_descentrega,ser_pendientecobrar FROM serviciosdia  where idservicios=$id_param ";
+$DB->Execute($sql);
+$rw = mysqli_fetch_array($DB->Consulta_ID);
     //Van 42 datos consultados
 
     if ($rw[0] == "" or $rw[0] == 0) {
 
-        $sql = "SELECT `idclientes`, `cli_iddocumento`, `cli_nombre`,  `cli_telefono`, `cli_email`, `ciu_nombre`, `cli_direccion`, `cli_clasificacion`, `cli_idciudad`,  `cli_tipo`,
-`idservicios`, `ser_destinatario`, `ser_telefonocontacto`,`ser_ciudadentrega`,`ser_direccioncontacto`, `ser_tipopaquete`,`ser_piezas`, `ser_paquetedescripcion`, 
-  `ser_horaentrega`,`ser_clasificacion`,`ser_valorprestamo`, `ser_valorseguro`,`ser_valorabono`, `ser_consecutivo`,`ser_idresponsable`, `ser_iduserverific`,
-  `ser_idasignacion`,`ser_peso`,`ser_guiare`,`ser_fechafinal`,`ser_valor`,  `ser_fechaentrega`, `ser_prioridad`,  `ser_recogida`, `ser_motivo`,  `ser_fecharegistro`,
-  `ser_fechaconfirmacion`, `ser_fechaasignacion`, `ser_estado`,ser_devolverreci,ser_volumen,ser_idverificadopeso,ser_descentrega FROM servicios2 inner join rel_sercli  on idservicios=ser_idservicio  inner join clientesservicios on idclientesdir=ser_idclientes inner join clientes on idclientes=cli_idclientes  inner join ciudades on idciudades=ser_ciudadentrega  where idservicios=$id_param ";
+    $sql = "SELECT `idclientes`, `cli_iddocumento`, `cli_nombre`,  `cli_telefono`, `cli_email`, `ciu_nombre`, `cli_direccion`, `cli_clasificacion`, `cli_idciudad`,  `cli_tipo`,
+    `idservicios`, `ser_destinatario`, `ser_telefonocontacto`,`ser_ciudadentrega`,`ser_direccioncontacto`, `ser_tipopaquete`,`ser_piezas`, `ser_paquetedescripcion`, 
+    `ser_horaentrega`,`ser_clasificacion`,`ser_valorprestamo`, `ser_valorseguro`,`ser_valorabono`, `ser_consecutivo`,`ser_idresponsable`, `ser_iduserverific`,
+    `ser_idasignacion`,`ser_peso`,`ser_guiare`,`ser_fechafinal`,`ser_valor`,  `ser_fechaentrega`, `ser_prioridad`,  `ser_recogida`, `ser_motivo`,  `ser_fecharegistro`,
+    `ser_fechaconfirmacion`, `ser_fechaasignacion`, `ser_estado`,ser_devolverreci,ser_volumen,ser_idverificadopeso,ser_descentrega FROM servicios2 inner join rel_sercli  on idservicios=ser_idservicio  inner join clientesservicios on idclientesdir=ser_idclientes inner join clientes on idclientes=cli_idclientes  inner join ciudades on idciudades=ser_ciudadentrega  where idservicios=$id_param ";
         $DB->Execute($sql);
         $rw = mysqli_fetch_array($DB->Consulta_ID);
     }
@@ -4568,110 +4568,203 @@ else if ($tabla == "Editar datos") {
             $sql2="SELECT `idcreditos`, `cre_nombre`,idhojadevida FROM `creditos` INNER JOIN hojadevidacliente on hoj_clientecredito=idcreditos WHERE cre_nombre='$credito'";
             $DB1->Execute($sql2); 
             $rw1=mysqli_fetch_row($DB1->Consulta_ID);
-
             $FB->llena_texto("Email Destinatario:", 2, 2, $DB, "(SELECT `cont_correo`,cont_correo FROM `contactofacturacion` WHERE cont_idhojavida ='$rw1[2]')", "", "", 17, 1);
-
-
-            // $FB->llena_texto("Email Destinatario:", 1, 2, $DB, "(SELECT `cont_correo`,CONCAT(cont_correo, '//', UPPER(cont_telefono1) ) AS nombre_completo FROM `contactofacturacion`)", "cambio_ajax2(this.value, 100, \"llega_sub1\", \"param33\", 1, $idciudad)", "", 17, 1);
-
-
         }
-
         $sql3="SELECT `idfacturascreditos`, `fac_fechafactura`,`fac_credito`, `fac_numerofactura`, `fac_fechaprefac`,`fac_idservicios`, `fac_iduserpre`,`fac_numeroref`, `fac_fechafacturado`, `fac_fechavencimiento`, `fac_estado`,`fac_tipopago`,`fac_iduserfac`,fac_precio,`fac_fecharadicado`,fac_fechapago,fac_notacredito,fac_fecharafacturado,fac_pagoconfir,fac_userconfirmo,fac_fechacomfir,fac_valorpendiente,fac_preciofinal FROM `facturascreditos` WHERE idfacturascreditos='$id_param'";
         $DB1->Execute($sql3); 
         $rw3=mysqli_fetch_row($DB1->Consulta_ID);
            $fechaactual = date("Y-m-d");
-        //    $rw3[7];
            echo'<tr><td><label>Contenido del correo</label><br><textarea id="param5" name="param5" rows="4" cols="50" placeholder="">Estimado cliente le recordamos que la factura #'.$rw3[7].' se encuentra vencida,si ya realizó su pago por favor enviar el soporte a  esté correo</textarea><td></tr><br>';
            echo '<tr><td><a class="icon-button file-button" href="#" onclick=\'sendEmail('.$id_param.'); return false;\'>Enviar</a><td></tr>';
            echo '<div id="loading">
            <img src="images/loading.gif" alt="Cargando..."></div>';
 }elseif ($tabla == "Enviar correo factura") {
-    $credito = $_REQUEST["ide"];
-    //    print_r($myArray);
-    // $FB->titulo_azul1("Archivos que se enviaran",1,0,7); 
-    if ($credito=="EXTERNOS") {
-        $FB->llena_texto("Email Destinatario:", 2, 1, $DB, "", "", "", 2, 0);
-    }else{
-        $sql2="SELECT `idcreditos`, `cre_nombre`,idhojadevida FROM `creditos` INNER JOIN hojadevidacliente on hoj_clientecredito=idcreditos WHERE cre_nombre='$credito' and hoj_estado='Activo'";
-        $DB1->Execute($sql2); 
-        $rw1=mysqli_fetch_row($DB1->Consulta_ID);
-        // $FB->llena_texto("Email Destinatario:", 2, 2, $DB, "(SELECT `cont_correo`,cont_correo FROM `contactofacturacion` WHERE cont_idhojavida ='$rw1[2]')", "", "", 17, 1);
-        // $FB->llena_texto("Email Destinatario:", 1, 2, $DB, "(SELECT `cont_correo`,CONCAT(cont_correo, '//', UPPER(cont_telefono1) ) AS nombre_completo FROM `contactofacturacion`)", "cambio_ajax2(this.value, 100, \"llega_sub1\", \"param33\", 1, $idciudad)", "", 17, 1);
-        
-        $sql3="SELECT `idcontactofacturacion`,cont_correo FROM `contactofacturacion` WHERE cont_idhojavida ='$rw1[2]'";
+    // $credito = $_REQUEST["ide"];
+    // if ($credito=="EXTERNOS") {
+    //     $FB->llena_texto("Email Destinatario:", 2, 1, $DB, "", "", "", 2, 0);
+    // }else{
+    //     $sql2="SELECT `idcreditos`, `cre_nombre`,idhojadevida FROM `creditos` INNER JOIN hojadevidacliente on hoj_clientecredito=idcreditos WHERE cre_nombre='$credito' and hoj_estado='Activo'";
+    //     $DB1->Execute($sql2); 
+    //     $rw1=mysqli_fetch_row($DB1->Consulta_ID);
+    //     $sql3="SELECT `idcontactofacturacion`,cont_correo FROM `contactofacturacion` WHERE cont_idhojavida ='$rw1[2]'";
 
-        $DB1->Execute($sql3);  
-        echo"<table>";
-        echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+    //     $DB1->Execute($sql3);  
+    //     echo"<table>";
+    //     echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 
-        while($rw3=mysqli_fetch_row($DB1->Consulta_ID))
-        {
-            if ($rw3[1]=="") {
-                # code...
-            }else {
-                echo "<td><input type='checkbox'  onchange='selecionado($rw3[0],\"$rw3[1]\")' class='checkbox' id='".$rw3[0]."s' value='$rw3[0]'></td><td>$rw3[1]</td>";
+    //     while($rw3=mysqli_fetch_row($DB1->Consulta_ID))
+    //     {
+    //         if ($rw3[1]=="") {
+    //         }else {
+    //             echo "<td><input type='checkbox'  onchange='selecionado($rw3[0],\"$rw3[1]\")' class='checkbox' id='".$rw3[0]."s' value='$rw3[0]'></td><td>$rw3[1]</td>";
+    //         }
+    //      }   
+    //     echo"</tr>";
 
-            }
-         }   
-echo"</tr>";
-
-    }
-    $FB->llena_texto("Otro Email :", 2, 1, $DB, "", "", "", 2, 0);
-    $FB->llena_texto("Documento1", 3, 6, $DB, "", "", "", 1, 0);
-    $FB->llena_texto("Documento2", 6, 6, $DB, "", "", "", 1, 0);
-
+    // }
+    // $FB->llena_texto("Otro Email :", 2, 1, $DB, "", "", "", 2, 0);
+    // $FB->llena_texto("Documento1", 3, 6, $DB, "", "", "", 1, 0);
+    // $FB->llena_texto("Documento2", 6, 6, $DB, "", "", "", 1, 0);
+    // $FB->llena_texto("Whatsapp", 12, 1, $DB, "", "", "", 1, 0);
 
 
     
    
-    $sql3="SELECT `idfacturascreditos`, `fac_fechafactura`,`fac_credito`, `fac_numerofactura`, `fac_fechaprefac`,`fac_idservicios`, `fac_iduserpre`,`fac_numeroref`, `fac_fechafacturado`, `fac_fechavencimiento`, `fac_estado`,`fac_tipopago`,`fac_iduserfac`,fac_precio,`fac_fecharadicado`,fac_fechapago,fac_notacredito,fac_fecharafacturado,fac_pagoconfir,fac_userconfirmo,fac_fechacomfir,fac_valorpendiente,fac_preciofinal FROM `facturascreditos` WHERE idfacturascreditos='$id_param'";
-    $DB1->Execute($sql3); 
-    $rw3=mysqli_fetch_row($DB1->Consulta_ID);
-       $fechaactual = date("Y-m-d");
-    //    $rw3[7];
-        echo'<tr><td class="text"><label >Mensaje</label></td><td class="text"><select class="form-control"  id="param5" name="param5" >
-        <option value="Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].'">Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].'</option>
-        <option value="Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].' enviamos factura vencida si ya realizó el pago por favor enviar soporte al correo ventastransmillas@gmail.com gracias">Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].' enviamos factura vencida si ya realizó el pago por favor enviar soporte al correo ventastransmillas@gmail.com gracias</option>
-        <option value="Queremos recordarte que tenemos varias facturas pendientes por pago.Haganos saber si hay algún problema o si necesitas información adicional para realizar el pago ventastransmillas@gmail.com ">Queremos recordarte que tenemos varias facturas pendientes por pago.Haganos saber si hay algún problema o si necesitas información adicional para realizar el pago ventastransmillas@gmail.com </option>
-        <option value="Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente">Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente</option>
-        </select>
-        </td></td></tr>';
-        echo"</table>";
-        $radicado="Facturado:".$rw3[17];
-        $linkfak1=  $LT->llenadocs31($DB1,"facturascreditos",$rw3[0], 3, 15,"$radicado");
+    // $sql3="SELECT `idfacturascreditos`, `fac_fechafactura`,`fac_credito`, `fac_numerofactura`, `fac_fechaprefac`,`fac_idservicios`, `fac_iduserpre`,`fac_numeroref`, `fac_fechafacturado`, `fac_fechavencimiento`, `fac_estado`,`fac_tipopago`,`fac_iduserfac`,fac_precio,`fac_fecharadicado`,fac_fechapago,fac_notacredito,fac_fecharafacturado,fac_pagoconfir,fac_userconfirmo,fac_fechacomfir,fac_valorpendiente,fac_preciofinal FROM `facturascreditos` WHERE idfacturascreditos='$id_param'";
+    // $DB1->Execute($sql3); 
+    // $rw3=mysqli_fetch_row($DB1->Consulta_ID);
+    //    $fechaactual = date("Y-m-d");
+    // //    $rw3[7];
+    //     echo'<tr><td class="text"><label >Mensaje</label></td><td class="text"><select class="form-control"  id="param5" name="param5" >
+    //     <option value="Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].'">Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].'</option>
+    //     <option value="Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].' enviamos factura vencida si ya realizó el pago por favor enviar soporte al correo ventastransmillas@gmail.com gracias">Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].' enviamos factura vencida si ya realizó el pago por favor enviar soporte al correo ventastransmillas@gmail.com gracias</option>
+    //     <option value="Queremos recordarte que tenemos varias facturas pendientes por pago.Haganos saber si hay algún problema o si necesitas información adicional para realizar el pago ventastransmillas@gmail.com ">Queremos recordarte que tenemos varias facturas pendientes por pago.Haganos saber si hay algún problema o si necesitas información adicional para realizar el pago ventastransmillas@gmail.com </option>
+    //     <option value="Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente">Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente</option>
+    //     </select>
+    //     </td></td></tr>';
+
+    //     echo"</table>";
+    //     $radicado="Facturado:".$rw3[17];
+    //     $linkfak1=  $LT->llenadocs31($DB1,"facturascreditos",$rw3[0], 3, 15,"$radicado");
         
-        // Usar una expresión regular para extraer el contenido del atributo href
-        if (preg_match("/href='([^']+)'/", $linkfak1, $matches)) {
-            $link = $matches[1];
-            // echo "El link es: " . $link;
-        } else {
-            // echo "No se encontró ningún link.";
+    //     // Usar una expresión regular para extraer el contenido del atributo href
+    //     if (preg_match("/href='([^']+)'/", $linkfak1, $matches)) {
+    //         $link = $matches[1];
+    //         // echo "El link es: " . $link;
+    //     } else {
+    //         // echo "No se encontró ningún link.";
+    //     }
+
+    //     if (file_exists("pre_facturas/".$rw3[3].".xls")) {
+	// 		$chek0="";
+	// 	} else {
+	// 		$chek0="disabled";
+	// 	}
+
+    //     if (file_exists($link)) {
+	// 		$chek1="";
+	// 	} else {
+	// 		$chek1="disabled";
+	// 	}
+    //     //Checkbox
+    //     echo "<tr><td>Pre-factura<input type='checkbox'   id='param10' name='param10' value='' ".$chek0."></td></tr><br>";
+    //     echo "<tr><td>Factura<input type='checkbox'   id='param11' name='param11' value='' ".$chek1."></td></tr><br>";
+
+    //     echo "<input type='hidden'   id='linkfac' name='linkfac' value='pre_facturas/".$rw3[3].".xls'><br>";
+    //     echo "<input type='hidden'   id='linkfac1' name='linkfac1' value='".$link."'><br>";
+    
+    //     //    echo'<tr><td><label>Contenido del correo</label><br><textarea id="param5" name="param5" rows="4" cols="50" placeholder="">Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].' </textarea><td></tr><br>';
+    //    echo '<tr><td><a class="icon-button file-button" href="#" onclick=\'sendEmailfac('.$id_param.'); return false;\'>Enviar</a><td></tr>';
+    //    echo '<div id="loading">
+    //    <img src="images/loading.gif" alt="Cargando..."></div>';
+
+    $credito = $_REQUEST["ide"];
+
+    if ($credito == "EXTERNOS") {
+        $FB->llena_texto("Email Destinatario:", 2, 1, $DB, "", "", "", 2, 0);
+    } else {
+        $sql2 = "SELECT idcreditos, cre_nombre, idhojadevida 
+                FROM creditos 
+                INNER JOIN hojadevidacliente ON hoj_clientecredito = idcreditos 
+                WHERE cre_nombre = '$credito' AND hoj_estado = 'Activo'";
+        $DB1->Execute($sql2); 
+        $rw1 = mysqli_fetch_row($DB1->Consulta_ID);
+
+        $sql3 = "SELECT idcontactofacturacion, cont_correo 
+                FROM contactofacturacion 
+                WHERE cont_idhojavida = '$rw1[2]'";
+        $DB1->Execute($sql3);  
+
+        echo '<div class="table-responsive mb-3">';
+        echo '<table class="table table-bordered table-hover">';
+        echo '<thead class="table-light"><tr><th colspan="2">Correos</th></tr></thead>';
+        echo '<tbody>';
+
+        while ($rw3 = mysqli_fetch_row($DB1->Consulta_ID)) {
+            if ($rw3[1] != "") {
+                echo "<tr >
+                        <td colspan='2'>
+                            <input type='checkbox' class='form-check-input' id='{$rw3[0]}s' value='{$rw3[0]}'
+                                onchange='selecionado({$rw3[0]}, \"{$rw3[1]}\")'>
+                                
+                                <label><strong>{$rw3[1]}</strong></label>
+                        </td>
+                        
+                    </tr>";
+            }
         }
 
-        if (file_exists("pre_facturas/".$rw3[3].".xls")) {
-			$chek0="";
-		} else {
-			$chek0="disabled";
-		}
+        
+    }
 
-        if (file_exists($link)) {
-			$chek1="";
-		} else {
-			$chek1="disabled";
-		}
-        //Checkbox
-        echo "<tr><td>Pre-factura<input type='checkbox'   id='param10' name='param10' value='' ".$chek0."></td></tr><br>";
-        echo "<tr><td>Factura<input type='checkbox'   id='param11' name='param11' value='' ".$chek1."></td></tr><br>";
+    $FB->llena_texto("Otro Email :", 2, 1, $DB, "", "", "", 2, 0);
+    $FB->llena_texto("Documento1", 3, 6, $DB, "", "", "", 1, 0);
+    $FB->llena_texto("Documento2", 6, 6, $DB, "", "", "", 1, 0);
+    $FB->llena_texto("Whatsapp", 12, 1, $DB, "", "", "57", 1, 0);
 
-        echo "<input type='hidden'   id='linkfac' name='linkfac' value='pre_facturas/".$rw3[3].".xls'><br>";
-        echo "<input type='hidden'   id='linkfac1' name='linkfac1' value='".$link."'><br>";
-    
-        //    echo'<tr><td><label>Contenido del correo</label><br><textarea id="param5" name="param5" rows="4" cols="50" placeholder="">Estimado cliente estos son los documentos correspondientes a la factura #'.$rw3[7].' </textarea><td></tr><br>';
-       echo '<tr><td><a class="icon-button file-button" href="#" onclick=\'sendEmailfac('.$id_param.'); return false;\'>Enviar</a><td></tr>';
-       echo '<div id="loading">
-       <img src="images/loading.gif" alt="Cargando..."></div>';
-       
+    $sql3 = "SELECT idfacturascreditos, fac_fechafactura, fac_credito, fac_numerofactura, fac_fechaprefac, fac_idservicios,
+                    fac_iduserpre, fac_numeroref, fac_fechafacturado, fac_fechavencimiento, fac_estado, fac_tipopago,
+                    fac_iduserfac, fac_precio, fac_fecharadicado, fac_fechapago, fac_notacredito, fac_fecharafacturado,
+                    fac_pagoconfir, fac_userconfirmo, fac_fechacomfir, fac_valorpendiente, fac_preciofinal 
+            FROM facturascreditos 
+            WHERE idfacturascreditos = '$id_param'";
+    $DB1->Execute($sql3); 
+    $rw3 = mysqli_fetch_row($DB1->Consulta_ID);
+
+    $fechaactual = date("Y-m-d");
+
+    // Mensajes
+    echo '<tr  class="text"><td class="text" >';
+    echo '<label for="param5" class="form-label"><strong>Mensaje</strong></label></td>';
+    echo '<td class="text" ><select class="form-select" id="param5" name="param5">';
+    echo "<option value='Estimado cliente estos son los documentos correspondientes a la factura #{$rw3[7]}'>
+            Estimado cliente estos son los documentos correspondientes a la factura #{$rw3[7]}
+        </option>";
+    echo "<option value='Estimado cliente estos son los documentos correspondientes a la factura #{$rw3[7]} enviamos factura vencida si ya realizó el pago por favor enviar soporte al correo ventastransmillas@gmail.com gracias'>
+            Estimado cliente estos son los documentos correspondientes a la factura #{$rw3[7]} (factura vencida, enviar soporte)
+        </option>";
+    echo "<option value='Queremos recordarte que tenemos varias facturas pendientes por pago.Haganos saber si hay algún problema o si necesitas información adicional para realizar el pago ventastransmillas@gmail.com'>
+            Recordatorio de facturas pendientes - Contacto: ventastransmillas@gmail.com
+        </option>";
+    echo "<option value='Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente'>
+            Envío de relación de servicios prestados para aprobación
+        </option>";
+    echo '</select>';
+    echo '</td></tr>';
+
+    // Documentos adjuntos
+    $radicado = "Facturado:" . $rw3[17];
+    $linkfak1 = $LT->llenadocs31($DB1, "facturascreditos", $rw3[0], 3, 15, $radicado);
+
+    if (preg_match("/href='([^']+)'/", $linkfak1, $matches)) {
+        $link = $matches[1];
+    }
+
+    $chek0 = file_exists("pre_facturas/{$rw3[3]}.xls") ? "" : "disabled";
+    $chek1 = file_exists($link) ? "" : "disabled";
+
+    echo '<tr  class="text"><td class="text" colspan="2">';
+    echo "<input class='form-check-input' type='checkbox' id='param10' name='param10' $chek0>";
+    echo "<label class='form-check-label' for='param10'>Pre-factura</label>";
+    echo "<input class='form-check-input' type='checkbox' id='param11' name='param11' $chek1>";
+    echo "<label class='form-check-label' for='param11'>Factura</label>";
+    echo '</td></tr>';
+
+
+
+    echo "<input type='hidden' id='linkfac' name='linkfac' value='pre_facturas/{$rw3[3]}.xls'>";
+    echo "<input type='hidden' id='linkfac1' name='linkfac1' value='{$link}'>";
+
+    // Botón enviar
+    echo '<tr  class="text"><td class="text" colspan="2">';
+    echo "<button class='btn btn-primary' onclick='sendEmailfac($id_param); return false;'>Enviar</button>";
+    echo '</td></tr>';
+
+    echo '</tbody></table></div>';
+    echo '<div id="loading" class="mt-2">';
+    echo '<img src="images/loading.gif" alt="Cargando...">';
+    echo '</div>';
+        
 }else if ($tabla == "Enviar Whatsapp"){
     // $myArray = $_REQUEST["ide"];
     print_r($myArray);
