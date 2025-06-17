@@ -60,8 +60,10 @@ $conde1="";
 	}else { $conde1="  "; } 
 
 
-  if($param4!='0' and $param4!=''){
+  if($param4!='0' and $param4!='' and $param4!='Todos'){
 	  $cond5=" and hoj_estado='$param4'";
+  }elseif($param4=='Todos'){
+	$cond5="";
   }else{
 
 	$cond5=" and hoj_estado='Activo'";
@@ -70,8 +72,7 @@ $conde1="";
   if($param1!='0' and $param1!=''){
 	$cond3=" and hoj_tipocontrato='$param1'";
 }
-
- $sql="SELECT COUNT(*) FROM `hojadevida` inner join sedes on hoj_sede=idsedes $conde1 $conde2 $cond5 $cond3";
+$sql="SELECT COUNT(*) FROM `hojadevida` inner join sedes on hoj_sede=idsedes $conde1 $conde2 $cond5 $cond3";
 $DB->Execute($sql); 
 $valor=$DB->recogedato(0);
 if(isset($_REQUEST["CantidadMostrar"])){ $CantidadMostrar=$_REQUEST["CantidadMostrar"]; } else { $CantidadMostrar=50; } 

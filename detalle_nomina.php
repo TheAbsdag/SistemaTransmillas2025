@@ -1274,10 +1274,10 @@ ORDER BY hoj_nombre ASC";
 								$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
 					}
 
- if ($rw1[1]=="EDGAR EDUARDO CONDUC") {
-	$diassitrabajoParaSumar=$diassitrabajoParaSumar-1;
-	$diassitrabajoParaMostrar=$diassitrabajoParaMostrar-1;
- }
+					if ($rw1[1]=="EDGAR EDUARDO CONDUC") {
+						$diassitrabajoParaSumar=$diassitrabajoParaSumar-1;
+						$diassitrabajoParaMostrar=$diassitrabajoParaMostrar-1;
+					}
 
 				}
 

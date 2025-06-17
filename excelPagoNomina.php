@@ -13,6 +13,8 @@ $param35 = $_GET['param35'];
 $param36 = $_GET['param36'];
 
 $param37 = $_GET['param37'];
+
+$param38= $_GET['param38'];
 ?>
 <style>
     /* Estilos básicos para la barra superior */
@@ -98,11 +100,26 @@ function descargar(p3,p4,p5,p6,p7){
 
 var variable = "descargar"; // Variable que deseas enviar
 
+let p8 = document.getElementById("tipoPago").value;
 // Codificar la variable
 var variableCodificada = encodeURIComponent(variable);
 
 // Abrir el enlace en una nueva página
-window.open("excelPagoNomina.php?variable=" + variableCodificada+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7, "_blank");
+window.open("excelPagoNomina.php?variable=" + variableCodificada+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7+"&param38="+p8, "_blank");
+
+
+    
+
+}
+function cambiar(p8,p3,p4,p5,p6,p7){
+
+var variable = "cambiar"; // Variable que deseas enviar
+
+// Codificar la variable
+var variableCodificada = encodeURIComponent(variable);
+
+// Abrir el enlace en una nueva página
+window.location.href = "excelPagoNomina.php?variable=" + variableCodificada+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7+"&param38="+p8;
 
 
     
@@ -114,6 +131,11 @@ window.open("excelPagoNomina.php?variable=" + variableCodificada+"&param33="+p3+
 
 
     <button onclick="descargar('<?echo$param33;?>','<?echo$param34;?>','<?echo$param35;?>','<?echo$param36;?>','<?echo$param37;?>')">Descargar</button>
+    <select id="tipoPago" onchange="cambiar(this.value,'<?php echo $param33; ?>','<?php echo $param34; ?>','<?php echo $param35; ?>','<?php echo $param36; ?>','<?php echo $param37; ?>')">
+        <option value="" <?php echo ($param38 == '') ? 'selected' : ''; ?>>Todos...</option>
+        <option value="TRANSFERENCIA" <?php echo ($param38 == 'TRANSFERENCIA') ? 'selected' : ''; ?>>TRANSFERENCIA</option>
+        <option value="EN EFECTIVO" <?php echo ($param38 == 'EN EFECTIVO') ? 'selected' : ''; ?>>EN EFECTIVO</option>
+    </select>
 </div>
 <?php 
 error_reporting(0);
@@ -132,6 +154,15 @@ if ($descargar=="descargar") {
     header('Content-type:application/xls');
 // header('Content-Disposition: attachment; filename='.$nombre.'.xls');
 header('Content-Disposition: attachment; filename='.$NombreExcel.'.xls');
+
+    if ($param38!="" or $param38!=0) {
+        $conde0="and hoj_tipo_pago='$param38'";
+    }else {
+        $conde0="";
+    }
+
+}elseif ($descargar=="cambiar") {
+$conde0="and hoj_tipo_pago='$param38'";
 }
 
 
@@ -271,7 +302,7 @@ function diasSegundaQuince($year, $month) {
       //echo$sql="SELECT  `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado` FROM `hojadevida`  inner join sedes on hoj_sede=idsedes   where idhojadevida>0  and hoj_estado='Activo'   order by hoj_nombre asc ";
     $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado`,hoj_sede,hoj_fechatermino,hoj_cuen,hoj_tcuenta,hoj_banco,hoj_valorRetegarantia,hoj_retegarantia FROM hojadevida
     INNER JOIN sedes ON hoj_sede = idsedes
-    WHERE idhojadevida > 0  and(hoj_fechatermino IS NULL OR hoj_fechatermino = '' OR ('$fechaactualSinTiempo' BETWEEN hoj_fechaingreso AND hoj_fechatermino ) OR (hoj_fechaingreso BETWEEN '$fechaactualSinTiempo' AND '$fechafinalSinTiempo'AND hoj_fechatermino BETWEEN '$fechaactualSinTiempo' AND '$fechafinalSinTiempo')) $conde5 $conde4 $conde
+    WHERE idhojadevida > 0  and(hoj_fechatermino IS NULL OR hoj_fechatermino = '' OR ('$fechaactualSinTiempo' BETWEEN hoj_fechaingreso AND hoj_fechatermino ) OR (hoj_fechaingreso BETWEEN '$fechaactualSinTiempo' AND '$fechafinalSinTiempo'AND hoj_fechatermino BETWEEN '$fechaactualSinTiempo' AND '$fechafinalSinTiempo')) $conde5 $conde4 $conde $conde0
     ORDER BY hoj_nombre ASC";
     $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar); 
     while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -741,8 +772,19 @@ function diasSegundaQuince($year, $month) {
                     
                       echo "<td>1</td>";//tipo identificacion
                       echo "<td>$rw11[5]</td>";//Numero identificacion
-                      echo "<td>$rw11[1]</td>";//Nombre
-                      echo "<td>$rw11[2]</td>";//Apellido
+                      $nombre=$rw11[1];
+                      // Reemplazar ñ y Ñ por n y N
+                      if (strpos($nombre, 'ñ') !== false || strpos($nombre, 'Ñ') !== false) {
+                            $nombre = str_replace(['ñ', 'Ñ'], ['n', 'N'], $nombre);
+                        }
+                      echo "<td>$nombre</td>";//Nombre
+
+                      $apellido=$rw11[2];
+                    // Reemplazar ñ y Ñ por n y N
+                      if (strpos($apellido, 'ñ') !== false || strpos($apellido, 'Ñ') !== false) {
+                            $apellido = str_replace(['ñ', 'Ñ'], ['n', 'N'], $apellido);
+                        }
+                      echo "<td>$apellido</td>";//Apellido
   
                       if ($rw1[16]=="DAVIPLATA") {
                           $tipoCuenta="DP";
@@ -1649,8 +1691,19 @@ function diasSegundaQuince($year, $month) {
                     
                       echo "<td>1</td>";//tipo identificacion
                       echo "<td>$rw16[5]</td>";//Numero identificacion
-                      echo "<td>$rw16[1]</td>";//Nombre
-                      echo "<td>$rw16[2]</td>";//Apellido
+                      $nombre=$rw16[1];
+                      // Reemplazar ñ y Ñ por n y N
+                      if (strpos($nombre, 'ñ') !== false || strpos($nombre, 'Ñ') !== false) {
+                            $nombre = str_replace(['ñ', 'Ñ'], ['n', 'N'], $nombre);
+                        }
+                      echo "<td>$nombre</td>";//Nombre
+
+                      $apellido=$rw16[2];
+                    // Reemplazar ñ y Ñ por n y N
+                      if (strpos($apellido, 'ñ') !== false || strpos($apellido, 'Ñ') !== false) {
+                            $apellido = str_replace(['ñ', 'Ñ'], ['n', 'N'], $apellido);
+                        }
+                      echo "<td>$apellido</td>";//Apellido
                         $tipoCuenta="";
                         $codigoBanco="";  
                       if ($rw1[16]=="DAVIPLATA") {

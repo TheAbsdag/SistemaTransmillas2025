@@ -124,7 +124,7 @@ switch ($condecion)
 	break;
 	case "datoscontrato":
 	
-			 $sql1="UPDATE hojadevida set `hoj_fechacontrato`='$param40',`hoj_tipocontrato`='$param39',`hoj_area`='$param41',`hoj_turnos`='$param43',`hoj_retegarantia`='$param45',`hoj_valorRetegarantia`='$param46',hoj_fech_año_act='$param100' where idhojadevida='$idhojadevida' ";
+			 $sql1="UPDATE hojadevida set `hoj_fechacontrato`='$param40',`hoj_tipocontrato`='$param39',`hoj_area`='$param41',`hoj_turnos`='$param43',`hoj_retegarantia`='$param45',`hoj_valorRetegarantia`='$param46',hoj_fech_año_act='$param100',hoj_tipo_pago='$param112' where idhojadevida='$idhojadevida' ";
 			$DB1->Execute($sql1);
 		
 		

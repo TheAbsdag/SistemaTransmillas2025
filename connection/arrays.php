@@ -66,9 +66,10 @@ $quincena["Primera"]="Primera";
 $quincena["Segunda"]="Segunda";
 $quincena["Completo"]="Completo";
 
-$estadosac2[0]="Todos...";
+$estadosac2[0]="Seleccionar...";
 $estadosac2["Inactivo"]="Inactivo";
 $estadosac2["Activo"]="Activo";
+$estadosac2["Todos"]="Todos";
 
 $estado_rec[0]="NO";
 $estado_rec[1]="SI";
@@ -328,6 +329,17 @@ $tipocuentaP['AHORROS']='AHORROS';
 $tipocuentaP['DAVIPLATA']='DAVIPLATA'; 
 $tipocuentaP['CORRIENTE']='CORRIENTE'; 
 $tipocuentaP['NOMINAL']='NOMINAL'; 
+
+$bancos[0]='Seleccione...'; 
+$bancos['DAVIPLATA']='DAVIPLATA'; 
+$bancos['DAVIVIENDA']='DAVIVIENDA'; 
+$bancos['BANCOLOMBIA']='BANCOLOMBIA'; 
+
+$tipoPagoNomina[0]='Seleccione...'; 
+$tipoPagoNomina['TRANSFERENCIA']='TRANSFERENCIA'; 
+$tipoPagoNomina['EN EFECTIVO']='EN EFECTIVO'; 
+
+
 
 $recogido[0]='Seleccione...'; 
 $recogido['RECOGIDO']='RECOGIDO'; 

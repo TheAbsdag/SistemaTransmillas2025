@@ -43,7 +43,17 @@ if($idhojadevida==''){
 if($accion!=1){
 
 	
-	 $sql="SELECT `idhojadevida`, `hoj_fechaingreso`, `hoj_sede`, `hoj_nombre`, `hoj_apellido`, `hoj_fechanacimiento`, `hoj_cedula`,`hoj_celular`, `hoj_licencia`, `hoj_tipolicencia`,`hoj_tipovivienda`, `hoj_arrendador`, `hoj_direccion`, `hoj_telefono`,`hoj_conyuge`, `hoj_profesion`, `hoj_celularconyuge`, '1','2','3', '4',  `hoj_eps`, `hoj_fechaeps`, `hoj_arl`, `hoj_fechaafi`, `hoj_pension`, `hoj_fechapen`,`hoj_cajacompensacion`,`hoj_fechacaja`,`hoj_fechacontrato`, `hoj_tipocontrato`,`hoj_fechatermino`, `hoj_entregapuesto`, `hoj_pazysalvo`,hoj_estado,hoj_cargo,`hoj_area`,`hoj_salario`,`hoj_turnos`,`hoj_pep`,`hoj_pas`,`hoj_cuen`,`hoj_banco`,`hoj_tcuenta`,`hoj_foto`,hoj_retegarantia,hoj_valorRetegarantia,hoj_confibanco,	hoj_confiNumCuenta, `hoj_confiCedula`, `hoj_conTipoCuenta`   FROM `hojadevida` where idhojadevida='$idhojadevida'";		
+	 $sql="SELECT `idhojadevida`, `hoj_fechaingreso`, `hoj_sede`, `hoj_nombre`, `hoj_apellido`,
+	  `hoj_fechanacimiento`, `hoj_cedula`,`hoj_celular`, `hoj_licencia`, `hoj_tipolicencia`,
+	  `hoj_tipovivienda`, `hoj_arrendador`, `hoj_direccion`, `hoj_telefono`,`hoj_conyuge`, 
+	  `hoj_profesion`, `hoj_celularconyuge`, '1','2','3', '4',  `hoj_eps`, `hoj_fechaeps`, 
+	  `hoj_arl`, `hoj_fechaafi`, `hoj_pension`, `hoj_fechapen`,`hoj_cajacompensacion`,
+	  `hoj_fechacaja`,`hoj_fechacontrato`, `hoj_tipocontrato`,`hoj_fechatermino`, 
+	  `hoj_entregapuesto`, `hoj_pazysalvo`,hoj_estado,hoj_cargo,`hoj_area`,
+	  `hoj_salario`,`hoj_turnos`,`hoj_pep`,`hoj_pas`,`hoj_cuen`,`hoj_banco`,
+	  `hoj_tcuenta`,`hoj_foto`,hoj_retegarantia,hoj_valorRetegarantia,hoj_confibanco,
+	  hoj_confiNumCuenta, `hoj_confiCedula`, `hoj_conTipoCuenta`,hoj_tipo_pago   
+	  FROM `hojadevida` where idhojadevida='$idhojadevida'";		
 	$DB1->Execute($sql);
 	$rw=mysqli_fetch_row($DB1->Consulta_ID);
 	$id_sedes=$rw[2];
@@ -166,7 +176,7 @@ if ($rw[50]=="no" or $rw[50]=="") {
 
 }else if ($rw[50]=="on") {
 
-	echo "<tr><td><label>Numero de cuenta :</label></td><td><input name='param38' id='param38' class='form-control' readonly type='text' value='$rw[43]'></td>";
+	echo "<tr><td><label>Tipo de cuenta :</label></td><td><input name='param38' id='param38' class='form-control' readonly type='text' value='$rw[43]'></td>";
 	// $FB->llena_texto("Tipo de cuenta:",40, 82, $DB, $tipocuentaP, "", "$rw[43]",17, 1);
 	if ($nivel_acceso==1 ) {
 		echo"<td><label>Validar</label><input id='param83' name='param83' type='checkbox' checked></td></tr>";
@@ -194,7 +204,14 @@ if ($rw[48]=="no" or $rw[48]=="") {
 if ($rw[47]=="no" or $rw[47]=="") {
 
 	
-	$FB->llena_texto("Banco:",39, 1, $DB, "", "", "$rw[42]", 1, 0);
+	// $FB->llena_texto("Banco:",39, 1, $DB, "", "", "$rw[42]", 1, 0);
+	if (strcasecmp($rw[42], "davivenda") == 0) {
+		$rw[42]="DAVIVIENDA";
+	}
+	if (strcasecmp($rw[42], "daviplata") == 0) {
+		$rw[42]="DAVIPLATA";
+	}
+	$FB->llena_texto("Banco:",39, 82, $DB, $bancos, "", "$rw[42]",1, 1);
 	if ($nivel_acceso==1 ) {
 	echo"<td><label>Validar</label><input id='param81' name='param81' type='checkbox'></td></tr>";
 	}
@@ -263,8 +280,10 @@ if ($rw[45]=="si") {
 	echo "<tr><td>Foto Pagare</td>".$LT->llenadocsimagen($DB1, "hojadevida",$id_p, 5, 35, 'Ver');
 	echo "<td>Foto  Funciones</td>".$LT->llenadocsimagen($DB1, "hojadevida",$id_p, 10, 35, 'Ver')."</tr>";
 	$FB->llena_texto("Fecha Inicio:",40, 10, $DB, "", "", "$rw[29]", 1, 1);
-	$FB->llena_texto("Fecha Inicio año actual:",100, 10, $DB, "", "", "$rw[29]", 1, 0);
-	$FB->llena_texto("Salario:",42, 118, $DB, "", "", "$cargosaldo[2]", 4, 2);
+	$FB->llena_texto("Fecha Inicio año actual:",100, 10, $DB, "", "", "$rw[29]", 4, 0);
+	$FB->llena_texto("Salario:",42, 118, $DB, "", "", "$cargosaldo[2]", 1, 2);
+	$FB->llena_texto("Tipo De Pago:", 112, 82, $DB, $tipoPagoNomina, "", "$rw[51]", 4, 1);
+
 	$FB->llena_texto("AUXILIO:",42, 118, $DB, "", "", "$cargosaldo[3]", 17, 2);
 	$FB->llena_texto("INGRESOS NO CONSTITUYENTES:",42, 118, $DB, "", "", "$cargosaldo[4]", 4, 2);
 	$FB->llena_texto("Turnos de Trabajo:", 43, 82, $DB, $turnostrabajo, "", "$rw[38]", 1, 1);
