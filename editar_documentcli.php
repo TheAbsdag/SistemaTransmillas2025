@@ -28,10 +28,11 @@ if (isset($_POST['iddoccliente'], $_POST['nombre'], $_POST['fecha'])) {
             exit;
         }
     }
+    $fecha_creacion = date("Y-m-d H:i:s");
+    $sql1 = "INSERT INTO doc_hoja_clientes 
+            (docl_nombre, docl_fecha_venc, docl_documento, docl_idhvc, docl_fecha_creacion)
+            VALUES ('$nombre', '$fecha', '$nombre_archivo', '$idhojadevida', '$fecha_creacion')";
 
-    // Insertar nuevo registro en lugar de actualizar
-    $sql1 = "INSERT INTO doc_hoja_clientes (docl_nombre, docl_fecha_venc, docl_documento, docl_idhvc)
-             VALUES ('$nombre', '$fecha', '$nombre_archivo', '$idhojadevida')";
     $DB1->Execute($sql1);
     $DB1->cerrarconsulta();
 

@@ -1,40 +1,49 @@
 <?php
-
-require("login_autentica.php"); 
-include("declara.php");
+require "login_autentica.php";
+include "declara.php";
 
 header("Content-Type: application/json");
 
-$id = $_GET['id']; 
-
-$stmt = $DB->Execute("SELECT docl_nombre FROM doc_hoja_clientes WHERE iddoccliente = ?");
-$stmt->bind_param("i", $id);
-$stmt->Execute();
-
-$stmt->bind_result($nombre);
-$stmt->fetch();
-
-$stmt->close();
-
-if ($nombre == '') {
-    echo json_encode([]);
+// Validar parámetros GET
+if (!isset($_GET['id']) || !isset($_GET['nombre'])) {
+    echo json_encode(["error" => "Faltan parámetros id o nombre"]);
     exit;
 }
 
-$stmt = $DB->Execute("SELECT iddoccliente, docl_nombre, docl_fecha_creacion, docl_fecha_venc, docl_documento FROM doc_hoja_clientes WHERE docl_nombre = ?");
-$stmt->bind_param("s", $nombre);
-$stmt->Execute();
+$idhojadevida = intval($_GET['id']);
+$nombre = $_GET['nombre'];
+$nombre_escapado = str_replace("'", "''", trim($nombre));
 
-$res = $stmt->get_result();
+$sql = "SELECT iddoccliente, docl_nombre, docl_fecha_creacion, docl_fecha_venc, docl_documento 
+        FROM doc_hoja_clientes 
+        WHERE docl_idhvc = $idhojadevida 
+        AND TRIM(LOWER(docl_nombre)) = LOWER('$nombre_escapado')"
+        ;
+
+$DB->Execute($sql);
+$resultado = $DB->Consulta_ID;
+
+// // 🔍 DEBUG: mostrar si se encontraron resultados
+// echo json_encode([
+//     "idhojadevida" => $idhojadevida,
+//     "nombre" => $nombre,
+//     "sql" => $sql,
+//     "resultados" => mysqli_num_rows($resultado)
+// ]);
+// exit;
+
 
 $documentos = [];
 
-while ($row = $res->fetch_assoc()) {
-    $documentos[] = $row;
+while ($fila = mysqli_fetch_assoc($resultado)) {
+    $documentos[] = [
+        "iddoccliente" => $fila["iddoccliente"],
+        "docl_nombre" => $fila["docl_nombre"],
+        "docl_fecha_creacion" => $fila["docl_fecha_creacion"],
+        "docl_fecha_venc" => $fila["docl_fecha_venc"],
+        "docl_documento" => $fila["docl_documento"]
+    ];
 }
 
-$stmt->close();
-
- echo json_encode($documentos);
-?>
-
+// Si no hay resultados, puedes devolver un mensaje vacío también
+echo json_encode($documentos);

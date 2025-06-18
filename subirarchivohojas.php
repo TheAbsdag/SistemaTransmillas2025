@@ -93,8 +93,9 @@ while ($rw1 = mysqli_fetch_row($DB->Consulta_ID)) {
     </td>";
 
     echo "<td style='text-align: center;'>
-        <button type='button' class='btn btn-success btn-sm' onclick='historialDocumentos($id_p)'>Registros</button>
+        <button type='button' class='btn btn-success btn-sm' onclick='historialDocumentos({$rw1[3]}, " . json_encode($rw1[1]) . ")'>Registros</button>
     </td>";
+
 
     echo "</tr>";
 }
@@ -106,49 +107,35 @@ echo '<input type="hidden" name="param8" id="foto" value="">';
 
 $FB->titulo_azul1("Nombre :",1,0,7);
 $FB->titulo_azul1("Documento",1,0,0); 
-$FB->titulo_azul1("Eliminar",1,0,0); 
+
+echo "</tr>";
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>CAMARA DE COMERCIO:</td>";
+echo $LT->llenadocs3($DB1, "hojadevidacliente",$idhojadevida, 1, 35, 'Ver Imagen');
+echo "</tr>"; 
+
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Rut:</td>";
+echo $LT->llenadocs3($DB1, "hojadevidacliente",$idhojadevida, 2, 35, 'Ver Imagen');
+echo "</tr>"; 
+
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Poliza:</td>";
+echo $LT->llenadocs3($DB1, "hojadevidacliente",$idhojadevida, 3, 35, 'Ver Imagen');
+echo "</tr>"; 
+
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Contrato:</td>";
+echo $LT->llenadocs3($DB1, "hojadevidacliente",$idhojadevida, 4, 35, 'Ver Imagen');
+echo "</tr>"; 
+
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'><td>Certificacion cuenta bancaria:</td>";
+echo $LT->llenadocs3($DB1, "hojadevidacliente",$idhojadevida, 5, 35, 'Ver Imagen');
+echo "</tr>"; 
+
+echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>><td>Cedula representante legal:</td>";
+echo $LT->llenadocs3($DB1, "hojadevidacliente",$idhojadevida, 6, 35, 'Ver Imagen');
 echo "</tr>";
 
- echo "<tr id='fila_$id_p' class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
- echo "<td>CAMARA DE COMERCIO:</td>";
- echo $LT->llenadocs3($DB1, "hojadevidacliente", $id_p, 1, 35, 'Ver Imagen'); 
- echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento1($id_p)'>Eliminar</button></td>";
- echo "</tr>";
-
- echo "<tr id='fila_rut_$id_p' class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
- echo "<td>Rut:</td>";
- echo $LT->llenadocs3($DB1, "hojadevidacliente", $id_p, 2, 35, 'Ver Imagen'); 
- echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento1($id_p)'>Eliminar</button></td>";
- echo "</tr>";
-
- echo "<tr id='fila_poliza_$id_p' class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
- echo "<td>Póliza:</td>";
- echo $LT->llenadocs3($DB1, "hojadevidacliente", $id_p, 3, 35, 'Ver Imagen'); 
- echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento1($id_p)'>Eliminar</button></td>";
- echo "</tr>";
-
- echo "<tr id='fila_contrato_$id_p' class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
- echo "<td>Contrato:</td>";
- echo $LT->llenadocs3($DB1, "hojadevidacliente", $id_p, 4, 35, 'Ver Imagen'); 
- echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento1($id_p)'>Eliminar</button></td>";
- echo "</tr>";
-
- echo "<tr id='fila_certificacion_$id_p' class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
- echo "<td>Certificación cuenta bancaria:</td>";
- echo $LT->llenadocs3($DB1, "hojadevidacliente", $id_p, 5, 35, 'Ver Imagen'); 
- echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento1($id_p)'>Eliminar</button></td>";
- echo "</tr>";
-
- echo "<tr id='fila_cedula_$id_p' class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
- echo "<td>Cédula representante legal:</td>";
- echo $LT->llenadocs3($DB1, "hojadevidacliente", $id_p, 6, 35, 'Ver Imagen'); 
- echo "<td style='text-align: center;'><button class='btn btn-danger' onclick='eliminarDocumento1($id_p)'>Eliminar</button></td>";
- echo "</tr>";
-
-
- 
 
 ?> 
+
 <script>
 
 function enviar_formulario() {
@@ -196,32 +183,7 @@ function eliminarDocumento(id, archivo) {
 
 }
 
-function eliminarDocumento1(id_p) {
-    if (confirm("¿Deseas eliminar el documento?")) {
-        fetch('eliminar_documento1.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'id=' + id_p
-        })
-        .then(function(response) {
-            return response.text();
-        })
-        .then(function(data) {
-            if (data.trim() == "OK") {
-                document.querySelectorAll("tr[id^='fila_" + id_p + "']").forEach(function(el) {
-                    el.remove();
-                });
-                alert("Registro eliminado.");
-            } else {
-                alert("Error eliminando el registro.");
-            }
-        })
-        .catch(function(error) {
-            console.error(error);
-            alert("Error en el procedimiento.");
-        });
-    }
-}
+
 
 function abrirEditarModal(id, nombre, fecha, documento) {
     document.getElementById('edit_iddoccliente').value = id;
@@ -293,84 +255,93 @@ function enviarCorreo(id_doccliente) {
     }
 }
 
-function historialDocumentos(id_p) {
-    fetch("obtener_historial.php?id=" + id_p)
+function historialDocumentos(idhojadevida, nombreDoc) {
+    console.log("ID:", idhojadevida, "Nombre:", nombreDoc);
+    fetch("obtener_historial.php?id=" + idhojadevida + "&nombre=" + encodeURIComponent(nombreDoc))
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            var tbody = document.querySelector("#table_registros tbody");
+    console.log("Respuesta del servidor:", data);
 
-            tbody.innerHTML = "";
+    if (!Array.isArray(data)) {
+        alert("Error en la respuesta: " + (data.error || "No se recibieron datos válidos."));
+        return;
+    }
 
-            data.forEach(function (item) {
-                var row = "<tr>" + 
-                    "<td>" + item.docl_nombre + "</td>" + 
-                    "<td>" + item.docl_fecha_creacion + "</td>" + 
-                    "<td>" + item.docl_fecha_venc + "</td>" + 
-                    "<td><a href='./img_docHVC/" + item.docl_documento + "' target='_blank'>Ver</a></td>" + 
-                    "</tr>";
+    const modalExistente = document.getElementById("modalRegistros");
+    if (modalExistente) modalExistente.remove();
 
-                tbody.innerHTML += row;
-            });
+    const modal = document.createElement("div");
+    modal.id = "modalRegistros";
+    modal.style.cssText = `
+        position: fixed;
+        top: 10%;
+        left: 20%;
+        width: 60%;
+        background: #fff;
+        border: 2px solid #666;
+        border-radius: 10px;
+        padding: 20px;
+        z-index: 1000;
+        box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+    `;
 
-            document.getElementById("modalRegistros").style.display = "block";
+    modal.innerHTML = `
+        <h4>Historial de Documentos: <span style="color:#000000;">${nombreDoc}</span></h4>
+        <table id="table_registros" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fecha de creación</th>
+                    <th>Fecha de vencimiento</th>
+                    <th>Archivo</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div style="text-align: right;">
+            <button class="btn btn-danger" onclick="document.getElementById('modalRegistros').remove()">Cerrar</button>
+        </div>
+    `;
 
-        })
-        .catch(function (error) {
-            console.error(error);
-            alert("Error al obtener los registros.");
-        });
+    document.body.appendChild(modal);
+
+    const tbody = modal.querySelector("tbody");
+    data.forEach(function (item) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.docl_fecha_creacion}</td>
+            <td>${item.docl_fecha_venc}</td>
+            <td><a href="./img_docHVC/${item.docl_documento}" target="_blank">Ver</a></td>
+        `;
+        tbody.appendChild(row);
+    });
+})
 }
-
-function cerrarModalRegistros(){
-    document.getElementById("modalRegistros").style.display = "none";
-
-}
-
 
 </script>
-<div id="modalEditar" style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:2px solid #666; border-radius:10px; z-index:1000;">
-  <h4>Actualizar Documento</h4>
+<div id="modalEditar" style="display:none; position:fixed; top:20%; left:50%; transform:translateX(-50%); width:900px; background:#fff; padding:20px; border:2px solid #666; border-radius:0; z-index:1000; box-shadow: 0 0 15px rgba(0,0,0,0.2);">
+  <h4 style="color: black;">Actualizar Documento</h4>
   <input type="hidden" id="edit_iddoccliente">
   
   <div>
-  <label>Nombre:</label><br>
+  <label style="color: black;">Nombre:</label><br>
   <div id="edit_nombre_texto" style="padding:8px; background-color:#f0f0f0; border:1px solid #ccc; border-radius:4px;"></div>
 </div>
   <div>
-    <label>Fecha de vencimiento:</label><br>
+    <label style="color: black;">Fecha de vencimiento:</label><br>
     <input type="date" id="edit_fecha" style="width:100%;">
   </div>
 
   <div>
-    <label>Documento actual:</label><br>
-    <div id="documento_actual" style="margin-bottom:5px;"></div>
+    <label style="color: black;">Documento actual:</label><br>
+    <div id="documento_actual" style="margin-bottom:15px;"></div>
     <input type="file" id="edit_documento"> 
   </div>
 
   <div style="margin-top:10px;">
     <button type="button" class="btn btn-success" onclick="guardarEdicion()">Guardar</button>
     <button type="button" onclick="cerrarModal()" class="btn btn-secondary">Cancelar</button>
-  </div>
-</div>
-
-<div id="modalRegistros" style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:2px solid #666; border-radius:10px; z-index:1000">
-  <h4>Registro de Documentos</h4>
-  <table id="table_registros" border="1" style="width:100%; border-collapse:collapse">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Fecha de Creación</th>
-        <th>Fecha de Vencimiento</th>
-        <th>Ver</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <div style="margin-top:10px">
-    <button type="button" onclick="cerrarModalRegistros()">Cerrar</button>
   </div>
 </div>
 
