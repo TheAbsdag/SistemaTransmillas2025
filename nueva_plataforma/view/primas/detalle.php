@@ -6,7 +6,48 @@
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </head>
 <body class="p-4">
-    <h3>Detalle de Primas</h3>
+    <h3 class="mb-4">Detalle de Primas</h3>
+
+    <form method="POST" action="?controller=DetallePrimas&action=detalle" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-2">
+                <label for="param34" class="form-label">Mes</label>
+                <select name="param34" id="param34" class="form-select" required>
+                    <option value="">Seleccione</option>
+                    <?php for ($i = 1; $i <= 12; $i++): ?>
+                        <option value="<?= str_pad($i, 2, '0', STR_PAD_LEFT) ?>" <?= ($_POST['param34'] ?? '') == str_pad($i, 2, '0', STR_PAD_LEFT) ? 'selected' : '' ?>>
+                            <?= str_pad($i, 2, '0', STR_PAD_LEFT) ?>
+                        </option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="param36" class="form-label">Periodo</label>
+                <select name="param36" id="param36" class="form-select" required>
+                    <option value="">Seleccione</option>
+                    <option value="Primera" <?= ($_POST['param36'] ?? '') == 'Primera' ? 'selected' : '' ?>>Primera Quincena</option>
+                    <option value="Segunda" <?= ($_POST['param36'] ?? '') == 'Segunda' ? 'selected' : '' ?>>Segunda Quincena</option>
+                    <option value="Completo" <?= ($_POST['param36'] ?? '') == 'Completo' ? 'selected' : '' ?>>Mes Completo</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="param35" class="form-label">Sede (ID)</label>
+                <input type="number" name="param35" id="param35" class="form-control" value="<?= $_POST['param35'] ?? '' ?>">
+            </div>
+
+            <div class="col-md-3">
+                <label for="param33" class="form-label">Cédula</label>
+                <input type="text" name="param33" id="param33" class="form-control" value="<?= $_POST['param33'] ?? '' ?>">
+            </div>
+
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            </div>
+        </div>
+    </form>
+
     <table id="tablaDetallePrimas" class="table table-striped table-bordered">
         <thead>
             <tr>
