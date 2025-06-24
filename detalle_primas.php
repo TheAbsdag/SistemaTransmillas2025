@@ -164,6 +164,7 @@ ORDER BY hoj_nombre ASC";
 		if($fechaIniciContrato>=$fechaactual and $fechaIniciContrato<=$fechafinal){  
 			$mesdeingreso=true;
 			$fechaAhora=$fechaIniciContrato;
+			
 		}else{
 			$mesdeingreso=false;
 			$fechaAhora=$fechaactual;
@@ -181,12 +182,14 @@ ORDER BY hoj_nombre ASC";
 		if ($mesdeingreso==true and $mesdeFinal==true) {
 			$fechaInicia=$fechaIniciContrato;
 			$fechaFinaliza=$fechaFinContrato;
+			$colorFila="#E6B7BE";
 		}elseif ($mesdeingreso==true) {
 			$fechaInicia=$fechaIniciContrato;
 			$fechaFinaliza=$fechafinal;
 		}elseif ($mesdeFinal==true) {
 			$fechaInicia=$mesdeingreso;
 			$fechaFinaliza=$fechaFinContrato;
+			$colorFila="#E6B7BE";
 		}else {
 			$fechaInicia=$fechaactual;
 			$fechaFinaliza=$mesdeFinal;
