@@ -212,7 +212,8 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$nombreCargo."</td>";
 			echo "<td>".$salario     ."</td>";//Salario Mes
 			echo "<td>".$auxilio    ."</td>";//Auxilio
-
+			echo "<td>".$fechaInicia    ."</td>";//Fecha inicio contrato
+			echo "<td>".$fechaFinaliza    ."</td>";//Fecha final de contrato
 
 
 		}
