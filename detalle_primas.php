@@ -95,7 +95,7 @@ $FB->titulo_azul1("Cedula",1,0,0);
 $FB->titulo_azul1("Cargo",1,0,0); 
 $FB->titulo_azul1("Salario por mes",1,0,0); 
 $FB->titulo_azul1("Auxilio",1,0,0); 
-$FB->titulo_azul1("Dias ",1,0,0); 
+$FB->titulo_azul1("Ingresos ",1,0,0); 
 $FB->titulo_azul1("Descansó",1,0,0);
 $FB->titulo_azul1("Dias No Trabajados",1,0,0); 
 $FB->titulo_azul1("Dias de Incapacidad Empresa",1,'5%',0); 
@@ -251,12 +251,14 @@ ORDER BY hoj_nombre ASC";
 				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
 			}
 
-			// Ejemplo: mostrar todo en tabla
-			echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
-			foreach ($conteo as $motivo => $cantidad) {
-				echo "<tr><td>$motivo</td><td>$cantidad</td></tr>";
-			}
-			echo "</table>";
+			// // Ejemplo: mostrar todo en tabla
+			// echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
+			// foreach ($conteo as $motivo => $cantidad) {
+			// 	echo "<tr><td>$motivo</td><td>$cantidad</td></tr>";
+			// }
+			// echo "</table>";
+
+			echo "<td>".$Ingreso    ."</td>";//Fecha final de contrato
 
 
 		}
