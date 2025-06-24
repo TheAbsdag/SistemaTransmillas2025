@@ -148,7 +148,7 @@ ORDER BY hoj_nombre ASC";
 
 		$idusuario = obtenerUsuarioConNomina($rw1[5]);
 
-		if ($rw1[20]!="000-00-00"){
+		if ($rw1[20]!="0000-00-00"){
 			$fechaIniciContrato=$rw1[20];
 		}else {
 			$fechaIniciContrato=$rw1[6];
