@@ -190,14 +190,14 @@ ORDER BY hoj_nombre ASC";
 			$colorFila="#E6B7BE";
 		}elseif ($mesdeingreso==true) {
 			$fechaInicia=$fechaIniciContrato;
-			$fechaFinaliza=$rw1[14];
+			$fechaFinaliza=$fechafinal;
 		}elseif ($mesdeFinal==true) {
 			$fechaInicia=$fechaactual;
 			$fechaFinaliza=$fechaFinContrato;
 			$colorFila="#E6B7BE";
 		}else {
 			$fechaInicia=$fechaactual;
-			$fechaFinaliza=$rw1[14];
+			$fechaFinaliza=$fechafinal;
 
 		}
 
@@ -217,8 +217,46 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$nombreCargo."</td>";
 			echo "<td>".$salario     ."</td>";//Salario Mes
 			echo "<td>".$auxilio    ."</td>";//Auxilio
-			echo "<td>".$fechaInicia    ."</td>";//Fecha inicio contrato
-			echo "<td>".$fechaFinaliza    ."</td>";//Fecha final de contrato
+
+
+			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
+			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
+			$conteo = obtenerConteoPorMotivo($fechaInicia, $fechaFinaliza, $idusuario);
+
+			// Capturar cada motivo en su propia variable
+			$Ingreso                   = $conteo['Ingreso'];
+			$NoTrabajo                = $conteo['No trabajo'];
+			$Sancionado               = $conteo['Sancionado'];
+			$Incapacidad              = $conteo['Incapacidad'];
+			$SeDevolvio               = $conteo['Se devolvio'];
+			$PositivoCovid            = $conteo['Positivo Covid'];
+			$CancelacionContrato      = $conteo['Cancelacion contrato'];
+			$AbandonoDePuesto         = $conteo['Abandono de puesto'];
+			$Vacaciones               = $conteo['Vacaciones'];
+			$Descanso                 = $conteo['Descanso'];
+			$IngresoPorHoras          = $conteo['Ingreso por horas'];
+			$DescansoNoRemunerado     = $conteo['Descanso no remunerado'];
+			$DiaDeSancionPs           = $conteo['Dia de sancion Ps'];
+			$ReposicionPorFalla       = $conteo['Reposicion por falla'];
+			$FestivoEnVacaciones      = $conteo['Festivo en vacaciones'];
+			$LicenciaMaternidad       = $conteo['licencia de maternidad'];
+			$LicenciaPorLuto          = $conteo['LICENCIA POR LUTO'];
+			$PermisoNoRemunerado      = $conteo['PERMISO NO REMUNERADO'];
+			$PagoIncapacidad66        = $conteo['PAGO DE INCAPACIDAD AL 66'];
+			$Incapacidad50            = $conteo['incapasidad al 50 porciento'];
+			$DiaSalarioMinimo         = $conteo['dia salario minimo'];
+
+			// Ejemplo: validar si tuvo vacaciones
+			if ($Vacaciones > 0) {
+				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
+			}
+
+			// Ejemplo: mostrar todo en tabla
+			echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
+			foreach ($conteo as $motivo => $cantidad) {
+				echo "<tr><td>$motivo</td><td>$cantidad</td></tr>";
+			}
+			echo "</table>";
 
 
 		}
@@ -1172,6 +1210,62 @@ function obtenerDatosCargo($idCargo) {
     return mysqli_fetch_row($DB1->Consulta_ID); // Devuelve array con los datos del cargo
 }
 
+function obtenerConteoPorMotivo($fechaInicio, $fechaFin, $idUsuario) {
+    global $DB1;
+
+    // Lista completa de motivos a considerar
+    $motivos = [
+        'Ingreso',
+        'No trabajo',
+        'Sancionado',
+        'Incapacidad',
+        'Se devolvio',
+        'Positivo Covid',
+        'Cancelacion contrato',
+        'Abandono de puesto',
+        'Vacaciones',
+        'Descanso',
+        'Ingreso por horas',
+        'Descanso no remunerado',
+        'Dia de sancion Ps',
+        'Reposicion por falla',
+        'Festivo en vacaciones',
+        'licencia de maternidad',
+        'LICENCIA POR LUTO',
+        'PERMISO NO REMUNERADO',
+        'PAGO DE INCAPACIDAD AL 66',
+        'incapasidad al 50 porciento',
+        'dia salario minimo'
+    ];
+
+    // Escapar motivos para SQL
+    $motivosSQL = implode("','", array_map('addslashes', $motivos));
+
+    // Consulta SQL
+    $sql = "
+        SELECT seg_motivo, COUNT(*) AS cantidad 
+        FROM seguimiento_user
+        WHERE seg_fechaingreso BETWEEN '$fechaInicio' AND '$fechaFin'
+          AND seg_idusuario = '$idUsuario'
+          AND seg_motivo IN ('$motivosSQL')
+        GROUP BY seg_motivo
+    ";
+
+    // Ejecutar consulta
+    $DB1->Execute($sql);
+
+    // Inicializar todos los motivos en 0
+    $conteo = array_fill_keys($motivos, 0);
+
+    // Recorrer resultados
+    while ($fila = mysqli_fetch_assoc($DB1->Consulta_ID)) {
+        $motivo = $fila['seg_motivo'];
+        $cantidad = (int)$fila['cantidad'];
+        $conteo[$motivo] = $cantidad;
+    }
+
+    return $conteo;
+}
 include("footer.php");
 
 
