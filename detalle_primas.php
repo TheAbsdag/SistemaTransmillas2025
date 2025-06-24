@@ -241,12 +241,12 @@ ORDER BY hoj_nombre ASC";
 			}
 
 
-			if (($fechaactual>=$priemrdiadestemes and $fechafinal<=$diaveinte)) {
-				$color="#00bf19";
-			}else{
+			// if (($fechaactual>=$priemrdiadestemes and $fechafinal<=$diaveinte)) {
+			// 	$color="#00bf19";
+			// }else{
 
-				if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
-			}
+			// 	if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
+			// }
 
 			
 			$terminaContrato="";
@@ -269,15 +269,15 @@ ORDER BY hoj_nombre ASC";
 
 			
 			$priemrDiaQuinceTermina=date("Y-m-d H:i:s", strtotime($añoterminocontrato.'-'.$mesterminocontrato.'-01'.' 00:00:00'));
-			if ($fechaactual>= $priemrDiaQuinceTermina ) {
+			// if ($fechaactual>= $priemrDiaQuinceTermina ) {
 				
-				$color="#D35400";
+			// 	$color="#D35400";
 
-			}else{
+			// }else{
 				
-				if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
+			// 	if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
 
-			}
+			// }
 
 
 			$nueva_fechaTerminaContrato = date("Y-m-d", strtotime($terminaContrato . "+30 days"));
