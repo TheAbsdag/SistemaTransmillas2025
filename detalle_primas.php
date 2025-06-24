@@ -156,7 +156,7 @@ ORDER BY hoj_nombre ASC";
 		
        	$fechaFinContrato=$rw1[14];
 
-		
+
 
 
 		$colorFila="";			
@@ -190,14 +190,14 @@ ORDER BY hoj_nombre ASC";
 			$colorFila="#E6B7BE";
 		}elseif ($mesdeingreso==true) {
 			$fechaInicia=$fechaIniciContrato;
-			$fechaFinaliza=$fechafinal;
+			$fechaFinaliza=$rw1[14];
 		}elseif ($mesdeFinal==true) {
 			$fechaInicia=$fechaactual;
 			$fechaFinaliza=$fechaFinContrato;
 			$colorFila="#E6B7BE";
 		}else {
 			$fechaInicia=$fechaactual;
-			$fechaFinaliza=null;
+			$fechaFinaliza=$rw1[14];
 
 		}
 
