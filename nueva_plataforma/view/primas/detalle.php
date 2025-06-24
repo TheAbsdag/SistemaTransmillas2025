@@ -1,3 +1,6 @@
+<?php 
+$sedes = $this->obtenerSedes($db);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,10 +35,14 @@
                 </select>
             </div>
 
-            <div class="col-md-3">
-                <label for="param35" class="form-label">Sede (ID)</label>
-                <input type="number" name="param35" id="param35" class="form-control" value="<?= $_POST['param35'] ?? '' ?>">
-            </div>
+            <select name="param35" class="form-select">
+                <option value="">Sede</option>
+                <?php foreach ($sedes as $sede): ?>
+                    <option value="<?= $sede['id_sedes'] ?>" <?= ($_POST['param35'] ?? '') == $sede['id_sedes'] ? 'selected' : '' ?>>
+                        <?= $sede['nombre_sede'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
             <div class="col-md-3">
                 <label for="param33" class="form-label">Cédula</label>
