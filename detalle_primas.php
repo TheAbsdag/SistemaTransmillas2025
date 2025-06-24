@@ -155,16 +155,20 @@ ORDER BY hoj_nombre ASC";
 		}
 		
        	$fechaFinContrato=$rw1[14];
-
+		// Comprobar si tiene hora (espacio + al menos una hora tipo 00:00:00)
+		if (strpos($fechaFinContrato, ' ') !== false) {
+			// Extraer solo la parte de la fecha
+			$fechaFinContrato = explode(' ', $fechaFinContrato)[0];
+		}
 
 		$colorFila="";			
 		$totaldevengado=0;
 		$totaldeduccion=0;
 		$fechafin=$fechafinal;
+		$mostrar=true;
 		if($fechaIniciContrato>=$fechaactual and $fechaIniciContrato<=$fechafinal){  
 			$mesdeingreso=true;
-			$fechaAhora=$fechaIniciContrato;
-			
+			$fechaAhora=$fechaIniciContrato;		
 		}else{
 			$mesdeingreso=false;
 			$fechaAhora=$fechaactual;
@@ -174,7 +178,8 @@ ORDER BY hoj_nombre ASC";
 			$mesdeFinal=false;
 		}elseif($fechaFinContrato>=$fechaactual and $fechaFinContrato<=$fechafinal){          
 			$mesdeFinal=true;
-		}else{
+		}elseif($fechaFinContrato<$fechaactual){
+			$mostrar=false;
 			$mesdeFinal=false;
 		}
 		
@@ -196,7 +201,7 @@ ORDER BY hoj_nombre ASC";
 
 		}
 
-		if($idusuario>=1){
+		if($idusuario>=1 and $mostrar==true){
 
 			echo "<tr class='text' bgcolor='$colorFila' onmouseover='this.style.backgroundColor=\"$colorFila\"' onmouseout='this.style.backgroundColor=\"$colorFila\"'>";		
 			echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
