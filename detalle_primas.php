@@ -164,7 +164,6 @@ ORDER BY hoj_nombre ASC";
 		$colorFila="";			
 		$totaldevengado=0;
 		$totaldeduccion=0;
-		$fechaAhora=$fechaIniciContrato;
 		$fechafin=$fechafinal;
 		$mostrar=true;
 		if($fechaIniciContrato>=$fechaactual and $fechaIniciContrato<=$fechafinal){  
@@ -193,7 +192,7 @@ ORDER BY hoj_nombre ASC";
 			$fechaInicia=$fechaIniciContrato;
 			$fechaFinaliza=$fechafinal;
 		}elseif ($mesdeFinal==true) {
-			$fechaInicia=$mesdeingreso;
+			$fechaInicia=$fechaactual;
 			$fechaFinaliza=$fechaFinContrato;
 			$colorFila="#E6B7BE";
 		}else {
