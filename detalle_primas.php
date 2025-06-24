@@ -129,7 +129,11 @@ $FB->titulo_azul1("Termina contrato",1,'5%',0);
 
 	$valorTotalDePrimas=0;
 	$tablaPago="";
-$sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado`,hoj_sede,hoj_fechatermino,hoj_cuen,hoj_tcuenta,hoj_firma,hoj_estado,hoj_banco FROM hojadevida
+$sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo,
+ `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,
+ `hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`,
+ `hoj_estado`,hoj_sede,hoj_fechatermino,hoj_cuen,hoj_tcuenta,hoj_firma,
+  hoj_estado,hoj_banco,hoj_fech_año_act FROM hojadevida
 INNER JOIN sedes ON hoj_sede = idsedes
 WHERE (idhojadevida > 0 AND hoj_estado = 'Activo' ) and hoj_tipocontrato='Empresa' $conde4 $conde
 ORDER BY hoj_nombre ASC";
@@ -138,32 +142,82 @@ ORDER BY hoj_nombre ASC";
 	  while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 	  {
 
+		//   $user="SELECT `idusuarios` FROM `usuarios` WHERE `usu_identificacion`='$rw1[5]' and usu_ver_nomina='1'";
+		//   $DB1->Execute($user); 
+		//   $idusuario=$DB1->recogedato(0);
+
+		$idusuario = obtenerUsuarioConNomina($rw1[5]);
+
+		if ($rw1[20]!="000-00-00"){
+			$fechaIniciContrato=$rw1[20];
+		}else {
+			$fechaIniciContrato=$rw1[6];
+		}
+		
+       	$fechaFinContrato=$rw1[14];
 
 
 
 		$totaldevengado=0;
 		$totaldeduccion=0;
 		$fechafin=$fechafinal;
-		if($rw1[6]>=$fechaactual and $rw1[6]<=$fechafinal){
-            // echo$rw1[6].$rw1[1];
+		if($fechaIniciContrato>=$fechaactual and $fechaIniciContrato<=$fechafinal){  
 			$mesdeingreso=true;
-			$fechaAhora=$rw1[6];
+			$fechaAhora=$fechaIniciContrato;
 		}else{
 			$mesdeingreso=false;
 			$fechaAhora=$fechaactual;
 		}
+
+		if ($fechaFinContrato==null){
+			$mesdeFinal=false;
+		}elseif($fechaFinContrato>=$fechaactual and $fechaFinContrato<=$fechafinal){          
+			$mesdeFinal=true;
+		}else{
+			$mesdeFinal=false;
+		}
 		
-		// and  usu_estado = '1' and usu_filtro='1'
-		  $user="SELECT `idusuarios` FROM `usuarios` WHERE `usu_identificacion`='$rw1[5]' and usu_ver_nomina='1'";
-		  $DB1->Execute($user); 
-		  $idusuario=$DB1->recogedato(0);
 
-		//   $fechafinal=$fechafinal;
+		if ($mesdeingreso==true and $mesdeFinal==true) {
+			$fechaInicia=$fechaIniciContrato;
+			$fechaFinaliza=$fechaFinContrato;
+		}elseif ($mesdeingreso==true) {
+			$fechaInicia=$fechaIniciContrato;
+			$fechaFinaliza=$fechafinal;
+		}elseif ($mesdeFinal==true) {
+			$fechaInicia=$mesdeingreso;
+			$fechaFinaliza=$fechaFinContrato;
+		}else {
+			$fechaInicia=$fechaactual;
+			$fechaFinaliza=$mesdeFinal;
+		}
+
+		if($idusuario>=1){
+
+			echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";		
+			echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
+			echo "<td>".$rw1[1]."".$rw1[2]."</td>";
+			echo "<td>".$rw1[4]."</td>";
+			echo "<td>".$rw1[5]."</td>";
+
+			$cargosaldo = obtenerDatosCargo($rw1[3]);
+			// Ejemplo de acceso a los datos:
+			$nombreCargo = $cargosaldo[1];
+			$salario     = $cargosaldo[2];
+			$auxilio     = $cargosaldo[3];
+			echo "<td>".$nombreCargo."</td>";
+			echo "<td>".$auxilio    ."</td>";//Salario Mes
+
+
+		}
 
 
 
 
-		if ($rw1[14]==null) {
+
+
+
+		if ($fechaFinContrato==null) {
 
 			$mesiniciocontrato=date("m", strtotime($rw1[6]));
 			$añoiniciocontrato=date("Y", strtotime($rw1[6]));
@@ -202,10 +256,10 @@ ORDER BY hoj_nombre ASC";
 		}else{
 			
 			
-			$terminaContrato=$rw1[14];
-			$mesterminocontrato=date("m", strtotime($rw1[14]));
-			$añoterminocontrato=date("Y", strtotime($rw1[14]));
-			$diaterminocontrato=date("d", strtotime($rw1[14]));
+			$terminaContrato=$fechaFinContrato;
+			$mesterminocontrato=date("m", strtotime($fechaFinContrato));
+			$añoterminocontrato=date("Y", strtotime($fechaFinContrato));
+			$diaterminocontrato=date("d", strtotime($fechaFinContrato));
 
 			
 			$priemrDiaQuinceTermina=date("Y-m-d H:i:s", strtotime($añoterminocontrato.'-'.$mesterminocontrato.'-01'.' 00:00:00'));
@@ -382,7 +436,7 @@ $tablaPago.="<td>$rw1[15]</td>";
 			
 //Dias trabajados		
 			$diassitrabajo=0;
-			$sitrabajo="SELECT count(*) FROM `seguimiento_user`  where seg_motivo in('Ingreso','descanso no remunerado','Reposicion por falla') and seg_fechaingreso>='$fechaAhora' and seg_fechaingreso<='$fechafin'  and seg_idusuario='$idusuario' "; 
+			echo$sitrabajo="SELECT count(*) FROM `seguimiento_user`  where seg_motivo in('Ingreso','descanso no remunerado','Reposicion por falla') and seg_fechaingreso>='$fechaAhora' and seg_fechaingreso<='$fechafin'  and seg_idusuario='$idusuario' "; 
 			$DB1->Execute($sitrabajo); 
 			$rw4=mysqli_fetch_row($DB1->Consulta_ID);
 			if(empty($rw4)){
@@ -392,7 +446,7 @@ $tablaPago.="<td>$rw1[15]</td>";
 				$diassitrabajoPrima=$rw4[0];
 				if($fin==31 and $param36=='Segunda' or $fin==31 and $param36=='Completo' ){
 					
-					// echo"segunda  $fin==31 and $param36=='Segunda' or $fin==31 and $param36=='Completo'";
+
 						if ($rw4[0]<=0 or $mesdeingreso==true) {
 							$dia31=0;
 							
@@ -422,8 +476,7 @@ $tablaPago.="<td>$rw1[15]</td>";
 									// echo"segunda quince con 16 dias";
 									$dia31=0;
 								}
-								// $dia31=1;# code...
-								// $Tuno="Si";
+
 							}
 						}
 						if (($rw4[0]+$diasDescanso)==0) {
@@ -434,12 +487,6 @@ $tablaPago.="<td>$rw1[15]</td>";
 						$diassitrabajoConAuxilio=$rw4[0];
 						$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso-($dia31+$diasnotrabajo);
 
-						
-						// $diassitrabajo=$rw4[0]+$diasDescanso-($dia31);
-						// $diassitrabajoParaSumar=$rw4[0]+$diasDescanso-($dia31);
-						// $suamdedias="$diassitrabajoParaSumar=$rw4[0]+$diasDescanso-($dia31)";
-						// $diassitrabajoConAuxilio=$rw4[0];
-						// $diassitrabajoParaMostrar=$rw4[0]+$diasDescanso-($dia31);
 					// }
 
 				}elseif($fin==29 and $param36=='Segunda' or $fin==29 and $param36=='Completo' ){
@@ -523,31 +570,10 @@ $tablaPago.="<td>$rw1[15]</td>";
 						
 						
 
-						// if(strpos($rw9[5], ".") !== false) {
-				
-							// $partes = explode(".", $rw9[5]);
-							// $numeroAntesDelPunto1 = $partes[0];
-							// $numeroDespuesDelPunto1 = $partes[1];
-							
-							// // echo"Antes$numeroAntesDelPunto1*$diasvalorporcentaje";
-							// // echo"Despues$diasvalorporcentaje*$numeroDespuesDelPunto1";
 
-							// $diasPerLicBasValor=$numeroAntesDelPunto1*$diasvalorporcentaje;
-							// $valorMitaddiasPerLic=$diasvalorporcentaje*$numeroDespuesDelPunto1;
-			
-							// $diasPerLicBasValortotal=$diasPerLicBasValor+$valorMitaddiasPerLic;
-							// // echo"Total dia $diasPerLicBasValortotal=$diasPerLicBasValor+$valorMitaddiasPerLic";
-
-							// $diasvalorporcentaje=$diasvalor*0.;
-						// } else {
 							$rw9[5];
-							$valorporcentaje=($rw9[5]/100)*$diasvalor;
-							
-							// $diasPerLicBasValor=$rw6[0]*$diasvalorporcentaje;
-							// $diasPerLicBasValortotal=$diasPerLicBasValor;
-							
-						// }	
-						$diasPerLicBasValortotalfinal=$diasPerLicBasValortotalfinal+$valorporcentaje;
+							$valorporcentaje=($rw9[5]/100)*$diasvalor;	
+							$diasPerLicBasValortotalfinal=$diasPerLicBasValortotalfinal+$valorporcentaje;
 
 						
 					}
@@ -559,10 +585,6 @@ $tablaPago.="<td>$rw1[15]</td>";
 			}
 
 
-			// echo$valorPermisosLicSalud;
-			// echo$valorPermisosLicPension;
-
-			// $valorPermisosLicBasico=$diasvalor*$diasPerLicBas;
 
 			$diasPerLicBasValortotalfinal_formateado = number_format($diasPerLicBasValortotalfinal, 0, ',', '.');			
 
@@ -577,13 +599,7 @@ $tablaPago.="<td>$rw1[15]</td>";
 
 			}else{
 				$diasincapacidad=$rw5[0];
-				// excepcion con usuario 423 andres 
-				// if ($idusuario=="1718" and $rw5[0]==0 and $fin ==29) {
 
-
-				// 	echo"OKKK";
-				// 	$diasincapacidad=1;
-				// }
 			}
 
 			if($diasincapacidad>=2){
@@ -599,49 +615,6 @@ $tablaPago.="<td>$rw1[15]</td>";
 			}
 
 
-//inac X porcentaje 
-			// $incaoacidadporce=0;
-			// $nombreMotivo="";
-			// $valorPermisosLicBasico=0;
-			// $diasPerLicBas=0;
-			// $incaporcen="SELECT `seg_motivo`, `seg_descr`, `mot_salud`, `mot_pension`, `mot_auxtransporte`, `mot_porcbasico`, `mot_otrosDevengos`  FROM `seguimiento_user` INNER JOIN motivo_ingreso on mot_nombre=seg_motivo  where seg_motivo in('PAGO DE INCAPACIDAD AL 66') and seg_fechaingreso>='$fechaAhora' and seg_fechaingreso<='$fechafin'  and seg_idusuario='$idusuario' "; 
-			// $DB1->Execute($permisoLicencia); 
-			// ;
-			// while($rw9=mysqli_fetch_row($DB1->Consulta_ID))
-			// {
-			// 	if(empty($rw9)){
-
-			// 		$incaoacidadporce=0;
-			// 	}else{
-				
-			// 		$incaoacidadporce=$incaoacidadporce+1;
-			// 		$nombreincapa=$rw9[0];
-
-			// 		if ($rw9[2]=="si" or $rw9[2]=="SI" ) {
-			// 			$incaoacidadporceSalud=$valorPermisosLic+1;
-			// 		}
-			// 		if ($rw9[3]=="si" or $rw9[3]=="SI") {
-			// 			$incaoacidadporcePension=$valorPermisosLic+1;
-			// 		}
-			// 		if($rw9[4]=="si" or $rw9[4]=="SI"){
-			// 			$incaoacidadporceAux=$valorPermisosLic+1;
-
-			// 		}
-			// 		if($rw9[6]=="si" or $rw9[6]=="SI"){
-			// 			$incaoacidadporceOtros=$valorPermisosLic+1;
-			// 		}
-					
-			// 		if($rw9[5]!="0"){
-			// 			$incaoacidadporceLicBas=$incaoacidadporceLicBas+1;
-						
-						
-			// 		}
-					
-					
-			// 	}
-
-			// 	$diasvalor*$incaoacidadporceLicBas
-			// }
 
 
 //VACACIONES
@@ -707,11 +680,7 @@ $tablaPago.="<td>$rw1[15]</td>";
 
 				
 			}
-// // excepcion con usuario 423 andres 
-// 			if ($idusuario== "423") {
-// 				$valorSalud=0;	
-// 				$valorPension=0;
-// 			}
+
 
 			$valorSalud_formateado = number_format($valorSalud, 0, ',', '.');
 
@@ -743,12 +712,7 @@ $tablaPago.="<td>$rw1[15]</td>";
 			}	
 
 			
-			// if($idcidades=='0'){
-			// 	$conde2="";
-		
-			// }else {
-			//   $conde2=" and (cue_idciudadori in $idcidades )"; 	
-			// }	
+	
 			$sedess="SELECT `usu_idsede` FROM `usuarios` WHERE `idusuarios`='$idusuario' ";
 			$DB1->Execute($sedess); 
 			$id_sedes=$DB1->recogedato(0);
@@ -904,25 +868,13 @@ elseif($param36=='Segunda'){
 		echo"$diasdeprima=($diasDiferencia+1)-($diasnotrabajo+$resta31s);";
 
 		$diasdeprima=($diasDiferencia+1)-($diasnotrabajo+$resta31s);
-		// $diasdeprima=$diasDiferencia;
-		
 
-	// }else if(date("".$añocontrato1."-".$mescontrato1."-".$dia1." 00:00:00")> date("".date('Y')."-01-31 00:00:00")){
-
-	// 	$diasdeprima=$diasDiferencia-($diasnotrabajo+1);
-	// 	$aqui="Mayor o igual a febrero";
-	// 	if ($idusuario==1819) {
-	// 		$diasdeprima=$diasDiferencia-($diasnotrabajo+2);
-	// 	}
-
-	// }
 
 
 }
 
 
 
-echo"Dias No trabajo".$diasnotrabajo;
 
 $valordiasprima=$diasdeprima*$primapordia;
 $valordiasprima_formateado = number_format($valordiasprima, 0, ',', '.');
@@ -1171,9 +1123,42 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 	  
 	
 
+$f1 = '2025-01-01';
+$f2 = '2025-06-30';
 
-	/* $FB->titulo_azul1("$ $totalalcobro",1,0,0); 
-	$FB->titulo_azul1("$ $totalprestamos",1,0,0);  */
+$dias = diasEntreFechas($f1, $f2);
+echo "Días entre $f1 y $f2: $dias";
+function diasEntreFechas($fecha1, $fecha2) {
+    $inicio = new DateTime($fecha1);
+    $fin = new DateTime($fecha2);
+
+    // Calcula la diferencia
+    $diferencia = $inicio->diff($fin);
+
+    // Devuelve el número de días (puede ser negativo si la fecha1 > fecha2)
+    return (int)$diferencia->format('%r%a');
+}
+function obtenerUsuarioConNomina($identificacion) {
+    global $DB1;
+
+    $query = "SELECT `idusuarios` FROM `usuarios` 
+              WHERE `usu_identificacion` = '$identificacion' 
+              AND `usu_ver_nomina` = '1'";
+
+    $DB1->Execute($query);
+    return $DB1->recogedato(0);
+}
+function obtenerDatosCargo($idCargo) {
+    global $DB1;
+
+    $sql = "SELECT `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, 
+                   `car_otros`, `car_Recogida`, `car_ValorRecogida`
+            FROM `cargo` 
+            WHERE `idcargo` = '$idCargo'";
+
+    $DB1->Execute($sql);
+    return mysqli_fetch_row($DB1->Consulta_ID); // Devuelve array con los datos del cargo
+}
 
 include("footer.php");
 
