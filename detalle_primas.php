@@ -198,7 +198,7 @@ ORDER BY hoj_nombre ASC";
 
 		if($idusuario>=1){
 
-			echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"$colorFila\"' onmouseout='this.style.backgroundColor=\"$colorFila\"'>";		
+			echo "<tr class='text' bgcolor='$colorFila' onmouseover='this.style.backgroundColor=\"$colorFila\"' onmouseout='this.style.backgroundColor=\"$colorFila\"'>";		
 			echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
 			echo "<td>".$rw1[1]."".$rw1[2]."</td>";
 			echo "<td>".$rw1[4]."</td>";
@@ -325,13 +325,13 @@ $tablaPago.="<td>$tipoCuenta</td>";
 $tablaPago.="<td>$codigoBanco</td>";
 $tablaPago.="<td>$rw1[15]</td>";
 
-			echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+			// echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 		 
-			echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
-			echo "
-			<td>".$rw1[1]." ".$rw1[2]."</td>";
-			echo "<td>".$rw1[4]."</td>";
-			echo "<td>".$rw1[5]."</td>";
+			// echo "<td><input type='checkbox'  onchange='selecionado($idusuario)' class='checkbox' id='".$idusuario."s' value='$idusuario'></td>";
+			// echo "
+			// <td>".$rw1[1]." ".$rw1[2]."</td>";
+			// echo "<td>".$rw1[4]."</td>";
+			// echo "<td>".$rw1[5]."</td>";
 
 
 			$va++; $p=$va%2;
