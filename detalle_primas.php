@@ -155,11 +155,7 @@ ORDER BY hoj_nombre ASC";
 		}
 		
        	$fechaFinContrato=$rw1[14];
-		// // Comprobar si tiene hora (espacio + al menos una hora tipo 00:00:00)
-		// if (strpos($fechaFinContrato, ' ') !== false) {
-		// 	// Extraer solo la parte de la fecha
-		// 	$fechaFinContrato = explode(' ', $fechaFinContrato)[0];
-		// }
+
 
 		$colorFila="";			
 		$totaldevengado=0;
@@ -181,6 +177,12 @@ ORDER BY hoj_nombre ASC";
 		}elseif($fechaFinContrato<$fechaactual){
 			$mostrar=false;
 			$mesdeFinal=false;
+		}
+
+		// Comprobar si tiene hora (espacio + al menos una hora tipo 00:00:00)
+		if (strpos($fechaFinContrato, ' ') !== false and $fechaFinContrato!=null) {
+			// Extraer solo la parte de la fecha
+			$fechaFinContrato = explode(' ', $fechaFinContrato)[0];
 		}
 		
 		$fechaInicia=$fechaIniciContrato;
