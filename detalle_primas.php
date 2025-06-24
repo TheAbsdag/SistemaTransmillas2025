@@ -210,7 +210,9 @@ ORDER BY hoj_nombre ASC";
 			$salario     = $cargosaldo[2];
 			$auxilio     = $cargosaldo[3];
 			echo "<td>".$nombreCargo."</td>";
-			echo "<td>".$auxilio    ."</td>";//Salario Mes
+			echo "<td>".$salario     ."</td>";//Salario Mes
+			echo "<td>".$auxilio    ."</td>";//Auxilio
+
 
 
 		}
@@ -886,20 +888,20 @@ $valordiasprima_formateado = number_format($valordiasprima, 0, ',', '.');
 $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 
 
-			echo "<td>".$cargosaldo[1]." </td>";//Nombre del cargo
+			// echo "<td>".$cargosaldo[1]." </td>";//Nombre del cargo
 			
 			
-			echo "<td>$".$sueldo_formateado."</td>";//Salario basico por mes
-			echo "<td>$".$cargosaldo[3]."</td>";//Auxilio por mes
+			// echo "<td>$".$sueldo_formateado."</td>";//Salario basico por mes
+			// echo "<td>$".$cargosaldo[3]."</td>";//Auxilio por mes
 			
 			
-			$diasvalor_formateado = number_format($diasvalor, 0, ',', '.');
-			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajoPrima Dias </td>"; //Ingreso?
-			echo "<td>".$diasDescanso."</td>";// dias de descanso
-			echo "<td>".$diasnotrabajo."</td>";
-			echo "<td>".$diasincapacidad."</td>";
-			echo "<td>$diasVacaciones</td>"; //VACACIONES
-			echo "<td>".$nombreMotivo."<br>".$permisosLic." Dias</td>"; 
+			// $diasvalor_formateado = number_format($diasvalor, 0, ',', '.');
+			// echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajoPrima Dias </td>"; //Ingreso?
+			// echo "<td>".$diasDescanso."</td>";// dias de descanso
+			// echo "<td>".$diasnotrabajo."</td>";
+			// echo "<td>".$diasincapacidad."</td>";
+			// echo "<td>$diasVacaciones</td>"; //VACACIONES
+			// echo "<td>".$nombreMotivo."<br>".$permisosLic." Dias</td>"; 
 
 
 
@@ -992,9 +994,9 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 
 			$TotalDevengado= ($totalauxilio + $valordediastrabajados+$valorDiasIncapadidad+$valorDiasVacaciones+$diasPerLicBasValortotalfinal+$ajustessumB)-($valorSalud+$valorPension+$restaABasico+$ajustesresB);
 			$TotalDevengado_formateado = number_format($TotalDevengado, 0, ',', '.');
-			echo "<td style='background-color:#F4D03F'>".$diasdeprima."  ".$calculo." </td>";//Valor quincena 
+			// echo "<td style='background-color:#F4D03F'>".$diasdeprima."  ".$calculo." </td>";//Valor quincena 
 
-			echo "<td style='background-color:#F4D03F'>$valordiasprima_formateado</td>";//Valor quincena 
+			// echo "<td style='background-color:#F4D03F'>$valordiasprima_formateado</td>";//Valor quincena 
 			$tablaPago.="<td>".$valordiasprima_formateado."</td></tr>";
 
 			if ($nombreMotivo="PAGO DE INCAPACIDAD AL 66") {
@@ -1004,16 +1006,16 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 			$totaldevengado=$valordediastrabajados+$totalauxilio+$valorDiasIncapadidad+$valorDiasVacaciones;
 			$totaldeduccion=$valorSalud+$valorPension+$restaABasico+$totaldeduccion;
 			$rutaDeComproBas="desprendible_primo.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaAhora&fechafin=$fechafinal&cuenta=&diastrabajados=$diasdeprima&sueldo=$valordiasprima&auxilitrans=&pagdiasinca=&totaldeveng=$valordiasprima&salud=&pension=&prestamos=&totaldeduccion=&confirmado=$validadoDesprendible&diasIncapacidad=&firma=$rw1[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=&sede=$rw1[7]&valorAjuste=&transporte=$cargosaldo[3]&sueldobasico=$cargosaldo[2]&semestre=$param36";
-			echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
-			<button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarDesPrima\",\"Basico\")' id='$param36".$idusuario."guardarCuenCobro'>$textEnviar</button>
-			<input  type='checkbox' $cheked1 id='".$param36."".$idusuario."confirmaAdminPrima1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdminPrima\",\"$param36\",1)' >
-			<label for='miCheckbox'>			
-			<details>
-			<summary>Confirmado</summary>
-				<p>$confirmado1<p/>
-	        </details>	
-			</label></td>";//IMPRIMIR
-			echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+			// echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
+			// <button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarDesPrima\",\"Basico\")' id='$param36".$idusuario."guardarCuenCobro'>$textEnviar</button>
+			// <input  type='checkbox' $cheked1 id='".$param36."".$idusuario."confirmaAdminPrima1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdminPrima\",\"$param36\",1)' >
+			// <label for='miCheckbox'>			
+			// <details>
+			// <summary>Confirmado</summary>
+			// 	<p>$confirmado1<p/>
+	        // </details>	
+			// </label></td>";//IMPRIMIR
+			// echo "<td>".$validado.$Observacion."</td>";//Confirmado?
 
 
 			$valorHorasDomini_formateado = number_format($valorTotalHorasDomini, 0, ',', '.');
@@ -1052,14 +1054,14 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 		    $totalOtrosConHD_formateado = number_format($totalOtrosConHD, 0, ',', '.');
 			$rutaDeComp="desprendibleOtros.php?cedula=".$rw1[5]."&nombre=".$rw1[1].$rw1[2]."&valor=".$totalOtrosConHD."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."&recogidas=".$cantRecogidas."&valorRecogidas=".$valorRecogidas."&otrosdeve=0&confirmado=$validadoDesprendible1&firma=$rw1[17]&valorAjuste=$valorAjusteO&tipoAjuste=$tipoAjusteO&descripcionAjuste=$descripcionAjusteO&descripcionOtros=$descripcionOtros";
 
-			echo "<td><div id='campo'>";
-			echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."$param36'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPagoPrima\",this.value,\"$param36\")' class='borrar' required>";
+			// echo "<td><div id='campo'>";
+			// echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."$param36'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPagoPrima\",this.value,\"$param36\")' class='borrar' required>";
 
-			echo"<option value='no' $no>NO</option>";
-			echo"<option value='Si'$si>SI</option>";
+			// echo"<option value='no' $no>NO</option>";
+			// echo"<option value='Si'$si>SI</option>";
 		   
 	
-			echo"</select>";
+			// echo"</select>";
 
 			
 
@@ -1070,19 +1072,19 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 
 		
 			  if ( $imagencompr=="") {
-				echo "<td>Cargar</td>";
+				// echo "<td>Cargar</td>";
 
 
 			  
 				}elseif ($imagencompr!=""){  
-				  echo "<td><a href='https://sistema.transmillas.com/img_nomina/$imagencompr' style='display: block;' target='_blank' title='Ver comprovante de pago de nomina' >Ver</a>";
-				  echo "<a id='Otros".$idusuario."' style='display: block;  pointer-events: ".$linkotros."; ' onclick='pop_dis16($idusuario,\"Comprobante_nomina_otros\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cambiar</a></td>";
+				//   echo "<td><a href='https://sistema.transmillas.com/img_nomina/$imagencompr' style='display: block;' target='_blank' title='Ver comprovante de pago de nomina' >Ver</a>";
+				//   echo "<a id='Otros".$idusuario."' style='display: block;  pointer-events: ".$linkotros."; ' onclick='pop_dis16($idusuario,\"Comprobante_nomina_otros\",\"$fechaactual\")';  title='Ingreso de Usuario' >Cambiar</a></td>";
 
 				}
 			// echo "<td></td>";
 			// echo "<td></td>";
-			echo "<td>$rw1[6]</td>";
-			echo "<td>$terminaContrato</td>";
+			// echo "<td>$rw1[6]</td>";
+			// echo "<td>$terminaContrato</td>";
 			
 			$totalDevengTodos=$totalDevengTodos+$TotalDevengado;
 
