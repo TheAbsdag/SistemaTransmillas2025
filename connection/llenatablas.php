@@ -773,10 +773,10 @@ class llenatablas
 		$imagen.="</td>";
 		return $imagen;
 	}
-	function llenadocs3($DB1, $tabla, $id_p, $version, $tam, $valor)
+	function llenadocs3($DB1, $tabla, $idhojadevida, $version, $tam, $valor)
 	{
 		$imagen="<td align='center' >";
-		$sql1="SELECT doc_ruta,iddocumentos,doc_fecha FROM documentos WHERE doc_idviene='$id_p' AND doc_tabla='$tabla' AND doc_version=$version ORDER BY doc_fecha DESC ";
+		$sql1="SELECT doc_ruta,iddocumentos,doc_fecha FROM documentos WHERE doc_idviene='$idhojadevida' AND doc_tabla='$tabla' AND doc_version=$version ORDER BY doc_fecha DESC ";
 		$DB1->Execute($sql1);
                 
                 $rw1=mysqli_fetch_row($DB1->Consulta_ID);

@@ -4,15 +4,8 @@ session_start();
  
 include("layout.php");
 
-echo '
-<style>
-.alerta-vencimiento td {
-  background-color: #ffcccc !important;
-}
-</style>
-';
 
-$FB->titulo_azul1("Hojas de Vida Clienetes",9,0,5);  
+$FB->titulo_azul1("Hojas de Vida Clientes",9,0,5);  
 $FB->abre_form("form1","hojadevidaclientes.php","post");
 $FB->nuevo7("new_hojadevidacliente.php?condecion=datospersonales&accion=1");
 
