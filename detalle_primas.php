@@ -335,6 +335,8 @@ ORDER BY hoj_nombre ASC";
 
 				
 				}
+				$rutaDeComproBas="desprendible_primo.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaAhora&fechafin=$fechafinal&cuenta=&diastrabajados=$totalDiasPrima&sueldo=$valordiasprima&auxilitrans=&pagdiasinca=&totaldeveng=$valorDiasPrima&salud=&pension=&prestamos=&totaldeduccion=&confirmado=$validadoDesprendible&diasIncapacidad=&firma=$rw1[17]&diasvacaciones=&sede=$rw1[7]&valorAjuste=&transporte=$cargosaldo[3]&sueldobasico=$cargosaldo[2]&semestre=$param36";
+
 				// HTML final
 				echo "<td>
 						<a href='$rutaDeComproBas' target='_blank'>Ver</a>
@@ -364,6 +366,7 @@ ORDER BY hoj_nombre ASC";
 								<option value='Si' $si>SI</option>
 						</select>
 					</td>";
+				echo "<td></td>";//Fecha inicio contrato
 				echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
 				echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
 		}
