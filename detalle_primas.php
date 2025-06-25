@@ -249,12 +249,12 @@ ORDER BY hoj_nombre ASC";
 
 			// Ejemplo: validar si tuvo vacaciones
 			if ($Vacaciones > 0) {
-				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
+				// echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
 			}
 
 			// Ejemplo: validar si tuvo vacaciones
 			if ($Descanso  > 0) {
-				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
+				// echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
 			}
 
 			$totalDiasPrima=$Ingreso+$descanso+$Incapacidad+$Vacaciones;
@@ -297,7 +297,7 @@ ORDER BY hoj_nombre ASC";
 			$botonEnviar1="none";
 			$confirmado1="";
 			$validadoDesprendible="";
-			$tablaNomina = "SELECT `pri_confirma`, `idprimas`, `pri_docprima`, `pri_confirmaUsus`, `pri_fechaconfirmausu`, `pri_confiAdmin`, `pri_fechaadminconfi`, `pri_idadminconfi`, `pri_fecha_inicio`, `pri_fecha_fin`, `pri_idusu`, `pri_semestre`, `pri_img_compro` 
+			echa$tablaNomina = "SELECT `pri_confirma`, `idprimas`, `pri_docprima`, `pri_confirmaUsus`, `pri_fechaconfirmausu`, `pri_confiAdmin`, `pri_fechaadminconfi`, `pri_idadminconfi`, `pri_fecha_inicio`, `pri_fecha_fin`, `pri_idusu`, `pri_semestre`, `pri_img_compro` 
 							FROM `primas` 
 							WHERE pri_idusu='$idusuario' AND pri_fecha_inicio='$fechaactual'";
 			$DB1->Execute($tablaNomina); 
