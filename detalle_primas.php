@@ -261,7 +261,8 @@ ORDER BY hoj_nombre ASC";
 			// }
 			// echo "</table>";
 
-			echo "<td>".$Ingreso    ."</td>";//cantidad de ingresos
+
+			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$Ingreso Dias </td>"; //Ingreso?
 			echo "<td>".$descanso     ."</td>";//cantidad de descansos
 			echo "<td>".$NoTrabajo  ."</td>";//cantidad de no trabajados
 			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
