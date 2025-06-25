@@ -1141,26 +1141,26 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 
 				
 			  }
-			echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
-			<button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarDesPrima\",\"Basico\")' id='$param36".$idusuario."guardarCuenCobro'>$textEnviar</button>
-			<input  type='checkbox' $cheked1 id='".$param36."".$idusuario."confirmaAdminPrima1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdminPrima\",\"$param36\",1)' >
-			<label for='miCheckbox'>			
-			<details>
-			<summary>Confirmado</summary>
-				<p>$confirmado1<p/>
-	        </details>	
-			</label></td>";//IMPRIMIR
-			echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+			// echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
+			// <button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarDesPrima\",\"Basico\")' id='$param36".$idusuario."guardarCuenCobro'>$textEnviar</button>
+			// <input  type='checkbox' $cheked1 id='".$param36."".$idusuario."confirmaAdminPrima1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdminPrima\",\"$param36\",1)' >
+			// <label for='miCheckbox'>			
+			// <details>
+			// <summary>Confirmado</summary>
+			// 	<p>$confirmado1<p/>
+	        // </details>	
+			// </label></td>";//IMPRIMIR
+			// echo "<td>".$validado.$Observacion."</td>";//Confirmado?
 
 
-			  			echo "<td><div id='campo'>";
-			echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."$param36'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPagoPrima\",this.value,\"$param36\")' class='borrar' required>";
+			//   			echo "<td><div id='campo'>";
+			// echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."$param36'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPagoPrima\",this.value,\"$param36\")' class='borrar' required>";
 
-			echo"<option value='no' $no>NO</option>";
-			echo"<option value='Si'$si>SI</option>";
+			// echo"<option value='no' $no>NO</option>";
+			// echo"<option value='Si'$si>SI</option>";
 		   
 	
-			echo"</select>";
+			// echo"</select>";
 			  
 
 			// $TotalDevengado= ($totalauxilio + $valordediastrabajados+$valorDiasIncapadidad+$valorDiasVacaciones+$diasPerLicBasValortotalfinal+$ajustessumB)-($valorSalud+$valorPension+$restaABasico+$ajustesresB);
