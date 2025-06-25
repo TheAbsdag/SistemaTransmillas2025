@@ -111,14 +111,14 @@ for ($year = $startYear; $year <= $currentYear; $year++){
 	
 	
 }
-$estados["Trabajando"]="Trabajando";
-$estados["Retirado"]="Retirado";
+$estadosUsu["Trabajando"]="Trabajando";
+$estadosUsu["Retirado"]="Retirado";
 $FB->llena_texto("A&ntildeo:", 34, 82, $DB, $años, "", "$añoA", 1, 0);
 $FB->llena_texto("Semestre", 36, 82, $DB, $semestres, "", "$quincena1", 4, 0);
 
 $FB->llena_texto("Sede :",35,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 and sed_principal='si' $conde2  order by sed_nombre asc  )", "cambio_ajax2(this.value, 16, \"llega_sub1\", \"param33\", 1, 0)", "$param35",1, 0);
 $FB->llena_texto("Operario:", 33, 444, $DB, "llega_sub1", "", "",4,0);
-$FB->llena_texto("Estado:", 38, 82, $DB, $estados, "", "$param38", 1, 0);
+$FB->llena_texto("Estado:", 38, 82, $DB, $estadosUsu, "", "$param38", 1, 0);
 // $FB->llena_texto("Motivo Ingreso:", 32, 82, $DB, $motivoingreso, "", "", 1, 0);
 $FB->llena_texto("", 37, 277, $DB, "", "", "llena_datos(0, $nivel_acceso, \"id_nombre\", \"ASC\");",1,0);
 // $FB->llena_texto("Tipo de Contrato:",37,82, $DB, $tipocontrato, "", "", 4, 0);
@@ -212,6 +212,7 @@ function llena_datos(ex, nivel, ordby, asc)
 	p4=document.getElementById('param34').value;
 	p5=document.getElementById('param35').value;
 	p6=document.getElementById('param36').value;
+	p8=document.getElementById('param38').value;
 	// p7=document.getElementById('param37').value;
 	//p7=document.getElementById('param37').value;
 	var pagina=0; 
@@ -222,7 +223,7 @@ function llena_datos(ex, nivel, ordby, asc)
 		location.href=destino;
 	}
 	else {
-		destino="detalle_primas.php?param31="+p1+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&pagina="+pagina+"&ordby="+ordby+"&asc="+asc;
+		destino="detalle_primas.php?param31="+p1+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param38="+p8+"&pagina="+pagina+"&ordby="+ordby+"&asc="+asc;
 		MostrarConsulta4(destino, "destino_vesr")
 	}
 	clearTimeout(timer2);
