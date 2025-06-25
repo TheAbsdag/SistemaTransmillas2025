@@ -258,6 +258,14 @@ ORDER BY hoj_nombre ASC";
 			}
 
 			$totalDiasPrima=$Ingreso+$descanso+$Incapacidad+$Vacaciones;
+
+			//==================================================
+			//               CALCULO DE PRECIO DE PRIMA
+			//==================================================
+			 $ValorDiaPrima=($salario/2)/180;
+			 $valorDiasPrima=$totalDiasPrima*$ValorDiaPrima;
+
+
 			// // Ejemplo: mostrar todo en tabla
 			// echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
 			// foreach ($conteo as $motivo => $cantidad) {
@@ -273,6 +281,8 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$Vacaciones  ."</td>";//cantidad de vacaciones
 			echo "<td>".$licenciasPermisos."</td>";//cantidad licenciasPermisos
 			echo "<td>".$totalDiasPrima  ."</td>";//Total Dias Prima
+			echo "<td>".$valorDiasPrima   ."</td>";//Fecha final de contrato
+
 			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
 			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
 
