@@ -2,39 +2,12 @@
 
 
 $diastrabajados=$_GET["diastrabajados"];
-// $sueldo=$_GET["sueldo"];
-// $auxilitrans=$_GET["auxilitrans"];
-// $pagdiasinca=$_GET["pagdiasinca"];
 $totaldeveng=$_GET["totaldeveng"];
-// $salud=$_GET["salud"];
-// $pension=$_GET["pension"];
-// $prestamos=$_GET["prestamos"];
-// $totaldeduccion=$_GET["totaldeduccion"];
-
-// $valor=$_GET["valor"];
-// $deudas=$_GET["deudas"];sueldo
 $validado=$_GET["confirmado"];
-// $diasIncapacidad=$_GET["diasIncapacidad"];
-// $valordiasVacaciones=$_GET["vacaciones"];
-// $diasVacaciones=$_GET["diasvacaciones"];
 $firma=$_GET["firma"];
-
-// $descriprestamos=$_GET["descriprestamos"];
-// $valorAjusteB=$_GET["valorAjuste"];
-// $tipoAjusteB=$_GET["tipoAjuste"];
-// $descripcionAjusteB=$_GET["descripcionAjuste"];
 $sueldobasico=$_GET["sueldobasico"];
 $transporte=$_GET["transporte"];
 
-// $ajustessumB=0;
-// $ajustesresB=0;
-// if ($tipoAjusteB=="suma") {
-//     $ajustessumB=$valorAjusteB;
-//     $ajustesresB=0;
-// }else if($tipoAjusteB=="descuento"){
-//     $ajustessumB=0;
-//     $ajustesresB=$valorAjusteB;
-// }
 
 $fechaini = strtotime($fechaini);
 $fechafin = strtotime($fechafin);
