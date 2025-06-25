@@ -250,6 +250,10 @@ ORDER BY hoj_nombre ASC";
 				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
 			}
 
+			// Ejemplo: validar si tuvo vacaciones
+			if ($Descanso  > 0) {
+				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
+			}
 			// // Ejemplo: mostrar todo en tabla
 			// echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
 			// foreach ($conteo as $motivo => $cantidad) {
@@ -257,7 +261,8 @@ ORDER BY hoj_nombre ASC";
 			// }
 			// echo "</table>";
 
-			echo "<td>".$Ingreso    ."</td>";//Fecha final de contrato
+			echo "<td>".$Ingreso    ."</td>";//cantidad de ingresos
+			echo "<td>".$Descanso    ."</td>";//cantidad de descansos
 			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
 			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
 
