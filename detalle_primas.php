@@ -219,8 +219,7 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$auxilio    ."</td>";//Auxilio
 
 
-			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
-			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
+
 			$conteo = obtenerConteoPorMotivo($fechaInicia, $fechaFinaliza, $idusuario);
 
 			// Capturar cada motivo en su propia variable
@@ -259,7 +258,8 @@ ORDER BY hoj_nombre ASC";
 			// echo "</table>";
 
 			echo "<td>".$Ingreso    ."</td>";//Fecha final de contrato
-
+			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
+			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
 
 		}
 
