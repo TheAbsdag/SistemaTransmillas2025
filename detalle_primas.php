@@ -284,7 +284,86 @@ ORDER BY hoj_nombre ASC";
 
 			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
 			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
+			
+			$tablaNomina = "SELECT `pri_confirma`, `idprimas`, `pri_docprima`, `pri_confirmaUsus`, `pri_fechaconfirmausu`, `pri_confiAdmin`, `pri_fechaadminconfi`, `pri_idadminconfi`, `pri_fecha_inicio`, `pri_fecha_fin`, `pri_idusu`, `pri_semestre`, `pri_img_compro` 
+							FROM `primas` 
+							WHERE pri_idusu='$idusuario' AND pri_fecha_inicio='$fechaactual'";
+			$DB1->Execute($tablaNomina); 
 
+			while ($Nomina = mysqli_fetch_row($DB1->Consulta_ID)) {
+				// Datos
+				$imagenCompro   = $Nomina[12];
+				$priConfirma    = $Nomina[0];
+				$priDoc         = $Nomina[2];
+				$confirmaUsus   = $Nomina[3];
+				$fechaConfirmUs = $Nomina[4];
+				$confirmaAdmin  = $Nomina[5];
+				$fechaAdmin     = $Nomina[6];
+				$idAdmin        = $Nomina[7];
+
+				// Color select pago
+				$colorSelect = ($priConfirma == "Si") ? "#28B463" : "#8B0000";
+				$si = ($priConfirma == "Si") ? "selected" : "";
+				$no = ($priConfirma != "Si") ? "selected" : "";
+				$linkBasico = ($priConfirma == "Si") ? "auto" : "none";
+
+				// Botón enviar
+				$textEnviar  = empty($priDoc) ? "Enviar" : "Reenviar";
+				$colorEnviar = empty($priDoc) ? "rgb(7, 79, 145)" : "#28B463";
+
+				// Validación usuario
+				if ($confirmaUsus == "Si") {
+					$validado = "Validado✅ <br> $fechaConfirmUs";
+				} elseif ($confirmaUsus == "no") {
+					$validado = "Rechazada❌ <br> $fechaConfirmUs";
+				} else {
+					$validado = "Pendiente";
+				}
+
+				// Confirmación admin
+				if ($confirmaAdmin == "si") {
+					$cheked1 = "checked";
+					$botonEnviar1 = "inline-block";
+					$user1 = "SELECT `usu_nombre` FROM `usuarios` WHERE `idusuarios`='$idAdmin'";
+					$DB1->Execute($user1); 
+					$nombre1 = $DB1->recogedato(0);
+					$confirmado1 = "Por $nombre1 <br> en la fecha: $fechaAdmin";
+				} else {
+					$cheked1 = "";
+					$botonEnviar1 = "none";
+					$confirmado1 = "";
+				}
+
+				// HTML final
+				echo "<td>
+						<a href='$rutaDeComproBas' target='_blank'>Ver</a>
+						<button 
+							style='display: $botonEnviar1; width:120px; border:1px solid #f9f9f9; background-color:$colorEnviar; color:#fff; font-size:15px' 
+							onclick='enviarDesprendible(\"$rutaDeComproBas\", $idusuario, \"$fechaactual\", \"$fechafinal\", \"guardarDesPrima\", \"Basico\")' 
+							id='$param36$idusuario"."guardarCuenCobro'>
+							$textEnviar
+						</button>
+						<input type='checkbox' $cheked1 id='$param36$idusuario"."confirmaAdminPrima1' 
+							onchange='confirmaAdmin($idusuario, \"$fechaactual\", \"$fechafinal\", \"confirmaAdminPrima\", \"$param36\", 1)' />
+						<label for='miCheckbox'>
+							<details><summary>Confirmado</summary><p>$confirmado1</p></details>
+						</label>
+					</td>";
+
+				echo "<td>$validado $Observacion</td>";
+
+				echo "<td>
+						<select 
+							style='width:120px; border:1px solid #f9f9f9; background-color:$colorSelect; color:#fff; font-size:15px'  
+							name='$va' 
+							id='".$idusuario."$param36' 
+							onchange='confirmarPago($idusuario, \"$fechaactual\", \"$fechafinal\", \"confirmarPagoPrima\", this.value, \"$param36\")' 
+							class='borrar' required>
+								<option value='no' $no>NO</option>
+								<option value='Si' $si>SI</option>
+						</select>
+					</td>";
+			}
 		}
 
 
@@ -1060,32 +1139,35 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 
 				
 			  }
+			echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
+			<button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarDesPrima\",\"Basico\")' id='$param36".$idusuario."guardarCuenCobro'>$textEnviar</button>
+			<input  type='checkbox' $cheked1 id='".$param36."".$idusuario."confirmaAdminPrima1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdminPrima\",\"$param36\",1)' >
+			<label for='miCheckbox'>			
+			<details>
+			<summary>Confirmado</summary>
+				<p>$confirmado1<p/>
+	        </details>	
+			</label></td>";//IMPRIMIR
+			echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+
+
+			  			echo "<td><div id='campo'>";
+			echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."$param36'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPagoPrima\",this.value,\"$param36\")' class='borrar' required>";
+
+			echo"<option value='no' $no>NO</option>";
+			echo"<option value='Si'$si>SI</option>";
+		   
+	
+			echo"</select>";
 			  
 
-			$TotalDevengado= ($totalauxilio + $valordediastrabajados+$valorDiasIncapadidad+$valorDiasVacaciones+$diasPerLicBasValortotalfinal+$ajustessumB)-($valorSalud+$valorPension+$restaABasico+$ajustesresB);
-			$TotalDevengado_formateado = number_format($TotalDevengado, 0, ',', '.');
-			// echo "<td style='background-color:#F4D03F'>".$diasdeprima."  ".$calculo." </td>";//Valor quincena 
+			// $TotalDevengado= ($totalauxilio + $valordediastrabajados+$valorDiasIncapadidad+$valorDiasVacaciones+$diasPerLicBasValortotalfinal+$ajustessumB)-($valorSalud+$valorPension+$restaABasico+$ajustesresB);
+			// $TotalDevengado_formateado = number_format($TotalDevengado, 0, ',', '.');
 
-			// echo "<td style='background-color:#F4D03F'>$valordiasprima_formateado</td>";//Valor quincena 
-			$tablaPago.="<td>".$valordiasprima_formateado."</td></tr>";
-
-			if ($nombreMotivo="PAGO DE INCAPACIDAD AL 66") {
-				$diasincapacidad=$diasincapacidad+$permisosLic;
-				$valorDiasIncapadidad=$valorDiasIncapadidad+$diasPerLicBasValortotalfinal;
-			}
 			$totaldevengado=$valordediastrabajados+$totalauxilio+$valorDiasIncapadidad+$valorDiasVacaciones;
 			$totaldeduccion=$valorSalud+$valorPension+$restaABasico+$totaldeduccion;
 			$rutaDeComproBas="desprendible_primo.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaAhora&fechafin=$fechafinal&cuenta=&diastrabajados=$diasdeprima&sueldo=$valordiasprima&auxilitrans=&pagdiasinca=&totaldeveng=$valordiasprima&salud=&pension=&prestamos=&totaldeduccion=&confirmado=$validadoDesprendible&diasIncapacidad=&firma=$rw1[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=&sede=$rw1[7]&valorAjuste=&transporte=$cargosaldo[3]&sueldobasico=$cargosaldo[2]&semestre=$param36";
-			// echo "<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
-			// <button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarDesPrima\",\"Basico\")' id='$param36".$idusuario."guardarCuenCobro'>$textEnviar</button>
-			// <input  type='checkbox' $cheked1 id='".$param36."".$idusuario."confirmaAdminPrima1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdminPrima\",\"$param36\",1)' >
-			// <label for='miCheckbox'>			
-			// <details>
-			// <summary>Confirmado</summary>
-			// 	<p>$confirmado1<p/>
-	        // </details>	
-			// </label></td>";//IMPRIMIR
-			// echo "<td>".$validado.$Observacion."</td>";//Confirmado?
+
 
 
 			$valorHorasDomini_formateado = number_format($valorTotalHorasDomini, 0, ',', '.');
@@ -1124,14 +1206,7 @@ $valorTotalDePrimas=$valordiasprima+$valorTotalDePrimas;
 		    $totalOtrosConHD_formateado = number_format($totalOtrosConHD, 0, ',', '.');
 			$rutaDeComp="desprendibleOtros.php?cedula=".$rw1[5]."&nombre=".$rw1[1].$rw1[2]."&valor=".$totalOtrosConHD."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."&recogidas=".$cantRecogidas."&valorRecogidas=".$valorRecogidas."&otrosdeve=0&confirmado=$validadoDesprendible1&firma=$rw1[17]&valorAjuste=$valorAjusteO&tipoAjuste=$tipoAjusteO&descripcionAjuste=$descripcionAjusteO&descripcionOtros=$descripcionOtros";
 
-			// echo "<td><div id='campo'>";
-			// echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$idusuario."$param36'  onchange='confirmarPago($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmarPagoPrima\",this.value,\"$param36\")' class='borrar' required>";
 
-			// echo"<option value='no' $no>NO</option>";
-			// echo"<option value='Si'$si>SI</option>";
-		   
-	
-			// echo"</select>";
 
 			
 
