@@ -125,7 +125,7 @@ $FB->titulo_azul1("Termina contrato",1,'5%',0);
 
 		$diasParaSumar=0;
 	}
-
+	if($param38=='' or $param38=='Trabajando'){   $conde3="and hoj_fechatermino is not null"; }else{$conde3="and hoj_fechatermino is null";}  
 
 	$valorTotalDePrimas=0;
 	$tablaPago="";
@@ -135,7 +135,7 @@ $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo,
  `hoj_estado`,hoj_sede,hoj_fechatermino,hoj_cuen,hoj_tcuenta,hoj_firma,
   hoj_estado,hoj_banco,hoj_fech_año_act FROM hojadevida
 INNER JOIN sedes ON hoj_sede = idsedes
-WHERE (idhojadevida > 0 AND hoj_estado = 'Activo' ) and hoj_tipocontrato='Empresa' $conde4 $conde
+WHERE (idhojadevida > 0 AND hoj_estado = 'Activo' ) and hoj_tipocontrato='Empresa' $conde4 $conde $conde3
 ORDER BY hoj_nombre ASC";
   $DB->Execute($sql); 
   $va=0; 
@@ -284,7 +284,7 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$valorDiasPrima_formateado   ."</td>";//Fecha final de contrato
 
 
-			$colorselect="#8B0000";
+			$colorselect="";
 			$si="";
 			$no="";
 			$imagencompr="";
@@ -347,7 +347,8 @@ ORDER BY hoj_nombre ASC";
 					}
 
 				
-				}
+			}
+			 
 				$rutaDeComproBas="desprendible_primo.php?
 				cedula=".$rw1[5]."&
 				nombre=".$rw1[1]." ".$rw1[2]."&
@@ -382,7 +383,7 @@ ORDER BY hoj_nombre ASC";
 
 				echo "<td>$validado $Observacion</td>";
 
-				echo "<td>
+				echo "<td>$colorSelect
 						<select 
 							style='width:120px; border:1px solid #f9f9f9; background-color:".$colorselect."; color:#fff; font-size:15px'  
 							name='$va' 
