@@ -283,7 +283,19 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$valorDiasPrima_formateado   ."</td>";//Fecha final de contrato
 
 
-
+			$colorselect="#8B0000";
+			$si="";
+			$no="";
+			$imagencompr="";
+			$linkbasico="";
+			$textEnviar="Enviar";
+			$colorEnviar="rgb(7, 79, 145)";
+			$validado="";
+			$Observacion="";
+			$cheked1="";
+			$botonEnviar1="none";
+			$confirmado1="";
+			$validadoDesprendible="";
 			$tablaNomina = "SELECT `pri_confirma`, `idprimas`, `pri_docprima`, `pri_confirmaUsus`, `pri_fechaconfirmausu`, `pri_confiAdmin`, `pri_fechaadminconfi`, `pri_idadminconfi`, `pri_fecha_inicio`, `pri_fecha_fin`, `pri_idusu`, `pri_semestre`, `pri_img_compro` 
 							FROM `primas` 
 							WHERE pri_idusu='$idusuario' AND pri_fecha_inicio='$fechaactual'";
@@ -335,19 +347,33 @@ ORDER BY hoj_nombre ASC";
 
 				
 				}
-				$rutaDeComproBas="desprendible_primo.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaAhora&fechafin=$fechafinal&cuenta=&diastrabajados=$totalDiasPrima&sueldo=$valordiasprima&auxilitrans=&pagdiasinca=&totaldeveng=$valorDiasPrima&salud=&pension=&prestamos=&totaldeduccion=&confirmado=$validadoDesprendible&diasIncapacidad=&firma=$rw1[17]&diasvacaciones=&sede=$rw1[7]&valorAjuste=&transporte=$cargosaldo[3]&sueldobasico=$cargosaldo[2]&semestre=$param36";
+				$rutaDeComproBas="desprendible_primo.php?
+				cedula=".$rw1[5]."&
+				nombre=".$rw1[1]." ".$rw1[2]."&
+				cargo=$cargosaldo[1]&
+				fechaini=$fechaAhora&
+				fechafin=$fechafinal&
+				diastrabajados=$totalDiasPrima&
+				sueldo=$valordiasprima&
+				totaldeveng=$valorDiasPrima&
+				confirmado=$validadoDesprendible&
+				firma=$rw1[17]&
+				sede=$rw1[7]&
+				transporte=$cargosaldo[3]&
+				sueldobasico=$cargosaldo[2]&
+				semestre=$param36";
 
 				// HTML final
 				echo "<td>
 						<a href='$rutaDeComproBas' target='_blank'>Ver</a>
 						<button 
 							style='display: $botonEnviar1; width:120px; border:1px solid #f9f9f9; background-color:$colorEnviar; color:#fff; font-size:15px' 
-							onclick='enviarDesprendible(\"$rutaDeComproBas\", $idusuario, \"$fechaactual\", \"$fechafinal\", \"guardarDesPrima\", \"Basico\")' 
+							onclick='enviarDesprendible(\"$rutaDeComproBas\", $idusuario, \"$fechaactual\", \"$fechaFinaliza\", \"guardarDesPrima\", \"Basico\")' 
 							id='$param36$idusuario"."guardarCuenCobro'>
 							$textEnviar
 						</button>
 						<input type='checkbox' $cheked1 id='$param36$idusuario"."confirmaAdminPrima1' 
-							onchange='confirmaAdmin($idusuario, \"$fechaactual\", \"$fechafinal\", \"confirmaAdminPrima\", \"$param36\", 1)' />
+							onchange='confirmaAdmin($idusuario, \"$fechaactual\", \"$fechaFinaliza\", \"confirmaAdminPrima\", \"$param36\", 1)' />
 						<label for='miCheckbox'>
 							<details><summary>Confirmado</summary><p>$confirmado1</p></details>
 						</label>
