@@ -384,7 +384,7 @@ ORDER BY hoj_nombre ASC";
 
 				echo "<td>
 						<select 
-							style='width:120px; border:1px solid #f9f9f9; background-color:$colorSelect; color:#fff; font-size:15px'  
+							style='width:120px; border:1px solid #f9f9f9; background-color:".$colorselect."; color:#fff; font-size:15px'  
 							name='$va' 
 							id='".$idusuario."$param36' 
 							onchange='confirmarPago($idusuario, \"$fechaactual\", \"$fechafinal\", \"confirmarPagoPrima\", this.value, \"$param36\")' 
