@@ -245,6 +245,8 @@ ORDER BY hoj_nombre ASC";
 			$Incapacidad50            = $conteo['incapasidad al 50 porciento'];
 			$DiaSalarioMinimo         = $conteo['dia salario minimo'];
 
+			$licenciasPermisos = $LicenciaMaternidad+$LicenciaPorLuto;
+
 			// Ejemplo: validar si tuvo vacaciones
 			if ($Vacaciones > 0) {
 				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
@@ -254,6 +256,7 @@ ORDER BY hoj_nombre ASC";
 			if ($Descanso  > 0) {
 				echo "Sí tuvo vacaciones: $Vacaciones veces<br>";
 			}
+			$totalDiasPrima=$Ingreso  +$descanso +$Incapacidad +$Vacaciones;
 			// // Ejemplo: mostrar todo en tabla
 			// echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
 			// foreach ($conteo as $motivo => $cantidad) {
@@ -265,6 +268,10 @@ ORDER BY hoj_nombre ASC";
 			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$Ingreso Dias </td>"; //Ingreso?
 			echo "<td>".$descanso     ."</td>";//cantidad de descansos
 			echo "<td>".$NoTrabajo  ."</td>";//cantidad de no trabajados
+			echo "<td>".$Incapacidad  ."</td>";//cantidad de incapacidad
+			echo "<td>".$Vacaciones  ."</td>";//cantidad de vacaciones
+			echo "<td>".$totalDiasPrima  ."</td>";//Total Dias Prima
+			echo "<td>".$licenciasPermisos."</td>";//cantidad licenciasPermisos
 			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
 			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
 
