@@ -100,7 +100,17 @@ $quincena1='Primera';
 
 $semestres['Primera']='Primero';
 $semestres['Segunda']='Segundo';
-$FB->llena_texto("Año:", 34, 82, $DB, $mesd, "", "$mes", 1, 0);
+// $FB->llena_texto("Año:", 34, 82, $DB, $mesd, "", "$mes", 1, 0);
+
+$startYear = 2024; // Año inicial
+$currentYear = 2025; // Año actual
+for ($year = $startYear; $year <= $currentYear; $year++){
+	
+	$años["$year"]="$year";
+	
+	
+}
+$FB->llena_texto("A&ntildeo:", 34, 82, $DB, $años, "", "$añoA", 1, 0);
 $FB->llena_texto("Semestre", 36, 82, $DB, $semestres, "", "$quincena1", 4, 0);
 
 $FB->llena_texto("Sede :",35,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 and sed_principal='si' $conde2  order by sed_nombre asc  )", "cambio_ajax2(this.value, 16, \"llega_sub1\", \"param33\", 1, 0)", "$param35",1, 0);
