@@ -233,6 +233,7 @@ ORDER BY hoj_nombre ASC";
 			$AbandonoDePuesto         = $conteo['Abandono de puesto'];
 			$Vacaciones               = $conteo['Vacaciones'];
 			$Descanso                 = $conteo['Descanso'];
+			$descanso                 = $conteo['descanso'];
 			$IngresoPorHoras          = $conteo['Ingreso por horas'];
 			$DescansoNoRemunerado     = $conteo['Descanso no remunerado'];
 			$DiaDeSancionPs           = $conteo['Dia de sancion Ps'];
@@ -262,7 +263,7 @@ ORDER BY hoj_nombre ASC";
 			// echo "</table>";
 
 			echo "<td>".$Ingreso    ."</td>";//cantidad de ingresos
-			echo "<td>".$Descanso    ."</td>";//cantidad de descansos
+			echo "<td>".$descanso     ."</td>";//cantidad de descansos
 			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
 			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
 
