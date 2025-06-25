@@ -363,10 +363,11 @@ ORDER BY hoj_nombre ASC";
 							</select>
 						</td>";
 				}
-			}
+				echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
+				echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
+		}
 
-			echo "<td>".$fechaIniciContrato    ."</td>";//Fecha inicio contrato
-			echo "<td>".$fechaFinContrato    ."</td>";//Fecha final de contrato
+
 
 
 
