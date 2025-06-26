@@ -23,15 +23,6 @@ $sql = "SELECT iddoccliente, docl_nombre, docl_fecha_creacion, docl_fecha_venc, 
 $DB->Execute($sql);
 $resultado = $DB->Consulta_ID;
 
-// // 🔍 DEBUG: mostrar si se encontraron resultados
-// echo json_encode([
-//     "idhojadevida" => $idhojadevida,
-//     "nombre" => $nombre,
-//     "sql" => $sql,
-//     "resultados" => mysqli_num_rows($resultado)
-// ]);
-// exit;
-
 
 $documentos = [];
 
