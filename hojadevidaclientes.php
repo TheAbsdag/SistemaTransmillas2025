@@ -140,38 +140,58 @@ $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar);
 	$IncrimentNum =(($compag +1)<=$TotalRegistro)?($compag +1):1;
   	$DecrementNum =(($compag -1))<1?1:($compag -1);
  // onchange=location.href='http://www.dominio/pagina.php?ref='+this.value
- $selec200="";
- $selec50="";
- $selec100="";
- $selec10000="";
- if($CantidadMostrar==50){ $selec50="Selected";} else if($CantidadMostrar==100){ $selec100="Selected";} else if($CantidadMostrar==200){ $selec100="Selected";} else if($CantidadMostrar==10000){ $selec10000="Selected";}
-	echo "<section class='paginacion'><ul ><li>Mostrar <select onchange=location.href=\"?CantidadMostrar=\"+this.value ><option value='50' $selec50 >50</option><option value='100' $selec100>100</option><option value='200' $selec200>200</option><option value='10000' $selec10000>Todos..</option></select></li><li><a>Total Registros: $valor </a></li><li ><a href=\"?pag=".$DecrementNum."\" >&#171;&#171;</a></li>";
-    //Se resta y suma con el numero de pag actual con el cantidad de 
-    //numeros  a mostrar
-     $Desde=$compag-(ceil($CantidadMostrar/2)-1);
-     $Hasta=$compag+(ceil($CantidadMostrar/2)-1);
-     //Se valida
-     $Desde=($Desde<1)?1: $Desde;
-     $Hasta=(($Hasta<$CantidadMostrar)?$CantidadMostrar:$Hasta)/10;
-     //Se muestra los numeros de paginas
-     for($i=$Desde; $i<=$Hasta;$i++){
-     	//Se valida la paginacion total
-     	//de registros
-     	if($i<=$TotalRegistro){
-     		//Validamos la pag activo
-     	  if($i==$compag){
+	$selec200="";
+	$selec50="";
+	$selec100="";
+	$selec10000="";
+	if ($CantidadMostrar == 50) { $selec50 = "Selected"; } 
+		else if ($CantidadMostrar == 100) { $selec100 = "Selected"; } 
+		else if ($CantidadMostrar == 200) { $selec200 = "Selected"; } 
+		else if ($CantidadMostrar == 10000) { $selec10000 = "Selected"; }
 
-           echo "<li><a href=\"?pag=".$i."\" class=\"active\">".$i."</a></li>";
+		echo "<section class='paginacion'>
+		<ul>
+		<li>
+			Mostrar 
+			<select onchange=location.href=\"?CantidadMostrar=\"+this.value >
+			<option value='50' $selec50 >50</option>
+			<option value='100' $selec100>100</option>
+			<option value='200' $selec200>200</option>
+			<option value='10000' $selec10000>Todos..</option>
+			</select>
+		</li>
+		<li>
+			<a>Total Registros: $valor </a>
+		</li>
+		<li>
+			<a href=\"?pag=".$DecrementNum."\" >&#171;&#171;</a>
+		</li>";
 
-     	  }else {
+		$Desde = $compag - (ceil($CantidadMostrar / 2) - 1);
+		$Hasta = $compag + (ceil($CantidadMostrar / 2) - 1);
+		$Desde = ($Desde < 1) ? 1 : $Desde;
+		$Hasta = (($Hasta < $CantidadMostrar) ? $CantidadMostrar : $Hasta) / 10;
 
-     	  	echo "<li><a href=\"?pag=".$i."\">".$i."</a></li>";
+		for ($i = $Desde; $i <= $Hasta; $i++) {
+			if ($i <= $TotalRegistro) {
+				if ($i == $compag) {
+					echo "<li><a href=\"?pag=".$i."\" class=\"active\">".$i."</a></li>";
+				} else {
+					echo "<li><a href=\"?pag=".$i."\">".$i."</a></li>";
+				}
+			}
+		}
 
-     	  }     		
-
-     	}
-
-     }
+	echo "<li class=\"active\"><a href=\"?pag=".$IncrimentNum."\">&#187;&#187;</a></li>";
+	echo "<li style='margin-left: 10px;'>
+			<a href='https://accounts.google.com/AccountChooser?Email=actualizaciondatostransmillas@gmail.com&continue=https://mail.google.com/mail/u/0/' 
+			target='_blank' 
+			style='padding: 5px 10px; background-color: #007bff; color: white; border-radius: 4px; text-decoration: none;'>
+			Abrir Correo 
+			</a>
+		</li>
+	</ul>
+	</section>";
 
 	echo "<li class=\"active\"><a href=\"?pag=".$IncrimentNum."\">&#187;&#187;</a></li></ul>";
 
