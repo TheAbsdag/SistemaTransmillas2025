@@ -104,64 +104,91 @@ timer =setTimeout(buscar(nombres),2000);
 		datos = {"vlores":telefono,"tipo":"telefono"};
 		
 		$.ajax({
-				url: "buscarclientes.php",
-				type: "POST",
-				data: datos
-			}).done(function(respuesta){
-				//alert('josee');
-				if (respuesta === null) {
-					
-					if(document.getElementById("id_param1").value!=1){
-					cambio_ajax2(1, 14, 'clientesdir', 'telefono', 1,'');
-					}
-					document.getElementById("id_param").value=0;
-					//alert('mm');
-					//document.getElementById("param2").value='';
-					//document.getElementById("param1").value='';
-					document.getElementById("param3").value='';
-					document.getElementById("param6").value='';
-					document.getElementById("param4").value='';
-					document.getElementById("param5").value=0;
-					document.getElementById("param51").value='';
-					document.getElementById("0").checked = true;
-					//document.getElementById("param7").checked = false; 
-					document.getElementById("param19").value=0; 
-					document.getElementById("param20").value=''; 
-					document.getElementById("param23").value=''; 
-					
-					document.getElementById("id_param1").value=0;
-					document.getElementById("id_param2").value=0;
+			url: "buscarclientes.php",
+			type: "POST",
+			data: datos
+		}).done(function(respuesta) {
+			// Asegúrate de que la respuesta venga parseada si es string
+			if (typeof respuesta === 'string') {
+				respuesta = JSON.parse(respuesta);
+			}
+
+			const cliente = respuesta.cliente || null;
+			const servicios = respuesta.servicios || [];
+
+			if (!cliente) {
+				if (document.getElementById("id_param1").value != 1) {
+					cambio_ajax2(1, 14, 'clientesdir', 'telefono', 1, '');
 				}
-				else {
-
-					cambio_ajax2(documento, 14, 'clientesdir', 'telefono', 1, respuesta.cli_nombre);
-					
-					document.getElementById("param3").value=respuesta.cli_email;
-					//document.getElementById("param4").value=respuesta.cli_idciudad;
-					document.getElementById("param4").value='';
-					var res = respuesta.cli_direccion.split("&");
-					if (typeof res[4] === 'undefined') {
-						res[4]='';
-						
-					}
-					//alert(res[0]);
-					document.getElementById("param5").value=res[0];
-					document.getElementById("param51").value=res[1];
-					document.getElementById("param19").value=res[2];
-					document.getElementById("param20").value=res[3];
-					document.getElementById("param23").value=res[4];
-					document.getElementById("id_param").value=respuesta.idclientes;
-					document.getElementById("id_param2").value=respuesta.idclientesdir;				
-					if(respuesta.cli_clasificacion!=null){
-						//document. getElementById(respuesta.cli_clasificacion).checked = true;
-					}
-					buscarservicio(respuesta.cli_idciudad, document.getElementById("param11").value,  param113.value,"Recogida")
-
-					
+				document.getElementById("id_param").value = 0;
+				document.getElementById("param3").value = '';
+				document.getElementById("param6").value = '';
+				document.getElementById("param4").value = '';
+				document.getElementById("param5").value = 0;
+				document.getElementById("param51").value = '';
+				document.getElementById("0").checked = true;
+				document.getElementById("param19").value = 0;
+				document.getElementById("param20").value = '';
+				document.getElementById("param23").value = '';
+				document.getElementById("id_param1").value = 0;
+				document.getElementById("id_param2").value = 0;
+			} else {
+				cambio_ajax2(documento, 14, 'clientesdir', 'telefono', 1, cliente.cli_nombre);
 				
-					
+				document.getElementById("param3").value = cliente.cli_email;
+				document.getElementById("param4").value = '';
+
+				// ✅ Protegemos el .split() para que no falle si la dirección no viene
+				let direccion = cliente.cli_direccion || '';
+				let res = direccion.split("&");
+				while (res.length < 5) {
+					res.push('');
 				}
-			});
+
+				document.getElementById("param5").value = res[0];
+				document.getElementById("param51").value = res[1];
+				document.getElementById("param19").value = res[2];
+				document.getElementById("param20").value = res[3];
+				document.getElementById("param23").value = res[4];
+
+				document.getElementById("id_param").value = cliente.idclientes;
+				document.getElementById("id_param2").value = cliente.idclientesdir;
+
+				if (cliente.cli_clasificacion != null) {
+					// document.getElementById(cliente.cli_clasificacion).checked = true;
+				}
+
+				buscarservicio(cliente.cli_idciudad, document.getElementById("param11").value, param113.value, "Recogida");
+
+				// ✅ Mostrar servicios en un alert si existen
+				if (Array.isArray(servicios) && servicios.length > 0) {
+					let mensaje = "🧾 Tiene servicios programados en las últimas 24 horas:\n\n";
+
+					servicios.forEach(function(servicio, index) {
+						const dirRemitente = (servicio.cli_direccion || "").replaceAll("&", " ");
+						const dirDestinatario = (servicio.ser_direccioncontacto || "").replaceAll("&", " ");
+
+						mensaje += `------------------------------------------------------\n`;
+						mensaje += `📅 Fecha: ${servicio.ser_fecharegistro}\n`;
+						mensaje += `👤 REMITENTE\n`;
+						mensaje += `📍 Nombre: ${servicio.cli_nombre || "N/A"}\n`;
+						mensaje += `🏠 Dirección: ${dirRemitente || "N/A"}\n`;
+						mensaje += `🏙️ Ciudad: ${servicio.ciu_nombre || "N/A"}\n`;
+						mensaje += `📞 Teléfono: ${servicio.cli_telefono || "N/A"}\n`;
+
+						mensaje += `\n📦 DESTINATARIO\n`;
+						mensaje += `📍 Nombre: ${servicio.ser_destinatario || "N/A"}\n`;
+						mensaje += `🏠 Dirección: ${dirDestinatario || "N/A"}\n`;
+						mensaje += `🏙️ Ciudad: ${servicio.ser_ciudadentrega || "N/A"}\n`;
+						mensaje += `📞 Teléfono: ${servicio.ser_telefonocontacto || "N/A"}\n`;
+
+						mensaje += `------------------------------------------------------\n`;
+					});
+
+					alert(mensaje);
+				}
+			}
+		});
 					
 	}
  } else  if(nombre=='param6'){	
@@ -602,6 +629,7 @@ $FB->llena_texto("id_param0", 1, 13, $DB, "", "", "$rw[19]", 5, 0); //idservicio
 $FB->llena_texto("id_param1", 1, 13, $DB, "", "", "0", 5, 0);
 $FB->llena_texto("id_param2", 1, 13, $DB, "", "", "$rw[21]", 5, 0); //idclientesdir
 ?> 
+
 <script>
 
 function validar_repuesta()
