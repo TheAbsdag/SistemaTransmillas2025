@@ -896,6 +896,57 @@ Full screen Modal
   <i id = 'toats'>Tiene un nuevo Mensaje Revise.</i>  
 </div>
 </div>
+<!-- MODAL DE PAGOS PENDIENTES / SERVICIOS -->
+<!-- MODAL: Servicios programados -->
+<div id="myModalConServicios" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalPendientesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content shadow-lg border-0 rounded-3">
+
+      <!-- Encabezado del modal -->
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title font-weight-bold" id="modalPendientesLabel">
+          </i> 🔔 <strong>Tienes servicios programados en las últimas 24 horas.</strong>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Cuerpo del modal -->
+      <div class="modal-body" style="overflow-x: auto;">
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm table-striped" style="min-width: 1200px;">
+            <thead class="table-light">
+              <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Remitente</th>
+                <th>Dirección Remitente</th>
+                <th>Ciudad</th>
+                <th>Teléfono</th>
+                <th>Destinatario</th>
+                <th>Dirección Destinatario</th>
+                <th>Ciudad Entrega</th>
+                <th>Teléfono Destinatario</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyServiciosPendientes">
+              <!-- Aquí se insertan los servicios desde JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pie del modal -->
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-primary px-4" data-dismiss="modal">Entendido</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 

@@ -160,32 +160,36 @@ timer =setTimeout(buscar(nombres),2000);
 
 				buscarservicio(cliente.cli_idciudad, document.getElementById("param11").value, param113.value, "Recogida");
 
-				// ✅ Mostrar servicios en un alert si existen
 				if (Array.isArray(servicios) && servicios.length > 0) {
-					let mensaje = "🧾 Tiene servicios programados en las últimas 24 horas:\n\n";
+					// Limpiar tabla
+					const tbody = document.getElementById("tbodyServiciosPendientes");
+					tbody.innerHTML = "";
 
+					// Llenar tabla con los servicios
 					servicios.forEach(function(servicio, index) {
 						const dirRemitente = (servicio.cli_direccion || "").replaceAll("&", " ");
 						const dirDestinatario = (servicio.ser_direccioncontacto || "").replaceAll("&", " ");
 
-						mensaje += `------------------------------------------------------\n`;
-						mensaje += `📅 Fecha: ${servicio.ser_fecharegistro}\n`;
-						mensaje += `👤 REMITENTE\n`;
-						mensaje += `📍 Nombre: ${servicio.cli_nombre || "N/A"}\n`;
-						mensaje += `🏠 Dirección: ${dirRemitente || "N/A"}\n`;
-						mensaje += `🏙️ Ciudad: ${servicio.ciu_nombre || "N/A"}\n`;
-						mensaje += `📞 Teléfono: ${servicio.cli_telefono || "N/A"}\n`;
+						const row = `
+							<tr>
+								<td>${index + 1}</td>
+								<td>${servicio.ser_fecharegistro || "N/A"}</td>
+								<td>${servicio.cli_nombre || "N/A"}</td>
+								<td>${dirRemitente || "N/A"}</td>
+								<td>${servicio.ciu_nombre || "N/A"}</td>
+								<td>${servicio.cli_telefono || "N/A"}</td>
+								<td>${servicio.ser_destinatario || "N/A"}</td>
+								<td>${dirDestinatario || "N/A"}</td>
+								<td>${servicio.ser_ciudadentrega || "N/A"}</td>
+								<td>${servicio.ser_telefonocontacto || "N/A"}</td>
+							</tr>
+						`;
 
-						mensaje += `\n📦 DESTINATARIO\n`;
-						mensaje += `📍 Nombre: ${servicio.ser_destinatario || "N/A"}\n`;
-						mensaje += `🏠 Dirección: ${dirDestinatario || "N/A"}\n`;
-						mensaje += `🏙️ Ciudad: ${servicio.ser_ciudadentrega || "N/A"}\n`;
-						mensaje += `📞 Teléfono: ${servicio.ser_telefonocontacto || "N/A"}\n`;
-
-						mensaje += `------------------------------------------------------\n`;
+						tbody.insertAdjacentHTML("beforeend", row);
 					});
 
-					alert(mensaje);
+					// Mostrar modal
+					$("#myModalConServicios").modal("show");
 				}
 			}
 		});
@@ -230,44 +234,46 @@ timer =setTimeout(buscar(nombres),2000);
 	if (variable2 >= 7) {
 		datos = {"vlores":telefono,"tipo":"telefono"};
 		
-		$.ajax({
-				url: "buscarclientes.php",
-				type: "POST",
-				data: datos
-			}).done(function(respuesta){
-				
-				if (respuesta === null) {
-	
-					document. getElementById("param9").value='';
-					document. getElementById("param10").value=0;
-					document. getElementById("param101").value='';
-					document. getElementById("param21").value=0;
-					document. getElementById("param22").value='';
-					document. getElementById("param24").value='';
-					document. getElementById("param11").value='';
-					
-					}
-				else {
-					document.getElementById("param9").value=respuesta.cli_nombre;
-					
-					var res = respuesta.cli_direccion.split("&");
-					if (typeof res[4] === 'undefined') {
-						res[4]='';
-						
-					}
-					document.getElementById("param10").value=res[0];
-					document.getElementById("param101").value=res[1];
-					document.getElementById("param21").value=res[2];
-					document.getElementById("param22").value=res[3];
-					document.getElementById("param24").value=res[4];
-					document.getElementById("param11").value=respuesta.cli_idciudad;
-					//document.getElementById("param11").value='';
-					buscarservicio(document.getElementById("param4").value, document.getElementById("param11").value,  param113.value, "Recogida")
+$.ajax({
+	url: "buscarclientes.php",
+	type: "POST",
+	data: datos
+}).done(function(respuesta) {
 
-					//document.getElementById("id_param2").value=respuesta.idclientesdir;
-					
-				}
-			});
+	if (respuesta === null || !respuesta.cliente) {
+		document.getElementById("param9").value = '';
+		document.getElementById("param10").value = 0;
+		document.getElementById("param101").value = '';
+		document.getElementById("param21").value = 0;
+		document.getElementById("param22").value = '';
+		document.getElementById("param24").value = '';
+		document.getElementById("param11").value = '';
+	} else {
+		const cliente = respuesta.cliente;
+		document.getElementById("param9").value = cliente.cli_nombre;
+
+		const direccion = (cliente.cli_direccion || "").replaceAll("&", " ");
+		const res = direccion.split(" ");
+		while (res.length < 5) res.push(''); // Rellenar si faltan partes
+
+		document.getElementById("param10").value = res[0];
+		document.getElementById("param101").value = res[1];
+		document.getElementById("param21").value = res[2];
+		document.getElementById("param22").value = res[3];
+		document.getElementById("param24").value = res[4];
+		document.getElementById("param11").value = cliente.cli_idciudad;
+
+		// Llamar función con datos
+		buscarservicio(
+			document.getElementById("param4").value,
+			document.getElementById("param11").value,
+			param113.value,
+			"Recogida"
+		);
+	}
+
+
+});
 					
 	}
 	 
