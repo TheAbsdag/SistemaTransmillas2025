@@ -128,22 +128,10 @@ echo "<tr><td colspan='4'>
  <input type='file' id='comproPago' class='archivo-button'>
  <button type='button' id='enviarIds' class='email-button' ><i class='fas fa-envelope'></i>Cargar comprobante</button>
  <button type='button' class='icon-button file-button' onclick='descargarExcelPagoPrimas()'><i class='fas fa-file'></i>Excel para pagos</button>
-
+ <button type='button' class='email-button' onclick='reporteNomina()' >Reporte de nomina</button>
  </div></td></tr>";
 
-// echo "<tr><td colspan='4'>
-// <div style='display: inline-block;'>
-// 	<input type='file' id='comproPago'>
-// 	<button class='btn btn-primary' id='enviarIds'>Cargar comprobante</button>
-// </div>
-// <div style='display: inline-block;'>
-// 	<button class='btn btn-primary' onclick='descargarExcel()'>
-// 	<svg width='20px' height='20px' viewBox='0 0 1024 1024' class='icon' version='1.1' xmlns='http://www.w3.org/2000/svg' fill='#fafafa' stroke='#fafafa'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round' stroke='#CCCCCC' stroke-width='14.336000000000002'></g><g id='SVGRepo_iconCarrier'><path d='M214.5 264.6h587.4v513.9H214.5z' fill='#E1F0FF'></path><path d='M214.5 240.2h587.4v97.9H214.5zM801.9 240.2h24.5v538.4h-24.5zM190 240.2h24.5v538.4H190z' fill='#45b079'></path><path d='M214.5 460.4h587.4v24.5H214.5zM214.5 607.3h587.4v24.5H214.5z' fill='#14b344'></path><path d='M385.8 338.1h24.5v416h-24.5zM606.1 338.1h24.5v416h-24.5z' fill='#14b344'></path><path d='M214.5 754.1h587.4v24.5H214.5z' fill='#45b079'></path></g></svg>
-// 	Excel parafiscales</button>
-// 	<button class='btn btn-primary' onclick='descargarExcelPagoNomina()'>
-// 	<svg width='20px' height='20px' viewBox='0 0 1024 1024' class='icon' version='1.1' xmlns='http://www.w3.org/2000/svg' fill='#fafafa' stroke='#fafafa'><g id='SVGRepo_bgCarrier' stroke-width='0'></g><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round' stroke='#CCCCCC' stroke-width='14.336000000000002'></g><g id='SVGRepo_iconCarrier'><path d='M214.5 264.6h587.4v513.9H214.5z' fill='#E1F0FF'></path><path d='M214.5 240.2h587.4v97.9H214.5zM801.9 240.2h24.5v538.4h-24.5zM190 240.2h24.5v538.4H190z' fill='#45b079'></path><path d='M214.5 460.4h587.4v24.5H214.5zM214.5 607.3h587.4v24.5H214.5z' fill='#14b344'></path><path d='M385.8 338.1h24.5v416h-24.5zM606.1 338.1h24.5v416h-24.5z' fill='#14b344'></path><path d='M214.5 754.1h587.4v24.5H214.5z' fill='#45b079'></path></g></svg>
-// 	Excel para pagos</button></td></tr>
-// </div>";
+
 $FB->div_valores("destino_vesr",12); 
 
 $FB->cierra_form(); 
@@ -511,6 +499,119 @@ destino="excelPagoPrimas.php?tablaPago="+tablaPago+"&param36="+p6;
 		window.open(destino, '_blank');
 
 }
+
+function reporteNomina() { 
+		// Captura de valores adicionales
+		
+		var p4 = document.getElementById('param34').value;
+		var p5 = document.getElementById('param35').value;
+		var p6 = document.getElementById('param36').value;
+		// var p7 = document.getElementById('param39').value;
+		
+		const idusuario = "<?= $fechaactualSinTiempo ?>";
+		// Crear formulario dinámico
+		var form = document.createElement("form");
+		form.method = "POST";
+		form.action = "prima_reporte.php";
+		form.target = "_blank";
+
+		// Agregar inputs normales
+		const campos = {
+			param33: idusuario,
+			param34: p4,
+			param35: p5,
+			param36: p6
+			
+		};
+
+		for (let key in campos) {
+			let input = document.createElement("input");
+			input.type = "hidden";
+			input.name = key;
+			input.value = campos[key];
+			form.appendChild(input);
+		}
+
+		// Convertir el arreglo completo a JSON
+		let inputDatos = document.createElement("input");
+		inputDatos.type = "hidden";
+		inputDatos.name = "datosusertabla";
+		inputDatos.value = JSON.stringify(datosusertabla); // Enviar como JSON
+		form.appendChild(inputDatos);
+
+		// 		// Convertir el arreglo completo a JSON
+		// let inputDatos2 = document.createElement("input");
+		// inputDatos2.type = "hidden";
+		// inputDatos2.name = "datosusertablaP";
+		// inputDatos2.value = JSON.stringify(datosusertablaP); // Enviar como JSON
+		// form.appendChild(inputDatos2);
+
+		document.body.appendChild(form);
+		form.submit();
+		form.remove();
+		
+		datosusertabla = [];
+		// datosusertablaP = [];
+}
+
+let datosusertabla = [];
+function selecionado1(
+		id,
+		nombreCompleto,
+		contrato,
+		cedula,
+		nombreCargo,
+		salario,
+		auxilio,
+		descanso,
+		NoTrabajo,
+		Incapacidad,
+		Vacaciones,
+		licenciasPermisos,
+		totalDiasPrima,
+		valorDiasPrima_formateado
+	) {
+		var checkbox = document.getElementById(id + "s1");
+		var contrato = "Prestacion";
+		const data = {
+		id:id,
+		nombreCompleto:nombreCompleto,
+		contrato:contrato,
+		cedula:cedula,
+		nombreCargo:nombreCargo,
+		salario:salario,
+		auxilio:auxilio,
+		descanso:descanso,
+		NoTrabajo:NoTrabajo,
+		Incapacidad:Incapacidad,
+		Vacaciones:Vacaciones,
+		licenciasPermisos:licenciasPermisos,
+		totalDiasPrima:totalDiasPrima,
+		valorDiasPrima_formateado:valorDiasPrima_formateado
+		};
+
+		if (checkbox.checked) {
+			// Agregar el objeto con los parámetros al array
+			datosusertabla.push(data);
+		} else {
+			// Buscar el objeto en el array y eliminarlo
+			datosusertabla = datosusertabla.filter(item => item.id !== id);
+		}
+
+		console.log("Datos User tabla:", datosusertabla);
+	}
+function seleccionarTodos() {
+  const estado = document.getElementById('check_todos').checked;
+  const checkboxes = document.querySelectorAll('.check_hijo');
+
+  checkboxes.forEach(chk => {
+    chk.checked = estado;
+
+    // Forzar que se dispare el evento onchange original
+    chk.dispatchEvent(new Event('change'));
+  });
+}
+
 </script>
 
 
