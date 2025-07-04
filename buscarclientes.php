@@ -34,11 +34,26 @@ $DB1->Execute($sql);
 $cliente = mysqli_fetch_array($DB1->Consulta_ID, MYSQLI_ASSOC);
 
 // Consulta de servicios del cliente en los últimos 2 días
-$sql2 = "SELECT ser_fecharegistro,cli_nombre,cli_direccion,
-ciu_nombre,cli_telefono,ser_destinatario,
-ser_direccioncontacto,ser_ciudadentrega,ser_telefonocontacto
-FROM serviciosdia WHERE cli_telefono = '{$cliente['cli_telefono']}'
-AND DATE(ser_fecharegistro) BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE() and ser_estado<10";
+$sql2 = "SELECT 
+  s.ser_fecharegistro,
+  cs.cli_nombre, 
+  cs.cli_direccion,
+  c1.ciu_nombre AS ciudad_destinatario,
+  cs.cli_telefono,
+  s.ser_destinatario,
+  s.ser_direccioncontacto,
+  c2.ciu_nombre AS ciudad_remitente,
+  s.ser_telefonocontacto 
+FROM clientesservicios cs
+JOIN rel_sercli rsc ON rsc.ser_idclientes = cs.idclientesdir
+JOIN servicios s ON s.idservicios = rsc.ser_idservicio
+JOIN ciudades c1 ON c1.idciudades = s.ser_ciudadentrega
+JOIN ciudades c2 ON c2.idciudades = cs.cli_idciudad
+WHERE cs.cli_telefono = '{$cliente['cli_telefono']}'
+  AND s.ser_fecharegistro >= CURDATE() - INTERVAL 1 DAY
+  AND s.ser_fecharegistro < CURDATE() + INTERVAL 1 DAY
+  AND s.ser_estado < 10
+    ";
 $DB1->Execute($sql2);
 $servicios = [];
 while ($row = mysqli_fetch_array($DB1->Consulta_ID, MYSQLI_ASSOC)) {
