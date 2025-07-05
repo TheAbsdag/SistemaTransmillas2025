@@ -5,7 +5,7 @@ $FB->titulo_azul1("$tabla",9,0,7);
 ?>
 <script language="javascript">
 
-</script>
+</script> 
 <body onLoad="">
 <?php 
 $nivel_acceso=$_SESSION['usuario_rol'];
@@ -34,9 +34,12 @@ $inner=" ";
 				$nombretable=$dato[1];
 				$iddes="id".$dato[1];
 			}
-			$inner.=" inner join $nombretable on $rw1[0]=$iddes";
+			$inner .= " LEFT JOIN $nombretable ON $rw1[0] = $iddes";
 			$indice=substr($dato[1],0,3);
 			$rw1[0]=$indice."_nombre";
+			if ($dato[1] == "sedes") {
+			$dato[1] = "Sede";
+		}
 		}
 		$sql.="$rw1[0],";
 		if($va2==1){	

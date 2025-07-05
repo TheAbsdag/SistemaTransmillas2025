@@ -7,7 +7,7 @@
 
 <?php 
 require("login_autentica.php");
-include("cabezote3.php"); 
+include("cabezote3.php");  
 
 $asc="ASC";
 $conde=" ";
@@ -39,7 +39,6 @@ if($param32=='' or $param32=='0'){
 $FB->titulo_azul1("Operador",1,0,7); 
 $FB->titulo_azul1("Preoperacional",1,0,0); 
 $FB->titulo_azul1("Validacion",1,0,0); 
-$FB->titulo_azul1("Prueba Alcohol",1,0,0); 
 $FB->titulo_azul1("Imagen",1,0,0); 
 $FB->titulo_azul1("Ingreso?",1,0,0); 
 $FB->titulo_azul1("Descripcion",1,0,0); 
@@ -154,8 +153,8 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 					echo "<td></td>";
 								echo "<td></td>";
 								echo "<td></td>";
-								echo "<td></td>";
 								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >sin Ingreso</td>"; //Ingreso?
+								echo "<td></td>";
 								echo "<td></td>";
 								echo "<td></td>";
 								echo "<td></td>";
@@ -209,7 +208,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 									echo "<td></td>";
 									echo "<td></td>";
 									echo "<td></td>";
-								    echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw2[8],\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>"; //Ingreso?
+								    echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 									echo "<td></td>";
 									echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 									echo "<td>D</td>";
@@ -285,9 +284,9 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 										echo	"<td colspan='1' width='0' align='center' >Sin Validar</td>";
 									}
 					
-									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
+									//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 									echo $ver ;
-									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>"; //Ingreso?
+									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 									echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>"; // DESCRIPCION
 									echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>"; //FECHA DE INGRESO
 					
@@ -610,7 +609,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw2[8],\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>"; //Ingreso?
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 										echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 										echo "<td>V</td>";
@@ -644,7 +643,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 												echo "<td></td>";
 												echo "<td></td>";
 												echo "<td></td>";
-												echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw2[8],\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>"; //Ingreso
+												echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 												echo "<td></td>";
 												echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 												echo "<td>V</td>";
@@ -678,8 +677,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-
-										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw2[8],\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>"; //Ingreso?
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 										echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw1[3]</td>";
 										echo "<td>D</td>";
@@ -710,8 +708,8 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-								        echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw2[8],\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>"; //Ingreso?
-										echo "<td></td>";
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+								        echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw1[3]</td>";
 										echo "<td>D</td>";
 										echo "<td>E</td>";
@@ -777,9 +775,9 @@ if (($muestra1 == false and $muestra2 == true)) {
 									echo	"<td colspan='1' width='0' align='center' >Sin Validar</td>";
 								}
 					
-								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$rw1[3]\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
+								//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$rw1[3]\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 								echo $ver ;
-								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>";
+								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 								echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>";
 								echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 					
@@ -1096,9 +1094,9 @@ if (($muestra1 == false and $muestra2 == true)) {
 							echo	"<td colspan='1' width='0' align='center' >Sin Validar</td>";
 						}
 			
-						echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
+						//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 						echo $ver ;
-						echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"ingresousuario\",\"$rw1[3]\")';  title='Ingreso de Usuario' >$rw2[5]</td>";
+						echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 						echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>";
 						echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 			

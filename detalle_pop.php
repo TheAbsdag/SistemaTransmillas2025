@@ -289,7 +289,7 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Fecha de Ingreso:", 3, 10, $DB, "", "", "", 2, 1);
     $FB->llena_texto("Motivo Ingreso:", 4, 82, $DB, $motivoingreso, "", "", 2, 1);
     $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
-    $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 )", "", "", 2, 0);
+    $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT idzonatrabajo, zon_nombre FROM zonatrabajo WHERE inner_sedes = '$idsede')", "", "", 2, 0);
     $FB->llena_texto("Prueba de Alcohol:", 7, 82, $DB, $pruebaalcohol, "", "", 2, 1);
     $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
 }elseif ($tabla == "Cambio_seguimientoUser") {
@@ -1867,17 +1867,28 @@ inner join sedes on idsedes=caj_idciudaddes and `caj_feccom` like '$fechaab%'  a
     $FB->llena_texto("param2", 1, 13, $DB, "", "", $id_param, 5, 0);
 }else if ($tabla == "ingresousuario") {
     $fecha = $_REQUEST["ide"];
-    
+    $id_sedes = isset($_REQUEST["idsede"]) ? $_REQUEST["idsede"] : "";
+
+    if ($nivel_acceso != '1' and $nivel_acceso != '12') {
+        $cond = "AND idsedes = $id_sedes";
+    } else {
+        $cond = "";
+    }
+
+    $FB->llena_texto("Sede:", 1, 2, $DB, "(SELECT idsedes, sed_nombre FROM sedes WHERE idsedes > 0 $cond)", "", "$id_sedes", 2, 1);
     $FB->llena_texto("Motivo Ingreso:", 4, 82, $DB, $motivoingreso, "", "", 2, 1);
-    $FB->llena_texto("Horas:", 9, 1, $DB, "", "", "", 2, 0);
     $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
-    $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 )", "", "", 2, 0);
+    $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT idzonatrabajo, zon_nombre FROM zonatrabajo WHERE inner_sedes = '$id_sedes')", "", "", 2, 1);
+    $FB->llena_texto("Prueba de Alcohol:", 7, 82, $DB, $pruebaalcohol, "", "", 2, 1);
     $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
-    
+
+    // ocultos o auxiliares
     $FB->llena_texto("param2", 1, 13, $DB, "", "", $id_param, 5, 0);
     $FB->llena_texto("param3", 1, 13, $DB, "", "", $fecha, 5, 0);
+}
 
-}else if ($tabla == "validartarea") {
+
+else if ($tabla == "validartarea") {
     $id = $_REQUEST["ide"];
     $FB->llena_texto("Estado:", 4, 82, $DB, $estadotarea, "", "", 2, 1);
     $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
@@ -2354,7 +2365,9 @@ print_r($pagadas);
                                     echo "<td></td>";
                                     echo "<td></td>";
                                     echo "<td></td>";
-                                    echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw3[0],\"SeguimientoUser\",\"$rw3[2]\")';  title='Ingreso de Usuario' >Sin ngreso</td>"; //Ingreso?
+                                    echo "<td colspan='1' width='0' align='center' >
+                                    <a id='link' onclick='pop_dis16($rw3[0], \"SeguimientoUser\", \"$rw3[2]\", document.getElementById(\"param35\").value)' title='Ingreso de Usuario'>Sin ngreso</a>
+                                    </td>";
                                     echo "<td></td>";
                                     echo "<td>$fechaConHora</td>";
                                     echo "<td></td>";
