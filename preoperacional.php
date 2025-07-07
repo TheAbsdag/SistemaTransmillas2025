@@ -90,7 +90,7 @@ if($param4=='covid19'){
 		echo "<tr bgcolor='$color' class='text' id='implementos40'>";
 		echo "<td colspan='2'>Tiene usted el cargador de su Celular?</td><td><input type='radio' name='implementos4'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos4'  class='obtener'  value='2'></td>";
 		echo "</tr>";
-		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">IMPRESORA</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
+		/*echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">IMPRESORA</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos50'>";
 		echo "<td colspan='2'>Cuenta con impresora suministrada por la Empresa?</td><td><input type='radio' name='implementos5'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos5'  class='obtener'  value='2'></td>";
 		echo "</tr>";
@@ -108,7 +108,7 @@ if($param4=='covid19'){
 		echo "</tr>";
 		echo "<tr bgcolor='$color' class='text' id='implementos90'>";
 		echo "<td colspan='2'>Verifico que la Impresora este configurada con su celular?</td><td><input type='radio' name='implementos9'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos9'  class='obtener'  value='2'></td>";
-		echo "</tr>";
+		echo "</tr>";*/
 
 		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">PESA</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos100'>";
@@ -132,13 +132,13 @@ if($param4=='covid19'){
 		echo "<td colspan='4'>Ultima vez que desinfecto la maleta:<input  name='param21' id='param21' value='$rw2[11]' style='width:395px'; class='text' ></td>";
 		echo "</tr>";
 
-		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">CARNET Y CARTA DE MOVILIDAD</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
+		/*echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">CARNET Y CARTA DE MOVILIDAD</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos160'>";
 		echo "<td colspan='2'>Cuenta con Carnet?</td><td><input type='radio' name='implementos16'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos16'  class='obtener'  value='2'></td>";
 		echo "</tr>";
 		echo "<tr bgcolor='$color' class='text' id='implementos170'>";
 		echo "<td colspan='2'>Cuenta con carta de movilidad?</td><td><input type='radio' name='implementos17'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos17'  class='obtener'  value='2'></td>";
-		echo "</tr>";
+		echo "</tr>";*/
 
 		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">PARAFISCALES O COPIA DE AFILIACION DE ARL</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos180'>";
@@ -668,7 +668,7 @@ if($nivel_acceso==3 or $param5=='valida'){
 		echo "<tr bgcolor='$color' class='text' id='implementos40'>";
 		echo "<td colspan='2'>Tiene usted el cargador de su Celular?</td><td><input type='radio' name='implementos4'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos4'  class='obtener'  value='2'></td>";
 		echo "</tr>";
-		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">IMPRESORA</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
+		/*echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">IMPRESORA</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos50'>";
 		echo "<td colspan='2'>Cuenta con impresora suministrada por la Empresa?</td><td><input type='radio' name='implementos5'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos5'  class='obtener'  value='2'></td>";
 		echo "</tr>";
@@ -686,7 +686,7 @@ if($nivel_acceso==3 or $param5=='valida'){
 		echo "</tr>";
 		echo "<tr bgcolor='$color' class='text' id='implementos90'>";
 		echo "<td colspan='2'>Verifico que la Impresora este configurada con su celular?</td><td><input type='radio' name='implementos9'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos9'  class='obtener'  value='2'></td>";
-		echo "</tr>";
+		echo "</tr>";*/
 
 		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">PESA</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos100'>";
@@ -710,13 +710,13 @@ if($nivel_acceso==3 or $param5=='valida'){
 		echo "<td colspan='4'>Ultima vez que desinfecto la maleta:<input  name='param21' id='param21' value='$rw2[11]' style='width:395px'; class='text' ></td>";
 		echo "</tr>";
 
-		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">CARNET Y CARTA DE MOVILIDAD</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
+		/*echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">CARNET Y CARTA DE MOVILIDAD</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos160'>";
 		echo "<td colspan='2'>Cuenta con Carnet?</td><td><input type='radio' name='implementos16'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos16'  class='obtener'  value='2'></td>";
 		echo "</tr>";
 		echo "<tr bgcolor='$color' class='text' id='implementos170'>";
 		echo "<td colspan='2'>Cuenta con carta de movilidad?</td><td><input type='radio' name='implementos17'  class='obtener'   value='1' required></td><td><input type='radio' name='implementos17'  class='obtener'  value='2'></td>";
-		echo "</tr>";
+		echo "</tr>";*/
 
 		echo '<tr bgcolor="#074F91" class="tittle3"><td colspan="2" width="4" align="center">PARAFISCALES O COPIA DE AFILIACION DE ARL</td><td colspan="1" width="4" align="center">SI</td><td colspan="1" width="4" align="center">NO</td></tr>';
 		echo "<tr bgcolor='$color' class='text' id='implementos180'>";

@@ -1264,7 +1264,7 @@ case "addgastos":
 		$estado='Validado';
 	}
 	$sql="UPDATE `pre-operacional` SET `prefechavalidacion`='$fechatiempo',`predatosvalidados`='$data',`pre_descvalidada`='$param10',pre_iduservalida='$id_usuario',`preestado`='$estado', `pre_correctiva`='$param9', `pre_responsable`='$param9', `pre_temperatura`='$param19', `pre_kilrecorridos`='$param12' WHERE idpreoperacinal=$param11";
-	$QL->addDocumento1($_FILES["param20"], 1, "pre-operacional", $param11, "preoperacional", $DB);
+	//$QL->addDocumento1($_FILES["param20"], 1, "pre-operacional", $param11, "preoperacional", $DB);
 	if($param12>0){
 		$sql2="UPDATE vehiculos set veh_kilactual='$param12' where idvehiculos='$param1'";
 		$DB->Execute($sql2);
@@ -1304,8 +1304,8 @@ case "addgastos":
 		 }else{
 			  $imagen2="";
 		 } 
-		$sql1="INSERT INTO `pre-operacional`(`prevehiculo`, `pretipovehiculo`, `prefechaingreso`, `preidusuario`, `preencuesta`,`preestado`,`pre_obsevaciones`, `pre_correctiva`, `pre_responsable`,`pre_temperatura`,`pre_kilrecorridos`,`pre_codigoimpresora`,`pre_limpiomaleta`,	pre_img_kilo)
-		VALUES ('$param1','$param2','$fechatiempo','$id_usuario','$data','$estado','$param7','$param8','$param9','$param19','$param12','$param20','$param21','$imagen2')";
+		$sql1="INSERT INTO `pre-operacional`(`prevehiculo`, `pretipovehiculo`, `prefechaingreso`, `preidusuario`, `preencuesta`,`preestado`,`pre_obsevaciones`, `pre_correctiva`, `pre_responsable`,`pre_temperatura`,`pre_kilrecorridos`,`pre_limpiomaleta`,	pre_img_kilo)
+		VALUES ('$param1','$param2','$fechatiempo','$id_usuario','$data','$estado','$param7','$param8','$param9','$param19','$param12','$param21','$imagen2')";
 		$vinculo=$DB->Executeid($sql1);
 	
 		$QL->addDocumento1($_FILES["param20"], 1, "pre-operacional", $vinculo, "preoperacional", $DB);
