@@ -31,4 +31,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) 
 }
 
 $roles = $modelo->obtenerRoles();
-include "../view/induccionesComunicados/index.php";
+include "../view/iduccionesComunicados/index.php";
