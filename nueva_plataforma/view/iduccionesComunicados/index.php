@@ -77,7 +77,7 @@ thead.azul-blanco th {
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     ajax: {
-      url: '/nueva_plataforma/controller/induccionesComunicadosController.php',
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
       type: 'POST',
       data: function (d) {
         d.ajax = true;
@@ -205,7 +205,7 @@ $('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {
 
   if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
     $.ajax({
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
       type: 'POST',
       data: {
         eliminar_usuario: true,
