@@ -184,7 +184,7 @@ $('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
   // }
 
   $.ajax({
-    url: '/nueva_plataforma/controller/induccionesComunicadosController.php',
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
     type: 'POST',
     data: {
       actualizar_campo: true,
