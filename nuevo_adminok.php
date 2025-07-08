@@ -1048,14 +1048,56 @@ if (is_uploaded_file($_FILES['param501']['tmp_name'])){
 		$fecha=$param3;
 		$param3=date("$param3 H:i:s");	
 
-		 $sql1="INSERT INTO `seguimiento_user`(`seg_idusuario`, `seg_fechaingreso`,seg_motivo,seg_descr,seg_idzona,seg_alcohol,seg_fechaalcohol,`seg_iduserregistro`)
-		VALUES ('$param2','$param3','$param4','$param5','$param6','$param7','$fecha','$id_usuario')";
-		$vinculo=$DB->Executeid($sql1);
+
+		$sql2="SELECT count(*), idpreoperacinal 
+		FROM `pre-operacional`   
+		WHERE  preidusuario='$param2'  
+		AND DATE(prefechaingreso) = '$fecha'";
+		$DB1->Execute($sql2); 
+		$rw0=mysqli_fetch_row($DB1->Consulta_ID);
+
+		if ($rw0[0]==0) {
+		$sql="INSERT 
+		INTO `pre-operacional`( `prefechaingreso`,
+		 `preidusuario`, `preestado`) 
+		 VALUES ('$param3','$param2','No aplica')";
+		$idviene=$DB->Executeid($sql);
+		}
+
+		$sql3="SELECT count(*),idseguimiento_user  
+		FROM `seguimiento_user`   
+		WHERE  seg_idusuario='$param2'  
+		AND DATE(seg_fechaingreso)='$fecha'";
+		$DB1->Execute($sql3); 
+		$rw1=mysqli_fetch_row($DB1->Consulta_ID);
+
+		if ($rw1[0]==0) {
+			$sql1="INSERT 
+			INTO `seguimiento_user`(`seg_idusuario`,
+			`seg_fechaingreso`,seg_motivo,seg_descr,
+			seg_idzona,seg_alcohol,seg_fechaalcohol,
+			`seg_iduserregistro`)
+			VALUES ('$param2','$param3','$param4',
+			'$param5','$param6','$param7',
+			'$fecha','$id_usuario')";
+		}else {
+			$sql1 = "UPDATE `seguimiento_user` 
+         SET 
+             `seg_fechaingreso` = '$param3',
+             `seg_motivo` = '$param4',
+             `seg_descr` = '$param5',
+             `seg_idzona` = '$param6',
+             `seg_alcohol` = '$param7',
+             `seg_fechaalcohol` = '$fecha',
+             `seg_iduserregistro` = '$id_usuario'
+         WHERE idseguimiento_user= '$rw1[1]'";
+		}
+
+
 		$QL->addDocumento1($_FILES["param8"], 1, "seguimiento_user", $vinculo, "seguimientouser", $DB);
+	
 
-		$sql="INSERT INTO `pre-operacional`( `prefechaingreso`, `preidusuario`, `preestado`) VALUES ('$param3','$param2','No aplica')";
-
-		$valores[7]=$sql; $valores[4]="seguimientouser.php"; $valores[8]=1; 
+		$valores[7]=$sql1; $valores[4]="seguimientouser.php"; $valores[8]=1; 
 	break;
 
 	case "Cambio_seguimientoUser":
