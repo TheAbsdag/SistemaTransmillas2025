@@ -35,7 +35,7 @@ if (@$actuliza == "si") {
 
 
 					$.ajax({
-						url: "buscarclientes.php",
+						url: "buscarclientesotros.php",
 						type: "POST",
 						data: datos
 					}).done(function(respuesta) {
@@ -122,7 +122,7 @@ if (@$actuliza == "si") {
 					};
 
 					$.ajax({
-						url: "buscarclientes.php",
+						url: "buscarclientesotros.php",
 						type: "POST",
 						data: datos
 					}).done(function(respuesta) {
@@ -202,7 +202,7 @@ if (@$actuliza == "si") {
 				};
 
 				$.ajax({
-					url: "buscarclientes.php",
+					url: "buscarclientesotros.php",
 					type: "POST",
 					data: datos
 				}).done(function(respuesta) {
@@ -241,8 +241,16 @@ if (@$actuliza == "si") {
 						type: "POST",
 						data: datos
 					}).done(function(respuesta) {
+						// Asegúrate de que la respuesta venga parseada si es string
+						if (typeof respuesta === 'string') {
+							respuesta = JSON.parse(respuesta);
+						}
 
-						if (respuesta === null) {
+						const cliente = respuesta.cliente || null;
+						const servicios = respuesta.servicios || [];
+
+						if (!cliente) {
+						// if (respuesta === null) {
 
 							document.getElementById("param9").value = '';
 
@@ -257,19 +265,19 @@ if (@$actuliza == "si") {
 
 						} else {
 
-							document.getElementById("id_param3").value = respuesta.idclientes;
-							document.getElementById("param9").value = respuesta.cli_nombre;
+							document.getElementById("id_param3").value = cliente.idclientes;
+							document.getElementById("param9").value = cliente.cli_nombre;
 							var a = 0;
-							if (isNaN(parseInt(respuesta.cli_valorprestado))) {
+							if (isNaN(parseInt(cliente.cli_valorprestado))) {
 								a = 0;
 							} else {
-								a = parseInt(respuesta.cli_valorprestado);
+								a = parseInt(cliente.cli_valorprestado);
 							}
-							var b = parseInt(respuesta.cli_valoraprobado);
+							var b = parseInt(cliente.cli_valoraprobado);
 							var disponible = b - a;
-							var res = respuesta.cli_direccion.split("&");
+							var res = cliente.cli_direccion.split("&");
 
-							temdocumento=respuesta.cli_iddocumento;
+							temdocumento=cliente.cli_iddocumento;
 							variable3=temdocumento.length;
 							if(documento!='' && temdocumento!=''){								
 								if(temdocumento!=documento){
@@ -280,7 +288,7 @@ if (@$actuliza == "si") {
 							}
 
 							if(temdocumento!=''){
-								document.getElementById("param7").value = respuesta.cli_iddocumento;
+								document.getElementById("param7").value = cliente.cli_iddocumento;
 							}
 
 							document.getElementById("param10").value = res[0];
@@ -289,17 +297,17 @@ if (@$actuliza == "si") {
 							document.getElementById("param22").value = res[3];
 							document.getElementById("param24").value = res[4];
 							document.getElementById("param30").value = disponible;
-							document.getElementById("param26").value = respuesta.cli_valoraprobado;
-							document.getElementById("param11").value = respuesta.cli_idciudad;
+							document.getElementById("param26").value = cliente.cli_valoraprobado;
+							document.getElementById("param11").value = cliente.cli_idciudad;
 							//document.getElementById("param11").value='';
-							//document.getElementById("id_param2").value=respuesta.idclientesdir;
+							//document.getElementById("id_param2").value=cliente.idclientesdir;
 							buscarservicio(document.getElementById("param4").value, document.getElementById("param11").value, param113.value, "Compra")
 
 							if (disponible > 0) {
 
 								var el = document.getElementById('cupo'); //se define la variable "el" igual a nuestro div
 								el.style.display = (el.style.display == 'none') ? 'block' : 'none';
-								el.innerHTML = "<strong>Atencion!</strong> El cupo disponible para este Cliente es de: " + disponible + " y el valor aprobado es de: " + respuesta.cli_valoraprobado + "</a>";
+								el.innerHTML = "<strong>Atencion!</strong> El cupo disponible para este Cliente es de: " + disponible + " y el valor aprobado es de: " + cliente.cli_valoraprobado + "</a>";
 							} else {
 
 								var el = document.getElementById('cupo'); //se define la variable "el" igual a nuestro div
@@ -321,7 +329,7 @@ if (@$actuliza == "si") {
 				};
 				$.ajax({
 
-					url: "buscarclientes.php",
+					url: "buscarclientesotros.php",
 					type: "POST",
 					data: datos
 				}).done(function(respuesta) {
@@ -359,7 +367,7 @@ if (@$actuliza == "si") {
 
 					$.ajax({
 
-						url: "buscarclientes.php",
+						url: "buscarclientesotros.php",
 						type: "POST",
 						data: datos
 
