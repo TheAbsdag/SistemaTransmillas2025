@@ -318,11 +318,11 @@ if (@$actuliza == "si") {
 											<td>${servicio.ser_fecharegistro || "N/A"}</td>
 											<td>${servicio.cli_nombre || "N/A"}</td>
 											<td>${dirRemitente || "N/A"}</td>
-											<td>${servicio.ciu_nombre || "N/A"}</td>
+											<td>${servicio.ciudad_remitente || "N/A"}</td>
 											<td>${servicio.cli_telefono || "N/A"}</td>
 											<td>${servicio.ser_destinatario || "N/A"}</td>
 											<td>${dirDestinatario || "N/A"}</td>
-											<td>${servicio.ser_ciudadentrega || "N/A"}</td>
+											<td>${servicio.ciudad_destinatario || "N/A"}</td>
 											<td>${servicio.ser_telefonocontacto || "N/A"}</td>
 										</tr>
 									`;
