@@ -302,7 +302,37 @@ if (@$actuliza == "si") {
 							//document.getElementById("param11").value='';
 							//document.getElementById("id_param2").value=cliente.idclientesdir;
 							buscarservicio(document.getElementById("param4").value, document.getElementById("param11").value, param113.value, "Compra")
+							if (Array.isArray(servicios) && servicios.length > 0) {
+								// Limpiar tabla
+								const tbody = document.getElementById("tbodyServiciosPendientes");
+								tbody.innerHTML = "";
 
+								// Llenar tabla con los servicios
+								servicios.forEach(function(servicio, index) {
+									const dirRemitente = (servicio.cli_direccion || "").replaceAll("&", " ");
+									const dirDestinatario = (servicio.ser_direccioncontacto || "").replaceAll("&", " ");
+
+									const row = `
+										<tr>
+											<td>${index + 1}</td>
+											<td>${servicio.ser_fecharegistro || "N/A"}</td>
+											<td>${servicio.cli_nombre || "N/A"}</td>
+											<td>${dirRemitente || "N/A"}</td>
+											<td>${servicio.ciu_nombre || "N/A"}</td>
+											<td>${servicio.cli_telefono || "N/A"}</td>
+											<td>${servicio.ser_destinatario || "N/A"}</td>
+											<td>${dirDestinatario || "N/A"}</td>
+											<td>${servicio.ser_ciudadentrega || "N/A"}</td>
+											<td>${servicio.ser_telefonocontacto || "N/A"}</td>
+										</tr>
+									`;
+
+									tbody.insertAdjacentHTML("beforeend", row);
+								});
+
+								// Mostrar modal
+								$("#myModalConServicios").modal("show");
+							}
 							if (disponible > 0) {
 
 								var el = document.getElementById('cupo'); //se define la variable "el" igual a nuestro div
