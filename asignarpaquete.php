@@ -219,7 +219,7 @@ else {
 $FB->llena_texto("Reasignar:",34,82,$DB,$reasignar,"",$param4,$posicion,0);
 $FB->llena_texto("Busqueda por:",31,82,$DB,$busqueda,"",$param1,1,0);
 $FB->llena_texto("Dato:", 32, 1, $DB, "", "","$param2", 4,0);
-$sqlo="SELECT `usu_nombre`,zon_nombre FROM  seguimiento_user inner join zonatrabajo on seg_idzona=idzonatrabajo  inner join  `usuarios` on idusuarios=seg_idusuario inner join ciudades on inner_sedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and seg_fechaalcohol='$fechaactual' and (usu_estado=1 or usu_filtro=1) and idciudades=$id_ciudad and `seg_motivo`='Ingreso' order by usu_nombre ";
+$sqlo="SELECT `usu_nombre`,zon_nombre FROM  seguimiento_user inner join zonatrabajo on seg_idzona=idzonatrabajo  inner join  `usuarios` on idusuarios=seg_idusuario inner join ciudades c on c.inner_sedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and seg_fechaalcohol='$fechaactual' and (usu_estado=1 or usu_filtro=1) and c.idciudades=$id_ciudad and `seg_motivo`='Ingreso' order by usu_nombre ";
 //$sql="SELECT `usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) $conde22";
 $FB->llena_texto("Operario:",33,84,$DB, "$sqlo", "", "$param33", 1,0);
 echo '<td><button type="button" class="btn btn-info" onclick="limpiar();">Limpiar</button></td>';
