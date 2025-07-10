@@ -282,17 +282,18 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     if ($nivel_acceso != '1' and $nivel_acceso != '12') {
         $cond = "and idsedes=$id_sedes";
     }
-    echo$idsede = $_REQUEST["ide"];
+    $fecha=date('Y-m-d');
+    $idsede = $_REQUEST["ide"];
     $FB->llena_texto("Operario:", 2, 2, $DB, "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) ", "", $id_param, 2, 1);
     $FB->llena_texto("Sede:", 1, 2, $DB, "(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 $cond  )", "", "$idsede", 2, 1);
    
-    $FB->llena_texto("Fecha de Ingreso:", 3, 10, $DB, "", "", "", 2, 1);
+    $FB->llena_texto("Fecha de Ingreso:", 3, 10, $DB, "", "", "$fecha", 2, 1);
     $FB->llena_texto("Motivo Ingreso:", 4, 82, $DB, $motivoingreso, "", "", 2, 1);
     $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
     $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT idzonatrabajo, zon_nombre FROM zonatrabajo WHERE inner_sedes = '$idsede')", "", "", 2, 0);
     $FB->llena_texto("Prueba de Alcohol:", 7, 82, $DB, $pruebaalcohol, "", "", 2, 1);
     $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
-}elseif ($tabla == "Cambio_seguimientoUser") {
+}elseif($tabla == "Cambio_seguimientoUser"){
 
     // if ($nivel_acceso != '1' and $nivel_acceso != '12') {
     //     $cond = "and idsedes=$id_sedes";
@@ -310,7 +311,7 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 )", "", "", 2, 0);
     $FB->llena_texto("Prueba de Alcohol:", 7, 82, $DB, $pruebaalcohol, "", "", 2, 1);
     $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
-} elseif ($tabla == "Agregar festivos") {
+}elseif($tabla == "Agregar festivos") {
 
 
     // $parametro = $_GET['parametro'];
