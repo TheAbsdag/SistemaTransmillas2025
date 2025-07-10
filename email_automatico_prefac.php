@@ -1,3 +1,48 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+var facturasVencidas = [];
+function sendEmail(idfac,email,body,asunto,numero,linkFac){
+
+
+        
+
+    console.log(idfac+"_"+email+"_"+body);
+
+
+    const formData = new FormData();
+    var cond = 1;
+    //agregar correo
+    formData.append('correo', email);
+    //agregar correo
+    formData.append('body', body);
+    formData.append('idfac', idfac);
+    formData.append('cond', cond);
+    formData.append('asunto', asunto);
+    formData.append('numero', numero);
+    formData.append('linkFac', linkFac);
+
+
+
+
+    fetch('email_fac.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log(result);
+        // alert(result);
+
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        
+    }).finally(() => {
+
+    });
+
+}
+</script>
 <?php
 // Configuración
 $bd = "u713516042_transmillas2"; 
@@ -8,7 +53,7 @@ date_default_timezone_set("America/Bogota");
 
 // Logger simple
 function log_envio($mensaje) {
-    $logFile = __DIR__ . '/../logs/envio_Prefacturas_auto.log';
+    $logFile = __DIR__ . '/logs/envio_Prefacturas_auto.log';
     $timestamp = date('Y-m-d H:i:s');
     file_put_contents($logFile, "[$timestamp] $mensaje\n", FILE_APPEND);
 }
@@ -50,55 +95,66 @@ while ($rw1 = mysqli_fetch_row($result5)) {
     $id_p = $rw1[0];
     $cliente = mysqli_real_escape_string($link, $rw1[2]);
 
-    $sql2 = "SELECT `idcreditos`, `cre_nombre`, idhojadevida, cre_numero_auto 
-             FROM `creditos` 
-             INNER JOIN hojadevidacliente ON hoj_clientecredito = idcreditos 
-             WHERE cre_nombre = '$cliente'";
-    
-    $result3 = mysqli_query($link, $sql2);
-    if (!$result3) {
-        log_envio("Error en SQL cliente: $sql2 - " . mysqli_error($link));
-        continue;
-    }
-
-    $rw2 = mysqli_fetch_row($result3);
-    if (!$rw2) {
-        log_envio("Cliente no encontrado para $cliente");
-        continue;
-    }
-
-    $correo_sql = "SELECT `cont_correo` FROM `contactofacturacion` 
-                   WHERE cont_idhojavida = '$rw2[2]' AND con_principal = '1'";
-
-    $result4 = mysqli_query($link, $correo_sql);
-    if (!$result4) {
-        log_envio("Error en SQL correo: $correo_sql - " . mysqli_error($link));
-        continue;
-    }
-
-    $ema = mysqli_fetch_row($result4);
-    $numero = $rw2[3];
-
-    $archivo = "pre_facturas/{$rw1[3]}.xls";
+$archivo = "pre_facturas/{$rw1[3]}.xls";
     if (file_exists($archivo)) {
-        $linkFac = $archivo;
-        $mensaje = "Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente";
-        $email = $ema[0];
-        $asunto = "Aprobación de Pre-Factura N° {$rw1[3]}";
+        $sql2 = "SELECT `idcreditos`, `cre_nombre`, idhojadevida, cre_numero_auto 
+                FROM `creditos` 
+                INNER JOIN hojadevidacliente ON hoj_clientecredito = idcreditos 
+                WHERE cre_nombre = '$cliente'";
+        
+        $result3 = mysqli_query($link, $sql2);
+        if (!$result3) {
+            log_envio("Error en SQL cliente: $sql2 - " . mysqli_error($link));
+            continue;
+        }
 
-        log_envio("Preparado envío para $email - Factura $rw1[3]");
+        $rw2 = mysqli_fetch_row($result3);
+        if (!$rw2) {
+            log_envio("Cliente no encontrado para $cliente");
+            continue;
+        }
 
-        echo "<script>facturasVencidas.push({
-            id: $id_p,
-            email: '$email',
-            mensaje: `$mensaje`,
-            asunto: `$asunto`,
-            numero: `$numero`,
-            linkFac: `$linkFac`
-        });</script>";
+        $correo_sql = "SELECT `cont_correo` FROM `contactofacturacion` 
+                    WHERE cont_idhojavida = '$rw2[2]' AND con_correo_automatico = 'si'";
+
+        $result4 = mysqli_query($link, $correo_sql);
+        if (!$result4) {
+            log_envio("Error en SQL correo: $correo_sql - " . mysqli_error($link));
+            continue;
+        }
+        while ($ema = mysqli_fetch_row($result4)) {
+            // $ema = mysqli_fetch_row($result4);
+            $numero = $rw2[3];
+
+            // $archivo = "pre_facturas/{$rw1[3]}.xls";
+            // if (file_exists($archivo)) {
+                $linkFac = $archivo;
+                $mensaje = "Estimado cliente envío archivo en excel con la relación de los servicios prestados para su respectiva aprobación esperando respuesta para generar la factura correspondiente";
+                $email = $ema[0];
+                $asunto = "Aprobacion de Pre-Factura N° {$rw1[3]}";
+
+                log_envio("Preparado envío para $email - Factura $rw1[3]");
+
+                echo "<script>facturasVencidas.push({
+                    id: $id_p,
+                    email: '$email',
+                    mensaje: `$mensaje`,
+                    asunto: `$asunto`,
+                    numero: `$numero`,
+                    linkFac: `$linkFac`
+                });</script>";
+            // } else {
+            //     log_envio("Archivo no encontrado: $archivo");
+            // }
+
+
+        }
+
+
     } else {
         log_envio("Archivo no encontrado: $archivo");
     }
+
 }
 
 // Cerrar conexión

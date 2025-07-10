@@ -42,7 +42,7 @@ try {
             $mail->addAddress($destinatarios);
         }
     } else {
-        echo "Error: 'correos' no es un array válido.";
+        echo "Error: 'correos' no es un array válido o esta vacio.";
         // exit;
     }
 
@@ -121,6 +121,8 @@ try {
 
     // Enviar el correo
     $mail->send();
+
+
     if ($_POST['numero']!="") {
         $numero=$_POST['numero'];
         $link="https://sistema.transmillas.com/".$existingFileName;
@@ -168,25 +170,52 @@ try {
 
 
 
-    echo 'El mensaje ha sido enviado';
-    require("login_autentica.php"); 
-    $id_ciudad= $_SESSION['usu_idsede'];
-    $id_usuario= $_SESSION['usuario_id'];
-    @$tipoguia=$_REQUEST["tipoguia"];
-    @$registros=$_REQUEST["registros"];
-    $id_nombre=$_SESSION['usuario_nombre'];
-    $DB = new DB_mssql;
-    $DB->conectar();
-    $DB1 = new DB_mssql;
-    $DB1->conectar();
+    // Incluir la clase de conexión
+    require_once 'config/database.php';
 
-    $sql2="SELECT fac_correofac FROM `facturascreditos`  WHERE idfacturascreditos='$idFactura'";
-    $DB1->Execute($sql2); 
-    $rw1=mysqli_fetch_row($DB1->Consulta_ID);
-    
-    $nummensajes=$rw1[0]+1;
-    $sqlsqlupdate = "UPDATE `facturascreditos` SET fac_correofac='$nummensajes'  WHERE idfacturascreditos='$idFactura'";
-    $DB->Execute($sqlsqlupdate);
+    // Crear instancia y conectar
+    $db = new Database();
+    $conn = $db->connect();
+
+    // Asegúrate de tener un valor válido de $idFactura
+    $idFactura = isset($_GET['idFactura']) ? intval($_GET['idFactura']) : 0;
+
+    if ($idFactura > 0) {
+        // Obtener el valor actual de fac_correofac
+        $sql = "SELECT fac_correofac FROM facturascreditos WHERE idfacturascreditos = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $idFactura);
+        $stmt->execute();
+        $stmt->bind_result($fac_correofac);
+        
+        if ($stmt->fetch()) {
+            $stmt->close();
+
+            // Incrementar el contador
+            $nummensajes = $fac_correofac + 1;
+
+            // Actualizar el valor
+            $sqlUpdate = "UPDATE facturascreditos SET fac_correofac = ? WHERE idfacturascreditos = ?";
+            $stmtUpdate = $conn->prepare($sqlUpdate);
+            $stmtUpdate->bind_param("ii", $nummensajes, $idFactura);
+            $stmtUpdate->execute();
+
+            if ($stmtUpdate->affected_rows > 0) {
+                echo 'El mensaje ha sido enviado y el contador actualizado.';
+            } else {
+                echo 'El mensaje ha sido enviado pero no se pudo actualizar el contador.';
+            }
+
+            $stmtUpdate->close();
+        } else {
+            echo 'Factura no encontrada.';
+        }
+    } else {
+        echo 'ID de factura inválido.';
+    }
+
+    // Cerrar conexión
+    $conn->close();
  
 
 } catch (Exception $e) {
