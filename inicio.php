@@ -221,6 +221,10 @@ if($nivel_acceso==6){
 			$FB->llena_texto("Fecha al :", 5, 10, $DB, "", "", "$param5", 4, 0);
 			$FB->llena_texto("Busqueda por:",1,82,$DB,$busqueda,"",$param1,1,0);
 			$FB->llena_texto("Dato:", 2, 1, $DB, "", "","$param2", 4,0);
+			if($nivel_acceso==1){
+				$FB->llena_texto("Estado Factura:",6,82,$DB,$estadocreditos,"",$param1,1,0);
+				echo "<td><button type='button' class='btn btn-success' onclick='enviarDatosPrefactura();'>Crear PRE-Factura</button></td></tr>";
+			}
 			$FB->llena_texto("", 3, 142, $DB, "BUSCAR", "","", 1, 0);
 
 
@@ -260,17 +264,23 @@ if($nivel_acceso==6){
 
 			if($param1==""){ $param1="ser_prioridad"; } 
 			$fehcaactual=date('Y-m-d');	 
-
-
-		$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_consecutivo,ser_guiare,cli_idciudad,ser_estado,'1' as tipoc,ser_clasificacion	FROM serviciosdia where $conde1 $condefecha 
+			
+			if($param6=="Sin Facturar"){ $conde2="and (ser_numerofactura ='' or ser_numerofactura is null)";}elseif ($param6=="Facturados") {
+				$conde2="and (ser_numerofactura !='' or ser_numerofactura IS NOT NULL)";	
+			}else{$conde2="";	} 
+			$idguias='';
+			
+		$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_consecutivo,ser_guiare,cli_idciudad,ser_estado,'1' as tipoc,ser_clasificacion	FROM serviciosdia where $conde1 $condefecha $conde2
 		union 
 		SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_consecutivo,ser_guiare,cli_idciudad,ser_estado,'2' as tipoc,ser_clasificacion
-		FROM servicios2 inner join rel_sercli  on idservicios=ser_idservicio  inner join clientesservicios on idclientesdir=ser_idclientes inner join clientes on idclientes=cli_idclientes  inner join ciudades on idciudades=ser_ciudadentrega  where $conde1 $condefecha
+		FROM servicios2 inner join rel_sercli  on idservicios=ser_idservicio  inner join clientesservicios on idclientesdir=ser_idclientes inner join clientes on idclientes=cli_idclientes  inner join ciudades on idciudades=ser_ciudadentrega  where $conde1 $condefecha $conde2
 		ORDER BY $param1 $asc "; 		
 				$DB->Execute($sql); $va=0; 
 				while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 				{
 					$id_p=$rw1[0];
+					
+					$idguias=$id_p.','.$idguias;
 					$va++; $p=$va%2;
 					if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
 					echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
@@ -465,6 +475,7 @@ if($nivel_acceso==6){
 				}
 				echo "<tr><td align='center' > Total Datos:$va</td>"; 				
 				echo "</tr>"; 
+				echo"<input type='hidden' id='idguias' value='$idguias'>";
 			}else{
 
 				$param4='covid19';
@@ -670,5 +681,48 @@ function enviarEmail() {
 		alert("Error en la solicitud: " + error);
 	});
 }
+
+function enviarDatosPrefactura() {
+
+    // let p1 = document.getElementById('param1').value;
+    let p4 = document.getElementById('param4').value;
+    let p5 = document.getElementById('param5').value;
+	let guias = document.getElementById('idguias').value;
+
+
+	let errores = [];
+
+	// if (!p1) errores.push("param1 (por ejemplo, fecha o identificador)");
+	if (!p4) errores.push("Fecha inicial");
+	if (!p5) errores.push("Fecha final");
+	if (!guias) errores.push("No hay guias para pre-facturar");
+
+	if (errores.length > 0) {
+		alert("⚠️ Faltan los siguientes datos obligatorios:\n\n- " + errores.join("\n- "));
+		return; // Detiene la ejecución
+	}
+
+    const formData = new FormData();
+	// formData.append('param1', p1);
+    formData.append('param4', p4);
+    formData.append('param5', p5);
+	formData.append('guias', guias);
+    // Si guías es un array, lo conviertes a una cadena separada por comas (o como esperes en PHP)
+    // formData.append('guias', guiasArray.join(','));
+
+    fetch('crear_prefactura.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log('Respuesta del servidor:', result);
+        // Aquí puedes mostrar un mensaje o hacer otra acción
+    })
+    .catch(error => {
+        console.error('Error al enviar datos:', error);
+    });
+}
+
 </script>
 
