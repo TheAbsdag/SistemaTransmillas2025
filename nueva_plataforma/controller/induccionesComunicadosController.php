@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once "../model/InduccionesComunicadosModel.php";
+require_once "../model/induccionesComunicadosModel.php";
 
 $modelo = new InduccionesComunicados();
 
