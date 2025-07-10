@@ -34,7 +34,7 @@ timer =setTimeout(buscar(nombres),2000);
 		
 			
 		$.ajax({
-				url: "buscarclientes.php",
+				url: "buscarclientesotros.php",
 				type: "POST",
 				data: datos
 			}).done(function(respuesta){
@@ -119,14 +119,14 @@ timer =setTimeout(buscar(nombres),2000);
 			if (!cliente) {
 				if (document.getElementById("id_param1").value != 1) {
 					cambio_ajax2(1, 14, 'clientesdir', 'telefono', 1, '');
-				}
+								}
 				document.getElementById("id_param").value = 0;
 				document.getElementById("param3").value = '';
 				document.getElementById("param6").value = '';
 				document.getElementById("param4").value = '';
 				document.getElementById("param5").value = 0;
 				document.getElementById("param51").value = '';
-				document.getElementById("0").checked = true;
+								document.getElementById("0").checked = true;
 				document.getElementById("param19").value = 0;
 				document.getElementById("param20").value = '';
 				document.getElementById("param23").value = '';
@@ -134,7 +134,7 @@ timer =setTimeout(buscar(nombres),2000);
 				document.getElementById("id_param2").value = 0;
 			} else {
 				cambio_ajax2(documento, 14, 'clientesdir', 'telefono', 1, cliente.cli_nombre);
-				
+								
 				document.getElementById("param3").value = cliente.cli_email;
 				document.getElementById("param4").value = '';
 
@@ -156,7 +156,7 @@ timer =setTimeout(buscar(nombres),2000);
 
 				if (cliente.cli_clasificacion != null) {
 					// document.getElementById(cliente.cli_clasificacion).checked = true;
-				}
+								}
 
 				buscarservicio(cliente.cli_idciudad, document.getElementById("param11").value, param113.value, "Recogida");
 
@@ -191,8 +191,8 @@ timer =setTimeout(buscar(nombres),2000);
 					// Mostrar modal
 					$("#myModalConServicios").modal("show");
 				}
-			}
-		});
+							}
+						});
 					
 	}
  } else  if(nombre=='param6'){	
@@ -202,7 +202,7 @@ timer =setTimeout(buscar(nombres),2000);
 		datos = {"vlores":idclinte,"tipo":"cliente"};
 	
 		$.ajax({
-				url: "buscarclientes.php",
+				url: "buscarclientesotros.php",
 				type: "POST",
 				data: datos
 			}).done(function(respuesta){
@@ -235,45 +235,43 @@ timer =setTimeout(buscar(nombres),2000);
 		datos = {"vlores":telefono,"tipo":"telefono"};
 		
 $.ajax({
-	url: "buscarclientes.php",
+	url: "buscarclientesotros.php",
 	type: "POST",
 	data: datos
-}).done(function(respuesta) {
+			}).done(function(respuesta){
+				
+				if (respuesta === null) {
+	
+					document. getElementById("param9").value='';
+					document. getElementById("param10").value=0;
+					document. getElementById("param101").value='';
+					document. getElementById("param21").value=0;
+					document. getElementById("param22").value='';
+					document. getElementById("param24").value='';
+					document. getElementById("param11").value='';
+					
+					}
+				else {
+					document.getElementById("param9").value=respuesta.cli_nombre;
+					
+					var res = respuesta.cli_direccion.split("&");
+					if (typeof res[4] === 'undefined') {
+						res[4]='';
+						
+					}
+					document.getElementById("param10").value=res[0];
+					document.getElementById("param101").value=res[1];
+					document.getElementById("param21").value=res[2];
+					document.getElementById("param22").value=res[3];
+					document.getElementById("param24").value=res[4];
+					document.getElementById("param11").value=respuesta.cli_idciudad;
+					//document.getElementById("param11").value='';
+					buscarservicio(document.getElementById("param4").value, document.getElementById("param11").value,  param113.value, "Recogida")
 
-	if (respuesta === null || !respuesta.cliente) {
-		document.getElementById("param9").value = '';
-		document.getElementById("param10").value = 0;
-		document.getElementById("param101").value = '';
-		document.getElementById("param21").value = 0;
-		document.getElementById("param22").value = '';
-		document.getElementById("param24").value = '';
-		document.getElementById("param11").value = '';
-	} else {
-		const cliente = respuesta.cliente;
-		document.getElementById("param9").value = cliente.cli_nombre;
-
-		const direccion = (cliente.cli_direccion || "").replaceAll("&", " ");
-		const res = direccion.split(" ");
-		while (res.length < 5) res.push(''); // Rellenar si faltan partes
-
-		document.getElementById("param10").value = res[0];
-		document.getElementById("param101").value = res[1];
-		document.getElementById("param21").value = res[2];
-		document.getElementById("param22").value = res[3];
-		document.getElementById("param24").value = res[4];
-		document.getElementById("param11").value = cliente.cli_idciudad;
-
-		// Llamar función con datos
-		buscarservicio(
-			document.getElementById("param4").value,
-			document.getElementById("param11").value,
-			param113.value,
-			"Recogida"
-		);
-	}
-
-
-});
+					//document.getElementById("id_param2").value=respuesta.idclientesdir;
+					
+				}
+			});
 					
 	}
 	 
@@ -283,7 +281,7 @@ var idclinte = document.getElementById("param71").value;
 datos = {"vlores":idclinte,"tipo":"cliente"};
 $.ajax({
 
-		url: "buscarclientes.php",
+		url: "buscarclientesotros.php",
 		type: "POST",
 		data: datos
 	}).done(function(respuesta){
@@ -318,7 +316,7 @@ $.ajax({
 
 	 $.ajax({
 
-			 url: "buscarclientes.php",
+			 url: "buscarclientesotros.php",
 			 type: "POST",
 			 data: datos
 

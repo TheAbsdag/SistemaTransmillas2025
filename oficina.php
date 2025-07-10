@@ -155,7 +155,7 @@ imer =setTimeout(buscar(nombres),2000);
 		datos = {"vlores":documento,"tipo":"documento"};
 
 		$.ajax({
-				url: "buscarclientes.php",
+				url: "buscarclientesotros.php",
 				type: "POST",
 				data: datos
 			}).done(function(respuesta){
@@ -217,7 +217,7 @@ imer =setTimeout(buscar(nombres),2000);
 	if (variable2 >= 7) {
 		datos = {"vlores":telefono,"tipo":"telefono"};
 		$.ajax({
-				url: "buscarclientes.php",
+				url: "buscarclientesotros.php",
 				type: "POST",
 				data: datos
 			}).done(function(respuesta){
@@ -274,7 +274,7 @@ imer =setTimeout(buscar(nombres),2000);
 		datos = {"vlores":idclinte,"tipo":"cliente"};
 		$.ajax({
 
-				url: "buscarclientes.php",
+				url: "buscarclientesotros.php",
 				type: "POST",
 				data: datos
 			}).done(function(respuesta){
@@ -302,7 +302,7 @@ imer =setTimeout(buscar(nombres),2000);
 		datos = {"vlores":telefono,"tipo":"telefono"};
 		$.ajax({
 
-				url: "buscarclientes.php",
+				url: "buscarclientesotros.php",
 				type: "POST",
 				data: datos
 
@@ -348,7 +348,7 @@ var idclinte = document.getElementById("param71").value;
 datos = {"vlores":idclinte,"tipo":"cliente"};
 $.ajax({
 
-		url: "buscarclientes.php",
+		url: "buscarclientesotros.php",
 		type: "POST",
 		data: datos
 	}).done(function(respuesta){
@@ -380,7 +380,7 @@ $.ajax({
 
 	 $.ajax({
 
-			 url: "buscarclientes.php",
+			 url: "buscarclientesotros.php",
 			 type: "POST",
 			 data: datos
 
