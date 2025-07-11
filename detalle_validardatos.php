@@ -79,7 +79,7 @@ $DB->Execute($sql); $va=0;
 		<td>".$rw1[8]."</td>
 		<td>".$rw1[9]."</td>";
 		if ($rw1[13]=="whatsapp") {
-			$sqlW="SELECT telefono_wa FROM `registro` WHERE mensaje_recibido='$rw1[3]' order by dec limit 1";
+			echo$sqlW="SELECT telefono_wa FROM `registro` WHERE mensaje_recibido='$rw1[3]' order by dec limit 1";
 			$DB1->Execute($sqlW);
 			$telW=mysqli_fetch_row($DB1->Consulta_ID);
 			$telWhatsapp=$telW[0];
