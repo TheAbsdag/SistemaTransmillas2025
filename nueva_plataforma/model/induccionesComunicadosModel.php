@@ -43,12 +43,13 @@ class induccionesComunicados {
     return $stmt->execute();
 }
 
-    public function eliminarUsuario($id) {
-        $sql = "DELETE FROM usuarios WHERE idusuarios = ?";
+    public function eliminarComunicado($id) {
+        $sql = "DELETE FROM comunicados_inducciones WHERE ci_id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        $ok = $stmt->execute();
         $stmt->close();
+        return $ok;
     }
 
     // ✅ Nuevo método para insertar comunicado o inducción

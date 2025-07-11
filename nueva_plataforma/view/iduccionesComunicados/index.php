@@ -92,8 +92,8 @@
                 <label>Estado</label>
                 <select class="form-select" name="ci_estado" required>
                   <option value="pendiente">Pendiente</option>
-                  <option value="completado">Completado</option>
-                  <option value="anulado">Anulado</option>
+                  <option value="revisado">Revisado</option>
+                  <option value="validado">Validado</option>
                 </select>
               </div>
               <div class="col-md-6">

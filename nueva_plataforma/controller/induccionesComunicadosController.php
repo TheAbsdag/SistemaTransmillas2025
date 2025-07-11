@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) 
 // ✅ 3. Eliminar usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) {
     $id = $_POST['id'];
-    $modelo->eliminarUsuario($id);
+    $modelo->eliminarComunicado($id);
     echo json_encode(['ok' => true]);
     exit;
 }
