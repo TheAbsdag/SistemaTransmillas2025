@@ -62,15 +62,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
     }
 
     // Insertar en la base de datos usando el modelo
-    $insertado = $modelo->insertarComunicado([
-        'nombreDoc'      => $nombreDoc,
-        'encargado'      => $encargado,
-        'usuario'        => $usuario,
-        'linkDoc'        => $linkDoc,
-        'estado'         => $estado,
-        'fechaUsuario'   => $fechaUsuario,
-        'fechaEncargado' => $fechaEncargado
-    ], $archivoNombre);
+    $fechaRegistro = date('Y-m-d'); // Agrega fecha de hoy
+
+    $insertado = $modelo->insertarComunicado(
+        $nombreDoc,
+        $encargado,
+        $usuario,
+        $linkDoc,
+        $archivoNombre,
+        $estado,
+        $fechaRegistro,
+        $fechaUsuario,
+        $fechaEncargado
+    );
+
 
     if ($insertado) {
         echo json_encode(['ok' => true]);

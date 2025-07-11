@@ -53,26 +53,37 @@ class induccionesComunicados {
     }
 
     // ✅ Nuevo método para insertar comunicado o inducción
-    public function insertarComunicado($data, $archivoNombre) {
-        $sql = "INSERT INTO comunicados_inducciones (
-            ci_nombre_documento, ci_encargado, ci_usuario,
-            ci_link_documento, ci_ruta_archivo, ci_estado,
-            ci_fecha_registro
-        ) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+    public function insertarComunicado($nombreDoc, $encargado, $usuario, $linkDoc, $archivoNombre, $estado, $fechaRegistro, $fechaUsuario, $fechaEncargado) {
+    $sql = "INSERT INTO comunicados_inducciones (
+        ci_nombre_documento,
+        ci_encargado,
+        ci_usuario,
+        ci_link_documento,
+        ci_ruta_archivo,
+        ci_estado,
+        ci_fecha_registro,
+        ci_fecha_confirmacion_usuario,
+        ci_fecha_confirmacion_encargado
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param(
-            "sssssss",
-            $data['nombreDoc'],
-            $data['encargado'],
-            $data['usuario'],
-            $data['linkDoc'],
-            $archivoNombre,
-            $data['estado'],
-        );
+    $stmt = $this->db->prepare($sql);
+    $stmt->bind_param(
+        "sssssssss",
+        $nombreDoc,
+        $encargado,
+        $usuario,
+        $linkDoc,
+        $archivoNombre,
+        $estado,
+        $fechaRegistro,
+        $fechaUsuario,
+        $fechaEncargado
+    );
 
-        return $stmt->execute();
-    }
+    $ok = $stmt->execute();
+    $stmt->close();
+    return $ok;
+}
 
     public function obtenerComunicados($estado = '') {
         $sql = "SELECT * FROM comunicados_inducciones WHERE 1";
