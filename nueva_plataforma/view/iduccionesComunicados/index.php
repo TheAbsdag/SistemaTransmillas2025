@@ -19,7 +19,7 @@
 <body>
 
 <div class="container mt-4">
-  <h2 class="mb-4">Comunicados e Inducciones..........n</h2>
+  <h2 class="mb-4">Comunicados e Inducciones</h2>
 
   <div class="row mb-3">
     <div class="col-md-4">
@@ -27,8 +27,8 @@
       <select id="filtroEstado" class="form-control">
         <option value="">Seleccionar...</option>
         <option value="pendiente">Pendiente</option>
-        <option value="completado">Revisado</option>
-        <option value="anulado">Validadoooooooo</option>
+        <option value="revisado">Revisado</option>
+        <option value="validado">Validado</option>
       </select>
     </div>
   </div>
@@ -90,7 +90,7 @@ $(document).ready(function () {
       {
         data: 'ci_estado',
         render: function (data, type, row) {
-          const clase = data === 'completado' ? 'bg-success' :
+          const clase = data === 'revisado' ? 'bg-success' :
                         data === 'pendiente' ? 'bg-warning' :
                         'bg-danger';
           return `
@@ -98,8 +98,8 @@ $(document).ready(function () {
                     data-id="${row.ci_id}"
                     data-campo="ci_estado">
               <option value="pendiente" ${data === 'pendiente' ? 'selected' : ''}>Pendiente</option>
-              <option value="completado" ${data === 'completado' ? 'selected' : ''}>Completado</option>
-              <option value="anulado" ${data === 'anulado' ? 'selected' : ''}>Anulado</option>
+              <option value="revisado" ${data === 'revisado' ? 'selected' : ''}>Revisado</option>
+              <option value="validado" ${data === 'validado' ? 'selected' : ''}>Validado</option>
             </select>
           `;
         }
