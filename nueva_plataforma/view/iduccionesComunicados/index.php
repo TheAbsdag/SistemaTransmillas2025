@@ -19,7 +19,7 @@
 <body>
 
 <div class="container mt-4">
-  <h2 class="mb-4">Comunicados e Inducciones</h2>
+  <h2 class="mb-4">Comunicados e Inducciones..........n</h2>
 
   <div class="row mb-3">
     <div class="col-md-4">
