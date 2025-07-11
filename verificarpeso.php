@@ -273,16 +273,16 @@ $DB->Execute($sql); $va=0;
 		// echo "<td align='center' >";
 		// echo "<a href='$recogidasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
 		
-		$sqlimg="SELECT ser_img_recog,ser_img_entre from servicios where idservicios=$id_p ";
-		$DB1->Execute($sqlimg); 
-		$img=mysqli_fetch_row($DB1->Consulta_ID);
-		if ($img[0]!="") {
-			// echo "<td align='center' >";
-			// 		echo "<a href='imgServicios/$img[0]' target='_blank'>Ver</td>";
-		}else {
-			// echo "<td align='center' >";
-			// echo "</td>";
-		}
+		// $sqlimg="SELECT ser_img_recog,ser_img_entre from servicios where idservicios=$id_p ";
+		// $DB1->Execute($sqlimg); 
+		// $img=mysqli_fetch_row($DB1->Consulta_ID);
+		// if ($img[0]!="") {
+		// 	echo "<td align='center' >";
+		// 			echo "<a href='imgServicios/$img[0]' target='_blank'>Ver</td>";
+		// }else {
+		// 	echo "<td align='center' >";
+		// 	echo "</td>";
+		// }
 
 
 		if($rw1[13]==11){

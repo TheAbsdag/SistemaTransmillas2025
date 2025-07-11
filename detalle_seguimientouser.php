@@ -208,7 +208,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 									echo "<td></td>";
 									echo "<td></td>";
 									echo "<td></td>";
-								    echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+								    echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso8</td>"; //Ingreso?
 									echo "<td></td>";
 									echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 									echo "<td>D</td>";
@@ -286,7 +286,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 					
 									//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 									echo $ver ;
-									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso7</td>"; //Ingreso?
 									echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>"; // DESCRIPCION
 									echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>"; //FECHA DE INGRESO
 					
@@ -469,11 +469,12 @@ if (($muestra1 == false and $muestra2 == true)) {
 	
 		# code...
 	
-	$sql4="SELECT usu_tipocontrato FROM `usuarios` WHERE idusuarios >0 $conde";
+	$sql4="SELECT usu_tipocontrato,usu_idsede,idusuarios FROM `usuarios` WHERE idusuarios >0 $conde";
 	$DB2->Execute($sql4);
 	$rw4=mysqli_fetch_row($DB2->Consulta_ID);
 	$tipoContrato ="$rw4[0]"; 
-
+	$ideSede ="$rw4[1]"; 
+	$iddelusu ="$rw4[2]"; 
 	if ($tipoContrato == $param37 or $porempresa == false) {
 		
 		$fechaini = $param34;
@@ -708,7 +709,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso3</td>"; //Ingreso?
 								        echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw1[3]</td>";
 										echo "<td>D</td>";
@@ -777,7 +778,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 					
 								//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$rw1[3]\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 								echo $ver ;
-								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($iddelusu,\"SeguimientoUser\",\"$ideSede\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 								echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>";
 								echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 					
@@ -1096,7 +1097,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 			
 						//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 						echo $ver ;
-						echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+						echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(523,\"SeguimientoUser\",\"1\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 						echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>";
 						echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 			
