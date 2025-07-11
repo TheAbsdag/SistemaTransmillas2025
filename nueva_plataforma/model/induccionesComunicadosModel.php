@@ -73,4 +73,18 @@ class induccionesComunicados {
 
         return $stmt->execute();
     }
+
+    public function obtenerComunicados($estado = '') {
+        $sql = "SELECT * FROM comunicados_inducciones WHERE 1";
+
+        if ($estado !== '') {
+            $sql .= " AND ci_estado = '" . $this->db->real_escape_string($estado) . "'";
+        }
+
+        $sql .= " ORDER BY ci_fecha_registro DESC";
+
+        $result = $this->db->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
 }
