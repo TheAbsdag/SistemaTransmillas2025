@@ -41,7 +41,8 @@ class induccionesComunicados {
     $stmt = $this->db->prepare($sql);
     $stmt->bind_param("si", $valor, $id);
     return $stmt->execute();
-}
+    }
+
 
     public function eliminarComunicado($id) {
         $sql = "DELETE FROM comunicados_inducciones WHERE ci_id = ?";

@@ -20,15 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) 
     $campo = $_POST['campo'];
     $valor = $_POST['valor'];
 
-    if (str_starts_with($campo, 'ci_')) {
-        $modelo->actualizarCampoCI($id, $campo, $valor);
-    } else {
-        $modelo->actualizarCampo($id, $campo, $valor);
-    }
-
+    $modelo->actualizarCampoCI($id, $campo, $valor); 
     echo json_encode(['ok' => true]);
     exit;
 }
+
 
 
 // ✅ 3. Eliminar usuario
