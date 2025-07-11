@@ -248,7 +248,7 @@ $(document).ready(function () {
 $('#formAgregarCI').on('submit', function (e) {
   e.preventDefault();
 
-  const formData = new FormData(this);
+  const formData = new FormData(this); 
 
   $.ajax({
     url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
