@@ -57,6 +57,64 @@
     </thead>
     <tbody></tbody>
   </table>
+  <!-- Modal para agregar nuevo-->
+  <div class="modal fade" id="modalAgregarCI" tabindex="-1" aria-labelledby="modalLabelCI" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <form id="formAgregarCI" enctype="multipart/form-data">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabelCI">Nuevo Comunicado / Inducción</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label>Nombre del documento</label>
+                <input type="text" class="form-control" name="ci_nombre_documento" required>
+              </div>
+              <div class="col-md-6">
+                <label>Encargado</label>
+                <input type="text" class="form-control" name="ci_encargado" required>
+              </div>
+              <div class="col-md-6">
+                <label>Usuario</label>
+                <input type="text" class="form-control" name="ci_usuario" required>
+              </div>
+              <div class="col-md-6">
+                <label>Link del documento (opcional)</label>
+                <input type="url" class="form-control" name="ci_link_documento">
+              </div>
+              <div class="col-md-6">
+                <label>Archivo (opcional)</label>
+                <input type="file" class="form-control" name="ci_ruta_archivo" accept=".pdf,.doc,.docx">
+              </div>
+              <div class="col-md-6">
+                <label>Estado</label>
+                <select class="form-select" name="ci_estado" required>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="completado">Completado</option>
+                  <option value="anulado">Anulado</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label>Fecha confirmación usuario</label>
+                <input type="date" class="form-control" name="ci_fecha_confirmacion_usuario" required>
+              </div>
+              <div class="col-md-6">
+                <label>Fecha confirmación encargado</label>
+                <input type="date" class="form-control" name="ci_fecha_confirmacion_encargado" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
 </div>
 
 <!-- JS -->
@@ -185,6 +243,30 @@ $(document).ready(function () {
     }
   });
 });
+
+// Agregar comunicado o inducción
+$('#formAgregarCI').on('submit', function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  $.ajax({
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function (res) {
+      $('#modalAgregarCI').modal('hide');
+      $('#tablaComunicados').DataTable().ajax.reload();
+      $('#formAgregarCI')[0].reset();
+    },
+    error: function () {
+      alert('Error al guardar el comunicado.');
+    }
+  });
+});
+
 </script>
 
 </body>
