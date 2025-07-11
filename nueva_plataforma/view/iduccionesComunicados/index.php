@@ -28,7 +28,7 @@
         <option value="">Seleccionar...</option>
         <option value="pendiente">Pendiente</option>
         <option value="completado">Revisado</option>
-        <option value="anulado">Validado</option>
+        <option value="anulado">Validadoooooooo</option>
       </select>
     </div>
   </div>
