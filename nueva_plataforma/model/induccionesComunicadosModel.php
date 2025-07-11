@@ -57,8 +57,8 @@ class induccionesComunicados {
         $sql = "INSERT INTO comunicados_inducciones (
             ci_nombre_documento, ci_encargado, ci_usuario,
             ci_link_documento, ci_ruta_archivo, ci_estado,
-            ci_fecha_registro, ci_fecha_confirmacion_usuario, ci_fecha_confirmacion_encargado
-        ) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
+            ci_fecha_registro
+        ) VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param(
@@ -69,8 +69,6 @@ class induccionesComunicados {
             $data['linkDoc'],
             $archivoNombre,
             $data['estado'],
-            $data['fechaUsuario'],
-            $data['fechaEncargado']
         );
 
         return $stmt->execute();
