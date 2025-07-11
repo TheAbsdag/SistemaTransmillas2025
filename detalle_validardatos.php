@@ -78,6 +78,7 @@ $DB->Execute($sql); $va=0;
 		<td>".$direct2."</td>
 		<td>".$rw1[8]."</td>
 		<td>".$rw1[9]."</td>";
+		$telWhatsapp="";
 		if ($rw1[13]=="whatsapp") {
 			echo$sqlW="SELECT telefono_wa FROM `registro` WHERE mensaje_recibido='$rw1[3]' order by dec limit 1";
 			$DB1->Execute($sqlW);
