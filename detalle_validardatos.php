@@ -53,7 +53,7 @@ if($param31==""){ $param31="ser_prioridad"; }
 if($param34==""){ $param34=$fechaactual; } 
 if($param33==""){ $param33=$fechainicial; } 
 
-  $sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_esatdollamando,ser_descllamada,gui_usucreado,ser_estado,ser_valorabono,ser_horaentrega,cli_idciudad,ser_ciudadentrega,gui_tiposervicio,rel_nom_credito
+  echo$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_esatdollamando,ser_descllamada,gui_usucreado,ser_estado,ser_valorabono,ser_horaentrega,cli_idciudad,ser_ciudadentrega,gui_tiposervicio,rel_nom_credito
  FROM serviciosdia inner join guias on idservicios=gui_idservicio inner join rel_sercre on idservicio=idservicios where ser_estado in (0,1,5,21) and  date(ser_fecharegistro) >= '$param33' and  date(ser_fecharegistro) <= '$param34'   $conde1 $conde2 ORDER BY ser_fechaentrega,ser_descllamada $asc ";
 
 $DB->Execute($sql); $va=0; 
@@ -83,10 +83,10 @@ $DB->Execute($sql); $va=0;
 			echo$sqlW="SELECT telefono_wa FROM `registro` WHERE mensaje_recibido='$rw1[3]' order by dec limit 1";
 			$DB1->Execute($sqlW);
 			$telW=mysqli_fetch_row($DB1->Consulta_ID);
-			$telWhatsapp=$telW[0];
+			$telWhatsapp="Tel: ".$telW[0]."";
 		}
 		echo"
-		<td>".$rw1[13]."<br> Tel: ".$telWhatsapp."</td>
+		<td>".$rw1[13]."<br>$telWhatsapp</td>
 		<td>".$rw1[12]."</td>
 		<td>".$rw1[15]."</td>
 		";
