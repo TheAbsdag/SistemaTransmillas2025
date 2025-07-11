@@ -33,16 +33,15 @@ class induccionesComunicados {
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    public function actualizarCampo($id, $campo, $valor) {
-        $permitidos = ['usu_filtro', 'usu_ver_nomina', 'usu_estado'];
-        if (!in_array($campo, $permitidos)) return;
+    public function actualizarCampoCI($id, $campo, $valor) {
+    $permitidos = ['ci_estado'];
+    if (!in_array($campo, $permitidos)) return false;
 
-        $sql = "UPDATE usuarios SET $campo = ? WHERE idusuarios = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("ii", $valor, $id);
-        $stmt->execute();
-        $stmt->close();
-    }
+    $sql = "UPDATE comunicados_inducciones SET $campo = ? WHERE ci_id = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bind_param("si", $valor, $id);
+    return $stmt->execute();
+}
 
     public function eliminarUsuario($id) {
         $sql = "DELETE FROM usuarios WHERE idusuarios = ?";

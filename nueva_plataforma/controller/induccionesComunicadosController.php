@@ -15,15 +15,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     exit;
 }
 
-// ✅ 2. Actualizar un campo específico (estado, etc)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) {
     $id = $_POST['id'];
     $campo = $_POST['campo'];
     $valor = $_POST['valor'];
-    $modelo->actualizarCampo($id, $campo, $valor);
+
+    if (str_starts_with($campo, 'ci_')) {
+        $modelo->actualizarCampoCI($id, $campo, $valor);
+    } else {
+        $modelo->actualizarCampo($id, $campo, $valor);
+    }
+
     echo json_encode(['ok' => true]);
     exit;
 }
+
 
 // ✅ 3. Eliminar usuario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) {
