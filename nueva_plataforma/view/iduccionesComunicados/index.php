@@ -33,6 +33,12 @@
     </div>
   </div>
 
+  <div class="d-flex justify-content-end mb-3">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarCI">
+    <i class="fas fa-plus"></i> Agregar Comunicado / Inducción
+  </button>
+</div>
+
   <table id="tablaComunicados" class="table table-bordered">
     <thead class="azul-blanco">
       <tr>
