@@ -27,8 +27,8 @@
       <select id="filtroEstado" class="form-control">
         <option value="">Seleccionar...</option>
         <option value="pendiente">Pendiente</option>
-        <option value="completado">Completado</option>
-        <option value="anulado">Anulado</option>
+        <option value="completado">Revisado</option>
+        <option value="anulado">Validado</option>
       </select>
     </div>
   </div>
