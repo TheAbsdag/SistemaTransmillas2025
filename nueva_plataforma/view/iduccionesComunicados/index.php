@@ -8,6 +8,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
   <style>
     thead.azul-blanco th {
@@ -76,9 +79,9 @@
                 <label>Encargado</label>
                 <input type="text" class="form-control" name="ci_encargado" required>
               </div>
-              <div class="col-md-6">
-                <label>Usuario</label>
-                <input type="text" class="form-control" name="ci_usuario" required>
+              <div class="col-md-12">
+                <label>Usuarios</label>
+                <select class="form-select" name="ci_usuario[]" id="ci_usuario" multiple required></select>
               </div>
               <div class="col-md-6">
                 <label>Link del documento (opcional)</label>
@@ -266,6 +269,33 @@ $('#formAgregarCI').on('submit', function (e) {
     }
   });
 });
+
+$(document).ready(function () {
+  $('#ci_usuario').select2({
+    placeholder: 'Selecciona usuarios',
+    width: '100%',
+    ajax: {
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
+      type: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          buscar_usuarios: true,
+          q: params.term
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data.map(function(usuario) {
+            return { id: usuario.usu_nombre, text: usuario.usu_nombre };
+          })
+        };
+      }
+    }
+  });
+});
+
 
 </script>
 
