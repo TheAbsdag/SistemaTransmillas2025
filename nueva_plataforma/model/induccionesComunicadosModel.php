@@ -8,41 +8,41 @@ class induccionesComunicados {
         $this->db = (new Database())->connect();
     }
 
-    public function obtenerUsuarios($filtroRol = '', $filtroEstado = '') {
-        $sql = "SELECT u.*, r.rol_nombre FROM usuarios u
-                INNER JOIN roles r ON r.idroles = u.roles_idroles
-                WHERE idusuarios != 1";
+    // ✅ Obtener solo nombres de usuarios activos
+    public function obtenerUsuarios($termino = '') {
+    $sql = "SELECT usu_nombre FROM usuarios WHERE idusuarios != 1";
 
-        if ($filtroRol !== '') {
-            $sql .= " AND idroles = '" . $this->db->real_escape_string($filtroRol) . "'";
-        }
-
-        if ($filtroEstado !== '') {
-            $sql .= " AND usu_estado = '" . $this->db->real_escape_string($filtroEstado) . "'";
-        }
-
-        $sql .= " ORDER BY usu_nombre ASC";
-
-        $result = $this->db->query($sql);
-        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    if (!empty($termino)) {
+        $termino = $this->db->real_escape_string($termino);
+        $sql .= " AND usu_nombre LIKE '%$termino%'";
     }
 
+    $sql .= " ORDER BY usu_nombre ASC";
+
+    $result = $this->db->query($sql);
+    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+}
+
+
+    // ✅ Cargar roles (opcional si se usa en algún filtro)
     public function obtenerRoles() {
         $sql = "SELECT idroles, rol_nombre FROM roles ORDER BY rol_nombre";
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
+    // ✅ Actualizar campos permitidos (por ahora solo estado)
     public function actualizarCampoCI($id, $campo, $valor) {
-    $permitidos = ['ci_estado'];
-    if (!in_array($campo, $permitidos)) return false;
+        $permitidos = ['ci_estado'];
+        if (!in_array($campo, $permitidos)) return false;
 
-    $sql = "UPDATE comunicados_inducciones SET $campo = ? WHERE ci_id = ?";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bind_param("si", $valor, $id);
-    return $stmt->execute();
-}
+        $sql = "UPDATE comunicados_inducciones SET $campo = ? WHERE ci_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("si", $valor, $id);
+        return $stmt->execute();
+    }
 
+    // ✅ Eliminar comunicado
     public function eliminarComunicado($id) {
         $sql = "DELETE FROM comunicados_inducciones WHERE ci_id = ?";
         $stmt = $this->db->prepare($sql);
@@ -52,39 +52,40 @@ class induccionesComunicados {
         return $ok;
     }
 
-    // ✅ Nuevo método para insertar comunicado o inducción
+    // ✅ Insertar nuevo comunicado (uno por usuario)
     public function insertarComunicado($nombreDoc, $encargado, $usuario, $linkDoc, $archivoNombre, $estado, $fechaRegistro, $fechaUsuario, $fechaEncargado) {
-    $sql = "INSERT INTO comunicados_inducciones (
-        ci_nombre_documento,
-        ci_encargado,
-        ci_usuario,
-        ci_link_documento,
-        ci_ruta_archivo,
-        ci_estado,
-        ci_fecha_registro,
-        ci_fecha_confirmacion_usuario,
-        ci_fecha_confirmacion_encargado
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO comunicados_inducciones (
+            ci_nombre_documento,
+            ci_encargado,
+            ci_usuario,
+            ci_link_documento,
+            ci_ruta_archivo,
+            ci_estado,
+            ci_fecha_registro,
+            ci_fecha_confirmacion_usuario,
+            ci_fecha_confirmacion_encargado
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = $this->db->prepare($sql);
-    $stmt->bind_param(
-        "sssssssss",
-        $nombreDoc,
-        $encargado,
-        $usuario,
-        $linkDoc,
-        $archivoNombre,
-        $estado,
-        $fechaRegistro,
-        $fechaUsuario,
-        $fechaEncargado
-    );
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param(
+            "sssssssss",
+            $nombreDoc,
+            $encargado,
+            $usuario, // ← este es el nombre (usu_nombre)
+            $linkDoc,
+            $archivoNombre,
+            $estado,
+            $fechaRegistro,
+            $fechaUsuario,
+            $fechaEncargado
+        );
 
-    $ok = $stmt->execute();
-    $stmt->close();
-    return $ok;
-}
+        $ok = $stmt->execute();
+        $stmt->close();
+        return $ok;
+    }
 
+    // ✅ Obtener comunicados para la tabla
     public function obtenerComunicados($estado = '') {
         $sql = "SELECT * FROM comunicados_inducciones WHERE 1";
 
@@ -97,5 +98,4 @@ class induccionesComunicados {
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
-
 }

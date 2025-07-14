@@ -5,12 +5,14 @@ ini_set('display_errors', 1);
 require_once "../model/induccionesComunicadosModel.php";
 $modelo = new induccionesComunicados();
 
-// ✅ 1. Buscar usuarios para el select2
+// ✅ 1. Buscar usuarios para Select2
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buscar_usuarios'])) {
-    $usuarios = $modelo->obtenerUsuarios(); // ← puedes agregar filtros si deseas
+    $termino = $_POST['q'] ?? ''; // ← término de búsqueda que envía Select2
+    $usuarios = $modelo->obtenerUsuarios($termino);
     echo json_encode($usuarios);
     exit;
 }
+
 
 // ✅ 2. Cargar datos AJAX para DataTable
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
@@ -42,11 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) 
 // ✅ 5. Agregar nuevo comunicado o inducción
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento'])) {
     // Recolectar datos del formulario
-    $nombreDoc   = $_POST['ci_nombre_documento'];
-    $encargado   = $_POST['ci_encargado'];
-    $usuarios    = $_POST['ci_usuario']; // ← Array de usuarios seleccionados
-    $linkDoc     = $_POST['ci_link_documento'];
-    $estado      = $_POST['ci_estado'];
+    $nombreDoc       = $_POST['ci_nombre_documento'];
+    $encargado       = $_POST['ci_encargado'];
+    $usuarios        = $_POST['ci_usuario']; // ← Array de nombres de usuarios
+    $linkDoc         = $_POST['ci_link_documento'];
+    $estado          = $_POST['ci_estado'];
     $fechaUsuario    = $_POST['ci_fecha_confirmacion_usuario'];
     $fechaEncargado  = $_POST['ci_fecha_confirmacion_encargado'];
     $fechaRegistro   = date('Y-m-d');
@@ -54,13 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
     $archivoNombre = "";
     $carpetaDestino = "../documentos_ci/";
 
-    // Si hay archivo, subirlo
+    // Subir archivo si existe
     if (!empty($_FILES['ci_ruta_archivo']['name'])) {
         $archivoTmp     = $_FILES['ci_ruta_archivo']['tmp_name'];
         $archivoNombre  = basename($_FILES['ci_ruta_archivo']['name']);
         $archivoDestino = $carpetaDestino . $archivoNombre;
 
-        // Crear carpeta si no existe
         if (!is_dir($carpetaDestino)) {
             mkdir($carpetaDestino, 0777, true);
         }
@@ -70,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
 
     // Insertar un registro por cada usuario seleccionado
     $todoBien = true;
+
     foreach ($usuarios as $usuario) {
         $ok = $modelo->insertarComunicado(
             $nombreDoc,
@@ -89,15 +91,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
         }
     }
 
-    if ($todoBien) {
-        echo json_encode(['ok' => true]);
-    } else {
-        echo json_encode(['error' => 'Error al insertar uno o más comunicados.']);
-    }
-
+    echo json_encode($todoBien ? ['ok' => true] : ['error' => 'Error al insertar uno o más comunicados.']);
     exit;
 }
 
-// ✅ 6. Mostrar vista por defecto
+// ✅ 6. Mostrar la vista por defecto
 $roles = $modelo->obtenerRoles();
 include "../view/iduccionesComunicados/index.php";
