@@ -270,32 +270,33 @@ $('#formAgregarCI').on('submit', function (e) {
   });
 });
 
-$(document).ready(function () {
-  $('#ci_usuario').select2({
-    placeholder: 'Selecciona usuarios',
-    width: '100%',
-    minimumInputLength: 0, 
-    ajax: {
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
-      type: 'POST',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          buscar_usuarios: true,
-          q: params.term
-        };
-      },
-      processResults: function (data) {
-        console.log("Respuesta AJAX:", data);  // 👈 Verifica si llega algo
-        return {
-          results: data.map(function(usuario) {
-            return { id: usuario.usu_nombre, text: usuario.usu_nombre };
-          })
-        };
-      }
+$('#ci_usuario').select2({
+  placeholder: 'Selecciona usuarios',
+  width: '100%',
+  minimumInputLength: 0,
+  ajax: {
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
+    type: 'POST',
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        buscar_usuarios: true,
+        q: params.term || ''
+      };
+    },
+    processResults: function (data) {
+      console.log("DATA:", data); // 🔍 VERIFICA LA RESPUESTA EN LA CONSOLA
+      return {
+        results: data.map(function(usuario) {
+          return {
+            id: usuario.idusuarios,
+            text: usuario.usu_nombre
+          };
+        })
+      };
     }
-  });
+  }
 });
 
 

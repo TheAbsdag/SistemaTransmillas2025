@@ -5,13 +5,11 @@ ini_set('display_errors', 1);
 require_once "../model/induccionesComunicadosModel.php";
 $modelo = new induccionesComunicados();
 
-// ✅ 1. Buscar usuarios para Select2
-file_put_contents("debug_log.txt", json_encode($_POST));
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buscar_usuarios'])) {
+    header('Content-Type: application/json');
     echo json_encode([
-        ["usu_nombre" => "Juan Pérez"],
-        ["usu_nombre" => "Ana García"],
-        ["usu_nombre" => "Carlos Gómez"]
+        ["idusuarios" => 2, "usu_nombre" => "Juan Pérez"],
+        ["idusuarios" => 3, "usu_nombre" => "Ana García"]
     ]);
     exit;
 }
