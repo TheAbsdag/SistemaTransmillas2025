@@ -103,8 +103,8 @@
                 </select>
               </div>
               <div class="col-md-6">
-                <label>Fecha confirmación encargado</label>
-                <input type="date" class="form-control" name="ci_fecha_confirmacion_encargado" required>
+                <label>Fecha confirmación usuario</label>
+                <input type="date" class="form-control" name="ci_fecha_confirmacion_usuario" required>
               </div>
             </div>
           </div>
