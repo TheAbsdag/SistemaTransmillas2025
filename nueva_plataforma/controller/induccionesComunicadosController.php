@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buscar_usuarios'])) {
     header('Content-Type: application/json');
     echo json_encode([
         ["idusuarios" => 2, "usu_nombre" => "Juan Pérez"],
-        ["idusuarios" => 3, "usu_nombre" => "Ana García"]
+        ["idusuarios" => 3, "usu_nombre" => "Ana García"],
+        ["idusuarios" => 4, "usu_nombre" => "Juan sosa"],
     ]);
     exit;
 }
