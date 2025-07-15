@@ -274,6 +274,7 @@ $(document).ready(function () {
   $('#ci_usuario').select2({
     placeholder: 'Selecciona usuarios',
     width: '100%',
+    minimumInputLength: 0, 
     ajax: {
       url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
       type: 'POST',
