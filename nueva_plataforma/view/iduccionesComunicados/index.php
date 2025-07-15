@@ -79,6 +79,12 @@
               </div>
               <div class="col-md-12">
                 <label>Usuarios</label>
+                <div class="col-md-12">
+                    <label>Sede</label>
+                    <select class="form-select" id="select_sede">
+                      <option value="">-- Selecciona una sede --</option>
+                    </select>
+                  </div>
                  <div class="mb-2">
                   <button type="button" class="btn btn-sm btn-outline-primary" id="btnSeleccionarTodos">
                     Seleccionar Todos los Usuarios
