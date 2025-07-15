@@ -294,6 +294,10 @@ $(document).ready(function () {
       $('#modalAgregarCI').on('shown.bs.modal', function () {
         $('#ci_usuario').select2('open');
       });
+      $('#modalAgregarCI').on('hidden.bs.modal', function () {
+         $('#formAgregarCI')[0].reset();    
+        $('#ci_usuario').val(null).trigger('change');
+      });
     },
     error: function (xhr, status, error) {
       console.error("Error cargando usuarios:", error);
