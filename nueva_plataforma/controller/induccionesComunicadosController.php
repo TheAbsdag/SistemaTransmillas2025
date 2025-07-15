@@ -98,6 +98,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
     exit;
 }
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['todos_usuarios'])) {
+    $usuarios = $modelo->obtenerUsuarios();
+    echo json_encode($usuarios);
+    exit;
+}
+
 // ✅ 6. Mostrar la vista por defecto
 $roles = $modelo->obtenerRoles();
 include "../view/iduccionesComunicados/index.php";
