@@ -31,16 +31,28 @@ class induccionesComunicados {
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // Actualizar campos permitidos estado
+    // Actualizar campos permitidos estado/revision encargado
     public function actualizarCampoCI($id, $campo, $valor) {
-        $permitidos = ['ci_estado'];
-        if (!in_array($campo, $permitidos)) return false;
+    $permitidos = ['ci_estado'];
+    if (!in_array($campo, $permitidos)) return false;
 
+    // Si el estado cambia a 'revisado', también actualizamos la fecha del encargado
+    if ($campo === 'ci_estado' && $valor === 'revisado') {
+        $fechaHoy = date('Y-m-d');
+        $sql = "UPDATE comunicados_inducciones 
+                SET ci_estado = ?, ci_fecha_confirmacion_encargado = ? 
+                WHERE ci_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("ssi", $valor, $fechaHoy, $id);
+    } else {
         $sql = "UPDATE comunicados_inducciones SET $campo = ? WHERE ci_id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("si", $valor, $id);
-        return $stmt->execute();
     }
+
+    return $stmt->execute();
+}
+
 
     //Eliminar comunicado
     public function eliminarComunicado($id) {
