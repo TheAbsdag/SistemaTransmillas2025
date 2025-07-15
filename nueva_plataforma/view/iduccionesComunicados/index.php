@@ -85,10 +85,9 @@
                       <option value="">-- Selecciona una sede --</option>
                     </select>
                   </div>
-                 <div class="mb-2">
-                  <button type="button" class="btn btn-sm btn-outline-primary" id="btnSeleccionarTodos">
-                    Seleccionar Todos los Usuarios
-                  </button>
+                 <div class="mt-2 d-flex gap-2">
+                  <button type="button" id="btnSeleccionarTodos" class="btn btn-sm btn-primary">Seleccionar todos los usuarios</button>
+                  <button type="button" id="btnDeseleccionarTodos" class="btn btn-sm btn-outline-secondary">Deseleccionar todos</button>
                 </div>
                 <select class="form-select" name="ci_usuario[]" id="ci_usuario" multiple required></select>
               </div>
@@ -320,6 +319,10 @@ $(document).ready(function () {
   // 🔹 Botón seleccionar todos (reutiliza si ya lo tenías)
   $('#btnSeleccionarTodos').on('click', function () {
     $('#ci_usuario > option').prop('selected', true).trigger('change');
+  });
+  //deseleccionar todos
+  $('#btnDeseleccionarTodos').on('click', function () {
+    $('#ci_usuario').val(null).trigger('change');
   });
 
   // 🔹 Reset al cerrar modal
