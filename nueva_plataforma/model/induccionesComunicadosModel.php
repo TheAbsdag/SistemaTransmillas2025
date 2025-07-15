@@ -109,4 +109,18 @@ class induccionesComunicados {
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
+
+    public function obtenerUsuariosPorSede($sedeId = '') {
+    $sql = "SELECT usu_nombre FROM usuarios WHERE idusuarios != 1";
+
+    if (!empty($sedeId)) {
+        $sedeId = $this->db->real_escape_string($sedeId);
+        $sql .= " AND usu_idsede = '$sedeId'";
+    }
+
+    $sql .= " ORDER BY usu_nombre ASC";
+    $result = $this->db->query($sql);
+    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+}
+
 }

@@ -275,46 +275,60 @@ $('#formAgregarCI').on('submit', function (e) {
   });
 });
 
-//Cargar usuarios directamente
 $(document).ready(function () {
-  $.ajax({
-    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php?todos_usuarios=true',
-    method: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      const usuarios = data.map(function (usuario) {
-        return { id: usuario.usu_nombre.trim(), text: usuario.usu_nombre.trim() };
-      });
+  // 🔹 Cargar sedes al abrir modal
+  $('#modalAgregarCI').on('shown.bs.modal', function () {
+    $.ajax({
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
+      method: 'POST',
+      data: { obtener_sedes: true },
+      dataType: 'json',
+      success: function (data) {
+        $('#select_sede').empty().append(`<option value="">-- Selecciona una sede --</option>`);
+        data.forEach(function (sede) {
+          $('#select_sede').append(`<option value="${sede.idsedes}">${sede.sed_nombre}</option>`);
+        });
+      }
+    });
+  });
 
-      $('#ci_usuario').empty().select2({
-        data: usuarios,
-        placeholder: 'Selecciona usuarios',
-        width: '100%',
-        dropdownParent: $('#modalAgregarCI')
-      });
+  // 🔹 Inicializar Select2 con usuarios vacíos por defecto
+  const cargarUsuarios = (sedeId = '') => {
+    $.ajax({
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
+      method: 'GET',
+      data: { todos_usuarios: true, sede_id: sedeId },
+      dataType: 'json',
+      success: function (data) {
+        const usuarios = data.map(u => ({ id: u.usu_nombre.trim(), text: u.usu_nombre.trim() }));
+        $('#ci_usuario').empty().select2({
+          data: usuarios,
+          placeholder: 'Selecciona usuarios',
+          width: '100%',
+          dropdownParent: $('#modalAgregarCI')
+        });
+      }
+    });
+  };
 
-      $('#modalAgregarCI').on('shown.bs.modal', function () {
-        $('#ci_usuario').select2('open');
-      });
-      $('#modalAgregarCI').on('hidden.bs.modal', function () {
-         $('#formAgregarCI')[0].reset();    
-        $('#ci_usuario').val(null).trigger('change');
-      });
-    },
-    error: function (xhr, status, error) {
-      console.error("Error cargando usuarios:", error);
-    }
+  // 🔹 Evento: cambiar sede => recargar usuarios
+  $('#select_sede').on('change', function () {
+    const sedeId = $(this).val();
+    cargarUsuarios(sedeId);
+  });
+
+  // 🔹 Botón seleccionar todos (reutiliza si ya lo tenías)
+  $('#btnSeleccionarTodos').on('click', function () {
+    $('#ci_usuario > option').prop('selected', true).trigger('change');
+  });
+
+  // 🔹 Reset al cerrar modal
+  $('#modalAgregarCI').on('hidden.bs.modal', function () {
+    $('#select_sede').val('');
+    $('#ci_usuario').val(null).trigger('change');
   });
 });
 
-// Botón "Seleccionar Todos los Usuarios"
-$('#btnSeleccionarTodos').on('click', function () {
-  const allOptions = $('#ci_usuario option').map(function () {
-    return $(this).val();
-  }).get();
-
-  $('#ci_usuario').val(allOptions).trigger('change');
-});
 
 </script>
 
