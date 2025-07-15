@@ -268,20 +268,27 @@ $('#formAgregarCI').on('submit', function (e) {
   });
 });
 
-// ⚠️ NUEVA versión: carga completa desde el inicio
-$.ajax({
-  url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php?todos_usuarios=true',
-  method: 'GET',
-  dataType: 'json',
-  success: function(data) {
-    const usuarios = data.map(u => ({ id: u.usu_nombre, text: u.usu_nombre }));
+// ✅ Cargar usuarios directamente (sin AJAX por búsqueda)
+$(document).ready(function () {
+  $.ajax({
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php?todos_usuarios=true',
+    method: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      const usuarios = data.map(function (usuario) {
+        return { id: usuario.usu_nombre, text: usuario.usu_nombre };
+      });
 
-    $('#ci_usuario').select2({
-      placeholder: 'Selecciona usuarios',
-      width: '100%',
-      data: usuarios
-    });
-  }
+      $('#ci_usuario').select2({
+        data: usuarios,
+        placeholder: 'Selecciona usuarios',
+        width: '100%'
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("Error cargando usuarios:", error);
+    }
+  });
 });
 
 
