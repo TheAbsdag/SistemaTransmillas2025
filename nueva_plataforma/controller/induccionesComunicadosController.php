@@ -6,12 +6,16 @@ require_once "../model/induccionesComunicadosModel.php";
 $modelo = new induccionesComunicados();
 
 // ✅ 1. Buscar usuarios para Select2
+file_put_contents("debug_log.txt", json_encode($_POST));
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buscar_usuarios'])) {
-    $termino = $_POST['q'] ?? ''; // ← término de búsqueda que envía Select2
-    $usuarios = $modelo->obtenerUsuarios($termino);
-    echo json_encode($usuarios);
+    echo json_encode([
+        ["usu_nombre" => "Juan Pérez"],
+        ["usu_nombre" => "Ana García"],
+        ["usu_nombre" => "Carlos Gómez"]
+    ]);
     exit;
 }
+
 
 
 // ✅ 2. Cargar datos AJAX para DataTable

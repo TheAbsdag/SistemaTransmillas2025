@@ -287,6 +287,7 @@ $(document).ready(function () {
         };
       },
       processResults: function (data) {
+        console.log("Respuesta AJAX:", data);  // 👈 Verifica si llega algo
         return {
           results: data.map(function(usuario) {
             return { id: usuario.usu_nombre, text: usuario.usu_nombre };
