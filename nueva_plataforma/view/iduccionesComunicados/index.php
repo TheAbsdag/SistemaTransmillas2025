@@ -79,6 +79,11 @@
               </div>
               <div class="col-md-12">
                 <label>Usuarios</label>
+                 <div class="mb-2">
+                  <button type="button" class="btn btn-sm btn-outline-primary" id="btnSeleccionarTodos">
+                    Seleccionar Todos los Usuarios
+                  </button>
+                </div>
                 <select class="form-select" name="ci_usuario[]" id="ci_usuario" multiple required></select>
               </div>
               <div class="col-md-6">
@@ -270,46 +275,40 @@ $('#formAgregarCI').on('submit', function (e) {
 
 //Cargar usuarios directamente
 $(document).ready(function () {
-  $('#ci_usuario').select2({
-    placeholder: 'Selecciona usuarios',
-    width: '100%',
-    ajax: {
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
-      type: 'POST',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          buscar_usuarios: true,
-          q: params.term
-        };
-      },
-      processResults: function (data) {
-        // Agregamos la opción "Todos los usuarios" al inicio
-        data.unshift({ usu_nombre: '__TODOS__' });
-
-        return {
-          results: data.map(function(usuario) {
-            return { id: usuario.usu_nombre, text: usuario.usu_nombre === '__TODOS__' ? 'Seleccionar Todos' : usuario.usu_nombre };
-          })
-        };
-      }
-    }
-  });
-
-  // Manejar selección de "Seleccionar Todos"
-  $('#ci_usuario').on('select2:select', function (e) {
-    if (e.params.data.id === '__TODOS__') {
-      // Llamar al backend para traer todos los usuarios
-      $.post('/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php', { buscar_usuarios: true }, function (res) {
-        const data = JSON.parse(res);
-        const all = data.map(u => u.usu_nombre);
-        $('#ci_usuario').val(all).trigger('change');
+  $.ajax({
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php?todos_usuarios=true',
+    method: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      const usuarios = data.map(function (usuario) {
+        return { id: usuario.usu_nombre.trim(), text: usuario.usu_nombre.trim() };
       });
+
+      $('#ci_usuario').empty().select2({
+        data: usuarios,
+        placeholder: 'Selecciona usuarios',
+        width: '100%',
+        dropdownParent: $('#modalAgregarCI')
+      });
+
+      $('#modalAgregarCI').on('shown.bs.modal', function () {
+        $('#ci_usuario').select2('open');
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("Error cargando usuarios:", error);
     }
   });
 });
 
+// Botón "Seleccionar Todos los Usuarios"
+$('#btnSeleccionarTodos').on('click', function () {
+  const allOptions = $('#ci_usuario option').map(function () {
+    return $(this).val();
+  }).get();
+
+  $('#ci_usuario').val(allOptions).trigger('change');
+});
 
 </script>
 
