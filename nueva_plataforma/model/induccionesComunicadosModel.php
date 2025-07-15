@@ -36,8 +36,8 @@ class induccionesComunicados {
     $permitidos = ['ci_estado'];
     if (!in_array($campo, $permitidos)) return false;
 
-    // Si el estado cambia a 'revisado', también actualizamos la fecha del encargado
-    if ($campo === 'ci_estado' && $valor === 'revisado') {
+    // Si el estado cambia a 'validado', actualizamos la fecha del encargado
+    if ($campo === 'ci_estado' && $valor === 'validado') {
         $fechaHoy = date('Y-m-d');
         $sql = "UPDATE comunicados_inducciones 
                 SET ci_estado = ?, ci_fecha_confirmacion_encargado = ? 
@@ -52,7 +52,6 @@ class induccionesComunicados {
 
     return $stmt->execute();
 }
-
 
     //Eliminar comunicado
     public function eliminarComunicado($id) {
