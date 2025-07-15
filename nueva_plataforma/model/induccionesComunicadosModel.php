@@ -8,7 +8,7 @@ class induccionesComunicados {
         $this->db = (new Database())->connect();
     }
 
-    // ✅ Obtener solo nombres de usuarios activos
+    //Obtener solo nombres de usuarios activos
     public function obtenerUsuarios($termino = '') {
     $sql = "SELECT usu_nombre FROM usuarios WHERE idusuarios != 1";
 
@@ -24,14 +24,14 @@ class induccionesComunicados {
 }
 
 
-    // ✅ Cargar roles (opcional si se usa en algún filtro)
+    //Cargar roles
     public function obtenerRoles() {
         $sql = "SELECT idroles, rol_nombre FROM roles ORDER BY rol_nombre";
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    // ✅ Actualizar campos permitidos (por ahora solo estado)
+    // Actualizar campos permitidos estado
     public function actualizarCampoCI($id, $campo, $valor) {
         $permitidos = ['ci_estado'];
         if (!in_array($campo, $permitidos)) return false;
@@ -42,7 +42,7 @@ class induccionesComunicados {
         return $stmt->execute();
     }
 
-    // ✅ Eliminar comunicado
+    //Eliminar comunicado
     public function eliminarComunicado($id) {
         $sql = "DELETE FROM comunicados_inducciones WHERE ci_id = ?";
         $stmt = $this->db->prepare($sql);
@@ -52,7 +52,7 @@ class induccionesComunicados {
         return $ok;
     }
 
-    // ✅ Insertar nuevo comunicado (uno por usuario)
+    //Insertar nuevo comunicado 
     public function insertarComunicado($nombreDoc, $encargado, $usuario, $linkDoc, $archivoNombre, $estado, $fechaRegistro, $fechaUsuario, $fechaEncargado) {
         $sql = "INSERT INTO comunicados_inducciones (
             ci_nombre_documento,
@@ -71,7 +71,7 @@ class induccionesComunicados {
             "sssssssss",
             $nombreDoc,
             $encargado,
-            $usuario, // ← este es el nombre (usu_nombre)
+            $usuario, 
             $linkDoc,
             $archivoNombre,
             $estado,
@@ -85,7 +85,7 @@ class induccionesComunicados {
         return $ok;
     }
 
-    // ✅ Obtener comunicados para la tabla
+    // Obtener comunicados para la tabla
     public function obtenerComunicados($estado = '') {
         $sql = "SELECT * FROM comunicados_inducciones WHERE 1";
 

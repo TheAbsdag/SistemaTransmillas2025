@@ -268,31 +268,44 @@ $('#formAgregarCI').on('submit', function (e) {
   });
 });
 
-// ✅ Cargar usuarios directamente (sin AJAX por búsqueda)
+//Cargar usuarios directamente
 $(document).ready(function () {
-  $.ajax({
-    url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php?todos_usuarios=true',
-    method: 'GET',
-    dataType: 'json',
-    success: function (data) {
-      const usuarios = data.map(function (usuario) {
-        return { id: usuario.usu_nombre.trim(), text: usuario.usu_nombre.trim() };
-      });
+  $('#ci_usuario').select2({
+    placeholder: 'Selecciona usuarios',
+    width: '100%',
+    ajax: {
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php',
+      type: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          buscar_usuarios: true,
+          q: params.term
+        };
+      },
+      processResults: function (data) {
+        // Agregamos la opción "Todos los usuarios" al inicio
+        data.unshift({ usu_nombre: '__TODOS__' });
 
-      $('#ci_usuario').empty().select2({
-        data: usuarios,
-        placeholder: 'Selecciona usuarios',
-        width: '100%',
-        dropdownParent: $('#modalAgregarCI') // ⚠️ necesario para modales Bootstrap
-      });
+        return {
+          results: data.map(function(usuario) {
+            return { id: usuario.usu_nombre, text: usuario.usu_nombre === '__TODOS__' ? 'Seleccionar Todos' : usuario.usu_nombre };
+          })
+        };
+      }
+    }
+  });
 
-      // OPCIONAL: abre el select automáticamente al abrir el modal
-      $('#modalAgregarCI').on('shown.bs.modal', function () {
-        $('#ci_usuario').select2('open');
+  // Manejar selección de "Seleccionar Todos"
+  $('#ci_usuario').on('select2:select', function (e) {
+    if (e.params.data.id === '__TODOS__') {
+      // Llamar al backend para traer todos los usuarios
+      $.post('/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php', { buscar_usuarios: true }, function (res) {
+        const data = JSON.parse(res);
+        const all = data.map(u => u.usu_nombre);
+        $('#ci_usuario').val(all).trigger('change');
       });
-    },
-    error: function (xhr, status, error) {
-      console.error("Error cargando usuarios:", error);
     }
   });
 });

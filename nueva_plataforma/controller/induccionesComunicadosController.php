@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buscar_usuarios'])) {
 
 
 
-// ✅ 2. Cargar datos AJAX para DataTable
+//Cargar datos AJAX para DataTable
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     $estado = $_POST['estado'] ?? '';
     $comunicados = $modelo->obtenerComunicados($estado);
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     exit;
 }
 
-// ✅ 3. Actualizar campo (como el estado)
+// Actualizar campo estado
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) {
     $id = $_POST['id'];
     $campo = $_POST['campo'];
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) 
     exit;
 }
 
-// ✅ 4. Eliminar comunicado
+//Eliminar comunicado
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) {
     $id = $_POST['id'];
     $modelo->eliminarComunicado($id);
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) 
     exit;
 }
 
-// ✅ 5. Agregar nuevo comunicado o inducción
+//Agregar nuevo comunicado o inducción
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento'])) {
     // Recolectar datos del formulario
     $nombreDoc       = $_POST['ci_nombre_documento'];
@@ -105,6 +105,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['todos_usuarios'])) {
     exit;
 }
 
-// ✅ 6. Mostrar la vista por defecto
 $roles = $modelo->obtenerRoles();
 include "../view/iduccionesComunicados/index.php";
