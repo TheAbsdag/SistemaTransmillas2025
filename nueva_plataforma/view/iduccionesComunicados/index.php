@@ -276,13 +276,19 @@ $(document).ready(function () {
     dataType: 'json',
     success: function (data) {
       const usuarios = data.map(function (usuario) {
-        return { id: usuario.usu_nombre, text: usuario.usu_nombre };
+        return { id: usuario.usu_nombre.trim(), text: usuario.usu_nombre.trim() };
       });
 
-      $('#ci_usuario').select2({
+      $('#ci_usuario').empty().select2({
         data: usuarios,
         placeholder: 'Selecciona usuarios',
-        width: '100%'
+        width: '100%',
+        dropdownParent: $('#modalAgregarCI') // ⚠️ necesario para modales Bootstrap
+      });
+
+      // OPCIONAL: abre el select automáticamente al abrir el modal
+      $('#modalAgregarCI').on('shown.bs.modal', function () {
+        $('#ci_usuario').select2('open');
       });
     },
     error: function (xhr, status, error) {
