@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
 }
 
 
-// ✅ Obtener sedes
+//Obtener sedes
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['obtener_sedes'])) {
     $sql = "SELECT idsedes, sed_nombre FROM sedes ORDER BY sed_nombre";
     $result = (new Database())->connect()->query($sql);
@@ -107,13 +107,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['obtener_sedes'])) {
     exit;
 }
 
-// ✅ Obtener usuarios filtrados por sede
+// Obtener usuarios filtrados por sede
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['todos_usuarios'])) {
     $sedeId = $_GET['sede_id'] ?? '';
     $usuarios = $modelo->obtenerUsuariosPorSede($sedeId);
     echo json_encode($usuarios);
     exit;
 }
+
+//Obtener encargados
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['encargados'])) {
+    $encargados = $modelo->obtenerEncargados(); // método del modelo
+    echo json_encode($encargados);
+    exit;
+}
+
 
 $roles = $modelo->obtenerRoles();
 include "../view/iduccionesComunicados/index.php";

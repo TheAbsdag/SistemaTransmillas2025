@@ -75,7 +75,9 @@
               </div>
               <div class="col-md-6">
                 <label>Encargado</label>
-                <input type="text" class="form-control" name="ci_encargado" required>
+                <select class="form-select" name="ci_encargado" id="ci_encargado" required>
+                  <option value="">Cargando encargados...</option>
+                </select>
               </div>
               <div class="col-md-12">
                 <label>Usuarios</label>
@@ -291,6 +293,8 @@ $(document).ready(function () {
     });
   });
 
+
+
   // 🔹 Inicializar Select2 con usuarios vacíos por defecto
   const cargarUsuarios = (sedeId = '') => {
     $.ajax({
@@ -309,6 +313,38 @@ $(document).ready(function () {
       }
     });
   };
+
+
+  function cargarEncargados() {
+    $.ajax({
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php?encargados=true',
+      method: 'GET',
+      dataType: 'json',
+      success: function (data) {
+        const encargados = data.map(function (usuario) {
+          return {
+            id: usuario.usu_nombre.trim(),
+            text: usuario.usu_nombre.trim()
+          };
+        });
+
+        $('#ci_encargado').empty().select2({
+          data: encargados,
+          placeholder: 'Selecciona un encargado',
+          width: '100%',
+          dropdownParent: $('#modalAgregarCI') // esto es importante por estar en modal
+        });
+      },
+      error: function () {
+        alert('Error al cargar encargados.');
+      }
+    });
+  }
+
+  // Ejecutar cuando se abra el modal
+  $('#modalAgregarCI').on('show.bs.modal', function () {
+    cargarEncargados();
+  });
 
   // 🔹 Evento: cambiar sede => recargar usuarios
   $('#select_sede').on('change', function () {
