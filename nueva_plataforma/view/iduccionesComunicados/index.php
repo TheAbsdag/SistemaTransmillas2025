@@ -52,6 +52,7 @@
         <th>Fecha de Registro</th>
         <th>Confirmación Usuario</th>
         <th>Confirmación Encargado</th>
+        <th>Respuestas del formulario</th>
         <th>Editar</th>
         <th>Eliminar</th>
       </tr>
@@ -96,6 +97,10 @@
               <div class="col-md-6">
                 <label>Link del documento (opcional)</label>
                 <input type="url" class="form-control" name="ci_link_documento">
+              </div>
+              <div class="form-group">
+                <label for="ci_id_hoja_google">ID Hoja de Google (respuestas del Form)</label>
+                <input type="text" name="ci_id_hoja_google" id="ci_id_hoja_google" class="form-control" placeholder="Ej: 1aPkjFnimUjNQFqr5uHhlRBPtqHS-jVIEReQxkjOxRu8">
               </div>
               <div class="col-md-6">
                 <label>Archivo (opcional)</label>
@@ -180,6 +185,21 @@ $(document).ready(function () {
       { data: 'ci_fecha_registro' },
       { data: 'ci_fecha_confirmacion_usuario' },
       { data: 'ci_fecha_confirmacion_encargado' },
+      
+      {
+      data: null,
+      render: function (data, type, row) {
+        if (row.ci_id_hoja_google) {
+          return `<button class="btn btn-info btn-sm" onclick="verRespuestasUsuario('${row.ci_id_hoja_google}', '${row.ci_usuario}')">
+                    Ver respuestas
+                  </button>`;
+        } else {
+          return '<i>Sin formulario</i>';
+        }
+      }
+    }
+
+      
       {
         data: null,
         orderable: false,
@@ -367,6 +387,22 @@ $(document).ready(function () {
     $('#ci_usuario').val(null).trigger('change');
   });
 });
+
+function verRespuestasUsuario(sheetId, identificacion) {
+  const url = `/testSistemaTransmillas/nueva_plataforma/controller/ver_respuestas_google.php?sheet_id=${sheetId}&identificacion=${identificacion}`;
+  window.open(url, '_blank');
+}
+
+
+<?php if (!empty($row['ci_id_hoja_google'])): ?>
+    <td>
+        <button class="btn btn-info btn-sm" onclick="verRespuestasUsuario('<?php echo $row['ci_id_hoja_google']; ?>', '<?php echo $row['ci_usuario']; ?>')">
+            Ver respuestas
+        </button>
+    </td>
+<?php else: ?>
+    <td><i>No hay formulario</i></td>
+<?php endif; ?>
 
 
 </script>
