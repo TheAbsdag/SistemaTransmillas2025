@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ci_nombre_documento']
 
 //Obtener sedes
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['obtener_sedes'])) {
-    $sql = "SELECT idsedes, sed_nombre FROM sedes ORDER BY sed_nombre";
+    $sql = "SELECT idsedes, sed_nombre FROM sedes WHERE sed_principal = 'si' ORDER BY sed_nombre";
     $result = (new Database())->connect()->query($sql);
     echo json_encode($result->fetch_all(MYSQLI_ASSOC));
     exit;
