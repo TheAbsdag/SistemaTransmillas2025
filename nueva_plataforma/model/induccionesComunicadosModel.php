@@ -129,13 +129,14 @@ class induccionesComunicados {
 
 
    public function obtenerEncargados() {
-        $sql = "SELECT usu_nombre 
-                FROM usuarios 
-                WHERE roles_idroles IN (1, 12) 
-                AND usu_estado IN (0, 1, 2) 
-                ORDER BY usu_nombre ASC";
-        $result = $this->db->query($sql);
-        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
-    }
-
+    $sql = "SELECT usu_nombre 
+            FROM usuarios 
+            WHERE roles_idroles IN (1, 12) 
+              AND usu_estado = 1 
+              AND usu_filtro = 1 
+            ORDER BY usu_nombre ASC";
+    
+    $result = $this->db->query($sql);
+    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+}
 }
