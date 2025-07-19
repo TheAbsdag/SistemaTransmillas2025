@@ -52,7 +52,6 @@
         <th>Fecha de Registro</th>
         <th>Confirmación Usuario</th>
         <th>Confirmación Encargado</th>
-        <th>Respuestas del formulario</th>
         <th>Editar</th>
         <th>Eliminar</th>
       </tr>
@@ -185,21 +184,6 @@ $(document).ready(function () {
       { data: 'ci_fecha_registro' },
       { data: 'ci_fecha_confirmacion_usuario' },
       { data: 'ci_fecha_confirmacion_encargado' },
-      
-      {
-      data: null,
-      render: function (data, type, row) {
-        if (row.ci_id_hoja_google) {
-          return `<button class="btn btn-info btn-sm" onclick="verRespuestasUsuario('${row.ci_id_hoja_google}', '${row.ci_usuario}')">
-                    Ver respuestas
-                  </button>`;
-        } else {
-          return '<i>Sin formulario</i>';
-        }
-      }
-    }
-
-      
       {
         data: null,
         orderable: false,
@@ -387,12 +371,6 @@ $(document).ready(function () {
     $('#ci_usuario').val(null).trigger('change');
   });
 });
-
-function verRespuestasUsuario(sheetId, identificacion) {
-  const url = `/testSistemaTransmillas/nueva_plataforma/controller/ver_respuestas_google.php?sheet_id=${sheetId}&identificacion=${identificacion}`;
-  window.open(url, '_blank');
-}
-
 
 <?php if (!empty($row['ci_id_hoja_google'])): ?>
     <td>
