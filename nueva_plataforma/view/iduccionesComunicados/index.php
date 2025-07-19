@@ -97,10 +97,6 @@
                 <label>Link del documento (opcional)</label>
                 <input type="url" class="form-control" name="ci_link_documento">
               </div>
-              <div class="form-group">
-                <label for="ci_id_hoja_google">ID Hoja de Google (respuestas del Form)</label>
-                <input type="text" name="ci_id_hoja_google" id="ci_id_hoja_google" class="form-control" placeholder="Ej: 1aPkjFnimUjNQFqr5uHhlRBPtqHS-jVIEReQxkjOxRu8">
-              </div>
               <div class="col-md-6">
                 <label>Archivo (opcional)</label>
                 <input type="file" class="form-control" name="ci_ruta_archivo" accept=".pdf,.doc,.docx">
@@ -371,16 +367,6 @@ $(document).ready(function () {
     $('#ci_usuario').val(null).trigger('change');
   });
 });
-
-<?php if (!empty($row['ci_id_hoja_google'])): ?>
-    <td>
-        <button class="btn btn-info btn-sm" onclick="verRespuestasUsuario('<?php echo $row['ci_id_hoja_google']; ?>', '<?php echo $row['ci_usuario']; ?>')">
-            Ver respuestas
-        </button>
-    </td>
-<?php else: ?>
-    <td><i>No hay formulario</i></td>
-<?php endif; ?>
 
 
 </script>
