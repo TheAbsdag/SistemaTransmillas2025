@@ -8,7 +8,7 @@ class UsuarioModel {
         $this->db = (new Database())->connect();
     }
 
-    public function obtenerMensajes($fecha_hora = '', $filtroEstado = '') {
+    public function obtenerMensajes($fecha_hora = '', $tipo = '') {
 
         // Establecer zona horaria de Bogotá
         date_default_timezone_set('America/Bogota');

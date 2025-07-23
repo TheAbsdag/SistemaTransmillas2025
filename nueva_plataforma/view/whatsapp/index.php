@@ -19,41 +19,46 @@ thead.azul-blanco th {
 </style>
 <body>
 <div class="container mt-4">
-  <h2 class="mb-4">Usuarios</h2>
-
-  <div class="row mb-3">
-    <div class="col-md-4">
-      <label for="rol">Rol</label>
-      <select id="filtroRol" class="form-control">
-        <option value="">Seleccionar...</option>
-        <?php foreach ($roles as $rol): ?>
-          <option value="<?= $rol['idroles'] ?>"><?= $rol['rol_nombre'] ?></option>
-        <?php endforeach; ?>
-      </select>
+  <div class="card shadow p-3 mb-4 bg-body rounded">
+    <div class="card-header text-white text-center bg-primary">
+      <h3 class="mb-0">📱 Módulo WhatsApp</h3>
     </div>
-    <div class="col-md-4">
-      <label for="estado">Estado</label>
-      <select id="filtroEstado" class="form-control">
-        <option value="">Seleccionar...</option>
-        <option value="1">Activo</option>
-        <option value="0">Inactivo</option>
-      </select>
+
+    <div class="card-body">
+      <div class="row mb-3 align-items-end">
+        <div class="col-md-4">
+          <label for="filtroFecha" class="form-label">📅 Fecha</label>
+          <input type="date" id="filtroFecha" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+          <label for="filtroTipoMensaje" class="form-label">💬 Tipo de mensaje</label>
+          <select id="filtroTipoMensaje" class="form-select">
+            <option value="">Todos</option>
+            <option value="recibido">Recibido</option>
+            <option value="enviado">Enviado</option>
+            <option value="respuesta_automatica">Respuesta automática</option>
+            <option value="manual">Mensaje manual</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
+          <thead class="table-primary">
+            <tr>
+              <th>📆 Fecha</th>
+              <th>📥 Mensaje recibido</th>
+              <th>📤 Mensaje enviado</th>
+              <th>🆔 ID WhatsApp</th>
+              <th>📞 Número</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
-
-  <table id="tablaUsuarios" class="table table-bordered" >
-    <thead class="azul-blanco">
-      <tr>
-        <th>Fecha</th>
-        <th>Mensaje recibido</th>
-        <th>Mensaje enviado</th>
-        <th>Id whatsapp</th>
-        <th>Numero</th>
-
-      </tr>
-    </thead>
-    <tbody></tbody>
-</table>
 </div>
 
 <!-- jQuery -->
