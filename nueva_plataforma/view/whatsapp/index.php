@@ -105,7 +105,12 @@ $(document).ready(function () {
             return '<textarea readonly class="form-control" rows="3" style="resize: none;">' + data + '</textarea>';
             }
         },
-        { data: 'id_wa' },
+        {
+            data: 'id_wa',
+            render: function (data, type, row) {
+            return '<textarea readonly class="form-control" rows="3" style="resize: none;">' + data + '</textarea>';
+            }
+        },
         { data: 'telefono_wa' }
       
  
