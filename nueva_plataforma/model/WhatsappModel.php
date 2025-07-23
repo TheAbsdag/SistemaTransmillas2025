@@ -8,13 +8,13 @@ class UsuarioModel {
         $this->db = (new Database())->connect();
     }
 
-    public function obtenerMensajes($fecha_hora = '', $tipo = '') {
+    public function obtenerMensajes($filtroFecha = '', $filtroTipoMensaje = '') {
 
         // Establecer zona horaria de Bogotá
         date_default_timezone_set('America/Bogota');
         // Si no se pasa una fecha, usa la fecha actual
-        if (empty($fecha_hora)) {
-            $fecha_hora = date('Y-m-d'); // solo fecha (puedes ajustar a Y-m-d H:i:s si quieres precisión total)
+        if (empty($filtroFecha)) {
+            $filtroFecha = date('Y-m-d'); // solo fecha (puedes ajustar a Y-m-d H:i:s si quieres precisión total)
         }
         
         $sql = "SELECT `id`, `fecha_hora`, `mensaje_recibido`,
@@ -24,8 +24,8 @@ class UsuarioModel {
         where id>0   
         ";
 
-        if ($fecha_hora !== '') {
-            $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($fecha_hora) . "'";
+        if ($filtroFecha !== '') {
+            $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
         }
 
         // if ($filtroEstado !== '') {

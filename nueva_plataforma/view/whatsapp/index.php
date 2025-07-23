@@ -21,7 +21,7 @@ thead.azul-blanco th {
 <div class="container mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
     <div class="card-header text-white text-center bg-primary">
-      <h3 class="mb-0">📱 Módulo WhatsApp</h3>
+      <h3 class="mb-0">Módulo WhatsApp</h3>
     </div>
 
     <div class="card-body">
@@ -167,9 +167,9 @@ $(document).ready(function () {
       ]
   });
 
-//   $('#filtroRol, #filtroEstado').on('change', function () {
-//     tabla.ajax.reload();
-//   });
+  $('#filtroFecha, #filtroTipoMensaje').on('change', function () {
+    tabla.ajax.reload();
+  });
 });
 
 // 🔁 Detectar cambios en cualquier campo editable
