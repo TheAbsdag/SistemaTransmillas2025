@@ -32,7 +32,7 @@ class UsuarioModel {
         if ($filtroTipoMensaje !== '') {
 
             if ($filtroTipoMensaje=="Alertas") {
-                # code...
+                $sql .="CHAR_LENGTH(mensaje_enviado) <= 99";
             }else if ($filtroTipoMensaje=="ChatBot") {
                 # code...
             }else if ($filtroTipoMensaje=="ServiciosHechos") {
