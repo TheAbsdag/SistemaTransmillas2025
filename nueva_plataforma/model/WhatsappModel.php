@@ -9,7 +9,7 @@ class UsuarioModel {
     }
 
     public function obtenerMensajes($fecha_hora = '', $filtroEstado = '') {
-        
+
         // Establecer zona horaria de Bogotá
         date_default_timezone_set('America/Bogota');
         // Si no se pasa una fecha, usa la fecha actual
@@ -33,6 +33,11 @@ class UsuarioModel {
         // }
 
         $sql .= "ORDER BY fecha_hora DESC";
+
+        // ✅ Guardar consulta en log para depuración
+        $logPath = __DIR__ . '/log_consultas.txt'; // puedes cambiar el nombre/ruta si quieres
+        $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
+        file_put_contents($logPath, $logMessage, FILE_APPEND);
         
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
