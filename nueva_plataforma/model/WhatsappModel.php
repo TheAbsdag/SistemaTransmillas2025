@@ -22,7 +22,7 @@ class UsuarioModel {
         `telefono_wa`,id_servicio 
         FROM `registro` 
         where id>0   
-        order by fecha_hora desc  ";
+        ";
 
         if ($fecha_hora !== '') {
             $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($fecha_hora) . "'";
