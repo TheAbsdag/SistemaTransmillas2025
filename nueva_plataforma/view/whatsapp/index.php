@@ -86,85 +86,85 @@ $(document).ready(function () {
       { data: 'mensaje_recibido' },
        { data: 'mensaje_enviado' },
       { data: 'id_wa' },
-      { data: 'telefono_wa' },
+      { data: 'telefono_wa' }
       
       // 🔁 Interactivo: usu_filtro → Ver en sistema
          // 🔁 Interactivo: usu_filtro → Ver en sistema
-      {
-        data: 'usu_filtro',
-        render: function (data, type, row) {
-          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
-          return `
-            <select class="form-select form-select-sm cambiar-campo ${clase}"
-                    data-id="${row.idusuarios}"
-                    data-campo="usu_filtro">
-              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-            </select>
-          `;
-        }
-      },
-      {
-        data: 'usu_ver_nomina',
-        render: function (data, type, row) {
-          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
-          return `
-            <select class="form-select form-select-sm cambiar-campo ${clase}"
-                    data-id="${row.idusuarios}"
-                    data-campo="usu_ver_nomina">
-              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-            </select>
-          `;
-        }
-      },
-      {
-        data: 'usu_estado',
-        render: function (data, type, row) {
-          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
-          return `
-            <select class="form-select form-select-sm cambiar-campo ${clase}"
-                    data-id="${row.idusuarios}"
-                    data-campo="usu_estado">
-              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-            </select>
-          `;
-        }
-      },
-      {
-        data: null,
-        orderable: false,
-        searchable: false,
-        render: function (data, type, row) {
-          return `
-            <a href="../../cambio_admin.php?id_param=${row.idusuarios}&tabla=Usuario&condecion=" 
-              class="btn btn-sm btn-outline-primary" title="Editar" target="_blank">
-              <i class="fas fa-edit"></i>
-            </a>
-          `;
-        }
-      },
-      {
-        data: null,
-        orderable: false,
-        searchable: false,
-        render: function (data, type, row) {
-          return `
-            <button class="btn btn-sm btn-danger eliminar-usuario"
-                    title="Eliminar"
-                    data-id="${row.idusuarios}">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          `;
-        }
-      }
+    //   {
+    //     data: 'usu_filtro',
+    //     render: function (data, type, row) {
+    //       const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
+    //       return `
+    //         <select class="form-select form-select-sm cambiar-campo ${clase}"
+    //                 data-id="${row.idusuarios}"
+    //                 data-campo="usu_filtro">
+    //           <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+    //           <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+    //         </select>
+    //       `;
+    //     }
+    //   },
+    //   {
+    //     data: 'usu_ver_nomina',
+    //     render: function (data, type, row) {
+    //       const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
+    //       return `
+    //         <select class="form-select form-select-sm cambiar-campo ${clase}"
+    //                 data-id="${row.idusuarios}"
+    //                 data-campo="usu_ver_nomina">
+    //           <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+    //           <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+    //         </select>
+    //       `;
+    //     }
+    //   },
+    //   {
+    //     data: 'usu_estado',
+    //     render: function (data, type, row) {
+    //       const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
+    //       return `
+    //         <select class="form-select form-select-sm cambiar-campo ${clase}"
+    //                 data-id="${row.idusuarios}"
+    //                 data-campo="usu_estado">
+    //           <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
+    //           <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
+    //         </select>
+    //       `;
+    //     }
+    //   },
+    //   {
+    //     data: null,
+    //     orderable: false,
+    //     searchable: false,
+    //     render: function (data, type, row) {
+    //       return `
+    //         <a href="../../cambio_admin.php?id_param=${row.idusuarios}&tabla=Usuario&condecion=" 
+    //           class="btn btn-sm btn-outline-primary" title="Editar" target="_blank">
+    //           <i class="fas fa-edit"></i>
+    //         </a>
+    //       `;
+    //     }
+    //   },
+    //   {
+    //     data: null,
+    //     orderable: false,
+    //     searchable: false,
+    //     render: function (data, type, row) {
+    //       return `
+    //         <button class="btn btn-sm btn-danger eliminar-usuario"
+    //                 title="Eliminar"
+    //                 data-id="${row.idusuarios}">
+    //           <i class="fas fa-trash-alt"></i>
+    //         </button>
+    //       `;
+    //     }
+    //   }
       ]
   });
 
-  $('#filtroRol, #filtroEstado').on('change', function () {
-    tabla.ajax.reload();
-  });
+//   $('#filtroRol, #filtroEstado').on('change', function () {
+//     tabla.ajax.reload();
+//   });
 });
 
 // 🔁 Detectar cambios en cualquier campo editable
