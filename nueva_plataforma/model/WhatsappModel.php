@@ -13,9 +13,7 @@ class UsuarioModel {
         // Establecer zona horaria de Bogotá
         date_default_timezone_set('America/Bogota');
         // Si no se pasa una fecha, usa la fecha actual
-        if (empty($filtroFecha)) {
-            $filtroFecha = date('Y-m-d'); // solo fecha (puedes ajustar a Y-m-d H:i:s si quieres precisión total)
-        }
+
         
         $sql = "SELECT `id`, `fecha_hora`, `mensaje_recibido`,
         `mensaje_enviado`, `id_wa`, `timestamp_wa`,
@@ -25,6 +23,9 @@ class UsuarioModel {
         ";
 
         if ($filtroFecha !== '') {
+            $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
+        }else{
+            $filtroFecha = date('Y-m-d'); // solo fecha (puedes ajustar a Y-m-d H:i:s si quieres precisión total)
             $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
         }
 
