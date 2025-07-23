@@ -72,7 +72,7 @@ thead.azul-blanco th {
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     ajax: {
-      url: '/nueva_plataforma/controller/WhatsappController.php',
+      url: '/testSistemaTransmillas/nueva_plataforma/controller/WhatsappController.php',
       type: 'POST',
       data: function (d) {
         d.ajax = true;
@@ -179,7 +179,7 @@ $('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
   // }
 
   $.ajax({
-    url: '/nueva_plataforma/controller/WhatsappController.php',
+    url: '/testSistemaTransmillas/nueva_plataforma/controller/WhatsappController.php',
     type: 'POST',
     data: {
       actualizar_campo: true,
