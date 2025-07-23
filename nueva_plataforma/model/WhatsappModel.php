@@ -14,7 +14,7 @@ class UsuarioModel {
         `telefono_wa`,id_servicio 
         FROM `registro` 
         where id>0   
-        order by fecha_hora desc limit 10 ";
+        order by fecha_hora desc  ";
 
         // if ($filtroRol !== '') {
         //     $sql .= " AND idroles = '" . $this->db->real_escape_string($filtroRol) . "'";
