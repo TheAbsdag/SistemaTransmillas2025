@@ -16,15 +16,15 @@ class UsuarioModel {
         where id>0   
         order by fecha_hora desc limit 10 ";
 
-        if ($filtroRol !== '') {
-            $sql .= " AND idroles = '" . $this->db->real_escape_string($filtroRol) . "'";
-        }
+        // if ($filtroRol !== '') {
+        //     $sql .= " AND idroles = '" . $this->db->real_escape_string($filtroRol) . "'";
+        // }
 
-        if ($filtroEstado !== '') {
-            $sql .= " AND usu_estado = '" . $this->db->real_escape_string($filtroEstado) . "'";
-        }
+        // if ($filtroEstado !== '') {
+        //     $sql .= " AND usu_estado = '" . $this->db->real_escape_string($filtroEstado) . "'";
+        // }
 
-        $sql .= " ORDER BY usu_nombre ASC";
+        // $sql .= " ORDER BY usu_nombre ASC";
         
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
