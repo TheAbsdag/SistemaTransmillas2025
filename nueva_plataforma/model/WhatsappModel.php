@@ -34,9 +34,9 @@ class UsuarioModel {
             if ($filtroTipoMensaje=="Alertas") {
                 $sql .="AND CHAR_LENGTH(mensaje_enviado) <= 99 ";
             }else if ($filtroTipoMensaje=="ChatBot") {
-                # code...
+                $sql .="AND CHAR_LENGTH(mensaje_enviado) > 2";
             }else if ($filtroTipoMensaje=="ServiciosHechos") {
-             $sql .="and mensaje_enviado like '%Hemos creado tu servicio%'";
+                $sql .="AND mensaje_enviado like '%Hemos creado tu servicio%'";
             }
             
         }
