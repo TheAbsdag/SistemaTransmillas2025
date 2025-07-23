@@ -4,9 +4,9 @@ require_once "../model/WhatsappModel.php";
 $modelo = new UsuarioModel();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
-    $rol = $_POST['rol'] ?? '';
-    $estado = $_POST['estado'] ?? '';
-    $usuarios = $modelo->obtenerMensajes($rol, $estado);
+    $fecha = $_POST['rol'] ?? '';
+    $tipo = $_POST['estado'] ?? '';
+    $usuarios = $modelo->obtenerMensajes($fecha, $tipo);
     echo json_encode($usuarios);
     exit;
 }

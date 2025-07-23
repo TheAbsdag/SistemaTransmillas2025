@@ -81,8 +81,8 @@ $(document).ready(function () {
       type: 'POST',
       data: function (d) {
         d.ajax = true;
-        d.rol = $('#filtroRol').val();
-        d.estado = $('#filtroEstado').val();
+        d.fecha = $('#filtroFecha').val();
+        d.tipo = $('#filtroTipoMensaje').val();
       },
       dataSrc: ''
     },
