@@ -101,6 +101,9 @@
                 <label>Archivo (opcional)</label>
                 <input type="file" class="form-control" name="ci_ruta_archivo" accept=".pdf,.doc,.docx">
               </div>
+              <div id="pdf-preview" style="display:none; border: 1px solid #ccc; padding: 10px; margin-top: 15px;">
+                <canvas id="pdf-canvas" width="100%"></canvas>
+              </div>
               <div class="col-md-6">
                 <label>Estado</label>
                 <select class="form-select" name="ci_estado" required>
@@ -132,6 +135,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 $(document).ready(function () {
   const tabla = $('#tablaComunicados').DataTable({
@@ -276,6 +281,43 @@ $('#formAgregarCI').on('submit', function (e) {
   });
 });
 
+const fileInput = document.querySelector('input[name="ci_ruta_archivo"]');
+const pdfPreviewDiv = document.getElementById('pdf-preview');
+const pdfCanvas = document.getElementById('pdf-canvas');
+const ctx = pdfCanvas.getContext('2d');
+
+fileInput.addEventListener('change', function () {
+  const file = this.files[0];
+
+  if (file && file.type === 'application/pdf') {
+    const fileReader = new FileReader();
+
+    fileReader.onload = function () {
+      const typedarray = new Uint8Array(this.result);
+
+      pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
+        pdf.getPage(1).then(function (page) {
+          const viewport = page.getViewport({ scale: 1.5 });
+          pdfCanvas.height = viewport.height;
+          pdfCanvas.width = viewport.width;
+
+          const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+          };
+
+          page.render(renderContext);
+          pdfPreviewDiv.style.display = 'block';
+        });
+      });
+    };
+
+    fileReader.readAsArrayBuffer(file);
+  } else {
+    pdfPreviewDiv.style.display = 'none';
+  }
+});
+
 $(document).ready(function () {
   // 🔹 Cargar sedes al abrir modal
   $('#modalAgregarCI').on('shown.bs.modal', function () {
@@ -292,8 +334,6 @@ $(document).ready(function () {
       }
     });
   });
-
-
 
   // 🔹 Inicializar Select2 con usuarios vacíos por defecto
   const cargarUsuarios = (sedeId = '') => {
