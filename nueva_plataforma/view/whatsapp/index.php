@@ -35,9 +35,9 @@ thead.azul-blanco th {
           <label for="filtroTipoMensaje" class="form-label">💬 Tipo de mensaje</label>
           <select id="filtroTipoMensaje" class="form-select">
             <option value="">Todos</option>
-            <option value="recibido">Recibido</option>
-            <option value="enviado">Enviado</option>
-            <option value="respuesta_automatica">Respuesta automática</option>
+            <option value="Alertas">Alertas</option>
+            <option value="ChatBot">Chat Bot</option>
+            <option value="ServiciosHechos">Servicios Hechos</option>
             <option value="manual">Mensaje manual</option>
           </select>
         </div>

@@ -29,9 +29,17 @@ class UsuarioModel {
             $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
         }
 
-        // if ($filtroEstado !== '') {
-        //     $sql .= " AND usu_estado = '" . $this->db->real_escape_string($filtroEstado) . "'";
-        // }
+        if ($filtroTipoMensaje !== '') {
+
+            if ($filtroTipoMensaje=="Alertas") {
+                # code...
+            }else if ($filtroTipoMensaje=="ChatBot") {
+                # code...
+            }else if ($filtroTipoMensaje=="ServiciosHechos") {
+             $sql .="and mensaje_enviado like '%Hemos creado tu servicio%'";
+            }
+            
+        }
 
         $sql .= "ORDER BY fecha_hora DESC";
 
