@@ -104,11 +104,17 @@
               <div id="pdf-preview" style="display:none; border: 1px solid #ccc; padding: 10px; margin-top: 15px;">
                 <canvas id="pdf-canvas" width="100%"></canvas>
               </div>
-              <div id="pdf-editor-controls" style="display:none; margin-top: 10px;">
-                <label for="textoPDF">Texto para insertar en PDF:</label>
-                <input type="text" id="textoPDF" class="form-control" placeholder="Ej: Aprobado por el usuario">
-                <button type="button" id="guardarEdicionPDF" class="btn btn-primary mt-2">Guardar cambios al PDF</button>
+              <div id="pdf-preview-multi" style="margin-top: 10px;"></div>
+              <div id="pdf-editor-controls" style="display: none; margin-top: 10px;">
+                <label for="textoPDF">Texto para insertar:</label>
+                <input type="text" id="textoPDF" class="form-control" placeholder="Ej: Documento revisado">
+                
+                <label for="paginaPDF" class="mt-2">Página donde insertar el texto:</label>
+                <select id="paginaPDF" class="form-control"></select>
+
+                <button type="button" id="guardarEdicionPDF" class="btn btn-success mt-3">Guardar cambios al PDF</button>
               </div>
+
               <div class="col-md-6">
                 <label>Estado</label>
                 <select class="form-select" name="ci_estado" required>
@@ -288,110 +294,102 @@ $('#formAgregarCI').on('submit', function (e) {
   });
 });
 
-const fileInput = document.querySelector('input[name="ci_ruta_archivo"]');
-const pdfPreviewDiv = document.getElementById('pdf-preview');
-const pdfCanvas = document.getElementById('pdf-canvas');
-const ctx = pdfCanvas.getContext('2d');
+  const fileInput = document.getElementById('archivoInput'); // tu input file
+  const pdfPreviewDiv = document.getElementById('pdf-preview-multi');
+  const paginaSelect = document.getElementById('paginaPDF');
+  let pdfBytesOriginal = null;
+  let totalPaginas = 0;
 
-fileInput.addEventListener('change', function () {
-  const file = this.files[0];
+  fileInput.addEventListener('change', function () {
+    const file = this.files[0];
 
-  if (file && file.type === 'application/pdf') {
-    const fileReader = new FileReader();
+    if (file && file.type === 'application/pdf') {
+      const fileReader = new FileReader();
 
-    fileReader.onload = function () {
-      const typedarray = new Uint8Array(this.result);
+      fileReader.onload = async function () {
+        const typedarray = new Uint8Array(this.result);
+        pdfBytesOriginal = typedarray;
+        const pdf = await pdfjsLib.getDocument(typedarray).promise;
 
-      pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
-        pdf.getPage(1).then(function (page) {
-          const viewport = page.getViewport({ scale: 1.5 });
-          pdfCanvas.height = viewport.height;
-          pdfCanvas.width = viewport.width;
+        totalPaginas = pdf.numPages;
+        pdfPreviewDiv.innerHTML = ''; // limpiamos contenido anterior
+        paginaSelect.innerHTML = '';  // limpiamos selector
 
+        for (let i = 1; i <= totalPaginas; i++) {
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale: 1.2 });
+
+          const canvas = document.createElement('canvas');
+          canvas.id = `pdf-canvas-${i}`;
+          canvas.classList.add('mb-2');
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          const ctx = canvas.getContext('2d');
           const renderContext = {
             canvasContext: ctx,
-            viewport: viewport
+            viewport: viewport,
           };
 
-          page.render(renderContext);
-          pdfPreviewDiv.style.display = 'block';
-        });
-      });
-    };
+          await page.render(renderContext);
+          pdfPreviewDiv.appendChild(canvas);
 
-    fileReader.readAsArrayBuffer(file);
-  } else {
-    pdfPreviewDiv.style.display = 'none';
-  }
-});
+          // Agregamos opción al selector de páginas
+          const option = document.createElement('option');
+          option.value = i;
+          option.text = `Página ${i}`;
+          paginaSelect.appendChild(option);
+        }
 
-
-
-let pdfBytesOriginal = null;
-
-fileInput.addEventListener('change', function () {
-  const file = this.files[0];
-
-  if (file && file.type === 'application/pdf') {
-    const fileReader = new FileReader();
-
-    fileReader.onload = async function () {
-      const typedarray = new Uint8Array(this.result);
-      pdfBytesOriginal = typedarray; // Guardamos para editar luego
-
-      const pdf = await pdfjsLib.getDocument(typedarray).promise;
-      const page = await pdf.getPage(1);
-      const viewport = page.getViewport({ scale: 1.5 });
-      pdfCanvas.height = viewport.height;
-      pdfCanvas.width = viewport.width;
-
-      const renderContext = {
-        canvasContext: ctx,
-        viewport: viewport
+        document.getElementById('pdf-editor-controls').style.display = 'block';
       };
 
-      await page.render(renderContext);
-      pdfPreviewDiv.style.display = 'block';
-      document.getElementById('pdf-editor-controls').style.display = 'block';
-    };
-
-    fileReader.readAsArrayBuffer(file);
-  } else {
-    pdfPreviewDiv.style.display = 'none';
-    document.getElementById('pdf-editor-controls').style.display = 'none';
-  }
-});
-
-
-document.getElementById('guardarEdicionPDF').addEventListener('click', async function () {
-  const texto = document.getElementById('textoPDF').value;
-  if (!texto || !pdfBytesOriginal) return alert("Por favor escribe algo para insertar.");
-
-  const pdfDoc = await PDFLib.PDFDocument.load(pdfBytesOriginal);
-  const pages = pdfDoc.getPages();
-  const firstPage = pages[0];
-
-  firstPage.drawText(texto, {
-    x: 50,
-    y: 700,
-    size: 18,
-    color: PDFLib.rgb(0, 0, 0),
+      fileReader.readAsArrayBuffer(file);
+    } else {
+      pdfPreviewDiv.innerHTML = '';
+      document.getElementById('pdf-editor-controls').style.display = 'none';
+    }
   });
 
-  const pdfBytesEditado = await pdfDoc.save();
+  // Insertar texto en la página seleccionada
+  document.getElementById('guardarEdicionPDF').addEventListener('click', async function () {
+    const texto = document.getElementById('textoPDF').value;
+    const paginaSeleccionada = parseInt(paginaSelect.value);
 
-  // Creamos un nuevo archivo PDF
-  const blob = new Blob([pdfBytesEditado], { type: 'application/pdf' });
-  const file = new File([blob], 'archivo_editado.pdf');
+    if (!texto || !pdfBytesOriginal || isNaN(paginaSeleccionada)) {
+      alert("Por favor completa todos los campos.");
+      return;
+    }
 
-  // Simulamos carga del nuevo archivo en el input
-  const dataTransfer = new DataTransfer();
-  dataTransfer.items.add(file);
-  fileInput.files = dataTransfer.files;
+    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytesOriginal);
+    const pages = pdfDoc.getPages();
 
-  alert("PDF editado cargado listo para ser enviado.");
-});
+    // Aseguramos que esté en rango
+    if (paginaSeleccionada < 1 || paginaSeleccionada > pages.length) {
+      alert("Página fuera de rango");
+      return;
+    }
 
+    const selectedPage = pages[paginaSeleccionada - 1];
+    selectedPage.drawText(texto, {
+      x: 50,
+      y: 700,
+      size: 16,
+      color: PDFLib.rgb(0, 0, 0),
+    });
+
+    const pdfBytesEditado = await pdfDoc.save();
+
+    const blob = new Blob([pdfBytesEditado], { type: 'application/pdf' });
+    const file = new File([blob], 'archivo_editado.pdf');
+
+    // Insertamos el nuevo archivo editado en el input
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    fileInput.files = dataTransfer.files;
+
+    alert("¡Cambios guardados en el PDF! Ahora puedes enviarlo.");
+  });
 
 $(document).ready(function () {
   // 🔹 Cargar sedes al abrir modal
