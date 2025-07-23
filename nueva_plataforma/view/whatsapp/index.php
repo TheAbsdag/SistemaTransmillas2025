@@ -47,7 +47,6 @@ thead.azul-blanco th {
         <th>Fecha</th>
         <th>Mensaje recibido</th>
         <th>Mensaje enviado</th>
-        <th>Id servicio</th>
         <th>Id whatsapp</th>
         <th>Numero</th>
 
@@ -83,12 +82,12 @@ $(document).ready(function () {
       dataSrc: ''
     },
     columns: [
-      { data: 'rol_nombre' },
-      { data: 'usu_nombre' },
-       { data: 'usu_identificacion' },
-      { data: 'usu_usuario' },
-      { data: 'usu_nivelacademico' },
-      { data: 'usu_tipocontrato' },
+      { data: 'fecha_hora' },
+      { data: 'mensaje_recibido' },
+       { data: 'mensaje_enviado' },
+      { data: 'id_wa' },
+      { data: 'telefono_wa' },
+      
       // 🔁 Interactivo: usu_filtro → Ver en sistema
          // 🔁 Interactivo: usu_filtro → Ver en sistema
       {
