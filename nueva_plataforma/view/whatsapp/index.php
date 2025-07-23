@@ -23,7 +23,7 @@ thead.azul-blanco th {
 
 </style>
 <body>
-<div class="container mt-4">
+<div class="container-fluid mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
     <div class="card-header text-center mi-header">
       <h3 class="mb-0">Módulo WhatsApp</h3>
@@ -43,7 +43,6 @@ thead.azul-blanco th {
             <option value="Alertas">Alertas</option>
             <option value="ChatBot">Chat Bot</option>
             <option value="ServiciosHechos">Servicios Hechos</option>
-            <option value="manual">Mensaje manual</option>
           </select>
         </div>
       </div>
