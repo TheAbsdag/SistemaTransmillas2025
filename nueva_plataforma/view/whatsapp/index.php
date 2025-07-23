@@ -16,11 +16,16 @@ thead.azul-blanco th {
   background-color: #01468c; /* Tu azul exacto */
   color: white;
 }
+.mi-header {
+        background-color: #00458D; /* Naranja por ejemplo */
+        color: white;
+}
+
 </style>
 <body>
 <div class="container mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
-    <div class="card-header text-white text-center bg-primary">
+    <div class="card-header text-center mi-header">
       <h3 class="mb-0">Módulo WhatsApp</h3>
     </div>
 
