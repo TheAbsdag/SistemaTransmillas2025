@@ -1,44 +1,39 @@
 <?php
-// include class
 
+$cot_id=$_POST["id"];
+$cot_clirente=$_POST["cliente"];	
+$cot_nit=$_POST["nit"];	
+$cot_origen=$_POST["origen"];	
+$cot_destino=$_POST["destino"];	
+$cot_direc_origen=$_POST["direccion_origen"];	
+$cot_direc_destino=$_POST["direccion_destino"];	
+$cot_desc_merc=$_POST["descripcion"];	
+$cot_tipo_servi=$_POST["tipo_servi"];	
+$cot_peso=$_POST["peso"];	
+$cot_val_minima=$_POST["val_minima"];	
+$cot_kilo_adi=$_POST["kilo_adi"];	
+$cot_vol=$_POST["vol"];	
+$cot_val_asegurado=$_POST["val_asegurado"];	
+$cot_val_seguro=$_POST["val_seguro"];	
+$cot_val_kilos_adi=$_POST["val_kilos_adi"];	
+$cot_val_servicio=$_POST["val_servicio"];	
+$cot_val_total=$_POST["val_total"];	
+$cot_fecha=$_POST["fecha"];
+$ciudadhecho=$_POST["sede"];
+$usuhecho=$_POST["usuario"];
+$cliente = $_POST['cliente'] ?? '';
+$correo = $_POST['correo'] ?? '';
+$descripcion = $_POST['descripcion'] ?? '';
 
+// ...
 
-// $nombrecon=$_GET["nombrecon"];
-// $cedulacon=$_GET["cedulacon"];
-// $placasvehi=$_GET["placasvehi"];
-// $valorcont=$_GET["valorcont"];
-// $fechaini=$_GET["fechaini"];
-// $fechafin=$_GET["fechafin"];
-// $piezascont=$_GET["piezascont"];
-// $telefonocon=$_GET["telefonocon"];
-// $firmacon=$_GET["firmacon"];
-// $expedida=$_GET["expedida"];
-// $ciudaddes=$_GET["ciudaddes"];
-// $ciudadori=$_GET["ciudadori"];
-// $num_mani=$_GET["num_mani"];
-// $num_remesa=$_GET["num_remesa"];
+// // Fotos como array
+// $fotos = isset($_POST['fotos']) ? json_decode($_POST['fotos'], true) : [];
 
-$cot_id=$_GET["id"];
-$cot_clirente=$_GET["clirente"];	
-$cot_nit=$_GET["nit"];	
-$cot_origen=$_GET["origen"];	
-$cot_destino=$_GET["destino"];	
-$cot_direc_origen=$_GET["direc_origen"];	
-$cot_direc_destino=$_GET["direc_destino"];	
-$cot_desc_merc=$_GET["desc_merc"];	
-$cot_tipo_servi=$_GET["tipo_servi"];	
-$cot_peso=$_GET["peso"];	
-$cot_val_minima=$_GET["val_minima"];	
-$cot_kilo_adi=$_GET["kilo_adi"];	
-$cot_vol=$_GET["vol"];	
-$cot_val_asegurado=$_GET["val_asegurado"];	
-$cot_val_seguro=$_GET["val_seguro"];	
-$cot_val_kilos_adi=$_GET["val_kilos_adi"];	
-$cot_val_servicio=$_GET["val_servicio"];	
-$cot_val_total=$_GET["val_total"];	
-$cot_fecha=$_GET["fecha"];
-$ciudadhecho=$_GET["ciudadhecho"];
-$usuhecho=$_GET["usuhecho"];
+// // // Mostrar imágenes
+// foreach ($fotos as $foto) {
+//     echo "<img src='$foto' width='200' style='margin:10px'>";
+// }
 
 
 
@@ -94,6 +89,7 @@ function Footer()
 
 }
 }
+
 
 // Creación del objeto de la clase heredada
 $pdf = new PDF();
@@ -226,7 +222,38 @@ $pdf->MultiCell(0, 5, utf8_decode('https://www.transmillas.com/                 
 
 
 $pdf->Ln(10);
+$fotos = isset($_POST['fotos']) ? json_decode($_POST['fotos'], true) : [];
 
+
+
+if (!empty($fotos)) {
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, utf8_decode(' Imágenes adjuntas al servicio:'), 0, 1, 'C');
+    $pdf->Ln(5);
+
+    $x = 10;
+    $y = $pdf->GetY();
+    $imgWidth = 80;
+    $imgHeight = 60;
+    $margin = 10;
+    $count = 0;
+
+    foreach ($fotos as $foto) {
+        
+        $url = 'https://www.transmillas.com/ChatbotTransmillas/' . $foto;
+        $headers = @get_headers($url);
+        if ($headers && strpos($headers[0], '200') !== false) {
+            $pdf->Image($url, $x, $y, $imgWidth, $imgHeight);
+            $x += $imgWidth + $margin;
+            $count++;
+            if ($count % 2 == 0) {
+                $x = 10;
+                $y += $imgHeight + $margin;
+            }
+        }
+    }
+}
 
 $pdf->Output();
 $filename = 'cotizaciones/'.$nombredoc.'.pdf'; // Ruta donde deseas guardar el PDF en el servidor

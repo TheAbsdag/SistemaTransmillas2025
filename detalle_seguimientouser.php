@@ -183,6 +183,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 							$DB1->Execute($sql1); 
 							$rw2=mysqli_fetch_row($DB1->Consulta_ID);
 								$compara=$rw2[5];
+								$idSegui=$rw2[8];
 								if ($rw2[10]=="") {
 									$compañero="Sin compañero";
 			
@@ -207,11 +208,11 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 									echo "<td></td>";
 									echo "<td></td>";
 									echo "<td></td>";
-									echo "<td></td>";
+									
 								    echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso8</td>"; //Ingreso?
 									echo "<td></td>";
 									echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
-									echo "<td>D</td>";
+									echo "<td>D3</td>";
 									echo "<td>E</td>";
 									echo "<td>S</td>";
 									echo "<td>C</td>";
@@ -226,7 +227,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 									echo "<td></td>";
 									echo "<td></td>";
 									if($nivel_acceso==1 or $nivel_acceso==12){
-										$DB1->edites($rw1[4], "borraseguser", 2,0);
+										$DB1->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
 									}
 								
 								}else{
@@ -286,7 +287,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 					
 									//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$param34\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 									echo $ver ;
-									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso7</td>"; //Ingreso?
+									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso+</td>"; //Ingreso?
 									echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>"; // DESCRIPCION
 									echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>"; //FECHA DE INGRESO
 					
@@ -448,7 +449,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 									}
 					
 									if($nivel_acceso==1 or $nivel_acceso==12){
-										$DB1->edites($rw1[4], "borraseguser", 2,0);
+										$DB1->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
 									}
 								
 								}
@@ -581,6 +582,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 					$DB->Execute($sql1); 
 					$rw2=mysqli_fetch_row($DB->Consulta_ID);
 					 $compara=$rw2[5];
+					 $idSegui=$rw2[8];
 					 if ($rw2[10]=="") {
 						$compañero="Sin compañero";
 
@@ -677,11 +679,11 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td></td>";
-										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+										
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idSegui,\"Cambio_seguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 										echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw1[3]</td>";
-										echo "<td>D</td>";
+										echo "<td>D1</td>";
 										echo "<td>E</td>";
 										echo "<td>S</td>";
 										echo "<td>C</td>";
@@ -708,11 +710,11 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td></td>";
-										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso3</td>"; //Ingreso?
+										
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idSegui,\"Cambio_seguimientoUser\",\"$ideSede\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 								        echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw1[3]</td>";
-										echo "<td>D</td>";
+										echo "<td>D2</td>";
 										echo "<td>E</td>";
 										echo "<td>S</td>";
 										echo "<td>C</td>";
@@ -724,7 +726,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										if($nivel_acceso==1 or $nivel_acceso==12){
-											$DB->edites($rw1[4], "borraseguser", 2,0);
+											$DB->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
 										}
 
 									}
@@ -778,7 +780,22 @@ if (($muestra1 == false and $muestra2 == true)) {
 					
 								//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$rw1[3]\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 								echo $ver ;
-								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($iddelusu,\"SeguimientoUser\",\"$ideSede\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+								$sqlw="SELECT idseguimiento_user, count(*) from seguimiento_user where seg_fechaalcohol like '$fechabusqueda%'  and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
+								$DB->Execute($sqlw); 
+								$rww=mysqli_fetch_row($DB->Consulta_ID);
+								if ($rww[0]>0) {
+									$caso="Cambio_seguimientoUser";
+									$parame1=$rww[0];
+									$textoing="Ingreso";
+									
+								} else {
+									// Sí hay resultados, puedes usarlos
+									$caso="";
+									$parame1=$id_p;
+									$textoing="Sin Ingreso";
+
+								}
+								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($parame1,\"$caso\",\"$ideSede\")';  title='Ingreso de Usuario'  >$textoing</td>"; //Ingreso?
 								echo "<td colspan='1' width='0' align='center' >$rw2[6]</td>";
 								echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 					
@@ -943,7 +960,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 								echo "<td colspan='1' width='0' align='center' ></td>";
 					
 								if($nivel_acceso==1 or $nivel_acceso==12){
-									$DB->edites($rw1[4], "borraseguser", 2,0);
+									$DB->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
 								}
 								
 
@@ -1016,6 +1033,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 			$DB->Execute($sql1); 
 			$rw2=mysqli_fetch_row($DB->Consulta_ID);
 			 $compara=$rw2[5];
+			 $idSegui=$rw2[8];
 	
 			if($param32!=$compara && $param32!='0' && $param32!=null){  $imprimir=0;}
 			
@@ -1254,7 +1272,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 						echo "<td colspan='1' width='0' align='center' ></td>";
 			
 						if($nivel_acceso==1 or $nivel_acceso==12){
-							$DB->edites($rw1[4], "borraseguser", 2,0);
+							$DB->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
 						}
 					}
 			}

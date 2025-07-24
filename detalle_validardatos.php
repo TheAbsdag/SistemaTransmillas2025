@@ -56,6 +56,7 @@ if($param33==""){ $param33=$fechainicial; }
 $sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_esatdollamando,ser_descllamada,gui_usucreado,ser_estado,ser_valorabono,ser_horaentrega,cli_idciudad,ser_ciudadentrega,gui_tiposervicio,rel_nom_credito
  FROM serviciosdia inner join guias on idservicios=gui_idservicio inner join rel_sercre on idservicio=idservicios where ser_estado in (0,1,5,21) and  date(ser_fecharegistro) >= '$param33' and  date(ser_fecharegistro) <= '$param34'   $conde1 $conde2 ORDER BY ser_fechaentrega,ser_descllamada $asc ";
 
+
 $DB->Execute($sql); $va=0; 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 	{
@@ -79,11 +80,13 @@ $DB->Execute($sql); $va=0;
 		<td>".$rw1[8]."</td>
 		<td>".$rw1[9]."</td>";
 		$telWhatsapp="";
+		$imgWhatsapp="";
 		if ($rw1[13]=="whatsapp") {
-			$sqlW="SELECT telefono_wa FROM `registro` WHERE mensaje_recibido LIKE '%$rw1[3]%' OR mensaje_enviado LIKE '%$rw1[3]%'  ORDER BY id DESC LIMIT 1";
+			$sqlW="SELECT ser_num_whatsapp_crea,ser_img_whatsapp FROM `servicios` WHERE idservicios='$rw1[0]' ";
 			$DB1->Execute($sqlW);
 			$telW=mysqli_fetch_row($DB1->Consulta_ID);
 			$telWhatsapp="Tel: ".$telW[0]."";
+			$imgWhatsapp=$telW[1];
 		}
 		echo"
 		<td>".$rw1[13]."<br>$telWhatsapp</td>
@@ -130,13 +133,10 @@ $DB->Execute($sql); $va=0;
 			echo "<td>Tiene Abono<td>";
 		}
 
-		$sql3="SELECT `ser_img_whatsapp` FROM `servicios` WHERE idservicios='$rw1[0]'";
-		$DB1->Execute($sql3);
-		$rw5=mysqli_fetch_row($DB1->Consulta_ID);
-		$imgWhatsapp=$rw5[0];
+
 
 		if ($imgWhatsapp!="") {
-			echo "<td><a href='https://www.transmillas.com/ChatbotTransmillas/verimagen.php?image_id=$imgWhatsapp' target='_blank' >Ver</a></td>";
+			echo "<td><a href='https://www.transmillas.com/ChatbotTransmillas/$imgWhatsapp' target='_blank' >Ver</a></td>";
 		}else {
 			echo "<td>-</td>";
 		}

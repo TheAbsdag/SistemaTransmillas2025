@@ -52,7 +52,7 @@ JOIN ciudades c2 ON c2.idciudades = cs.cli_idciudad
 WHERE cs.cli_telefono = '{$cliente['cli_telefono']}'
   AND s.ser_fecharegistro >= CURDATE() - INTERVAL 1 DAY
   AND s.ser_fecharegistro < CURDATE() + INTERVAL 1 DAY
-  AND s.ser_estado < 10
+  AND s.ser_estado < 4
     ";
 $DB1->Execute($sql2);
 $servicios = [];
