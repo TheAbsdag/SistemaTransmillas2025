@@ -937,6 +937,17 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
             echo "</span>
             </a>";
 
+        }else if($link=="cotizaciones.php" ){
+            $sqlc = "SELECT COUNT(*) FROM `cotozaciones` where cot_id_ingresa='1919' and cot_estado='';";
+            $DB1->Execute($sqlc); 
+            $cotizacionesW=$DB1->recogedato(0);
+                    echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
+                    $LT->llenadocs1($DB_m1, "Menu", $id_menu, 1, 15, 1);
+                    echo "<span > $rw_m[0] ";
+            echo ' <div class="noti_bubble">'.$cotizacionesW.'</div>';
+            echo "</span>
+            </a>";
+
         }
         else{
 
