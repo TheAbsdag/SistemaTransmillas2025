@@ -32,13 +32,17 @@ class UsuarioModel {
         if ($filtroTipoMensaje !== '') {
 
             if ($filtroTipoMensaje=="Alertas") {
-                $sql .="AND CHAR_LENGTH(mensaje_enviado) <= 99 ";
+                $sql .="AND tipo ='Alerta'";
             }else if ($filtroTipoMensaje=="ChatBot") {
                 $sql .="AND CHAR_LENGTH(mensaje_enviado) > 2 ";
             }else if ($filtroTipoMensaje=="ServiciosHechos") {
                 $sql .="AND mensaje_enviado like '%Hemos creado tu servicio%'";
+            }else if ($filtroTipoMensaje=="Cotizaciones") {
+                $sql .="AND mensaje_enviado like '%Cotización registrada%'";
             }
             
+        }else {
+            $sql .="AND CHAR_LENGTH(mensaje_enviado) > 2 ";
         }
 
         $sql .= "ORDER BY fecha_hora DESC";

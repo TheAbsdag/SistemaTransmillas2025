@@ -41,8 +41,9 @@ thead.azul-blanco th {
           <select id="filtroTipoMensaje" class="form-select">
             <option value="">Todos</option>
             <option value="Alertas">Alertas</option>
-            <option value="ChatBot">Chat Bot</option>
+            <option value="ChatBot" selected>Chat Bot</option>
             <option value="ServiciosHechos">Servicios Hechos</option>
+            <option value="Cotizaciones">Cotizaciones</option>
           </select>
         </div>
       </div>
@@ -81,7 +82,7 @@ thead.azul-blanco th {
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     ajax: {
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/WhatsappController.php',
+      url: '/nueva_plataforma/controller/WhatsappController.php',
       type: 'POST',
       data: function (d) {
         d.ajax = true;
@@ -133,7 +134,7 @@ $('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
   // }
 
   $.ajax({
-    url: '/testSistemaTransmillas/nueva_plataforma/controller/WhatsappController.php',
+    url: '/nueva_plataforma/controller/WhatsappController.php',
     type: 'POST',
     data: {
       actualizar_campo: true,
@@ -154,7 +155,7 @@ $('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {
 
   if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
     $.ajax({
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/WhatsappController.php',
+      url: '/nueva_plataforma/controller/WhatsappController.php',
       type: 'POST',
       data: {
         eliminar_usuario: true,

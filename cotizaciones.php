@@ -164,21 +164,10 @@ $FB->cierra_form();
 		$conde3="and cot_estado='' ";
 	}
 
-	
-
-//   if($param4!='0' and $param4!=''){
-// 	  $cond5=" and hoj_estado='$param4'";
-//   }
-
-//   if($param1!='0' and $param1!=''){
-// 	$cond3=" and hoj_tipocontrato='$param1'";
-// }
-
-
 
 if(isset($_REQUEST["ordby"])){ $ordby=$_REQUEST["ordby"]; } else { $ordby="hoj_nombre,hoj_apellido"; } 
 if(@$_REQUEST["asc"]!=""){ $asc=$_REQUEST["asc"]; } else {$asc="ASC"; } 	$asc2=""; if($asc=="ASC"){ $asc2="DESC";}
-//$condlimit=$FB->llena_sigant($pagina, $ordby, $asc, $valor); 
+
 
 
 // $FB->titulo_azul1("#",1,0,7); 
@@ -190,11 +179,11 @@ $FB->titulo_azul1("Fecha",1,0,0);
 // $FB->titulo_azul1("Remesas de carga",1,0,0);
 $FB->titulo_azul1("Enviar al correo",1,0,0); 
 $FB->titulo_azul1("Estado",1,0,0); 
+$FB->titulo_azul1("Fotos",1,0,0); 
 $FB->titulo_azul1("Editar",1,0,0); 
 $FB->titulo_azul1("Eliminar",1,0,0); 
 
-
-$sql="SELECT `cot_id`, `cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,cot_correo,cot_Whatsapp,cot_enviado,sed_nombre,usu_nombre,cot_estado FROM cotozaciones JOIN usuarios ON cot_id_ingresa = idusuarios JOIN sedes ON usu_idsede = idsedes WHERE cot_id>0 $cond2 $cond $conde1 $conde3 order by cot_id desc";
+$sql="SELECT `cot_id`, `cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,cot_correo,cot_Whatsapp,cot_enviado,sed_nombre,usu_nombre,cot_estado,cot_fotos FROM cotozaciones JOIN usuarios ON cot_id_ingresa = idusuarios JOIN sedes ON usu_idsede = idsedes WHERE cot_id>0 $cond2 $cond $conde1 $conde3 order by cot_id desc";
 
 $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar); 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -215,53 +204,41 @@ $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar);
 		$vehiculo = "SELECT `vehim_placas` FROM  `vehiculo_manif` where vehimid=$rw1[2] ";
 		$DB1->Execute($vehiculo);
 		$rw3 = mysqli_fetch_array($DB1->Consulta_ID);
+        $fotos = json_decode($rw1[25], true) ?? [];
 
-		// echo "<td>".$rw3[0]."</td>";
-		// echo "<td><a href='".$rw1[7]."' target='_blank'>Ver</a></td>";
-		// if ($rw1[8]=="") {
-		// 	echo "<td>Sin archivo</td>";
+        $datos = [
+            'id' => $rw1[0],
+            'cliente' => $rw1[1],
+            'nit' => $rw1[2],
+            'origen' => $rw1[3],
+            'destino' => $rw1[4],
+            'direccion_origen' => $rw1[5],
+            'direccion_destino' => $rw1[6],
+            'descripcion' => $rw1[7],
+            'tipo_servi' => $rw1[8],
+            'peso' => $rw1[9],
+            'val_minima' => $rw1[10],
+            'kilo_adi' => $rw1[11],
+            'vol' => $rw1[12],
+            'val_asegurado' => $rw1[13],
+            'val_seguro' => $rw1[14],
+            'val_kilos_adi' => $rw1[15],
+            'val_servicio' => $rw1[16],
+            'val_total' => $rw1[17],
+            'fecha' => $rw1[18],
+            'correo' => $rw1[19],
+            'whatsapp' => $rw1[20],
+            'enviado' => $rw1[21],
+            'sede' => $rw1[22],
+            'usuario' => $rw1[23],
+            'estado' => $rw1[24],
+            'fotos' => $fotos
+        ];
 
-		// }else {
-		// echo '<td><a  href="#" onclick="ver('.$rw1[1].','.$rw1[2].','.$rw1[3].','.$rw1[4].','.$rw1[5].','.$rw1[6].','.$rw1[7].','.$rw1[8].','.$rw1[9].','.$rw1[10].','.$rw1[11].','.$rw1[12].','.$rw1[13].','.$rw1[14].','.$rw1[15].','.$rw1[16].','.$rw1[17].','.$rw1[18].');">Ver</a></td>';
+        $json = htmlspecialchars(json_encode($datos), ENT_QUOTES, 'UTF-8');
 
-        echo '<td><a href="#" onclick="ver(' . 
-        "'" . addslashes($rw1[0]) . "'," .  // Se utiliza addslashes para escapar las comillas y caracteres especiales
-        "'" . addslashes($rw1[1]) . "'," . 
-        "'" . addslashes($rw1[2]) . "'," . 
-        "'" . addslashes($rw1[3]) . "'," . 
-        "'" . addslashes($rw1[4]) . "'," . 
-        "'" . addslashes($rw1[5]) . "'," . 
-        "'" . addslashes($rw1[6]) . "'," . 
-        "'" . addslashes($rw1[7]) . "'," . 
-        "'" . addslashes($rw1[8]) . "'," . 
-        "'" . addslashes($rw1[9]) . "'," . 
-        "'" . addslashes($rw1[10]) . "'," . 
-        "'" . addslashes($rw1[11]) . "'," . 
-        "'" . addslashes($rw1[12]) . "'," . 
-        "'" . addslashes($rw1[13]) . "'," . 
-        "'" . addslashes($rw1[14]) . "'," . 
-        "'" . addslashes($rw1[15]) . "'," . 
-        "'" . addslashes($rw1[16]) . "'," . 
-        "'" . addslashes($rw1[17]) . "'," . 
-		"'" . addslashes($rw1[18]) . "'," . 
-		"'" . addslashes($rw1[22]) . "'," . 
-        "'" . addslashes($rw1[23]) . "');\">Ver</a></td>";
-		// }
-		// if ($rw1[12]=="") {
-		// 	echo "<td>Sin archivo</td>";
+        echo "<td><a href='#' onclick='ver(JSON.parse(`$json`));'>Ver</a></td>";
 
-		// }else {
-		// 	echo "<td><a href='maniRemesaCarga.php?pdf=$rw1[12]&dato=$rw2[1]' target='_blank'>Ver</a></td>";
-
-		// }
-		// if ($rw1[13]=="") {
-		// 	echo "<td>Sin archivo</td>";
-
-		// }else {
-		// 	echo "<td><a href='img_manifiestos/manifiestos/$rw1[13]' target='_blank'>Ver</a></td>";
-
-		// }
-	
          if($rw1[21]==""){
 
             $textEnviar1="Enviar";
@@ -287,12 +264,23 @@ $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar);
 
 		echo "<td><div id='campo'>";
 		echo "<select  style='width:120px;border:1px solid #f9f9f9;background-color:".$colorselect.";color:#f9f9f9;font-size:15px'  name='$va' id='".$rw1[0]."estado'  onchange='realizada($rw1[0],\"realizada\",this.value)' class='borrar' required>";
-		// $LT->llenaselect_ar("Selecccione...",$estadosguiasinfin);
 		echo"<option value='' $no>No realizada</option>";
-		echo"<option value='realizada'$si>Realizada</option>";
+		echo"<option value='realizada' $si>Realizada</option>";
 	   
 
-		echo"</select>";
+		echo"</select></td>";
+		if ($rw1[25]!='') {
+			
+            // Supón que ya tienes esto
+            $fotos = $rw1[25];
+            
+            $url = 'https://www.transmillas.com/ChatbotTransmillas/view/ver_fotos.php?fotos=' . urlencode($fotos);
+            echo "<td><a href='$url' target='_blank'>Ver</a></td>";
+        
+        }else {
+			echo "<td></td>";
+		}
+		
 	echo "<td>	<a onclick='pop_dis16($id_p, \"Editar cotizacion\",\"$rw1[1]\")';  style='cursor: pointer;' title='editar' >Editar</td>";
 	if($nivel_acceso==1){
 		$DB->edites($id_p, "cotizaciones", 2, $condecion);
@@ -306,11 +294,29 @@ include("footer.php");
 ?>
 <script>
 
-function ver(id,clirente,nit,origen,destino,direc_origen,direc_destino,desc_merc,tipo_servi,peso,val_minima,kilo_adi,vol,val_asegurado,val_seguro,val_kilos_adi,val_servicio,val_total,fecha,ciudadhecho,usuhecho){
-var url = "cotiza_descargable.php?id=" + encodeURIComponent(id) + "&clirente=" + encodeURIComponent(clirente)+ "&origen=" + encodeURIComponent(origen)+ "&nit=" + encodeURIComponent(nit)+ "&destino=" + encodeURIComponent(destino)+ "&direc_origen=" + encodeURIComponent(direc_origen)+ "&direc_destino=" + encodeURIComponent(direc_destino)+ "&desc_merc=" + encodeURIComponent(desc_merc)+ "&tipo_servi=" + encodeURIComponent(tipo_servi)+ "&peso=" + encodeURIComponent(peso)+ "&val_minima=" + encodeURIComponent(val_minima)+ "&kilo_adi=" + encodeURIComponent(kilo_adi)+ "&vol=" + encodeURIComponent(vol)+ "&val_asegurado=" + encodeURIComponent(val_asegurado)+ "&val_kilos_adi=" + encodeURIComponent(val_kilos_adi)+ "&val_servicio=" + encodeURIComponent(val_servicio)+ "&val_total=" + encodeURIComponent(val_total)+ "&fecha=" + encodeURIComponent(fecha)+ "&val_seguro=" + encodeURIComponent(val_seguro)+ "&ciudadhecho=" + encodeURIComponent(ciudadhecho)+ "&usuhecho=" + encodeURIComponent(usuhecho);
+function ver(datos) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "cotiza_descargable.php";
+    form.target = "_blank";
 
-// Abrir la nueva página en una nueva pestaña
-window.open(url, "_blank");   
+    for (const key in datos) {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+
+        if (key === 'fotos') {
+            input.value = JSON.stringify(datos[key]); // Pasamos array como JSON
+        } else {
+            input.value = datos[key];
+        }
+
+        form.appendChild(input);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
 }
 function enviarCorreo(id,cliente,email){
 
