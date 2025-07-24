@@ -9,6 +9,7 @@ $FB->titulo_azul1("IdServicio",1,0,0);
 $FB->titulo_azul1("Hora Recogida",1,0,0); 
 $FB->titulo_azul1("Remitente",1,0,0); 
 $FB->titulo_azul1("Tel&eacute;fono",1,0,0); 
+$FB->titulo_azul1("Llamar",1,0,0); 
 $FB->titulo_azul1("Direcci&oacute;n",1,0,0); 
 $FB->titulo_azul1("Destinatario",1,0,0); 
 $FB->titulo_azul1("Tel&eacute;fono",1,0,0); 
@@ -21,7 +22,6 @@ $FB->titulo_azul1("Creada por",1,0,0);
 //if($_SESSION['usuario_rol']!=2){
 $FB->titulo_azul1("Descripcion Llamada",1,0,0); 
 $FB->titulo_azul1("Abono",1,0,0); 
-$FB->titulo_azul1("Llamar",1,0,0); 
 $FB->titulo_azul1("MOTIVO",1,0,0); 
 $FB->titulo_azul1("CANCELAR",1,0,0);
 $FB->titulo_azul1("Imagen",1,0,0);
@@ -67,37 +67,12 @@ $DB->Execute($sql); $va=0;
 		echo "<tr  class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 		$direc1=str_replace("&"," ", $rw1[4]);
 		$direct2=str_replace("&"," ", $rw1[7]);
-		echo "<td>".$rw1[10]." oki  $rw1[20]</td>";
+		echo "<td>".$rw1[10]."  $rw1[20]</td>";
 		echo "<td align='center' ><a  onclick='pop_dis5($id_p,\"Recogidas\")';  style='cursor: pointer;' title='Detalle Guia' >$id_p</td>";
 
 		echo "<td>".$rw1[1]."</td>
-		<td>".$rw1[2]."</td>
-		<td>".$rw1[3]."</td>
-		<td>".$direc1."</td>
-		<td>".$rw1[5]."</td>
-		<td>".$rw1[6]."</td>
-		<td>".$direct2."</td>
-		<td>".$rw1[8]."</td>
-		<td>".$rw1[9]."</td>";
-		$telWhatsapp="";
-		$imgWhatsapp="";
-		if ($rw1[13]=="whatsapp") {
-			$sqlW="SELECT ser_num_whatsapp_crea,ser_img_whatsapp FROM `servicios` WHERE idservicios='$rw1[0]' ";
-			$DB1->Execute($sqlW);
-			$telW=mysqli_fetch_row($DB1->Consulta_ID);
-			$telWhatsapp="Tel: ".$telW[0]."";
-			$imgWhatsapp=$telW[1];
-		}
-		echo"
-		<td>".$rw1[13]."<br>$telWhatsapp</td>
-		<td>".$rw1[12]."</td>
-		<td>".$rw1[15]."</td>
-		";
-
-
-
-
-		if($rw1[20]!=''){
+		<td>".$rw1[2]."</td>";
+				if($rw1[20]!=''){
 			
 			 $sql2="SELECT `idcreditos` FROM `creditos` WHERE cre_nombre='$rw1[20]'";
 			$DB1->Execute($sql2);
@@ -122,6 +97,32 @@ $DB->Execute($sql); $va=0;
 			echo '</td>';
 			
 		}
+		echo"<td>".$rw1[3]."</td>
+		<td>".$direc1."</td>
+		<td>".$rw1[5]."</td>
+		<td>".$rw1[6]."</td>
+		<td>".$direct2."</td>
+		<td>".$rw1[8]."</td>
+		<td>".$rw1[9]."</td>";
+		$telWhatsapp="";
+		$imgWhatsapp="";
+		if ($rw1[13]=="whatsapp") {
+			$sqlW="SELECT ser_num_whatsapp_crea,ser_img_whatsapp FROM `servicios` WHERE idservicios='$rw1[0]' ";
+			$DB1->Execute($sqlW);
+			$telW=mysqli_fetch_row($DB1->Consulta_ID);
+			$telWhatsapp="Tel: ".$telW[0]."";
+			$imgWhatsapp=$telW[1];
+		}
+		echo"
+		<td>".$rw1[13]."<br>$telWhatsapp</td>
+		<td>".$rw1[12]."</td>
+		<td>".$rw1[15]."</td>
+		";
+
+
+
+
+
 				$descrip="des_$va";
 		echo "<td><textarea name='des_$va' id='des_$va' value='' style='width:195px; class='text' ></textarea></td>";
 		if($rw1[15]<=0 or $nivel_acceso==1){ 
