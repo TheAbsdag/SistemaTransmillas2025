@@ -890,18 +890,7 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
                 echo "</span>
                 </a>";
             }
-        //      else if($link=="salaChats3.php" ){
-        //         $sql1 = "SELECT count(*) FROM `noticia` WHERE not_idusuario='$id_usuario' and  not_visto='no' and not_deChat = '' ";
-        //         $DB1->Execute($sql1); 
-        //         $cantMensajes=$DB1->recogedato(0);
-        //                 echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
-        //                 $LT->llenadocs1($DB_m1, "Menu", $id_menu, 1, 15, 1);
-        //                 echo "<span > $rw_m[0] ";
-        //           echo ' <div class="noti_bubble"><i id = "span">'.$cantMensajes.'</i></div>';
-        //          echo "</span>
-        //          </a>";
-
-        //  }
+ 
         else if($link=="chatTransmillas.php" ){
             $sql1 = "SELECT COUNT(*)FROM `salasChatTransmillas` WHERE sl_id_deReceptor ='$id_usuario'and sl_numMensajes='1' ";
             $DB1->Execute($sql1); 
@@ -944,7 +933,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
                     echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
                     $LT->llenadocs1($DB_m1, "Menu", $id_menu, 1, 15, 1);
                     echo "<span > $rw_m[0] ";
-            echo ' <div class="noti_bubble">'.$cotizacionesW.'</div>';
+            if($nivel_acceso==1){
+                echo ' <div class="noti_bubble">'.$cotizacionesW.'</div>';
+            }
             echo "</span>
             </a>";
 
