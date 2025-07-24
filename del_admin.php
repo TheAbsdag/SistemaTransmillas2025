@@ -166,19 +166,16 @@ switch($tabla)
 		$tabla=$tabla1;
 	break;
 	case "borraseguser":
-		echo$sql1="SELECT preidusuario,prefechaingreso FROM `pre-operacional` where idpreoperacinal=$id_param";
-		$DB1->Execute($sql1);
-		$rw3=mysqli_fetch_array($DB1->Consulta_ID);	
+		$partes = explode("_", $id_param);
+		// Guardar en variables separadas
+		$IdPreo = $partes[0];
+		$IdSeg = $partes[1];
 
-		$sql2="SELECT idseguimiento_user FROM seguimiento_user where seg_motivo ='Ingreso' and seg_fechaingreso>='$rw3[1]'  and seg_idusuario='$rw3[0]'";
-		$DB1->Execute($sql2);
-		$rw2=mysqli_fetch_array($DB1->Consulta_ID);	
+		echo$sql="DELETE FROM `pre-operacional` WHERE idpreoperacinal='$IdPreo'";
+		$DB->Execute($sql);
+		echo$sql1="DELETE FROM seguimiento_user WHERE idseguimiento_user='$IdSeg'";
 
-		echo$sql4="DELETE FROM `pre-operacional` WHERE idpreoperacinal='$id_param'";
-		$DB->Execute($sql4);
-
-		echo$valores[7]="DELETE FROM seguimiento_user WHERE idseguimiento_user='$rw2[0]'";
-		 $valores[8]=1; $valores[4]="seguimientouser.php"; $id_param=""; $ir=3;
+		$valores[8]=1; $valores[4]="seguimientouser.php"; $id_param=""; $ir=3; $valores[7]=$sql1;
 		$tabla=$tabla1;
 	break;
 	
@@ -244,4 +241,5 @@ elseif($ir==3){
 	header ("Location: $valores[4]");
 }
 else { header ("Location: $valores[4]?bandera=$bandera&condecion=$condecion&tabla=$tabla"); } 
+
 ?>

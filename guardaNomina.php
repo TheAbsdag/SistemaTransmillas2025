@@ -433,13 +433,13 @@ $tipo=$_POST['tipo'];
        
     }elseif ($funcion =="confirmarPagoPrima") {
         
-$idusuario=$_POST['idUsuario'];
-$abono=$_POST['abono'];
-$fechaini=$_POST['fechaini'];
-$fechafin=$_POST['fechafin'];
+        $idusuario=$_POST['idUsuario'];
+        $abono=$_POST['abono'];
+        $fechaini=$_POST['fechaini'];
+        $fechafin=$_POST['fechafin'];
 
-$estado=$_POST['confirma'];
-$tipo=$_POST['tipo'];
+        $estado=$_POST['confirma'];
+        $tipo=$_POST['tipo'];
 
 
         // if ($tipo=="Basico") {
@@ -448,8 +448,11 @@ $tipo=$_POST['tipo'];
             $rw1=mysqli_fetch_row($DB1->Consulta_ID);
         
             if ($rw1[0]>0) {
-                echo$sql="UPDATE `primas` SET `pri_confirma`='$estado' WHERE pri_idusu='$idusuario' and pri_fecha_inicio='$fechaini' ";
-                $DB1->Execute($sql);
+                $sql="UPDATE `primas` SET `pri_confirma`='$estado' WHERE pri_idusu='$idusuario' and pri_fecha_inicio='$fechaini' ";
+                // $DB1->Execute($sql);
+                    if ($DB1->Execute($sql)) {
+                    echo"ok";
+                    }
                 // and nom_tipo_pago='$tipo'
             }else{
                 // $sql="INSERT INTO `nomina`(`nom_id_usu`,`nom_confirma`,`nom_fecha_inicio`, `nom_fecha_fin`, `nom_tipo_pago`) VALUES ('$idusuario','$estado','$fechaini','$fechafin','$tipo')";
@@ -467,15 +470,17 @@ $tipo=$_POST['tipo'];
         $tipo=$_POST['tipo'];
         $desprendible=$_POST['desprendible'];
         $Observacion=$_POST['Observacion'];
-        
+        $nombre=$_POST['nombre'];
 
         // if ($tipo=="Basico") {
-            echo$sql1="SELECT  count(*) from primas where  pri_idusu='$idusuario' and pri_fecha_inicio='$fechaini' ";		
+            echo$sql1="SELECT  count(*),pri_docprima,pri_confiAdmin from primas where  pri_idusu='$idusuario' and pri_fecha_inicio='$fechaini' ";		
             $DB1->Execute($sql1);
             $rw1=mysqli_fetch_row($DB1->Consulta_ID);
         
             if ($rw1[0]>0) {
-                echo$sql="UPDATE `primas` SET `pri_confirmaUsus`='$estado', pri_fechaconfirmausu='$fechaHoraActual' WHERE  pri_idusu='$idusuario' and pri_fecha_inicio='$fechaini'";
+                $validadoDesprendible="Validado el $fechaHoraActual";
+                $rutaDeComproBas=$rw1[1]."&confirmado=".$validadoDesprendible;
+                echo$sql="UPDATE `primas` SET `pri_confirmaUsus`='$estado', pri_fechaconfirmausu='$fechaHoraActual',pri_docprima='$rutaDeComproBas' WHERE  pri_idusu='$idusuario' and pri_fecha_inicio='$fechaini'";
                 $DB1->Execute($sql);
            
             }else{
