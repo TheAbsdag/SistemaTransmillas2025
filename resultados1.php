@@ -733,23 +733,32 @@ else if($cond==27) {
     
 	if($param1!='Oficina'){ $cond1=" and `usu_tipovehiculo`='$param1'"; } else { $cond1=" and roles_idroles!=3"; }
 
-	$sql3="SELECT `idusuarios`,`usu_nombre`,zon_nombre FROM  seguimiento_user inner join zonatrabajo on seg_idzona=idzonatrabajo  inner join  `usuarios` on idusuarios=seg_idusuario inner join ciudades on inner_sedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and seg_fechaalcohol='$fechaactual' and (usu_estado=1 or usu_filtro=1) and idciudades=$para and `seg_motivo`='Ingreso' $cond1 ";
+	$sql="SELECT `idusuarios`,`usu_nombre`,zon_nombre 
+	FROM  seguimiento_user 
+	inner join zonatrabajo on seg_idzona=idzonatrabajo  
+	inner join  `usuarios` on idusuarios=seg_idusuario 
+	inner join ciudades on inner_sedes=usu_idsede 
+	WHERE `roles_idroles` in (2,3,5) 
+	and seg_fechaalcohol='$fechaactual' 
+	and (usu_estado=1 or usu_filtro=1) 
+	and idciudades=$para 
+	and `seg_motivo`='Ingreso' $cond1 ";
 //	llena_datos() //$sql="SELECT `idusuarios`,`usu_nombre` FROM `usuarios` inner join ciudades on inner_sedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and  (usu_estado=1 or usu_filtro=1) and idciudades=$para $cond1 ";
-	$sql = "SELECT 
-    u.idusuarios,
-    u.usu_nombre,
-    z.zon_nombre
-	FROM seguimiento_user su
-	INNER JOIN zonatrabajo z ON su.seg_idzona = z.idzonatrabajo
-	INNER JOIN usuarios u ON u.idusuarios = su.seg_idusuario
-	INNER JOIN ciudades c ON c.inner_sedes = u.usu_idsede
-	WHERE 
-    u.roles_idroles IN (2, 3, 5)
-    AND su.seg_fechaalcohol = '$fechaactual'
-    AND (u.usu_estado = 1 OR u.usu_filtro = 1)
-    AND c.idciudades = $para
-    AND su.seg_motivo = 'Ingreso'
-    $cond1";
+	// $sql = "SELECT 
+    // u.idusuarios,
+    // u.usu_nombre,
+    // z.zon_nombre
+	// FROM seguimiento_user su
+	// INNER JOIN zonatrabajo z ON su.seg_idzona = z.idzonatrabajo
+	// INNER JOIN usuarios u ON u.idusuarios = su.seg_idusuario
+	// INNER JOIN ciudades c ON c.inner_sedes = u.usu_idsede
+	// WHERE 
+    // u.roles_idroles IN (2, 3, 5)
+    // AND su.seg_fechaalcohol = '$fechaactual'
+    // AND (u.usu_estado = 1 OR u.usu_filtro = 1)
+    // AND c.idciudades = $para
+    // AND su.seg_motivo = 'Ingreso'
+    // $cond1";
 	if ($id_usuario=523) {
 		echo$sql3;
 	}
