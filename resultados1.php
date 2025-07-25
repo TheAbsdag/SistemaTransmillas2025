@@ -737,11 +737,11 @@ else if($cond==27) {
 	FROM  seguimiento_user 
 	inner join zonatrabajo on seg_idzona=idzonatrabajo  
 	inner join  `usuarios` on idusuarios=seg_idusuario 
-	inner join ciudades on inner_sedes=usu_idsede 
+	inner join ciudades c on c.inner_sedes=usu_idsede 
 	WHERE `roles_idroles` in (2,3,5) 
 	and seg_fechaalcohol='$fechaactual' 
 	and (usu_estado=1 or usu_filtro=1) 
-	and idciudades=$para 
+	and c.idciudades=$para 
 	and `seg_motivo`='Ingreso' $cond1 ";
 //	llena_datos() //$sql="SELECT `idusuarios`,`usu_nombre` FROM `usuarios` inner join ciudades on inner_sedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and  (usu_estado=1 or usu_filtro=1) and idciudades=$para $cond1 ";
 	// $sql = "SELECT 
@@ -760,7 +760,7 @@ else if($cond==27) {
     // AND su.seg_motivo = 'Ingreso'
     // $cond1";
 	if ($id_usuario=523) {
-		echo$sql3;
+		echo$sql;
 	}
 	echo "<select name='$nombre' id='$nombre' class='form-control' >";
 	echo "<option  value=''>Seleccione... </option>";
