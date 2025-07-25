@@ -193,29 +193,26 @@ $(document).ready(function () {
       { data: 'ci_fecha_confirmacion_usuario' },
       { data: 'ci_fecha_confirmacion_encargado' },
       {
-        data: null,
-        orderable: false,
-        render: function (data, type, row) {
-          return `
-            <a href="../../cambio_admin.php?id_param=${row.ci_id}&tabla=Comunicado&condecion="
-               class="btn btn-sm btn-outline-primary" title="Editar" target="_blank">
-              <i class="fas fa-edit"></i>
-            </a>`;
-        }
-      },
-      {
-        data: null,
-        orderable: false,
-        render: function (data, type, row) {
-          return `
-            <button class="btn btn-sm btn-danger eliminar-usuario"
-                    data-id="${row.ci_id}" title="Eliminar">
-              <i class="fas fa-trash-alt"></i>
-            </button>`;
-        }
-      }
-    ]
-  });
+  data: null,
+  render: function (data, type, row) {
+    if (row.es_admin == 1) {
+      return `<a href="#" class="btn btn-sm btn-outline-primary editar" data-id="${row.ci_id}"><i class="fas fa-edit"></i></a>`;
+    } else {
+      return '';
+    }
+  }
+},
+{
+  data: null,
+  render: function (data, type, row) {
+    if (row.es_admin == 1) {
+      return `<button class="btn btn-sm btn-danger eliminar" data-id="${row.ci_id}"><i class="fas fa-trash-alt"></i></button>`;
+    } else {
+      return '';
+    }
+  }
+}
+
 
   $('#filtroEstado').on('change', function () {
     tabla.ajax.reload();
