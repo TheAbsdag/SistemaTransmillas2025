@@ -16,8 +16,8 @@ if($rcrear==1) { $FB->nuevo("Usuario", $condecion, "configuracion.php?idmen=138"
     }
   </style>
 
-<iframe src="/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php" width="100%"
-        style="border: none;"></iframe>
+<iframe id="iframeUsuarios" src="/testSistemaTransmillas/nueva_plataforma/controller/induccionesComunicadosController.php" width="100%" style="border: none;"></iframe>
+
 <script>
   function ajustarAlturaIframe() {
     const iframe = document.getElementById('iframeUsuarios');
