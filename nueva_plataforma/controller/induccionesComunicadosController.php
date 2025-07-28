@@ -7,7 +7,8 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 require_once "../model/induccionesComunicadosModel.php";
-require_once __DIR__ . '/../../declara.php';
+require_once("../../login_autentica.php");
+require_once("/../../declara.php");
 
 $modelo = new induccionesComunicados();
 $accion = $_REQUEST["accion"] ?? null;
