@@ -2,6 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once "../model/induccionesComunicadosModel.php";
 require_once __DIR__ . '/../../declara.php';
 
