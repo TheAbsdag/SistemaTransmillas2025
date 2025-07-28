@@ -109,6 +109,7 @@
                 <input type="text" id="textoPDF" class="form-control" placeholder="Ej: Aprobado por el usuario">
                 <button type="button" id="guardarEdicionPDF" class="btn btn-primary mt-2">Guardar cambios al PDF</button>
               </div>
+
               <div class="col-md-6">
                 <label>Estado</label>
                 <select class="form-select" name="ci_estado" required>
@@ -193,26 +194,29 @@ $(document).ready(function () {
       { data: 'ci_fecha_confirmacion_usuario' },
       { data: 'ci_fecha_confirmacion_encargado' },
       {
-  data: null,
-  render: function (data, type, row) {
-    if (row.es_admin == 1) {
-      return `<a href="#" class="btn btn-sm btn-outline-primary editar" data-id="${row.ci_id}"><i class="fas fa-edit"></i></a>`;
-    } else {
-      return '';
-    }
-  }
-},
-{
-  data: null,
-  render: function (data, type, row) {
-    if (row.es_admin == 1) {
-      return `<button class="btn btn-sm btn-danger eliminar" data-id="${row.ci_id}"><i class="fas fa-trash-alt"></i></button>`;
-    } else {
-      return '';
-    }
-  }
-}
-
+        data: null,
+        orderable: false,
+        render: function (data, type, row) {
+          return `
+            <a href="../../cambio_admin.php?id_param=${row.ci_id}&tabla=Comunicado&condecion="
+               class="btn btn-sm btn-outline-primary" title="Editar" target="_blank">
+              <i class="fas fa-edit"></i>
+            </a>`;
+        }
+      },
+      {
+        data: null,
+        orderable: false,
+        render: function (data, type, row) {
+          return `
+            <button class="btn btn-sm btn-danger eliminar-usuario"
+                    data-id="${row.ci_id}" title="Eliminar">
+              <i class="fas fa-trash-alt"></i>
+            </button>`;
+        }
+      }
+    ]
+  });
 
   $('#filtroEstado').on('change', function () {
     tabla.ajax.reload();
@@ -321,7 +325,6 @@ fileInput.addEventListener('change', function () {
     pdfPreviewDiv.style.display = 'none';
   }
 });
-
 
 $(document).ready(function () {
   // 🔹 Cargar sedes al abrir modal
