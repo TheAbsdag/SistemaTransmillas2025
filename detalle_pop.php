@@ -3305,7 +3305,7 @@ else if ($tabla == "Editar datos") {
     echo " <input name='param6' id='param6' class='trans'  type='text' value='$rw[6]' onkeypress='return noenter();' $blo2>
 		</div></td>";
 
-    $FB->llena_texto("Ciudad:", 114, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $blo);
+    $FB->llena_texto("Ciudad:", 4, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $blo);
 
     @$direcc = explode("&", $rw[5]);
     @$param5 = $direcc[0];
