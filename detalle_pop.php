@@ -294,7 +294,7 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Prueba de Alcohol:", 7, 82, $DB, $pruebaalcohol, "", "", 2, 1);
     $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
 }elseif($tabla == "Cambio_seguimientoUser"){
-
+    $idsede = $_REQUEST["ide"];
     // if ($nivel_acceso != '1' and $nivel_acceso != '12') {
     //     $cond = "and idsedes=$id_sedes";
     // }
@@ -308,7 +308,7 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Motivo Ingreso:", 4, 82, $DB, $motivoingreso, "", "", 2, 1);
     $FB->llena_texto("Horas trabajadas", 9, 1, $DB, "", "", "", 2, 0);
     $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
-    $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 )", "", "", 2, 0);
+    $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 and inner_sedes = '$idsede' )", "", "", 2, 0);
     $FB->llena_texto("Prueba de Alcohol:", 7, 82, $DB, $pruebaalcohol, "", "", 2, 1);
     $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
 }elseif($tabla == "Agregar festivos") {
@@ -589,35 +589,18 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Valor Total (servicio + seguro):", 17, 1, $DB, "", "", "", 4, 0);
     $FB->llena_texto("Correo :", 18, 1, $DB, "", "", "", 4, 0);
     $FB->llena_texto("Numero Whatsapp:", 19, 1, $DB, "", "", "", 4, 0);
-    
 
 
+} elseif ($tabla == "Editar cotizacion"){
 
-    // $FB->llena_texto("Contrato", 8, 6, $DB, "", "", "img_manifiestos/manifiestos/$rw2[8]", 1, 0);
-    // $FB->llena_texto("Manifiesto", 7, 6, $DB, "", "", "img_manifiestos/manifiestos/$rw2[8]", 1, 0);
-    // $FB->llena_texto("Remesa de carga", 10, 6, $DB, "", "", "$rw2[13]", 1, 0);
-    // $FB->llena_texto("Guias", 11, 6, $DB, "", "", "$rw2[14]", 1, 0);
-
-
-
-
-
-
-
-   
-    
-
-} elseif ($tabla == "Editar cotizacion") {
-
-
-    $conductor = "SELECT `cot_id`, `cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,`cot_correo`,cot_Whatsapp FROM `cotozaciones` where cot_id='$id_param'";
+    $conductor = "SELECT `cot_id`, `cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,`cot_correo`,cot_Whatsapp,cot_piezas,cot_observaciones FROM `cotozaciones` where cot_id='$id_param'";
     $DB1->Execute($conductor);
     $rw2 = mysqli_fetch_array($DB1->Consulta_ID);
 
     if ($nivel_acceso != '1' and $nivel_acceso != '12') {
         $cond = "and idsedes=$id_sedes";
     }
-    echo$idsede = $_REQUEST["ide"];
+    $idsede = $_REQUEST["ide"];
     $FB->titulo_azul1("Agregar cotizacion",10,0, 7);  
     $FB->llena_texto("Cliente:", 1, 1, $DB, "", "", "$rw2[1]", 1, 0);
     $FB->llena_texto("Nit:", 2, 1, $DB, "", "", "$rw2[2]", 4, 0);
@@ -625,38 +608,53 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Ciudad destino:", 4, 1, $DB, "", "", "$rw2[4]", 4, 0);
     $FB->llena_texto("Direccion Origen:", 5, 1, $DB, "", "", "$rw2[5]", 1, 0);
     $FB->llena_texto("Direccion destino:", 6, 1, $DB, "", "", "$rw2[6]", 4, 0);
-    // $FB->llena_texto("Fecha inicial:", 4, 10, $DB, "", "", "$rw2[4]", 2, 0);
-    // $FB->llena_texto("Fecha final:", 5, 10, $DB, "", "", "$rw2[5]", 2, 0);
     $FB->llena_texto("Descripcion mercancia:", 7, 1, $DB, "", "", "$rw2[7]", 1, 0);
-    
     $FB->llena_texto("Tipo de servicio:", 8, 1, $DB, "", "", "$rw2[8]", 4, 0);
     $FB->llena_texto("Peso en kilos:", 9, 1, $DB, "", "", "$rw2[9]", 1, 0);
     $FB->llena_texto("Valor Carga Mínima:", 10, 1, $DB, "", "", "$rw2[10]", 4, 0);
     $FB->llena_texto("Valor Kilo adicional:", 11, 1, $DB, "", "", "$rw2[11]", 1, 0);
     $FB->llena_texto("Volumen:", 12, 1, $DB, "", "", "$rw2[12]", 4, 0);
-    $FB->llena_texto("Valor Asegurado:", 13, 1, $DB, "", "", "$rw2[13]", 1, 0);
-    $FB->llena_texto("Valor seguro:", 14, 1, $DB, "", "", "$rw2[145]", 4, 0);
-    $FB->llena_texto("Valor kilos adicionales:", 15, 1, $DB, "", "", "$rw2[15]", 1, 0);
-    $FB->llena_texto("Valor servicio:", 16, 1, $DB, "", "", "$rw2[16]", 4, 0);
-    $FB->llena_texto("Valor Total (servicio + seguro):", 17, 1, $DB, "", "", "$rw2[17]", 1, 0);
-    $FB->llena_texto("id_param", 20, 13, $DB, "", "", $id_param, 4, 0);
+    $FB->llena_texto("Cantidad de piezas:", 20, 1, $DB, "", "", "$rw2[21]", 1, 0);
+    $FB->llena_texto("Valor Asegurado:", 13, 1, $DB, "", "", "$rw2[13]", 4, 0);
+    $FB->llena_texto("Valor seguro:", 14, 1, $DB, "", "", "$rw2[14]", 1, 0);
+    $FB->llena_texto("Valor kilos adicionales:", 15, 1, $DB, "", "", "$rw2[15]", 4, 0);
+    $FB->llena_texto("Valor servicio:", 16, 1, $DB, "", "", "$rw2[16]", 1, 0);
+    $FB->llena_texto("Valor Total (servicio + seguro):", 17, 1, $DB, "", "", "$rw2[17]", 4, 0);
+    $FB->llena_texto("id_param", 20, 13, $DB, "", "", $id_param, 1, 0);
     $FB->llena_texto("Correo :", 18, 1, $DB, "", "", "$rw2[19]", 4, 0);
     $FB->llena_texto("Numero Whatsapp:", 19, 1, $DB, "", "", "$rw2[20]", 1, 0);
+    $FB->llena_texto("Observaciones:", 21, 1, $DB, "", "", "$rw2[22]", 1, 0);
+    echo'</table>';
+    $link="https://sistema.transmillas.com/cotizaciones/Cotizacion$rw2[0].pdf";
+    if ($rw2[20]!="") {
+        $FB->titulo_azul1("Enviar guia",1,0,7); 
+        echo'<tr><td class="text"><textarea type="tel" disabled placeholder="Numero de whatsapp" id="Mensaje" name="Mensaje" style="width: 943px; height: 135px;">📄 En respuesta a tu solicitud de la cotización número #'.$rw2[0].':
+
+        Hemos generado el documento correspondiente, donde encontrarás el valor estimado del servicio, así como los detalles relacionados con el envío.
+
+        🔗 Puedes consultarlo en el siguiente enlace:
+        '.$link.'
+
+        📦 ¿Deseas crear el servicio con esta cotización?
+
+        ✅ Responde con SÍ para continuar con la creación del servicio.
+        ❌ Responde con NO si deseas hacer cambios o cancelar el proceso.
+
+        Gracias por confiar en Transmillas Logística y Transportadora S.A.S.
+        Estamos atentos a tu respuesta.</textarea></td></tr>';
     
-    // $FB->llena_texto("Fecha inicial:", 19, 10, $DB, "", "", "$rw2[4]", 1, 0);
+    
+        $telefono=$rw2[20];
+        $texto1=$rw2[0];
+        $texto2=$link;
+        echo '<tr><td class="text"><a class="btn btn-primary btn-lg" href="#" onclick="enviarAlertaWhat(\''.$telefono.'\', 35, \''.$texto1.'\', \''.$texto2.'\');">Enviar</a></td></tr>';
+        // echo '<tr><td><a class="icon-button file-button" href="#" onclick=\'enviarAlertaWhat(telefono, tipo,texto1,texto2) Enviar</a><td></tr>';
+        echo'<div id="loading"  style="display: none;">
+        <img src="images/loading.gif" alt="Cargando..."></div>';
 
-
-
-
-
-
-
-
-
-
+        # code...
+    }
    
-    
-
 } elseif ($tabla == "agregadocumentos") {
 
     // $FB->llena_texto("Valor a Pagar:",4, 1, $DB, "", "", "$rw[4]", 1, 0);
@@ -3307,7 +3305,7 @@ else if ($tabla == "Editar datos") {
     echo " <input name='param6' id='param6' class='trans'  type='text' value='$rw[6]' onkeypress='return noenter();' $blo2>
 		</div></td>";
 
-    $FB->llena_texto("Ciudad:", 4, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $blo);
+    $FB->llena_texto("Ciudad:", 114, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $blo);
 
     @$direcc = explode("&", $rw[5]);
     @$param5 = $direcc[0];
@@ -5021,33 +5019,13 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
             echo "<td>$rw3[9]</td>";
   
      } 
-    // $FB->llena_texto("Cargar formato", 3, 6, $DB, "", "", "", 1, 0); 
-    // echo '<tr><td></td><td></td><td></td></tr>'; 
+
 }else if ($tabla == "Reporte_de_nomina"){
 
 
-    // $FB->titulo_azul1("#Guia",1,0,7); 
+ 
     $FB->llena_texto("Soporte de pago pago", 1, 6, $DB, "", "", "", 1, 0);
-    // $FB->titulo_azul1("En?",1,0,0); 
-    // $FB->titulo_azul1("Quien?",1,0,0);
-    // $FB->titulo_azul1("Fecha",1,0,0);  
-    // $FB->titulo_azul1("# pieza",1,0,0);  
-    // $sql3="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,ser_piezas,`ser_guiare`,numeropieza,ser_estado, `transporta`,`quien_escanea`,fecha_escanea FROM serviciosdia inner join piezasguia on ser_consecutivo=numeroguia where  ser_guiare like '%$id_param%' ORDER BY numeropieza ASC";
 
-    // $DB1->Execute($sql3);  
-   
-
-    // while($rw3=mysqli_fetch_row($DB1->Consulta_ID))
-    // {
-    //     echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
-
-    //         echo "<td>$rw3[1]</td>";
-    //         echo "<td>$rw3[11]</td>";
-    //         echo "<td>$rw3[12]</td>";
-    //         echo "<td>$rw3[13]</td>";
-    //         echo "<td>$rw3[9]</td>";
-  
-    //  } 
 
 }else if ($tabla == "Editar Factura Externa") {
     $sql2="SELECT fac_fechavencimiento,fac_correo_auto from facturascreditos where idfacturascreditos =$id_param  ";
@@ -5061,7 +5039,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
    
 
 }else if ($tabla == "Enviar Whatsapp Conductores"){
-    // $myArray = $_REQUEST["ide"];
+    
     print_r($myArray);
     $fechaactual = date("Y-m-d");
     $FB->titulo_azul1("Mensajes para clientes",1,0,7); 
@@ -5111,11 +5089,10 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     }
     echo '<a class="btn btn-primary btn-lg" href="#" onclick=\'sendWhatsapp(' . htmlspecialchars(json_encode($fileNames), ENT_QUOTES, 'UTF-8') . '); return false;\'>Enviar</a>';
 
-    // echo '<tr><td><a class="icon-button file-button" href="#" onclick=\'sendEmailfac('.$_GET['ide'].'); return false;\'>Enviar</a><td></tr>';
+    
     echo'<div id="loading"  style="display: none;">
     <img src="images/loading.gif" alt="Cargando..."></div>';
 }else if ($tabla == "Enviar Whatsapp Operadores"){
-    // $myArray = $_REQUEST["ide"];
     print_r($myArray);
     $fechaactual = date("Y-m-d");
     $FB->titulo_azul1("Mensajes para clientes",1,0,7); 
@@ -5133,10 +5110,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
 
         // Verifica que $myArray es realmente un array
         if (is_array($myArray)) {
-            // Imprime la estructura del array para depuración
-            // echo '<pre>';
-            // var_dump($myArray);
-            // echo '</pre>';
+
 
             // Genera la tabla
              echo '<table border="1">';
@@ -5204,8 +5178,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
          // Verifica que $myArray es realmente un array
          if (is_array($myArray)) {
  
-            // Supongamos que este es tu array de IDs permitidos
-            // $myArray = [101, 102, 105]; // Aquí agregas los IDs válidos
+
 
             echo '<div class="container mt-4">';
             echo '<table class="table table-bordered">';
