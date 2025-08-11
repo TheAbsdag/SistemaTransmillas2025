@@ -747,7 +747,7 @@ Full screen Modal
     <div class="modal-dialog">
         <div class="modal-content" style="width:800px; left:0%">
             <div class="modal-body"><div id="llena_sub66"></div></div>
-            
+            <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>
         </div>
     </div>
     </form>
