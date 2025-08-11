@@ -1056,8 +1056,8 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
     aceptarCompa(' .$idCompa. ')
     function aceptarCompa(idCompa) {
 
-        if(valor1==1000){
-            var ruta = "id="+idCompa;
+        
+            var ruta = "id="+idCompa+"&tabla=ConfirmaCompañero";
             $.ajax({
 
                 url: 'nuevo_adminok.php',
@@ -1065,11 +1065,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
                 data: ruta,
             }).done(function(res) {
 
-                $('#convenir').html(res)
+                $('#myModal44').modal('hide');
             });
-        }else{
-            $('#convenir').html('');
-        }
+
     }
 
 
