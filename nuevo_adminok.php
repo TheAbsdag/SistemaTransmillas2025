@@ -2169,7 +2169,7 @@ if($bandera==1){
 }
 
 
-	// header ("Location: $valores[4]?bandera=$bandera&id_param=$id_param&condecion=$condecion&tabla=$tabla");
+	header ("Location: $valores[4]?bandera=$bandera&id_param=$id_param&condecion=$condecion&tabla=$tabla");
 
 function enviarAlertaWhat($numguia,$telefono,$tipo,$idservi){
 
