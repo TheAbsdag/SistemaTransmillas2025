@@ -1053,7 +1053,7 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
             $('#convenir').html('');
         }
     }
-    aceptarCompa(' .$idCompa. ')
+    
     function aceptarCompa(idCompa) {
 
         
