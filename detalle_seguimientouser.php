@@ -298,7 +298,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 									$zona ="$rw3[1]"; 
 									if($zona=='' or $zona==null){ $zona='Faltante'; }
 									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"zonatrabajo\",\"$rw1[3]\")';  title='Zona' >$zona</td>"; //ZONA TRABAJO
-									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"Trabaja con:\",\"$fechabusqueda_$rw0[0]\")';  title='Zona' >$compañero</td>"; //COMPAÑERO TRABAJO
+									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"Trabaja con:\",\"$fechabusqueda _ $rw0[0]\")';  title='Zona' >$compañero</td>"; //COMPAÑERO TRABAJO
 									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"horaalmuerzo\",\"$rw1[3]\")';  title='Hora almuerzo' >$rw2[2]</td>"; // HORA DE ALMUERZO
 									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"horaretorno\",\"$rw1[3]\")';  title='Retorno almuerzo' >$rw2[3]</td>"; //RETORNO ALMUERZO
 									echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"horaoficina\",\"$rw1[3]\")';  title='Retorno Oficina' >$rw2[9]</td>"; //RETORNO OFICINA
@@ -806,7 +806,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 								$zona ="$rw3[1]"; 
 								if($zona=='' or $zona==null){ $zona='Faltante'; }
 								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"zonatrabajo\",\"$rw1[3]\")';  title='Zona' >$zona</td>";
-								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"Trabaja con:\",\"$fechabusqueda_$rw0[0]\")';  title='Zona' >$compañero</td>"; //ZONA TRABAJO
+								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"Trabaja con:\",\"$fechabusqueda _ $rw0[0]\")';  title='Zona' >$compañero</td>"; //ZONA TRABAJO
 
 								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"horaalmuerzo\",\"$rw1[3]\")';  title='Hora almuerzo' >$rw2[2]</td>";
 								echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idingresouser,\"horaretorno\",\"$rw1[3]\")';  title='Retorno almuerzo' >$rw2[3]</td>";
