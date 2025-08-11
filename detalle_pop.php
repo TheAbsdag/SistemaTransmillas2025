@@ -5238,7 +5238,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
       echo'<div class="modal-body text-center">
         <p class="mb-3 fs-5"><h1>'.$rw1[0].'.</h1></p>
         <p class="text-muted"><strong>🔔 Es su compañero asignado para el dia de hoy <br>Confirme por favor</p>
-        <a class="btn btn-primary btn-lg" href="#" onclick=\'aceptarCompa(' .$idCompa. '); return false;\'>Confirmar</a>
+        <a class="btn btn-primary btn-lg" href="#" onclick=\'aceptarCompa(' .$idCompa. ',' .$idCompa. '); return false;\'>Confirmar</a>
         </div>';
         
 }
