@@ -4221,32 +4221,28 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     }else if ($tabla == "Trabaja con:") {
         $fecha = $_REQUEST["ide"];
         $fechaactual = date("Y-m-d");
-        // $FB->llena_texto("Sede :",35,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 )", "cambio_sede(this.value)", "$id_sedes", 4, 0);
-    
-        // $sqlo = "SELECT `idusuarios`,concat_ws(' ',usu_nombre,'--',zon_nombre) as nombre FROM  seguimiento_user inner join zonatrabajo on seg_idzona=idzonatrabajo  inner join  `usuarios` on idusuarios=seg_idusuario inner join sedes on idsedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and seg_fechaalcohol='$fechaactual' and (usu_estado=1 or usu_filtro=1)  and `seg_motivo`='Ingreso'  order by usu_nombre ";
-        // $FB->llena_texto("Operario:", 33, 2, $DB, "$sqlo", "", "$param33", 1, 0);
-    
-    
+        // Usando explode
+        $partes = explode("_", $fecha);
+
+        // Antes del guion bajo
+        $fecha = $partes[0];
+
+        // Después del guion bajo
+        $id_usuario = $partes[1];
+
+
         $FB->llena_texto("Sede:", 35, 2, $DB, "(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 )", "cambio_ajax2(this.value, 100, \"llega_sub1\", \"param33\", 1, $idciudad)", "", 17, 1);
         $FB->llena_texto("Operario:", 33, 444, $DB, "llega_sub1", "", "", 4, 1);
     
-        // $FB->llena_texto("Motivo Ingreso:", 4, 82, $DB, $motivoingreso, "", "", 2, 1);
-        // $FB->llena_texto("Horas:", 9, 1, $DB, "", "", "", 2, 0);
-        // $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
-        // $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 )", "", "", 2, 0);
-        // $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
-        
+
         $FB->llena_texto("param2", 1, 13, $DB, "", "", $id_param, 5, 0);
         $FB->llena_texto("param3", 1, 13, $DB, "", "", $fecha, 5, 0);
+        $FB->llena_texto("param4", 1, 13, $DB, "", "", $id_usuario, 5, 0);
     
     }else if ($tabla == "Brochur") {
         $fecha = $_REQUEST["ide"];
         $fechaactual = date("Y-m-d");
-        // $FB->llena_texto("Sede :",35,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 )", "cambio_sede(this.value)", "$id_sedes", 4, 0);
-    
-        // $sqlo = "SELECT `idusuarios`,concat_ws(' ',usu_nombre,'--',zon_nombre) as nombre FROM  seguimiento_user inner join zonatrabajo on seg_idzona=idzonatrabajo  inner join  `usuarios` on idusuarios=seg_idusuario inner join sedes on idsedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and seg_fechaalcohol='$fechaactual' and (usu_estado=1 or usu_filtro=1)  and `seg_motivo`='Ingreso'  order by usu_nombre ";
-        // $FB->llena_texto("Operario:", 33, 2, $DB, "$sqlo", "", "$param33", 1, 0);
-    
+
         echo'<div class="input-container">';
         echo'<input disabled type="text" class="link-input" id="linkInput" value="https://www.transmillas.com/brochure">';
         echo'<a href="#" class="copy-button" onclick="copyLink(event)"><i class="mdi mdi-content-copy"></i>Copiar</a>';
@@ -4256,15 +4252,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
         echo'<a href="images/Brochur transmillas.png" class="download-button" download="BrochurTransmillas.jpg">';
         echo'<i class="mdi mdi-download"></i>Descargar QR </a>';
         echo'</div>';
-        // $FB->llena_texto("Sede:", 35, 2, $DB, "(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 )", "cambio_ajax2(this.value, 100, \"llega_sub1\", \"param33\", 1, $idciudad)", "", 17, 1);
-        // $FB->llena_texto("Operario:", 33, 444, $DB, "llega_sub1", "", "", 4, 1);
-    
-        // $FB->llena_texto("Motivo Ingreso:", 4, 82, $DB, $motivoingreso, "", "", 2, 1);
-        // $FB->llena_texto("Horas:", 9, 1, $DB, "", "", "", 2, 0);
-        // $FB->llena_texto("Descripcion:", 5, 1, $DB, "", "", "", 2, 0);
-        // $FB->llena_texto("Zona:", 6, 2, $DB, "(SELECT `idzonatrabajo`,`zon_nombre` FROM zonatrabajo where idzonatrabajo>0 )", "", "", 2, 0);
-        // $FB->llena_texto("Imagen", 8, 6, $DB, "", "", "", 1, 0);
-        
+
         $FB->llena_texto("param2", 1, 13, $DB, "", "", $id_param, 5, 0);
         $FB->llena_texto("param3", 1, 13, $DB, "", "", $fecha, 5, 0);
     
@@ -5240,6 +5228,18 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
 
 }elseif ($tabla == "pagosPendientes") {
     echo "Tienje pagos pendientes";
+}elseif ($tabla == "aceptaCompañero") {
+        $idCompa=$_GET['mensaje'];
+                   $sql2 = "SELECT usu_nombre FROM usuarios WHERE idusuarios = '$idCompa'";
+                    $DB1->Execute($sql2);
+                    $rw1 = mysqli_fetch_row($DB1->Consulta_ID);
+
+    
+      echo'<div class="modal-body text-center">
+        <p class="mb-3 fs-5"><h1>🔔Compañero de ruta.</h1></p>
+        <p class="text-muted">Su compañero asignado para el dia de hoy es: <br><strong>'.$rw1[0].'</strong></p>
+        <a class="btn btn-primary btn-lg" href="#" onclick=\'aceptarCompa(' .$idCompa. '); return false;\'>Confirmar</a>
+        </div>';
 }
 
 

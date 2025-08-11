@@ -488,7 +488,9 @@ break;
 case "Editar cotizacion":
 
 		$fecha=date("Y-m-d");
-	    $sql="UPDATE `cotozaciones` SET `cot_clirente`='$param1',`cot_nit`='$param2',`cot_origen`='$param',`cot_destino`='$param3',`cot_direc_origen`='$param4',`cot_direc_destino`='$param5',`cot_desc_merc`='$param6',`cot_tipo_servi`='$param7',`cot_peso`='$param8',`cot_val_minima`='$param9',`cot_kilo_adi`='$param11',`cot_vol`='$param12',`cot_val_asegurado`='$param13',`cot_val_seguro`='$param14',`cot_val_kilos_adi`='$param15',`cot_val_servicio`='$param16',`cot__val_total`='$param17',`cot_correo`='$param18',cot_Whatsapp='$param19' WHERE cot_id='$id_param'";
+	    $sql="UPDATE `cotozaciones` SET `cot_clirente`='$param1',`cot_nit`='$param2',`cot_origen`='$param3',`cot_destino`='$param4',`cot_direc_origen`='$param5',`cot_direc_destino`='$param6',`cot_desc_merc`='$param7',`cot_tipo_servi`='$param8',`cot_peso`='$param9',`cot_val_minima`='$param10',`cot_kilo_adi`='$param11',`cot_vol`='$param12',`cot_val_asegurado`='$param13',`cot_val_seguro`='$param14',`cot_val_kilos_adi`='$param15',`cot_val_servicio`='$param16',`cot__val_total`='$param17',`cot_correo`='$param18',cot_Whatsapp='$param19',cot_piezas='$param20',cot_observaciones='$param21' WHERE cot_id='$id_param'";
+		        
+
 		$valores[7]=$sql; $valores[4]="cotizaciones.php"; $valores[8]=1; 
 		
 break;
@@ -565,14 +567,18 @@ case "Entregar valor":
 	
 	break;
 	case "Trabaja con:":
-	
+		echo$sql0="SELECT idseguimiento_user from seguimiento_user where seg_fechaalcohol like '$param3%'  and seg_idusuario='$param33'";
+		$DB1->Execute($sql0); 
+		$rw1=mysqli_fetch_row($DB1->Consulta_ID);
 
-	$hora=date("H:i:s");
-	 $sql="UPDATE `seguimiento_user` SET `seg_compañero`='$param33'  WHERE `idseguimiento_user`='$param2' ";
-	
-	
-	$valores[7]=$sql; $valores[4]="seguimientouser.php"; $valores[8]=1; 
-	
+		$hora=date("H:i:s");
+		$sql1="UPDATE `seguimiento_user` SET `seg_compañero`='$param4'  WHERE `idseguimiento_user`='".$rw1[0]."' ";
+		$vinculo=$DB1->Executeid($sql1);	
+		$sql="UPDATE `seguimiento_user` SET `seg_compañero`='$param33'  WHERE `idseguimiento_user`='$param2' ";
+		
+		
+		$valores[7]=$sql; $valores[4]="seguimientouser.php"; $valores[8]=1; 
+		
 	break;	
 	case "cajamenor":
 	$param5=str_replace(".","", $param5);
@@ -1103,12 +1109,12 @@ if (is_uploaded_file($_FILES['param501']['tmp_name'])){
 	case "Cambio_seguimientoUser":
 
 
-		$sql1="UPDATE `seguimiento_user` SET `seg_motivo`='$param4',`seg_descr`='$param5',`seg_idzona`='$param6',`seg_iduserregistro`='$id_usuario',seg_fechaalcohol='$param7',seg_horas_trabajadas='$param9' WHERE idseguimiento_user='$param13'";
+		$sql1="UPDATE `seguimiento_user` SET `seg_motivo`='$param4',`seg_descr`='$param5',`seg_idzona`='$param6',`seg_iduserregistro`='$id_usuario',seg_horas_trabajadas='$param9' WHERE idseguimiento_user='$param13'";
 		$vinculo=$DB->Executeid($sql1);
 		$QL->addDocumento1($_FILES["param8"], 1, "seguimiento_user", $vinculo, "seguimientouser", $DB);
 
 		// $sql="INSERT INTO `pre-operacional`( `prefechaingreso`, `preidusuario`, `preestado`) VALUES ('$param3','$param2','No aplica')";
-		$valores[7]=$sql; $valores[4]="seguimientouser.php"; $valores[8]=1; 
+		$valores[7]=$sql1; $valores[4]="seguimientouser.php"; $valores[8]=1; 
 
 
 	break;
