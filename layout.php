@@ -499,6 +499,16 @@ $activo=true;
                         if ($totalnomina>0) {
                             echo"<script>pagosPendientes();</script>";
                         }
+
+                        $sqlcompa = "SELECT seg_compañero from seguimiento_user where seg_fechaalcohol like '$fechabusqueda%'  and seg_idusuario='$id_p'";
+                        $DB1->Execute($sqlcompa); 
+                        $compa=mysqli_fetch_row($DB1->Consulta_ID);
+                        // $nominaspendientes=$DB1->recogedato(0);
+
+                        if ($compa[0]!="") {
+                            $idCompa=$compa[0];
+                            echo"<script>aceptaCompañero($idCompa);</script>";
+                        }
                         ?>
 
                         <li >
