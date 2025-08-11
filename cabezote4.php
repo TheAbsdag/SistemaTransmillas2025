@@ -339,10 +339,10 @@ function pagosPendientes(){
     MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
 }
 
-function aceptaCompañero(compañero,){
+function aceptaCompañero(compañero,idSeg){
 
-    $("#myModal44").modal("show"); 
-    MostrarConsulta("detalle_pop.php?id_param=&tabla=aceptaCompañero&mensaje="+compañero+"idSeg="+compañero, "llena_sub66");
+    $("#myModalCompa").modal("show"); 
+    MostrarConsulta("detalle_pop.php?tabla=aceptaCompañero&mensaje="+compañero+"&idSeg="+idSeg, "llena_sub66");
 }
 
 </script>
@@ -738,6 +738,16 @@ Full screen Modal
         <div class="modal-content" style="width:800px; left:0%">
             <div class="modal-body"><div id="llena_sub66"></div></div>
             <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>
+        </div>
+    </div>
+    </form>
+</div>
+<div id="myModalCompa" class="modal fade" >
+	<form name='form14' id='form14' method='post' action='cambio_adminok.php' enctype='multipart/form-data'>
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:800px; left:0%">
+            <div class="modal-body"><div id="llena_sub66"></div></div>
+            
         </div>
     </div>
     </form>
