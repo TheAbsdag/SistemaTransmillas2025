@@ -2103,7 +2103,7 @@ echo$rw2[0];
 		$idSeg=$_GET['idSeg'];
 		date_default_timezone_set('America/Bogota'); // Zona horaria Colombia
 		$fechaActual = date("Y-m-d"); // Formato: Año-Mes-Día Hora:Minuto:Segundo
-		echo$sql1="UPDATE facturascreditos SET  seg_conf_compañero='1'  WHERE idseguimiento_user ='$idSeg' ";			
+		echo$sql1="UPDATE seguimiento_user SET  seg_conf_compañero='1'  WHERE idseguimiento_user ='$idSeg' ";			
 	    $DB1->Execute($sql1);
 		exit; // ← Detiene la ejecución aquí
 		// $valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 
