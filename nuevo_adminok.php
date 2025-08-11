@@ -572,9 +572,9 @@ case "Entregar valor":
 		$rw1=mysqli_fetch_row($DB1->Consulta_ID);
 
 		$hora=date("H:i:s");
-		$sql1="UPDATE `seguimiento_user` SET `seg_compañero`='$param4'  WHERE `idseguimiento_user`='".$rw1[0]."' ";
+		echo$sql1="UPDATE `seguimiento_user` SET `seg_compañero`='$param4'  WHERE `idseguimiento_user`='".$rw1[0]."' ";
 		$vinculo=$DB1->Executeid($sql1);	
-		$sql="UPDATE `seguimiento_user` SET `seg_compañero`='$param33'  WHERE `idseguimiento_user`='$param2' ";
+		echo$sql="UPDATE `seguimiento_user` SET `seg_compañero`='$param33'  WHERE `idseguimiento_user`='$param2' ";
 		
 		
 		$valores[7]=$sql; $valores[4]="seguimientouser.php"; $valores[8]=1; 
@@ -2169,7 +2169,7 @@ if($bandera==1){
 }
 
 
-	header ("Location: $valores[4]?bandera=$bandera&id_param=$id_param&condecion=$condecion&tabla=$tabla");
+	// header ("Location: $valores[4]?bandera=$bandera&id_param=$id_param&condecion=$condecion&tabla=$tabla");
 
 function enviarAlertaWhat($numguia,$telefono,$tipo,$idservi){
 
