@@ -500,14 +500,15 @@ $activo=true;
                             echo"<script>pagosPendientes();</script>";
                         }
 
-                        echo$sqlcompa = "SELECT seg_compañero from seguimiento_user where seg_fechaalcohol like '$fechaactual%'  and seg_idusuario='$id_usuario'";
+                        echo$sqlcompa = "SELECT seg_compañero,idseguimiento_user  from seguimiento_user where seg_fechaalcohol like '$fechaactual%'  and seg_idusuario='$id_usuario'";
                         $DB1->Execute($sqlcompa); 
                         $compa=mysqli_fetch_row($DB1->Consulta_ID);
                         // $nominaspendientes=$DB1->recogedato(0);
 
                         if ($compa[0]!="") {
                             $idCompa=$compa[0];
-                            echo"<script>aceptaCompañero($idCompa);</script>";
+                            $idSeg=$compa[1];
+                            echo"<script>aceptaCompañero($idCompa,$idSeg);</script>";
                         }
                         ?>
 
@@ -1054,10 +1055,10 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
         }
     }
     
-    function aceptarCompa(idCompa) {
+    function aceptarCompa(idCompa,idseg) {
 
         
-            var ruta = "id="+idCompa+"&tabla=ConfirmaCompañero";
+            var ruta = "id="+idCompa+"&tabla=ConfirmaCompañero&idSeg="+idseg;
             $.ajax({
 
                 url: 'nuevo_adminok.php',

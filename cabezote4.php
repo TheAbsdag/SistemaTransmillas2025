@@ -339,10 +339,10 @@ function pagosPendientes(){
     MostrarConsulta("detalle_pop.php?id_param=&tabla=pagosPendientes&mensaje="+nuevomensaje, "llena_sub43");
 }
 
-function aceptaCompañero(compañero){
+function aceptaCompañero(compañero,){
 
     $("#myModal44").modal("show"); 
-    MostrarConsulta("detalle_pop.php?id_param=&tabla=aceptaCompañero&mensaje="+compañero, "llena_sub66");
+    MostrarConsulta("detalle_pop.php?id_param=&tabla=aceptaCompañero&mensaje="+compañero+"idSeg="+compañero, "llena_sub66");
 }
 
 </script>

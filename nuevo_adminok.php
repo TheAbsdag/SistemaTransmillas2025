@@ -2100,9 +2100,10 @@ echo$rw2[0];
    break;
    	case "ConfirmaCompañero": 
 		$id=$_GET['id'];
+		$idSeg=$_GET['idSeg'];
 		date_default_timezone_set('America/Bogota'); // Zona horaria Colombia
 		$fechaActual = date("Y-m-d"); // Formato: Año-Mes-Día Hora:Minuto:Segundo
-		$sql1="UPDATE facturascreditos SET  seg_conf_compañero='1'  WHERE seg_compañero ='$id' and seg_fechaalcohol like '$fechaActual%'  ";			
+		echo$sql1="UPDATE facturascreditos SET  seg_conf_compañero='1'  WHERE idseguimiento_user ='$idSeg' ";			
 	    $DB1->Execute($sql1);
 		exit; // ← Detiene la ejecución aquí
 		// $valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 
