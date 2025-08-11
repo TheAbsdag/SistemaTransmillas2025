@@ -4222,7 +4222,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
         $fecha = $_REQUEST["ide"];
         $fechaactual = date("Y-m-d");
         // Usando explode
-        $partes = explode("_", $fecha);
+        $partes = explode(" _ ", $fecha);
 
         // Antes del guion bajo
         $fecha = $partes[0];
