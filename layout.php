@@ -500,7 +500,7 @@ $activo=true;
                             echo"<script>pagosPendientes();</script>";
                         }
 
-                        echo$sqlcompa = "SELECT seg_compañero,idseguimiento_user  from seguimiento_user where seg_fechaalcohol like '$fechaactual%'  and seg_idusuario='$id_usuario'";
+                        $sqlcompa = "SELECT seg_compañero,idseguimiento_user  from seguimiento_user where seg_fechaalcohol like '$fechaactual%'  and seg_idusuario='$id_usuario'";
                         $DB1->Execute($sqlcompa); 
                         $compa=mysqli_fetch_row($DB1->Consulta_ID);
                         // $nominaspendientes=$DB1->recogedato(0);
