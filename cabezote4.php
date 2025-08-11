@@ -341,8 +341,8 @@ function pagosPendientes(){
 
 function aceptaCompañero(compañero){
 
-    $("#myModalPendientes").modal("show"); 
-    MostrarConsulta("detalle_pop.php?id_param=&tabla=aceptaCompañero&mensaje="+compañero, "llena_sub1");
+    $("#myModal44").modal("show"); 
+    MostrarConsulta("detalle_pop.php?id_param=&tabla=aceptaCompañero&mensaje="+compañero, "llena_sub66");
 }
 
 </script>
