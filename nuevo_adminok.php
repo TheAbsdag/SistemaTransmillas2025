@@ -2098,6 +2098,14 @@ echo$rw2[0];
 	   $valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 
 
    break;
+   	case "ConfirmaCompañero": 
+		$id=$_GET['id'];
+		date_default_timezone_set('America/Bogota'); // Zona horaria Colombia
+		$fechaActual = date("Y-m-d"); // Formato: Año-Mes-Día Hora:Minuto:Segundo
+		$sql="UPDATE facturascreditos SET  seg_conf_compañero='1'  WHERE seg_compañero ='$id' and seg_fechaalcohol like '$fechaActual%'  ";			
+	   $valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 
+
+   break;
 
 	default:
 		$valores=$LT->devuelvecampos($tabla, 1, "");

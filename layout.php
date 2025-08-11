@@ -1053,7 +1053,24 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
             $('#convenir').html('');
         }
     }
+    aceptarCompa(' .$idCompa. ')
+    function aceptarCompa(idCompa) {
 
+        if(valor1==1000){
+            var ruta = "id="+idCompa;
+            $.ajax({
+
+                url: 'nuevo_adminok.php',
+                type: 'Get',
+                data: ruta,
+            }).done(function(res) {
+
+                $('#convenir').html(res)
+            });
+        }else{
+            $('#convenir').html('');
+        }
+    }
 
 
     </script>
