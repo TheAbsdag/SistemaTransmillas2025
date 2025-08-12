@@ -23,7 +23,7 @@ thead.azul-blanco th {
 </style>
 <body>
 <div class="container-fluid mt-4">
-  <div class="card shadow p-3 mb-4 bg-body rounded"></div>
+  <div class="card shadow p-3 mb-4 bg-body rounded">
     <div class="card-header text-center mi-header">
       <h3 class="mb-0">Usuarios</h3>
     </div>
@@ -49,28 +49,29 @@ thead.azul-blanco th {
           </div>
       </div>
 
-        <div class="table-responsive">
-          <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
-            <thead class="table-primary">
-              <tr>
-                  <th>Rol</th>
-                  <th>Nombre</th>
-                  <th>Cedula</th>
-                  <th>Usuario</th>
-                  <th>Profesión</th>
-                  <th>Contrato</th>
-                  <th>Ver en sistema</th>
-                  <th>Ver en nómina</th>
-                  <th>Estado</th>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
+      <div class="table-responsive">
+        <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
+          <thead class="table-primary">
+            <tr>
+                <th>Rol</th>
+                <th>Nombre</th>
+                <th>Cedula</th>
+                <th>Usuario</th>
+                <th>Profesión</th>
+                <th>Contrato</th>
+                <th>Ver en sistema</th>
+                <th>Ver en nómina</th>
+                <th>Estado</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
 
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 
 
