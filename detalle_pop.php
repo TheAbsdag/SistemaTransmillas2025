@@ -47,19 +47,20 @@ if ($tabla == "Verificar Datos") {
     $param15 = $rw[15];
 
     if ($rw[28]!="") {
-        echo'<div style="
+        echo "<div style=\"
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
             text-align: center;
-            background-color: #28a745; /* Verde agradable */
+            background-color: #28a745; 
             border-radius: 6px;
-        ">
-            <a href="https://tupagina.com" target="_blank" 
-            style="color: white; text-decoration: none; font-weight: bold; font-size: 16px;">
-                Con Cotización
+        \">
+            <a href=\"#\" 
+            onclick=\"window.open(' https://sistema.transmillas.com/cotizaciones/Cotizacion".$rw[28].".pdf', 'popup', 'width=800,height=600'); return false;\"
+            style=\"color: white; text-decoration: none; font-weight: bold; font-size: 16px;\">
+                Con Cotización 👉Ver
             </a>
-        </div>';
+        </div>";
     }
 
     if ($param15 == "Envio Oficina") {
