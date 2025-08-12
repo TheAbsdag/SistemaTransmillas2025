@@ -16,50 +16,65 @@ thead.azul-blanco th {
   background-color: #01468c; /* Tu azul exacto */
   color: white;
 }
+.mi-header {
+        background-color: #00458D; /* Naranja por ejemplo */
+        color: white;
+}
 </style>
 <body>
-<div class="container mt-4">
-  <h2 class="mb-4">Usuarios</h2>
-
-  <div class="row mb-3">
-    <div class="col-md-4">
-      <label for="rol">Rol</label>
-      <select id="filtroRol" class="form-control">
-        <option value="">Seleccionar...</option>
-        <?php foreach ($roles as $rol): ?>
-          <option value="<?= $rol['idroles'] ?>"><?= $rol['rol_nombre'] ?></option>
-        <?php endforeach; ?>
-      </select>
+<div class="container-fluid mt-4">
+  <div class="card shadow p-3 mb-4 bg-body rounded"></div>
+    <div class="card-header text-center mi-header">
+      <h3 class="mb-0">Usuarios</h3>
     </div>
-    <div class="col-md-4">
-      <label for="estado">Estado</label>
-      <select id="filtroEstado" class="form-control">
-        <option value="">Seleccionar...</option>
-        <option value="1">Activo</option>
-        <option value="0">Inactivo</option>
-      </select>
-    </div>
-  </div>
+    <div class="card-body">
+      <div class="row mb-3 align-items-end">
+          <div class="col-md-4">
+            <label for="rol">Rol</label>
+            <select id="filtroRol" class="form-control">
+              <option value="">Seleccionar...</option>
+              <?php foreach ($roles as $rol): ?>
+                <option value="<?= $rol['idroles'] ?>"><?= $rol['rol_nombre'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
 
-  <table id="tablaUsuarios" class="table table-bordered" >
-    <thead class="azul-blanco">
-      <tr>
-        <th>Rol</th>
-        <th>Nombre</th>
-        <th>Cedula</th>
-        <th>Usuario</th>
-        <th>Profesión</th>
-        <th>Contrato</th>
-        <th>Ver en sistema</th>
-        <th>Ver en nómina</th>
-        <th>Estado</th>
-        <th>Editar</th>
-        <th>Eliminar</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+          <div class="col-md-4">
+            <label for="estado">Estado</label>
+            <select id="filtroEstado" class="form-control">
+              <option value="">Seleccionar...</option>
+              <option value="1">Activo</option>
+              <option value="0">Inactivo</option>
+            </select>
+          </div>
+      </div>
+
+        <div class="table-responsive">
+          <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
+            <thead class="table-primary">
+              <tr>
+                  <th>Rol</th>
+                  <th>Nombre</th>
+                  <th>Cedula</th>
+                  <th>Usuario</th>
+                  <th>Profesión</th>
+                  <th>Contrato</th>
+                  <th>Ver en sistema</th>
+                  <th>Ver en nómina</th>
+                  <th>Estado</th>
+                  <th>Editar</th>
+                  <th>Eliminar</th>
+
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+    </div>
 </div>
+
+
+
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
