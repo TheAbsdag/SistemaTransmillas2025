@@ -32,11 +32,12 @@ if ($tabla == "Verificar Datos") {
     $dir = $_REQUEST["dir"];
 
     $sql = "SELECT `idclientes`, `cli_iddocumento`, `cli_telefono`, `cli_email`, `cli_idciudad`, `cli_direccion`, `cli_nombre`, `ser_iddocumento`,`ser_telefonocontacto`, `ser_destinatario`, `ser_direccioncontacto`,`ser_ciudadentrega`,
- `ser_tipopaquete`, `ser_paquetedescripcion`, `ser_fechaentrega`,`ser_prioridad`,  `ser_valorprestamo`, `ser_valorabono`, `ser_valorseguro`, `idservicios`,cli_retorno,idclientesdir,ser_descllamada,date(ser_fecharegistro),ser_clasificacion,ser_tipopaq,ser_valor,ser_piezas FROM 
+ `ser_tipopaquete`, `ser_paquetedescripcion`, `ser_fechaentrega`,`ser_prioridad`,  `ser_valorprestamo`, `ser_valorabono`, `ser_valorseguro`, `idservicios`,cli_retorno,idclientesdir,ser_descllamada,date(ser_fecharegistro),ser_clasificacion,ser_tipopaq,ser_valor,ser_piezas,ser_cotizacion FROM 
  servicios inner join rel_sercli  on idservicios=ser_idservicio  inner join clientesservicios on idclientesdir=ser_idclientes inner join clientes on idclientes=cli_idclientes  where idservicios=$id_param ";
     $DB->Execute($sql);
     $rw = mysqli_fetch_array($DB->Consulta_ID);
 
+    
 //$descllamada.=@$rw[22];
     $fecharegistro = @$rw[23];
     $sql2 = "UPDATE `servicios` SET  `ser_esatdollamando`='Ocupado',`ser_descllamada`='$descllamada' WHERE `idservicios`='$id_param' ";
@@ -44,6 +45,22 @@ if ($tabla == "Verificar Datos") {
 
     $actuliza = "no";
     $param15 = $rw[15];
+
+    if ($rw[28]!="") {
+        echo'<div style="
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: #28a745; /* Verde agradable */
+            border-radius: 6px;
+        ">
+            <a href="https://tupagina.com" target="_blank" 
+            style="color: white; text-decoration: none; font-weight: bold; font-size: 16px;">
+                Con Cotización
+            </a>
+        </div>';
+    }
 
     if ($param15 == "Envio Oficina") {
 
