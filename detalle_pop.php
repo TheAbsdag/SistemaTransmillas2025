@@ -83,7 +83,16 @@ if ($tabla == "Verificar Datos") {
     } else {
         include("recoleccion_datos.php");
     }
-
+    if ($rw[28]!="") {
+        $sqlC="SELECT `cot_id`,`cot_peso`, `cot_vol`,`cot_val_seguro`, `cot_val_servicio`,cot_piezas FROM cotozaciones WHERE cot_id='$rw[28]'";
+        $DB1->Execute($sqlC);
+        $rwC=mysqli_fetch_row($DB1->Consulta_ID);
+        $FB->llena_texto("Peso:", 110, 1, $DB, "", "", "$rwC[1]", 1, 0);
+        $FB->llena_texto("Numero de piezas:", 111, 1, $DB, "", "", "$rwC[5]", 4, 0);
+        $FB->llena_texto("Seguro:", 112, 1, $DB, "", "", "$rwC[3]", 4, 0);
+        $FB->llena_texto("Valor servicio:", 113, 1, $DB, "", "", "$rwC[4]", 4, 0);
+    
+    }
     if ($dir == "adm_validardatos.php") {
         $FB->llena_texto("LLAMAR DESPUES:", 99, 5, $DB, "", "", "", 1, 0);
         $FB->llena_texto("MOTIVO:", 100, 1, $DB, "", "", "", 4, 0);
@@ -93,16 +102,7 @@ if ($tabla == "Verificar Datos") {
         $FB->llena_texto("param100", 1, 13, $DB, "", "", "", 5, 0);
         $FB->llena_texto("param105", 1, 13, $DB, "", "", "$fecharegistro", 4, 0);
     }
-    if ($rw[28]!="") {
-        echo$sqlC="SELECT `cot_id`,`cot_peso`, `cot_vol`,`cot_val_seguro`, `cot_val_servicio`,cot_piezas FROM cotozaciones WHERE cot_id='$rw[28]'";
-        $DB1->Execute($sqlC);
-        $rwC=mysqli_fetch_row($DB1->Consulta_ID);
-        $FB->llena_texto("Peso:", 110, 1, $DB, "", "", "$rwC[1]", 1, 0);
-        $FB->llena_texto("Numero de piezas:", 111, 1, $DB, "", "", "$rwC[5]", 4, 0);
-        $FB->llena_texto("Seguro:", 112, 1, $DB, "", "", "$rwC[3]", 4, 0);
-        $FB->llena_texto("Valor servicio:", 113, 1, $DB, "", "", "$rwC[4]", 4, 0);
-    
-    }
+
 
     $FB->llena_texto("param106", 1, 13, $DB, "", "", "$fecharegistro", 4, 0);
     $FB->llena_texto("id_usuario", 1, 13, $DB, "", "", $id_usuario, 5, 0);
