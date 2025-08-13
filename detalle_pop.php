@@ -46,8 +46,7 @@ if ($tabla == "Verificar Datos") {
     where idservicios=$id_param ";
     $DB->Execute($sql);
     $rw = mysqli_fetch_array($DB->Consulta_ID);
-    $sqlC="SELECT `cot_id`,`cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_piezas FROM cotozaciones JOIN usuarios ON cot_id_ingresa = idusuarios JOIN sedes ON usu_idsede = idsedes WHERE cot_id>0 $cond2 $cond $conde1 $conde3 order by cot_id desc";
-    $rwC=mysqli_fetch_row($DB1->Consulta_ID);
+
     
 //$descllamada.=@$rw[22];
     $fecharegistro = @$rw[23];
@@ -72,6 +71,8 @@ if ($tabla == "Verificar Datos") {
                 Con Cotización 👉Ver
             </a>
         </div>";
+    $sqlC="SELECT `cot_id`,`cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_piezas FROM cotozaciones WHERE cot_id='$rw[28]'";
+    $rwC=mysqli_fetch_row($DB1->Consulta_ID);
     }
 
     if ($param15 == "Envio Oficina") {
@@ -94,7 +95,7 @@ if ($tabla == "Verificar Datos") {
         $FB->llena_texto("param105", 1, 13, $DB, "", "", "$fecharegistro", 4, 0);
     }
     if ($rw[28]!="") {
-        $FB->llena_texto("Peso:", 110, 5, $DB, "", "", "$rwC[1]", 1, 0);
+        $FB->llena_texto("Peso:", 110, 1, $DB, "", "", "$rwC[1]", 1, 0);
         $FB->llena_texto("Numero de piezas:", 111, 1, $DB, "", "", "$rwC[9]", 4, 0);
         $FB->llena_texto("Valor :", 112, 1, $DB, "", "", "$rwC[10]", 4, 0);
     
