@@ -1493,13 +1493,13 @@ ORDER BY hoj_nombre ASC";
 						$partes = explode(".", $rw6[0]);
 						$numeroAntesDelPunto = $partes[0];
 
-						$valorHorasDomini=$numeroAntesDelPunto*10831;
-						$valorMitadDomini=10831/2;
+						$valorHorasDomini=$numeroAntesDelPunto*11140;
+						$valorMitadDomini=11140/2;
 
 						$valorTotalHorasDomini=$valorHorasDomini+$valorMitadDomini;
 					} else {
 
-						$valorHorasDomini=$rw6[0]*10831;
+						$valorHorasDomini=$rw6[0]*11140;
 						$valorTotalHorasDomini=$valorHorasDomini;
 
 					}
