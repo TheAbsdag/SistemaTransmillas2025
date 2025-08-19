@@ -94,23 +94,31 @@
   <div class="container-fluid">
     <div class="row flex-nowrap">
       <!-- Sidebar -->
+      <?php
+      // Mostrar todos los errores
+      ini_set('display_errors', 1);
+      ini_set('display_startup_errors', 1);
+      error_reporting(E_ALL);
+      ?>
+      <?php
+        
+        require_once "../../model/layoutModel.php";
+
+        $menuClass = new menu();
+        $itemsMenu = $menuClass->obtenerMenu();
+      ?>
+
       <nav class="col-auto col-lg-2 sidebar d-flex flex-column p-3" id="sidebar">
-        <h4 class="text-primary">Transmillas</h4>
-        <ul class="nav flex-column gap-2">
-          <li class="nav-item">
-            <a class="nav-link active" href="#" onclick="cargarContenido('paginas/inicio.html')">🏠 Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" onclick="cargarContenido('paginas/mis_pagos.html')">
-              💳 Mis pagos <span class="badge-notify">0</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" onclick="cargarContenido('paginas/sin_ingreso.html')">
-              👥 Sin ingreso <span class="badge-notify">25</span>
-            </a>
-          </li>
-        </ul>
+          <h4 class="text-primary">Transmillas</h4>
+          <ul class="nav flex-column gap-2">
+              <?php foreach ($itemsMenu as $item): ?>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#" onclick="cargarContenido('<?php echo $item['men_url']; ?>')">
+                          <?php echo htmlspecialchars($item['men_nombre']); ?>
+                      </a>
+                  </li>
+              <?php endforeach; ?>
+          </ul>
       </nav>
 
       <!-- Contenido principal -->
@@ -143,6 +151,11 @@
   </div>
 
   <script>
+    function toggleSubmenu(event) {
+      event.preventDefault();
+      const submenu = event.target.closest("li").querySelector(".submenu");
+      submenu.style.display = submenu.style.display === "none" ? "block" : "none";
+    }
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('overlay');
@@ -155,8 +168,20 @@
           if (!response.ok) throw new Error("No se pudo cargar el contenido.");
           return response.text();
         })
-        .then(data => {
-          document.getElementById("contenido").innerHTML = data;
+        .then(html => {
+          const contenedor = document.getElementById("contenido");
+          contenedor.innerHTML = html;
+
+          // Buscar scripts dentro del HTML cargado y ejecutarlos
+          contenedor.querySelectorAll("script").forEach(script => {
+            const nuevoScript = document.createElement("script");
+            if (script.src) {
+              nuevoScript.src = script.src;
+            } else {
+              nuevoScript.textContent = script.textContent;
+            }
+            document.body.appendChild(nuevoScript);
+          });
         })
         .catch(error => {
           document.getElementById("contenido").innerHTML = "<p style='color:red;'>Error al cargar el contenido.</p>";

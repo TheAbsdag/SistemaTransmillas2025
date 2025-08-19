@@ -45,7 +45,7 @@ class UsuarioModel {
             $sql .="AND CHAR_LENGTH(mensaje_enviado) > 2 ";
         }
 
-        $sql .= "ORDER BY fecha_hora DESC";
+        $sql .= "ORDER BY fecha_hora ASC";
 
         // ✅ Guardar consulta en log para depuración
         $logPath = __DIR__ . '/log_consultas.txt'; // puedes cambiar el nombre/ruta si quieres

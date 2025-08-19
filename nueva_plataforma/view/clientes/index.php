@@ -26,7 +26,7 @@ thead.azul-blanco th {
 <div class="container-fluid mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
     <div class="card-header text-center mi-header">
-      <h3 class="mb-0">Servicios automaticos</h3>
+      <h3 class="mb-0">Clientes</h3>
     </div>
 
     <div class="card-body">
@@ -37,12 +37,12 @@ thead.azul-blanco th {
             </div>
 
             <div class="col-md-4">
-                <label for="filtroTipoMensaje" class="form-label">👤 Cliente</label>
-                <select id="filtroTipoMensaje" class="form-select">
+                <label for="idciudades" class="form-label">Ciudad</label>
+                <select id="idciudades" class="form-select">
                 <option value="">Seleccione un cliente</option>
                 
-                <?php foreach ($creditos as $credito): ?>
-                <option value="<?= $credito['idcreditos'] ?>"><?= $credito['cre_nombre'] ?></option>
+                <?php foreach ($ciudades as $ciudad): ?>
+                <option value="<?= $ciudad['idciudades'] ?>"><?= $ciudad['ciu_nombre'] ?></option>
                 <?php endforeach; ?>
                 </select>
             </div>
@@ -50,7 +50,7 @@ thead.azul-blanco th {
             <div class="col-md-4 text-end">
                 <label class="form-label d-block invisible">Botón</label>
                 <button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#modalServicioAuto">
-                <i class="bi bi-plus-circle me-1"></i> Nuevo Servicio Automático
+                <i class="bi bi-plus-circle me-1"></i> Nuevo Cliente
                 </button>
             </div>
         </div>
@@ -59,13 +59,18 @@ thead.azul-blanco th {
         <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
           <thead class="table-primary">
             <tr>
-                <th>Cliente</th>
-                <th>📆 Dias</th>
-                <th>Ciudad de Recogida</th>
-                <th>Telefonos</th>
-                <th>Direccion</th>
-                <th>Hora de la alerta</th>
+                <th>ID Cliente</th>
+                <th>CC / Nit</th>
+                <th>Nombre Del Cliente</th>
+                <th>Tel&eacute;fonos </th>
+                <th>Ciudad</th>
+                <th>Direcci&oacute;n</th>
+                <th>Email</th>
+                <th>Clasificaci&oacute;n</th>
+                <th>Valor Aprobado</th>
+                <th>Editar</th>
                 <th>Eliminar</th>
+
 
             </tr>
           </thead>
@@ -76,95 +81,205 @@ thead.azul-blanco th {
   </div>
 </div>
 
-<!-- Modal para crear nuevo servicio automático -->
+<!-- Modal para Editar cliente-->
 <div class="modal fade" id="modalServicioAuto" tabindex="-1" aria-labelledby="modalServicioAutoLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-xl">
     <form id="formNuevoServicioAuto" class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalServicioAutoLabel">Nuevo Servicio Automático</h5>
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="modalServicioAutoLabel">Destinatario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
+
       <div class="modal-body">
-        <!-- Select de clientes -->
-        <div class="mb-3">
-          <label for="selectCliente" class="form-label">👤 Cliente</label>
-          <select id="selectCliente" name="cliente" class="form-select" required>
-            <option value="">Seleccione un cliente</option>
-            <option value="EXTERNOS">EXTERNOS</option>
-            <!-- Puedes llenar esto dinámicamente con PHP -->
-            <?php foreach ($creditos as $credito): ?>
-            <option value="<?= $credito['idcreditos'] ?>"><?= $credito['cre_nombre'] ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
+        <div class="row g-3">
+          
+          <!-- CC / NIT -->
+          <div class="col-md-6">
+            <label class="form-label">CC / NIT</label>
+            <input type="text" name="cc_nit" class="form-control">
+          </div>
 
-        <!-- Ciudad de recogida -->
-        <div class="mb-3">
-          <label for="ciudadRecogida" class="form-label">🏙️ Ciudad de recogida</label>
-          <select id="ciudadRecogida" name="ciudadRecogida" class="form-select" required>
-            <?php foreach ($ciudades as $ciudad): ?>
-            <option value="<?= $ciudad['idciudades'] ?>"><?= $ciudad['ciu_nombre'] ?></option>
-            <?php endforeach; ?>
-          </select>
-
-
-        </div>
-
-        <!-- Días de la semana -->
-        <div class="mb-3">
-          <label class="form-label">📅 Días de programación</label>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Lunes" id="diaLunes">
-            <label class="form-check-label" for="diaLunes">Lunes</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Martes" id="diaMartes">
-            <label class="form-check-label" for="diaMartes">Martes</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Miércoles" id="diaMiercoles">
-            <label class="form-check-label" for="diaMiercoles">Miércoles</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Jueves" id="diaJueves">
-            <label class="form-check-label" for="diaJueves">Jueves</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Viernes" id="diaViernes">
-            <label class="form-check-label" for="diaViernes">Viernes</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Sábado" id="diaSabado">
-            <label class="form-check-label" for="diaSabado">Sábado</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="dias[]" value="Domingo" id="diaDomingo">
-            <label class="form-check-label" for="diaDomingo">Domingo</label>
-          </div>
-        </div>
-        <!-- Campos extra para EXTERNOS -->
-        <div id="camposExternos" class="mb-3">
-        <label class="form-label">📞 Teléfonos del cliente</label>
-        <div id="contenedorTelefonos">
-            <div class="input-group mb-2">
-            <input type="text" name="telefono_externo[]" class="form-control" placeholder="Ej: 3123456789" required>
-            <button type="button" class="btn btn-outline-success" id="btnAgregarTelefono">+</button>
+          <!-- Teléfonos -->
+          <div class="col-md-6">
+            <label class="form-label">Teléfonos (*)</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+              <input type="text" name="telefono" class="form-control" required>
             </div>
-        </div>
-        </div>
-        <div class="mb-3">
-            <label for="direccion" class="form-label">📍 Dirección</label>
-            <input type="text" id="direccion" name="direccion" class="form-control" placeholder="Escriba la dirección" required>
-        </div>
-        <div class="mb-3">
-            <label for="hora" class="form-label">⏰ Hora</label>
-            <input type="time" id="hora" name="hora" class="form-control" required>
+          </div>
+            <input type="hidden" name="telefonos" class="form-control" required>
+          <!-- WhatsApp -->
+          <div class="col-md-6">
+            <label class="form-label">WhatsApp (*)</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-whatsapp"></i></span>
+              <input type="text" name="whatsapp" class="form-control" required>
+            </div>
+          </div>
+
+          <!-- Ciudad -->
+          <div class="col-md-6">
+            <label class="form-label">Ciudad (*)</label>
+            <select name="ciudad" class="form-select" required>
+              <option value="">Seleccione...</option>
+              <?php foreach($ciudades as $c): ?>
+                <option value="<?= $c['idciudades'] ?>"><?= $c['ciu_nombre'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <!-- Nombre del cliente -->
+          <div class="col-md-6">
+            <label class="form-label">Nombre del Cliente</label>
+            <input type="text" name="nombre_cliente" class="form-control">
+          </div>
+
+          <!-- Dirección -->
+          <div class="col-md-3">
+            <label class="form-label">Dirección</label>
+            <select name="direccion" class="form-select">
+                <option value="">Seleccione...</option>
+                <option value="CALLE">CALLE</option>
+                <option value="CARRERA">CARRERA</option>
+                <option value="TRANSVERSAL">TRANSVERSAL</option>
+                <option value="DIAGONAL">DIAGONAL</option>
+                <option value="AUTOPISTA NORTE">AUTOPISTA NORTE</option>
+                <option value="AUTOPISTA SUR">AUTOPISTA SUR</option>
+                <option value="KILOMETRO">KILOMETRO</option>
+                <option value="URBANIZACION ">URBANIZACION </option>
+                <option value="AVENIDA">AVENIDA</option>
+                <option value="CIUDAD">CIUDAD</option>
+                <option value="AVENIDA CALLE">AVENIDA CALLE</option>
+                <option value="AVENIDA CARRERA">AVENIDA CARRERA</option>
+                <option value="VEREDA">VEREDA</option>
+                <option value="EDIFICIO">EDIFICIO</option>
+                <option value="ALMACEN">ALMACEN</option>
+                <option value="CONSULTORIO">CONSULTORIO</option>
+                <option value="MANZANA">MANZANA</option>
+                <option value="CENTRO COMERCIAL">CENTRO COMERCIAL</option>
+                <option value="OFICINA TRANSMILLAS">OFICINA TRANSMILLAS</option>
+            </select>
+          </div>
+
+          
+          <!-- Lugar de recogida -->
+          <div class="col-md-3">
+            <label class="form-label">-</label>
+            <input type="text" name="restodireccion" class="form-control">
+          </div>
+          <!-- Lugar de recogida -->
+          <div class="col-md-3">
+            <label class="form-label">Lugar de Recogida</label>
+            <select name="lugar_recogida" class="form-select">
+                <option value="">Seleccione...</option><option value="Apartamento">Apartamento</option><option value="Local">Local</option><option value="Porteria">Porteria</option><option value="Casa">Casa</option><option value="Bloque">Bloque</option><option value="OFICINA">OFICINA</option><option value="CONJUNTO">CONJUNTO</option><option value="INTERIOR">INTERIOR</option><option value="MANZANA ">MANZANA </option><option value="TORRE">TORRE</option><option value="RECLAMA OFICINA DE TRANSMILLAS">RECLAMA OFICINA DE TRANSMILLAS</option><option value="EMPRESA">EMPRESA</option><option value="BODEGA">BODEGA</option><option value="ALMACEN">ALMACEN</option><option value="PISO">PISO</option><option value="EDIFICIO">EDIFICIO</option><option value="CONSULTORIO">CONSULTORIO</option><option value="LOTE">LOTE</option><option value="VEREDA">VEREDA</option><option value="OFICINA TRANSMILLAS">OFICINA TRANSMILLAS</option>
+            </select>
+          </div>
+
+          <!-- Barrio -->
+          <div class="col-md-6">
+            <label class="form-label">Barrio</label>
+            <input type="text" name="barrio" class="form-control">
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control">
+          </div>
+
+          <!-- Valor autorizado -->
+          <div class="col-md-3">
+            <label class="form-label">Valor Autorizado</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="number" name="valor_autorizado" class="form-control">
+            </div>
+          </div>
+
+          <!-- ¿Crédito? -->
+          <div class="col-md-3">
+            <label class="form-label d-block">¿Crédito?</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="credito" value="SI" class="form-check-input">
+                <label class="form-check-label">SI</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" name="credito" value="NO" class="form-check-input" checked>
+                <label class="form-check-label">NO</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- AU -->
+          <div class="col-md-3">
+            <label class="form-label">AU</label>
+            <input type="text" name="au" class="form-control">
+          </div>
+
+          <!-- AC -->
+          <div class="col-md-3">
+            <label class="form-label">AC</label>
+            <input type="text" name="ac" class="form-control">
+          </div>
+
+          <!-- Actividad económica -->
+          <div class="col-md-3">
+            <label class="form-label">Actividad económica</label>
+            <input type="text" name="actividad_economica" class="form-control">
+          </div>
+
+          <!-- CIIU -->
+          <div class="col-md-3">
+            <label class="form-label">CIIU</label>
+            <input type="text" name="ciiu" class="form-control">
+          </div>
+
+          <!-- Tipo de empresa -->
+          <div class="col-md-3">
+            <label class="form-label">Tipo de empresa</label>
+            <select name="tipo_empresa" class="form-select">
+              <option value="">Seleccione...</option>
+              <?php foreach($tipos_empresa as $t): ?>
+                <option value="<?= $t['idtipo'] ?>"><?= $t['nombre'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <!-- Régimen -->
+          <div class="col-md-3">
+            <label class="form-label">Régimen</label>
+            <select name="regimen" class="form-select">
+              <option value="">Seleccione...</option>
+              <?php foreach($regimenes as $r): ?>
+                <option value="<?= $r['idregimen'] ?>"><?= $r['nombre'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <!-- Comercializadora -->
+          <div class="col-md-6">
+            <label class="form-label">Comercializadora</label>
+            <select name="comercializadora" class="form-select">
+              <option value="">Seleccione...</option>
+              <?php foreach($comercializadoras as $com): ?>
+                <option value="<?= $com['idcomercializadora'] ?>"><?= $com['nombre'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <!-- Producto o servicio -->
+          <div class="col-md-6">
+            <label class="form-label">Producto o servicio que suministra</label>
+            <input type="text" name="producto_servicio" class="form-control">
+          </div>
+
         </div>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="submit" class="btn btn-primary">Guardar servicio</button>
+        <button type="submit" class="btn btn-primary">Editar</button>
       </div>
     </form>
   </div>
@@ -184,184 +299,157 @@ thead.azul-blanco th {
 <script>
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
+    processing: true,    // Muestra "procesando..."
+    serverSide: true,    // Activa server-side
+    
     ajax: {
       url: '/nueva_plataforma/controller/ClientesController.php',
       type: 'POST',
       data: function (d) {
-        d.ajax = true;
         d.fecha = $('#filtroFecha').val();
-        d.tipo = $('#filtroTipoMensaje').val();
-      },
-      dataSrc: ''
+        d.ciudad = $('#idciudades').val();
+        d.ajax = true; // <-- para que entre en el if
+      }
     },
     columns: [
-        { data: 'cliente' },
-        {
-            data: 'aut_dias',
-            render: function (data, type, row) {
-            try {
-                const dias = JSON.parse(data); // intenta parsear el JSON
-                if (Array.isArray(dias)) {
-                return dias.join(', '); // convierte array a string separado por coma
-                } else {
-                return data; // si no es array, muestra tal cual
-                }
-            } catch (e) {
-                return data; // si no se puede parsear, muestra el contenido original
-            }
-            }
-        },
-        { data: 'ciudad_origen' },
-        {
-            data: 'aut_telefono',
-            render: function (data, type, row) {
-            try {
-                const dias = JSON.parse(data); // intenta parsear el JSON
-                if (Array.isArray(dias)) {
-                return dias.join(', '); // convierte array a string separado por coma
-                } else {
-                return data; // si no es array, muestra tal cual
-                }
-            } catch (e) {
-                return data; // si no se puede parsear, muestra el contenido original
-            }
-            }
-        },
-        { data: 'aut_direccion' },
-        { data: 'aut_fecha' },
-        {
-            data: 'aut_id', // ← El ID del registro para eliminar
-            render: function (data, type, row) {
-            return `
-                <button class="btn btn-sm btn-danger eliminar-usuario" data-id="${data}">
-                <i class="bi bi-trash"></i>
-                </button>
-            `;
-            }
+      { data: 'idclientes' },
+      { data: 'cli_iddocumento' },
+      { data: 'cli_nombre' },
+      { data: 'cli_telefono' },
+      { data: 'ciu_nombre' },
+      { data: 'cli_direccion' },
+      { data: 'cli_correo' },
+      { data: 'cli_clasificacion' },
+      { data: 'cli_valoraprobado' },
+      {
+        data: 'cli_telefono',
+        render: function (data) {
+          return `<button class="btn btn-sm btn-primary editar-usuario" data-id="${data}">
+                    <i class="bi bi-pencil"></i>
+                  </button>`;
         }
-      
- 
-      ]
+      },
+      {
+        data: 'idclientes',
+        render: function (data) {
+          return `<button class="btn btn-sm btn-danger eliminar-usuario" data-id="${data}">
+                    <i class="bi bi-trash"></i>
+                  </button>`;
+        }
+      }
+    ]
   });
 
-  $('#filtroFecha, #filtroTipoMensaje').on('change', function () {
+  // 🔄 Recargar cuando cambian filtros
+  $('#filtroFecha, #idciudades').on('change', function () {
     tabla.ajax.reload();
   });
-});
-
-// 🔁 Detectar cambios en cualquier campo editable
-$('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
-  const id = $(this).data('id');
-  const campo = $(this).data('campo');
-  const valor = $(this).val();
-
-  // if(id == "usu_estado" and valor==0){
-  //   alert('Está apunto de desactivar al usuario, recuerde colocar fecha de finalizacion en la hoja de vida si aun no lo ha hecho');
-
-  // }
-
-  $.ajax({
-    url: '/nueva_plataforma/controller/ClientesController.php',
-    type: 'POST',
-    data: {
-      actualizar_campo: true,
-      id: id,
-      campo: campo,
-      valor: valor
-    },
-    success: function (res) {
-      $('#tablaUsuarios').DataTable().ajax.reload(null, false);
-    },
-    error: function () {
-      alert("Hubo un error al actualizar.");
-    }
-  });
-});
-$('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {
-  const id = $(this).data('id');
-
-  if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-    $.ajax({
-      url: '/nueva_plataforma/controller/ClientesController.php',
-      type: 'POST',
-      data: {
-        eliminar_usuario: true,
-        id: id
-      },
-      success: function (res) {
-        $('#tablaUsuarios').DataTable().ajax.reload(null, false);
-      },
-      error: function () {
-        alert('Error al eliminar el usuario.');
+    // 🔍 Solo buscar al presionar Enter
+  $('#tablaUsuarios_filter input')
+    .off() // quitar el evento keyup que viene por defecto
+    .on('keyup', function (e) {
+      if (e.keyCode === 13) { // 13 = Enter
+        tabla.search(this.value).draw();
       }
     });
-  }
 });
 
 
 
-document.getElementById("formNuevoServicioAuto").addEventListener("submit", function(e) {
-  e.preventDefault();
 
-  const form = document.getElementById("formNuevoServicioAuto");
-  const formData = new FormData(form);
 
-  // Validaciones opcionales
-  const cliente = formData.get("cliente");
-  const ciudad = formData.get("cliente"); // Cuidado: aquí hay dos con mismo name
-  const diasSeleccionados = formData.getAll("dias[]");
 
-  if (!cliente || !ciudad || diasSeleccionados.length === 0) {
-    alert("Por favor completa todos los campos.");
-    return;
-  }
 
-  fetch("/nueva_plataforma/controller/ClientesController.php", {
-    method: "POST",
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-        if (data.ok) {
-        alert("Servicio automático creado correctamente.");
-        form.reset();
-        const modal = bootstrap.Modal.getInstance(document.getElementById("modalServicioAuto"));
-        modal.hide();
-        $('#tablaUsuarios').DataTable().ajax.reload(null, false); // ← Agrega esta línea
-        }
-  })
-  .catch(err => {
-    console.error("Error en la solicitud:", err);
-    alert("Error inesperado al guardar el servicio.");
-  });
-});
-  
-document.addEventListener("DOMContentLoaded", function() {
-  const contenedor = document.getElementById("contenedorTelefonos");
-  const btnAgregar = document.getElementById("btnAgregarTelefono");
 
-  btnAgregar.addEventListener("click", function() {
-    const nuevoCampo = document.createElement("div");
-    nuevoCampo.classList.add("input-group", "mb-2");
-    nuevoCampo.innerHTML = `
-      <input type="text" name="telefono_externo[]" class="form-control" placeholder="Ej: 3123456789">
-      <button type="button" class="btn btn-outline-danger btnQuitarTelefono">−</button>
-    `;
 
-    contenedor.appendChild(nuevoCampo);
-  });
+$(document).on('click', '.editar-usuario', function () {
+  let telefono = $(this).data('id');
 
-  // Delegar evento para quitar campos
-  contenedor.addEventListener("click", function(e) {
-    if (e.target.classList.contains("btnQuitarTelefono")) {
-      e.target.parentElement.remove();
+  $('#formNuevoServicioAuto')[0].reset();
+  $('#modalServicioAuto').modal('show');
+
+  $.ajax({
+    url: '../controller/ClientesController.php',
+    type: 'GET',
+    data: { accion: 'buscar_por_telefono', telefono: telefono },
+    dataType: 'json',
+    success: function (cliente) {
+      if (cliente) {
+        $('[name="cc_nit"]').val(cliente.cc_nit);
+        $('[name="telefono"]').val(cliente.cli_telefono);
+        $('[name="telefonos"]').val(cliente.cli_telefono);
+        $('[name="whatsapp"]').val(cliente.cli_whatsap);
+        $('[name="nombre_cliente"]').val(cliente.cli_nombre);
+        $('[name="ciudad"]').val(cliente.cli_idciudad);
+        
+        $('[name="lugar_recogida"]').val(cliente.lugar_recogida_id);
+        $('[name="barrio"]').val(cliente.cli_barrio);
+        $('[name="email"]').val(cliente.cli_correo);
+        $('[name="valor_autorizado"]').val(cliente.cli_valoraprobado);
+        $(`[name="credito"][value="${cliente.credito}"]`).prop('checked', true);
+        $('[name="au"]').val(cliente.au);
+        $('[name="ac"]').val(cliente.ac);
+        $('[name="actividad_economica"]').val(cliente.actividad_economica);
+        $('[name="ciiu"]').val(cliente.ciiu);
+        $('[name="tipo_empresa"]').val(cliente.tipo_empresa);
+        $('[name="regimen"]').val(cliente.regimen);
+        $('[name="comercializadora"]').val(cliente.comercializadora);
+        $('[name="producto_servicio"]').val(cliente.producto_servicio);
+
+
+
+            if (cliente.cli_direccion) {
+                let partes = cliente.cli_direccion.split('&').map(p => p.trim());
+
+                $('[name="direccion"]').val((partes[0] || '').toUpperCase()); // Mayúsculas para el primero
+                $('[name="restodireccion"]').val(partes[1] || '');
+                $('[name="lugar_recogida"]').val(partes[2] || '');
+                // $('[name="detalle_direccion2"]').val(partes[3] || '');
+                $('[name="barrio"]').val(partes[4] || '');
+            }
+
+
+
+      } else {
+        alert('No se encontró el cliente.');
+      }
+    },
+    error: function () {
+      alert('Error al buscar el cliente.');
     }
   });
 });
 
+  // Envío del formulario de edición
+$(document).on('submit', '#formNuevoServicioAuto', function(e) {
+    e.preventDefault();
 
+    let formData = $(this).serialize();
+    formData += '&accion=editar_cliente'; // Acción que el controlador debe reconocer
 
-  
+    $.ajax({
+        url: '/nueva_plataforma/controller/ClientesController.php',
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(resp) {
+            if (resp.success) {
+                alert('Cliente actualizado correctamente.');
+                $('#modalServicioAuto').modal('hide');
+
+                // Si tienes DataTables, refresca
+                if ($.fn.DataTable.isDataTable('#miTablaClientes')) {
+                    $('#miTablaClientes').DataTable().ajax.reload();
+                }
+            } else {
+                alert(resp.message || 'No se pudo actualizar el cliente.');
+            }
+        },
+        error: function() {
+            alert('Error en la petición.');
+        }
+    });
+});
 </script>
 </body>
 </html>
