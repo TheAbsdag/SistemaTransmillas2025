@@ -329,15 +329,43 @@ else if($cond==12){
 }else if($cond==11){
 
 	 $hora=date("H:m");
-	 $sql="SELECT `ser_paquetedescripcion`,`ser_valorprestamo`,`ser_valorabono`,`ser_valorseguro`,ser_clasificacion,ser_ciudadentrega,ser_devolverreci,cli_idciudad,ser_prioridad,ser_idresponsable,ser_tipopaq,ser_volumen,ser_verificado,ser_piezas,ser_guiare,ser_consecutivo,gui_tiposervicio,ser_valor,ser_peso,ser_estado,ser_pendientecobrar,ser_recogida 
-	 FROM  servicios inner join rel_sercli  on idservicios=ser_idservicio  inner join clientesservicios on idclientesdir=ser_idclientes  inner join guias on idservicios=gui_idservicio WHERE idservicios=$para";
+	 $sql="SELECT `ser_paquetedescripcion`,`ser_valorprestamo`,
+	 `ser_valorabono`,`ser_valorseguro`,ser_clasificacion,
+	 ser_ciudadentrega,ser_devolverreci,cli_idciudad,
+	 ser_prioridad,ser_idresponsable,ser_tipopaq,ser_volumen,
+	 ser_verificado,ser_piezas,ser_guiare,ser_consecutivo,
+	 gui_tiposervicio,ser_valor,ser_peso,ser_estado,
+	 ser_pendientecobrar,ser_recogida,ser_cotizacion
+	 FROM  servicios 
+	 inner join rel_sercli  on idservicios=ser_idservicio  
+	 inner join clientesservicios on idclientesdir=ser_idclientes  
+	 inner join guias on idservicios=gui_idservicio 
+	 WHERE idservicios=$para";
 		 $DB1->Execute($sql);
 		 $rw=mysqli_fetch_row($DB1->Consulta_ID);  
 
 		 $sql12="SELECT cue_transferencia from cuentaspromotor where cue_idservicio=$para";
 		 $DB->Execute($sql12);
 		 $servicio=mysqli_fetch_row($DB->Consulta_ID); 
-
+		if ($rw[22]!="") {
+			echo "<div style=\"
+				width: 100%;
+				padding: 10px;
+				box-sizing: border-box;
+				text-align: center;
+				background-color: #28a745; 
+				border-radius: 6px;
+			\">
+				<a href=\"#\" 
+				onclick=\"window.open(' https://sistema.transmillas.com/cotizaciones/Cotizacion".$rw[22].".pdf', 'popup', 'width=800,height=600'); return false;\"
+				style=\"color: white; text-decoration: none; font-weight: bold; font-size: 16px;\">
+					Con Cotización 👉Ver
+				</a>
+			</div>";
+			// $sqlC="SELECT `cot_id`,`cot_peso`, `cot_vol`,`cot_val_seguro`, `cot_val_servicio`,cot_piezas FROM cotozaciones WHERE cot_id='$rw[22]'";
+			// $DB1->Execute($sqlC);
+		}
+		
 		if($rw[20]==1){
 			$pagot='PendienteXCobrar';
 		}elseif($servicio[0]=='' and $rw[4]==1){
@@ -743,25 +771,9 @@ else if($cond==27) {
 	and (usu_estado=1 or usu_filtro=1) 
 	and c.idciudades=$para 
 	and `seg_motivo`='Ingreso' $cond1 ";
-//	llena_datos() //$sql="SELECT `idusuarios`,`usu_nombre` FROM `usuarios` inner join ciudades on inner_sedes=usu_idsede WHERE `roles_idroles` in (2,3,5) and  (usu_estado=1 or usu_filtro=1) and idciudades=$para $cond1 ";
-	// $sql = "SELECT 
-    // u.idusuarios,
-    // u.usu_nombre,
-    // z.zon_nombre
-	// FROM seguimiento_user su
-	// INNER JOIN zonatrabajo z ON su.seg_idzona = z.idzonatrabajo
-	// INNER JOIN usuarios u ON u.idusuarios = su.seg_idusuario
-	// INNER JOIN ciudades c ON c.inner_sedes = u.usu_idsede
-	// WHERE 
-    // u.roles_idroles IN (2, 3, 5)
-    // AND su.seg_fechaalcohol = '$fechaactual'
-    // AND (u.usu_estado = 1 OR u.usu_filtro = 1)
-    // AND c.idciudades = $para
-    // AND su.seg_motivo = 'Ingreso'
-    // $cond1";
-	if ($id_usuario=523) {
-		echo$sql;
-	}
+
+	
+
 	echo "<select name='$nombre' id='$nombre' class='form-control' >";
 	echo "<option  value=''>Seleccione... </option>";
 	$LT->llenaselect($sql,0,"1-2", $valor, $DB);
@@ -1487,7 +1499,9 @@ $param6=str_replace(".","", $param6);
 	   @$precioadicional=$rw2[1];
 		   
 	}else{
-		 $sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
+		 $sql="SELECT `idprecios`, `pre_kilo`, `con_precios` 
+		 FROM `precios` 
+		 inner join `configuracionkilos` on con_idprecioskilos=idprecios 
 		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio'  and con_idprecios='$idprecios'";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
@@ -1531,11 +1545,11 @@ $param6=str_replace(".","", $param6);
 		<td colspan="1" align="center">Valor</td></tr>';
 		$color="#EFEFEF";
 		echo "<tr bgcolor='$color' class='text' style='background-color:$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' 	
-	 onmouseout='this.style.backgroundColor=\"$color\"'>";
-	 echo "<td>$preciokilo</td><td>$precioadicional</td><td>$pordeclarado</td><td>$porprestamo</td><td>".$valorapagar."</td></tr></table>";
+	 	onmouseout='this.style.backgroundColor=\"$color\"'>";
+	 	echo "<td>$preciokilo</td><td>$precioadicional</td><td>$pordeclarado</td><td>$porprestamo</td><td>".$valorapagar."</td></tr></table>";
 
 
-	//	$FB->llena_texto("",111, 118, $DB, "", "", $valorapagar, 6, 0);
+		//	$FB->llena_texto("",111, 118, $DB, "", "", $valorapagar, 6, 0);
 }else if($cond==36) {
 
 	$param1=$_REQUEST["param1"]; 
