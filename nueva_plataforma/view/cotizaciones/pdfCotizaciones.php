@@ -1,69 +1,30 @@
 <?php
-//  require("login_autentica.php");
-require("connection/conectarse.php");
-require("connection/arrays.php");
-require("connection/funciones.php");
-require("connection/funciones_clases.php");
-require("connection/sql_transact.php");
-require("connection/llenatablas.php");
-require("connection/PasswordHash.php");
-require("definirvar.php");
-date_default_timezone_set("America/Bogota");
 
 
-$DB = new DB_mssql;
-$DB->conectar();
-
-
-
-$cot_id=$_POST['id'];
-$sql="SELECT `cot_id`, `cot_clirente`, `cot_nit`, 
-`cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`,
-`cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, 
-`cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`,
-`cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,
-cot_fecha,cot_correo,cot_Whatsapp,cot_enviado,sed_nombre,
-usu_nombre,cot_estado,cot_fotos,cot_observaciones,cot_piezas
-FROM cotozaciones 
-JOIN usuarios ON cot_id_ingresa = idusuarios 
-JOIN sedes ON usu_idsede = idsedes 
-WHERE cot_id='$cot_id'";
-
-$DB->Execute($sql);  
-	while($rw1 = mysqli_fetch_assoc($DB->Consulta_ID))
-	{
-
-        $cot_id=$rw1['cot_id'];
-        $cot_clirente=$rw1['cot_clirente'];	
-        $cot_nit=$rw1['cot_nit'];	
-        $cot_origen=$rw1['cot_origen'];	
-        $cot_destino=$rw1['cot_destino'];	
-        $cot_direc_origen=$rw1['cot_direc_origen'];	
-        $cot_direc_destino=$rw1['cot_direc_destino'];	
-        $cot_desc_merc=$rw1['cot_desc_merc'];	
-        $cot_tipo_servi=$rw1['cot_tipo_servi'];	
-        $cot_peso=$rw1['cot_peso'];	
-        $cot_val_minima=$rw1['cot_val_minima'];	
-        $cot_kilo_adi=$rw1['cot_kilo_adi'];	
-        $cot_vol=$rw1['cot_vol'];	
-        $cot_val_asegurado=$rw1['cot_val_asegurado'];	
-        $cot_val_seguro=$rw1['cot_val_seguro'];	
-        $cot_val_kilos_adi=$rw1['cot_val_kilos_adi'];	
-        $cot_val_servicio=$rw1['cot_val_servicio'];	
-        $cot_val_total=$rw1['cot__val_total'];	
-        $cot_fecha=$rw1['cot_fecha'];
-        $ciudadhecho=$rw1['sed_nombre'];
-        $usuhecho=$rw1['usu_nombre'];
-        $cliente = $rw1['cot_Whatsapp'] ?? '';
-        $correo = $rw1['cot_correo'] ?? '';
-        $observacion = $rw1['cot_observaciones'] ?? '';
-        $fotos=$rw1['cot_fotos'] ?? '';
-        $piezas=$rw1['cot_piezas'] ?? '';
-
-
-    }
-
-
+$cot_id=$_POST["id"];
+$cot_clirente=$_POST["cliente"];	
+$cot_nit=$_POST["nit"];	
+$cot_origen=$_POST["origen"];	
+$cot_destino=$_POST["destino"];	
+$cot_direc_origen=$_POST["direccion_origen"];	
+$cot_direc_destino=$_POST["direccion_destino"];	
+$cot_desc_merc=$_POST["descripcion"];	
+$cot_tipo_servi=$_POST["tipo_servi"];	
+$cot_peso=$_POST["peso"];	
+$cot_val_minima=$_POST["val_minima"];	
+$cot_kilo_adi=$_POST["kilo_adi"];	
+$cot_vol=$_POST["vol"];	
+$cot_val_asegurado=$_POST["val_asegurado"];	
+$cot_val_seguro=$_POST["val_seguro"];	
+$cot_val_kilos_adi=$_POST["val_kilos_adi"];	
+$cot_val_servicio=$_POST["val_servicio"];	
+$cot_val_total=$_POST["val_total"];	
+$cot_fecha=$_POST["fecha"];
+$ciudadhecho=$_POST["sede"];
+$usuhecho=$_POST["usuario"];
+$cliente = $_POST['cliente'] ?? '';
+$correo = $_POST['correo'] ?? '';
+$descripcion = $_POST['descripcion'] ?? '';
 
 // ...
 
@@ -96,7 +57,7 @@ $ano2 = date('Y', $timestamp2);
 
 
 
-require('fpdf/fpdf.php');
+require('../../fpdf/fpdf.php');
 
 
 
@@ -164,24 +125,7 @@ $pdf->MultiCell(0, 5, utf8_decode('NIT. '.$cot_nit.''), 0,'L');
 $pdf->Ln(2);
 
 $ciudad_en_negrita = utf8_decode($cot_origen);
-if ($observacion!="") {
-    // Establecer color rojo para el texto
-    $pdf->SetTextColor(255, 0, 0);
-
-    // Texto
-    $texto = utf8_decode('Atencion: '.$observacion.'');
-
-    // Imprimir párrafo (MultiCell permite salto de línea automático)
-    $pdf->MultiCell(0, 6, $texto);
-
-    // Si luego quieres volver al color negro
-    $pdf->SetTextColor(0, 0, 0);
-}
-
-
-
 $pdf->SetFont('Times','',12);
-
 $texto = utf8_decode('Por medio de la siguiente, damos respuesta a la cotización del servicio de transporte de carga desde la ciudad de '.$cot_origen.' hacia la ciudad de '.$cot_destino.', con las siguientes características:');
 
 $pdf->MultiCell(0, 5, $texto, 0,'J');
@@ -210,11 +154,8 @@ $matriz = array(
     array("Valor Asegurado", $cot_val_asegurado),
     array("Valor seguro", $cot_val_seguro),
     array("Valor kilos adicionales", $cot_val_kilos_adi),
-     array("Cantidad de piezas", $piezas),
     array("Valor servicio", $cot_val_servicio),
     array("Valor Total (servicio + seguro)", $cot_val_total)
-   
-
     // Continúa con los datos de tu matriz...
 );
 // Establecer el tamaño de la celda y la separación entre las celdas
@@ -282,7 +223,7 @@ $pdf->MultiCell(0, 5, utf8_decode('https://www.transmillas.com/                 
 
 
 $pdf->Ln(10);
-$fotos = isset($fotos) ? json_decode($fotos, true) : [];
+$fotos = isset($_POST['fotos']) ? json_decode($_POST['fotos'], true) : [];
 
 
 

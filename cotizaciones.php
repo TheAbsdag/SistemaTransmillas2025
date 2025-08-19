@@ -183,7 +183,7 @@ $FB->titulo_azul1("Fotos",1,0,0);
 $FB->titulo_azul1("Editar",1,0,0); 
 $FB->titulo_azul1("Eliminar",1,0,0); 
 
-$sql="SELECT `cot_id`, `cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,cot_correo,cot_Whatsapp,cot_enviado,sed_nombre,usu_nombre,cot_estado,cot_fotos FROM cotozaciones JOIN usuarios ON cot_id_ingresa = idusuarios JOIN sedes ON usu_idsede = idsedes WHERE cot_id>0 $cond2 $cond $conde1 $conde3 order by cot_id desc";
+$sql="SELECT `cot_id`, `cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,cot_correo,cot_Whatsapp,cot_enviado,sed_nombre,usu_nombre,cot_estado,cot_fotos,cot_observaciones FROM cotozaciones JOIN usuarios ON cot_id_ingresa = idusuarios JOIN sedes ON usu_idsede = idsedes WHERE cot_id>0 $cond2 $cond $conde1 $conde3 order by cot_id desc";
 
 $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar); 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -294,101 +294,174 @@ include("footer.php");
 ?>
 <script>
 
-function ver(datos) {
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "cotiza_descargable.php";
-    form.target = "_blank";
+    function ver(datos) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "cotiza_descargable.php";
+        form.target = "_blank";
 
-    for (const key in datos) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = key;
+        for (const key in datos) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
 
-        if (key === 'fotos') {
-            input.value = JSON.stringify(datos[key]); // Pasamos array como JSON
-        } else {
-            input.value = datos[key];
+            if (key === 'fotos') {
+                input.value = JSON.stringify(datos[key]); // Pasamos array como JSON
+            } else {
+                input.value = datos[key];
+            }
+
+            form.appendChild(input);
         }
 
-        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
     }
 
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-}
-function enviarCorreo(id,cliente,email){
+    function editaPdf(datos) {
+        fetch('cotiza_descargable.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // Indicamos que enviamos JSON
+            },
+            body: JSON.stringify(datos)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Error al generar el PDF");
 
-	
-	var boton = document.getElementById("correo"+id);
-	datos = {"numFac":id,"cliente":cliente,"email":email};
-			$.ajax({
-					url: "cotizaEmail.php",
-					type: "POST",
-					data: datos
-				}).done(function(respuesta){
-					
-					if (respuesta=="Revise el archivo antes de enviarlo y vuelva a intentar.") {
-						alert("ERROR revise el archivo antes de enviarlo y vuelva a intentar.");
-					}else{
-                   	alert(respuesta);
+            return response.blob(); // Esperamos un archivo
+        })
+        .then(blob => {
+            // Crear un enlace para descargar/ver el PDF
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cotizacion.pdf'; // Puedes cambiar el nombre del archivo
+            a.click();
+            window.URL.revokeObjectURL(url); // Liberar el objeto
+        })
+        .catch(error => {
+            console.error("Hubo un problema con el PDF:", error);
+        });
+    }
+    function enviarCorreo(id,cliente,email){
 
-					boton.textContent = 'Reenviar';
-					boton.style.backgroundColor = "#28B463";
-					}
-				});
-}
+        
+        var boton = document.getElementById("correo"+id);
+        datos = {"numFac":id,"cliente":cliente,"email":email};
+                $.ajax({
+                        url: "cotizaEmail.php",
+                        type: "POST",
+                        data: datos
+                    }).done(function(respuesta){
+                        
+                        if (respuesta=="Revise el archivo antes de enviarlo y vuelva a intentar.") {
+                            alert("ERROR revise el archivo antes de enviarlo y vuelva a intentar.");
+                        }else{
+                        alert(respuesta);
 
-        // Función para copiar el enlace al portapapeles
-		function copyLink(event) {
-            event.preventDefault(); // Previene el comportamiento predeterminado del enlace
+                        boton.textContent = 'Reenviar';
+                        boton.style.backgroundColor = "#28B463";
+                        }
+                    });
+    }
 
-            // Obtén el valor del input
-            var copyText = document.getElementById("linkInput").value;
+    // Función para copiar el enlace al portapapeles
+    function copyLink(event) {
+        event.preventDefault(); // Previene el comportamiento predeterminado del enlace
 
-            // Usa la API moderna de portapapeles
-            navigator.clipboard.writeText(copyText).then(function() {
-                // Opcional: Muestra un mensaje de confirmación
-                alert("Enlace copiado: " + copyText);
-            }).catch(function(error) {
-                console.error("Error al copiar el enlace: ", error);
+        // Obtén el valor del input
+        var copyText = document.getElementById("linkInput").value;
+
+        // Usa la API moderna de portapapeles
+        navigator.clipboard.writeText(copyText).then(function() {
+            // Opcional: Muestra un mensaje de confirmación
+            alert("Enlace copiado: " + copyText);
+        }).catch(function(error) {
+            console.error("Error al copiar el enlace: ", error);
+        });
+    }
+
+    function realizada(id,funcion,estado){
+        
+        // var valorAbono=document.getElementById(valor1,fechaini,fechafin).value;
+        // var valorAbono = document.getElementById(valor1).value;
+        
+        var select = document.getElementById(id+"estado");
+        // var enlace = document.getElementById(tipo+idusuario);
+        // var funcion = "realizada";
+
+    datos = {"id":id,"funcion":funcion,"estado":estado};
+            $.ajax({
+                    url: "guardarcotizacion.php",
+                    type: "POST",
+                    data: datos
+                }).done(function(respuesta){
+                    
+
+
+                    // if (respuesta.trim().toLowerCase() === "ok") {
+                    // 	// La respuesta es "ok", realiza las acciones correspondientes
+                    // 	console.log("OK");
+                    // 	// Cambia el color de fondo
+            
+                        if (estado=="realizada") {
+                            select.style.backgroundColor = "#28B463"; // Cambia "red" por el color que desees
+                        }else{
+                            select.style.backgroundColor = "#8B0000"; // Cambia "red" por el color que desees
+                        }
+                    // } else {
+                    // 	// La respuesta no es "ok", maneja el caso de otra manera si es necesario
+                    // 	console.log("error al guardar cambio");
+                    // }
+                });
+                
+    }
+
+    async function enviarAlertaWhat(telefono, tipo,texto1,texto2) {
+            
+        // URL de la API
+        const url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+
+        // Datos a enviar en la solicitud
+        const data = {
+            telefono: telefono,    // Número de teléfono
+            tipo_alerta: tipo,     // Tipo de alerta
+            texto1: texto1,
+            texto2: texto2      
+        };
+
+        try {
+            // Realizar la solicitud POST con fetch
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer MiSuperToken123" // Si la API requiere autenticación
+                },
+                body: JSON.stringify(data) // Convertir los datos a JSON
             });
+
+            // Verificar si la respuesta fue exitosa
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+
+            // Decodificar la respuesta
+            const responseData = await response.json();
+            
+            // Mostrar la respuesta
+            console.log("Respuesta de la API:", responseData);
+                // Muestra solo el mensaje de éxito (o el campo específico que necesites)
+                // if (responseData.message) {
+                // 	alert(responseData.message); // Muestra solo el mensaje
+                // } else {
+                    alert("Mensaje enviado con exito");
+                // }
+        } catch (error) {
+            // Manejar errores
+            console.error("Error en la solicitud:", error);
         }
-
-function realizada(id,funcion,estado){
-	
-	// var valorAbono=document.getElementById(valor1,fechaini,fechafin).value;
-	// var valorAbono = document.getElementById(valor1).value;
-	
-	 var select = document.getElementById(id+"estado");
-	// var enlace = document.getElementById(tipo+idusuario);
-	// var funcion = "realizada";
-
-datos = {"id":id,"funcion":funcion,"estado":estado};
-		$.ajax({
-				url: "guardarcotizacion.php",
-				type: "POST",
-				data: datos
-			}).done(function(respuesta){
-				
-
-
-				// if (respuesta.trim().toLowerCase() === "ok") {
-				// 	// La respuesta es "ok", realiza las acciones correspondientes
-				// 	console.log("OK");
-				// 	// Cambia el color de fondo
-		
-					if (estado=="realizada") {
-						select.style.backgroundColor = "#28B463"; // Cambia "red" por el color que desees
-					}else{
-						select.style.backgroundColor = "#8B0000"; // Cambia "red" por el color que desees
-					}
-				// } else {
-				// 	// La respuesta no es "ok", maneja el caso de otra manera si es necesario
-				// 	console.log("error al guardar cambio");
-				// }
-			});
-			
-}
+    }
 </script>
