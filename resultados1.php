@@ -707,7 +707,7 @@ if($param1==1){
 		} else {
 			$FB->llena_texto("Credito:", "telefono", 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
 			$FB->llena_texto("Tel Cliente:", 102, 1, $DB, "", "", "", 2, 1);
-			echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente(109);'  >Buscar Cliente</button></td></tr>";
+			echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente2(109);'  >Buscar Cliente</button></td></tr>";
 
 		}
 
