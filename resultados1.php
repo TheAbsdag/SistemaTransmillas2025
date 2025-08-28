@@ -686,6 +686,11 @@ if($param1==1){
 		$FB->titulo_azul1("Credito	",8,0,5);  
 		//echo "SELECT `cre_nombre`,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para)";
 		$FB->llena_texto("Cliente:",113,2, $DB, "(SELECT  idcreditos,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para) group by idcreditos )", "buscarservicio(param4.value,param11.value,this.value,\"Compra\");", "", 1, 1);
+		$FB->llena_texto("Credito:", 1, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
+		$FB->llena_texto("Tel Cliente:", 2, 1, $DB, "", "", "", 2, 1);
+		echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente(25);'  >Buscar Cliente</button></td></tr>";
+
+		$FB->llena_texto("", 2, 4, $DB, "llega_sub2", "", "", 1, 0);
 		//$FB->llena_texto("Valor del Flete:",10, 118, $DB, "", "", "", 1, 0);
 		}
 	} 
