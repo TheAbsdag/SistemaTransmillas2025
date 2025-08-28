@@ -2012,6 +2012,23 @@ else if($cond==108) {
 
 	echo "</select>";
 }
+else if($cond==109){
+
+ 	$param101=$_REQUEST["param1"]; 
+	$cond1="cli_telefono=$param101";
+	 $sql="SELECT `idclientesdir`,`cli_nombre`, `cli_direccion` FROM `clientes` inner join clientesdir on cli_idclientes=idclientes  where $cond1 ";
+	$DB->Execute($sql);
+	$rw7=mysqli_fetch_row($DB->Consulta_ID); 
+	$rw7[2]=str_replace("&"," ", $rw7[2]);
+	if($rw7[0]>=0){
+	
+		$FB->titulo_azul1("Cliente	",8,0,5);  
+		$FB->llena_texto("Nombre:",103, 1, $DB, "", "", $rw7[1], 17, 1);
+		$FB->llena_texto("Direcci&oacute;n:",104, 1, $DB, "", "", $rw7[2], 17, 1);
+		$FB->llena_texto("param105", 1, 13, $DB, "", "", "$rw7[0]", 5, 0);
+	
+	} 
+}
 
 $DB->cerrarconsulta();
 

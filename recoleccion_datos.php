@@ -474,7 +474,7 @@ $FB->llena_texto("Tel&eacute;fonos :",2, $tcampot, $DB, "", "", $rw[2], 4, 1);
 	
 
 // $FB->llena_texto("Ciudad:",4,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` )", "", "$param4", 4, 1);
-$FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1  order by ciu_nombre)", "buscarservicio(param11.value,this.value,param113.value,\"Recogida\");", "$param4", 4, 1);
+$FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1  order by idciudades)", "buscarservicio(param11.value,this.value,param113.value,\"Recogida\");", "$param4", 4, 1);
 
 //$FB->llena_texto("Direccion:",5, 1, $DB, "", "", $rw[5], 1, 0);
 
@@ -600,6 +600,11 @@ $FB->llena_texto("&iquest;Servicio con Retorno?:", 25, 212, $DB, "", "3","$rw[20
 
 if($rw[24]=='' or $rw[24]==NULL or $rw[24]==0){ $creditos=3; } else { $creditos=1; }
 $FB->llena_texto("&iquest;Credito?:",28, 216, $DB, "3","creditosrecolecion(this.value,24,\"llega_sub2\",\"total valor\",1,0)", "$creditos", 4, 0);	
+$FB->llena_texto("Credito:", 1, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
+$FB->llena_texto("Tel Cliente:", 2, 1, $DB, "", "", "", 2, 1);
+echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente(109);'  >Buscar Cliente</button></td></tr>";
+
+$FB->llena_texto("", 2, 4, $DB, "llega_sub2", "", "", 1, 0);
 echo "<td colspan=2><div id='llega_sub2' >";
 	if ($creditos == 1) {
 		$telefonos=$rw[2].','.$rw[8];
