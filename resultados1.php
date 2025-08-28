@@ -705,8 +705,8 @@ if($param1==1){
 		if (mysqli_num_rows($DB1->Consulta_ID) > 0) {
 
 		} else {
-			$FB->llena_texto("Credito:", 1, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
-			$FB->llena_texto("Tel Cliente:", 2, 1, $DB, "", "", "", 2, 1);
+			$FB->llena_texto("Credito:", 101, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
+			$FB->llena_texto("Tel Cliente:", 102, 1, $DB, "", "", "", 2, 1);
 			echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente(109);'  >Buscar Cliente</button></td></tr>";
 
 		}
@@ -2014,8 +2014,8 @@ else if($cond==108) {
 }
 else if($cond==109){
 
- 	$param101=$_REQUEST["param1"]; 
-	$cond1="cli_telefono=$param101";
+ 	$param102=$_REQUEST["param102"]; 
+	$cond1="cli_telefono=$param102";
 	 $sql="SELECT `idclientesdir`,`cli_nombre`, `cli_direccion` FROM `clientes` inner join clientesdir on cli_idclientes=idclientes  where $cond1 ";
 	$DB->Execute($sql);
 	$rw7=mysqli_fetch_row($DB->Consulta_ID); 
