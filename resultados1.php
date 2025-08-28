@@ -2016,7 +2016,7 @@ else if($cond==109){
 
  	$param102=$_REQUEST["param102"]; 
 	$cond1="cli_telefono=$param102";
-	 $sql="SELECT `idclientesdir`,`cli_nombre`, `cli_direccion` FROM `clientes` inner join clientesdir on cli_idclientes=idclientes  where $cond1 ";
+	echo$sql="SELECT `idclientesdir`,`cli_nombre`, `cli_direccion` FROM `clientes` inner join clientesdir on cli_idclientes=idclientes  where $cond1 ";
 	$DB->Execute($sql);
 	$rw7=mysqli_fetch_row($DB->Consulta_ID); 
 	$rw7[2]=str_replace("&"," ", $rw7[2]);
