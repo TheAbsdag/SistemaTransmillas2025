@@ -670,6 +670,13 @@ function buscarcliente(resul1)
 	var destino="resultados1.php?param1='"+tel+"'&cond="+resul1;
 	MostrarConsulta(destino, div);
 }
+function buscarcliente2(resul1)
+{
+	var div='llega_sub2';
+	var tel=document.getElementById("telefono").value;
+	var destino="resultados1.php?telefono='"+tel+"'&cond="+resul1;
+	MostrarConsulta(destino, div);
+}
 function buscarguia(resul1)
 {
 	var div='llega_sub2';
