@@ -600,9 +600,6 @@ $FB->llena_texto("&iquest;Servicio con Retorno?:", 25, 212, $DB, "", "3","$rw[20
 
 if($rw[24]=='' or $rw[24]==NULL or $rw[24]==0){ $creditos=3; } else { $creditos=1; }
 $FB->llena_texto("&iquest;Credito?:",28, 216, $DB, "3","creditosrecolecion(this.value,24,\"llega_sub2\",\"total valor\",1,0)", "$creditos", 4, 0);	
-$FB->llena_texto("Credito:", 1, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
-$FB->llena_texto("Tel Cliente:", 2, 1, $DB, "", "", "", 2, 1);
-echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente(109);'  >Buscar Cliente</button></td></tr>";
 
 $FB->llena_texto("", 2, 4, $DB, "llega_sub2", "", "", 1, 0);
 echo "<td colspan=2><div id='llega_sub2' >";
