@@ -685,8 +685,7 @@ if($param1==1){
 		}else{
 		$FB->titulo_azul1("Credito	",8,0,5);  
 		//echo "SELECT `cre_nombre`,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para)";
-		$FB->llena_texto("Cliente:",113,2, $DB, "(SELECT  idcreditos,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para) group by idcreditos )", "buscarservicio(param4.value,param11.value,this.value,\"Compra\");", "", 1, 1);
-		
+
 
 		$sql = "SELECT  
 			idcreditos,
@@ -703,11 +702,11 @@ if($param1==1){
 
 		// Verifica si la consulta devolvió filas
 		if (mysqli_num_rows($DB1->Consulta_ID) > 0) {
-
+			$FB->llena_texto("Cliente:",113,2, $DB, "(SELECT  idcreditos,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para) group by idcreditos )", "buscarservicio(param4.value,param11.value,this.value,\"Compra\");", "", 1, 1);
 		} else {
-			// $FB->llena_texto("Credito:", 120, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
-			// $FB->llena_texto("Tel Cliente:", 121, 1, $DB, "", "", "", 2, 1);
-			// echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente2(109);'  >Buscar Cliente</button></td></tr>";
+			$FB->llena_texto("Credito:", 113, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
+			$FB->llena_texto("Tel Cliente:", 121, 1, $DB, "", "", "", 2, 1);
+			echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente2(109);'  >Buscar Cliente</button></td></tr>";
 
 		}
 
