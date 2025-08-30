@@ -723,7 +723,7 @@ function validar_repuesta()
 
 }
 function atar(){
-	let credito = document.getElementById("param113").value;
+	let credito = document.getElementById("param126").value;
     let nombre = document.getElementById("param123").value;
     let direccion = document.getElementById("param124").value;
     let idCliente = document.getElementById("param125").value;
@@ -742,6 +742,7 @@ function atar(){
 													// Ocultar un div y tres inputs
 													$("#llega_sub3").hide();         // id del div
 										    alert("¡Relacionado con exito!");
+											creditosrecolecion(1,24,"llega_sub2","total valor",1,0);
 										}
 									}
 								});	
