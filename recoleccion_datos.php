@@ -612,7 +612,8 @@ echo "<td colspan=2><div id='llega_sub2' >";
 		echo"<input id='param113' name='param113' type='hidden' value=''>";
 
 	}
-	echo '</div></td></tr>';
+	echo '</div></td><td colspan=2><div id="llega_sub3" ></div></td></tr>';
+
 
 
 	echo "<tr><td style='background-color: #F5B7B1;'>Tipo de servicio(*)</td><td id='respuesta'><input id='param27' name='param27' type='hidden' value='0'></td><td colspan=2 id='convenir'>";
@@ -721,5 +722,25 @@ function validar_repuesta()
 	return false;
 
 }
+function atar(){
 
+	datos = {"param1":"validarrepetidas","param2":teldestino,"param3":telremitente,"param4":ciudadori,"param5":ciudaddes,"condeccion":"rel_crecli","tabla":"rel_crecli","general":"0","enviar":"Guardar"};
+								$.ajax({
+									url: "nuevo_adminok.php",
+									type: "POST",
+									data: datos,
+									async: false,
+									success: function(respuesta) {	
+										console.log('respuesta');
+										console.log(respuesta);
+										if(respuesta>0){
+											
+												idservicio=respuesta;
+												trueorfalse=4;
+										}else{
+												trueorfalse=0;
+											}
+									}
+								});	
+}						 
 </script>
