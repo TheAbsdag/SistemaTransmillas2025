@@ -706,6 +706,7 @@ if($param1==1){
 		} else {
 			$FB->llena_texto("Credito:", 113, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
 			$FB->llena_texto("Tel Cliente:", 121, 1, $DB, "", "", "", 2, 1);
+			echo '</tr><td>Datos cliente</td><td colspan=2><div id="llega_sub3" ></div></td></tr>';
 			echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente2(109);'  >Buscar Cliente</button></td></tr>";
 
 		}
@@ -2025,7 +2026,7 @@ else if($cond==109){
 		$FB->llena_texto("Nombre:",123, 1, $DB, "", "", $rw7[1], 17, 1);
 		$FB->llena_texto("Direcci&oacute;n:",124, 1, $DB, "", "", $rw7[2], 17, 1);
 		$FB->llena_texto("param125", 1, 13, $DB, "", "", "$rw7[0]", 5, 0);
-		echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='atar(109);'  >Buscar Cliente</button></td></tr>";
+		echo "<tr><td><button type='button' class='btn btn-outline-primary btn-lg' onclick='atar(109);'  >Guardar</button></td></tr>";
 	
 	} 
 }

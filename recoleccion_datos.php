@@ -612,7 +612,7 @@ echo "<td colspan=2><div id='llega_sub2' >";
 		echo"<input id='param113' name='param113' type='hidden' value=''>";
 
 	}
-	echo '</div></td><td colspan=2><div id="llega_sub3" ></div></td></tr>';
+	echo '</div></td></tr>';
 
 
 
@@ -723,8 +723,13 @@ function validar_repuesta()
 
 }
 function atar(){
+	let credito = document.getElementById("param113").value;
+    let nombre = document.getElementById("param123").value;
+    let direccion = document.getElementById("param124").value;
+    let idCliente = document.getElementById("param125").value;
+	let telefono = document.getElementById("param121").value;
 
-	datos = {"param1":"validarrepetidas","param2":teldestino,"param3":telremitente,"param4":ciudadori,"param5":ciudaddes,"condeccion":"rel_crecli","tabla":"rel_crecli","general":"0","enviar":"Guardar"};
+	datos = {"param1":credito,"param2":telefono,"param3":nombre,"param4":direccion,"param5":idCliente,"condeccion":"rel_crecli","tabla":"rel_crecli","general":"0","enviar":"Guardar"};
 								$.ajax({
 									url: "nuevo_adminok.php",
 									type: "POST",
