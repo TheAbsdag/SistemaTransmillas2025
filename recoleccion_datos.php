@@ -738,13 +738,7 @@ function atar(){
 									success: function(respuesta) {	
 										console.log('respuesta');
 										console.log(respuesta);
-										if(respuesta>0){
-											
-												idservicio=respuesta;
-												trueorfalse=4;
-										}else{
-												trueorfalse=0;
-											}
+
 									}
 								});	
 }						 
