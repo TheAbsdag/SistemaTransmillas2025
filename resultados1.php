@@ -2022,9 +2022,10 @@ else if($cond==109){
 	if($rw7[0]>=0){
 	
 		$FB->titulo_azul1("Cliente	",8,0,5);  
-		$FB->llena_texto("Nombre:",103, 1, $DB, "", "", $rw7[1], 17, 1);
-		$FB->llena_texto("Direcci&oacute;n:",104, 1, $DB, "", "", $rw7[2], 17, 1);
-		$FB->llena_texto("param105", 1, 13, $DB, "", "", "$rw7[0]", 5, 0);
+		$FB->llena_texto("Nombre:",123, 1, $DB, "", "", $rw7[1], 17, 1);
+		$FB->llena_texto("Direcci&oacute;n:",124, 1, $DB, "", "", $rw7[2], 17, 1);
+		$FB->llena_texto("param125", 1, 13, $DB, "", "", "$rw7[0]", 5, 0);
+		echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='atar(109);'  >Buscar Cliente</button></td></tr>";
 	
 	} 
 }
