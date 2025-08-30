@@ -600,7 +600,7 @@ $FB->llena_texto("&iquest;Servicio con Retorno?:", 25, 212, $DB, "", "3","$rw[20
 
 if($rw[24]=='' or $rw[24]==NULL or $rw[24]==0){ $creditos=3; } else { $creditos=1; }
 $FB->llena_texto("&iquest;Credito?:",28, 216, $DB, "3","creditosrecolecion(this.value,24,\"llega_sub2\",\"total valor\",1,0)", "$creditos", 4, 0);	
-echo "<td colspan=2><div id='llega_sub2' >";
+echo "<td colspan=4><div id='llega_sub2' >";
 	if ($creditos == 1) {
 		$telefonos=$rw[2].','.$rw[8];
 		//echo "SELECT  cre_nombre,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($telefonos) group by idcreditos ";	
