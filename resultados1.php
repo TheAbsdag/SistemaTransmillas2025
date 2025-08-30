@@ -2028,7 +2028,7 @@ else if($cond==109){
 		$FB->llena_texto("Nombre:",123, 1, $DB, "", "", $rw7[1], 17, 1);
 		$FB->llena_texto("Direcci&oacute;n:",124, 1, $DB, "", "", $rw7[2], 17, 1);
 		$FB->llena_texto("param125", 1, 13, $DB, "", "", "$rw7[0]", 5, 0);
-		echo "<tr><td><button type='button' class='btn btn-outline-primary btn-lg' onclick='atar(109);'  >Guardar</button></td></tr>";
+		echo "<tr><td><button type='button' class='btn btn-outline-primary btn-lg' onclick='atar(109);'  >Relacionar</button></td></tr>";
 	
 	} 
 }
