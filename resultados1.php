@@ -683,7 +683,7 @@ if($param1==1){
 					echo ' Los telefonos ingresados no Contiene Creditos configurados!
 					</div>';
 		}else{
-		$FB->titulo_azul1("Credito	",8,0,5);  
+		$FB->titulo_azul1("No tiene creditos relacionado, ate uno aqui",8,0,5);  
 		//echo "SELECT `cre_nombre`,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para)";
 
 
