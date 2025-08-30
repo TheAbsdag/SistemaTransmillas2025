@@ -705,7 +705,7 @@ if($param1==1){
 			$FB->titulo_azul1("Creditos relacionados",8,0,5);  
 			$FB->llena_texto("Cliente:",113,2, $DB, "(SELECT  idcreditos,`cre_nombre` FROM `creditos` inner join  rel_crecli on rel_idcredito=idcreditos inner join clientesdir on idclientesdir=rel_idcliente where cli_telefono in ($para) group by idcreditos )", "buscarservicio(param4.value,param11.value,this.value,\"Compra\");", "", 1, 1);
 
-		$FB->titulo_azul1("Relacione uncredito mas aqui",8,0,5);  
+		$FB->titulo_azul1("Relacione un crédito más aquí",8,0,5);  
 		
 			$FB->llena_texto("Credito:", 126, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
 			$FB->llena_texto("Tel Cliente:", 121, 1, $DB, "", "", "", 2, 1);
