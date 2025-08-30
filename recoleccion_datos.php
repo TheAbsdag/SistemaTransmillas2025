@@ -741,7 +741,7 @@ function atar(){
 										if (respuesta.trim() === "ok") {
 													// Ocultar un div y tres inputs
 													$("#llega_sub3").hide();         // id del div
-
+										    alert("¡Atado con exito!");
 										}
 									}
 								});	
