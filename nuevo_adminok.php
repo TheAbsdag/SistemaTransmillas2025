@@ -1482,7 +1482,21 @@ case "addgastos":
 		}
 
 		$sql="INSERT INTO `rel_crecli`( `rel_idcredito`, `rel_idcliente`) VALUES ('$param1','$param5')";
-		$valores[7]=$sql; $valores[4]="relacioncreditos.php"; $valores[8]=1; 
+
+		if (isset($_POST['recargar']) and $_POST['recargar']=="no") {
+			// La variable recargar viene en el POST
+			if($DB->Execute($sql)){
+				echo "ok";
+			}else{
+				echo "Error al relacionar";
+			}
+			exit;
+			
+		} 
+			// No viene en el POST	
+			$valores[7]=$sql; $valores[4]="relacioncreditos.php"; $valores[8]=1; 
+		
+
 	break;
 	case "TipoPago": 
 		$fechat=date("$param5 H:i:s");

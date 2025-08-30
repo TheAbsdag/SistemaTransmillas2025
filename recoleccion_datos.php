@@ -729,7 +729,7 @@ function atar(){
     let idCliente = document.getElementById("param125").value;
 	let telefono = document.getElementById("param121").value;
 
-	datos = {"param1":credito,"param2":telefono,"param3":nombre,"param4":direccion,"param5":idCliente,"condeccion":"rel_crecli","tabla":"rel_crecli","general":"0","enviar":"Guardar"};
+	datos = {"param1":credito,"param2":telefono,"param3":nombre,"param4":direccion,"param5":idCliente,"condeccion":"rel_crecli","tabla":"rel_crecli","general":"0","enviar":"Guardar","recargar":"no"};
 								$.ajax({
 									url: "nuevo_adminok.php",
 									type: "POST",
@@ -738,7 +738,11 @@ function atar(){
 									success: function(respuesta) {	
 										console.log('respuesta');
 										console.log(respuesta);
+										if (respuesta.trim() === "ok") {
+													// Ocultar un div y tres inputs
+													$("#llega_sub3").hide();         // id del div
 
+										}
 									}
 								});	
 }						 
