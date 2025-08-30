@@ -2014,8 +2014,8 @@ else if($cond==108) {
 }
 else if($cond==109){
 
- 	$param1=$_REQUEST["param1"]; 
-	$cond1="cli_telefono=$param1";
+ 	$param102=$_REQUEST["telefono"]; 
+	$cond1="cli_telefono=$param102";
 	echo$sql="SELECT `idclientesdir`,`cli_nombre`, `cli_direccion` FROM `clientes` inner join clientesdir on cli_idclientes=idclientes  where $cond1 ";
 	$DB->Execute($sql);
 	$rw7=mysqli_fetch_row($DB->Consulta_ID); 
