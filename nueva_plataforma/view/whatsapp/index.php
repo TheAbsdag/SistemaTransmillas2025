@@ -44,6 +44,7 @@ thead.azul-blanco th {
             <option value="ChatBot" selected>Chat Bot</option>
             <option value="ServiciosHechos">Servicios Hechos</option>
             <option value="Cotizaciones">Cotizaciones</option>
+            <option value="cotizaMinima">cotizaciones minima</option>
           </select>
         </div>
       </div>

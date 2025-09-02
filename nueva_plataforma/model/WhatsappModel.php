@@ -39,6 +39,8 @@ class UsuarioModel {
                 $sql .="AND mensaje_enviado like '%Hemos creado tu servicio%'";
             }else if ($filtroTipoMensaje=="Cotizaciones") {
                 $sql .="AND mensaje_enviado like '%Cotización registrada%'";
+            }else if ($filtroTipoMensaje=="cotizaMinima") {
+                $sql .="AND mensaje_enviado like '%El valor estimado%'";
             }
             
         }else {

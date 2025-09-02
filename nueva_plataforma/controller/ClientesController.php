@@ -56,6 +56,7 @@ if (isset($_POST['accion']) && $_POST['accion'] === 'editar_cliente') {
 }
 $roles = $modelo->obtenerRoles();
 $ciudades = $modelo->obtenerCiudades();
+$creditos = $modelo->obtenerCreditos();
 
 include "../view/clientes/index.php";
 

@@ -84,7 +84,7 @@ thead.azul-blanco th {
 <!-- Modal para Editar cliente-->
 <div class="modal fade" id="modalServicioAuto" tabindex="-1" aria-labelledby="modalServicioAutoLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
-    <form id="formNuevoServicioAuto" class="modal-content">
+    <form id="formEditarCliente" class="modal-content">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="modalServicioAutoLabel">Destinatario</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -188,13 +188,13 @@ thead.azul-blanco th {
           </div>
 
           <!-- Valor autorizado -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <label class="form-label">Valor Autorizado</label>
             <div class="input-group">
               <span class="input-group-text">$</span>
               <input type="number" name="valor_autorizado" class="form-control">
             </div>
-          </div>
+          </div> -->
 
           <!-- ¿Crédito? -->
           <div class="col-md-3">
@@ -210,6 +210,25 @@ thead.azul-blanco th {
               </div>
             </div>
           </div>
+          <div class="col-md-3">
+            <label class="form-label d-block">Créditos asignado</label>
+            <div id="creditoAsignado" class="form-check form-check-inline"></div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Seleccionar crédito</label>
+            <select id="selectCredito" class="form-select">
+                <option value="">Seleccione un credito</option>
+                
+                <?php foreach ($creditos as $credito): ?>
+                <option value="<?= $credito['idcreditos'] ?>"><?= $credito['cre_nombre'] ?></option>
+                <?php endforeach; ?>
+            </select>
+          </div>
+
+          <div class="col-md-3 mt-3">
+            <label class="form-label d-block">Créditos asignados</label>
+            <div id="creditoSeleccionados" class="form-check form-check-inline"></div>
+          </div>
 
           <!-- AU -->
           <div class="col-md-3">
@@ -224,55 +243,49 @@ thead.azul-blanco th {
           </div>
 
           <!-- Actividad económica -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <label class="form-label">Actividad económica</label>
             <input type="text" name="actividad_economica" class="form-control">
-          </div>
+          </div> -->
 
           <!-- CIIU -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <label class="form-label">CIIU</label>
             <input type="text" name="ciiu" class="form-control">
-          </div>
+          </div> -->
 
           <!-- Tipo de empresa -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <label class="form-label">Tipo de empresa</label>
             <select name="tipo_empresa" class="form-select">
               <option value="">Seleccione...</option>
-              <?php foreach($tipos_empresa as $t): ?>
-                <option value="<?= $t['idtipo'] ?>"><?= $t['nombre'] ?></option>
-              <?php endforeach; ?>
+
             </select>
-          </div>
+          </div> -->
 
           <!-- Régimen -->
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <label class="form-label">Régimen</label>
             <select name="regimen" class="form-select">
               <option value="">Seleccione...</option>
-              <?php foreach($regimenes as $r): ?>
-                <option value="<?= $r['idregimen'] ?>"><?= $r['nombre'] ?></option>
-              <?php endforeach; ?>
+
             </select>
-          </div>
+          </div> -->
 
           <!-- Comercializadora -->
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <label class="form-label">Comercializadora</label>
             <select name="comercializadora" class="form-select">
               <option value="">Seleccione...</option>
-              <?php foreach($comercializadoras as $com): ?>
-                <option value="<?= $com['idcomercializadora'] ?>"><?= $com['nombre'] ?></option>
-              <?php endforeach; ?>
+
             </select>
-          </div>
+          </div> -->
 
           <!-- Producto o servicio -->
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <label class="form-label">Producto o servicio que suministra</label>
             <input type="text" name="producto_servicio" class="form-control">
-          </div>
+          </div> -->
 
         </div>
       </div>
@@ -360,12 +373,12 @@ $(document).ready(function () {
 
 
 
-
+let creditosSeleccionados = [];
 
 $(document).on('click', '.editar-usuario', function () {
   let telefono = $(this).data('id');
 
-  $('#formNuevoServicioAuto')[0].reset();
+  $('#formEditarCliente')[0].reset();
   $('#modalServicioAuto').modal('show');
 
   $.ajax({
@@ -386,15 +399,21 @@ $(document).on('click', '.editar-usuario', function () {
         $('[name="barrio"]').val(cliente.cli_barrio);
         $('[name="email"]').val(cliente.cli_correo);
         $('[name="valor_autorizado"]').val(cliente.cli_valoraprobado);
-        $(`[name="credito"][value="${cliente.credito}"]`).prop('checked', true);
+        if (cliente.total_creditos > 0) {
+            $(`[name="credito"][value="SI"]`).prop('checked', true);
+            $('#creditoAsignado').html(
+            '<label class="form-check-label">' + cliente.nombres_creditos + '</label>'
+        );
+        } else {
+            $(`[name="credito"][value="NO"]`).prop('checked', true);
+        }
+
         $('[name="au"]').val(cliente.au);
         $('[name="ac"]').val(cliente.ac);
-        $('[name="actividad_economica"]').val(cliente.actividad_economica);
         $('[name="ciiu"]').val(cliente.ciiu);
-        $('[name="tipo_empresa"]').val(cliente.tipo_empresa);
-        $('[name="regimen"]').val(cliente.regimen);
-        $('[name="comercializadora"]').val(cliente.comercializadora);
-        $('[name="producto_servicio"]').val(cliente.producto_servicio);
+
+
+
 
 
 
@@ -421,23 +440,23 @@ $(document).on('click', '.editar-usuario', function () {
 });
 
   // Envío del formulario de edición
-$(document).on('submit', '#formNuevoServicioAuto', function(e) {
+$(document).on('submit', '#formEditarCliente', function(e) {
     e.preventDefault();
 
-    let formData = $(this).serialize();
-    formData += '&accion=editar_cliente'; // Acción que el controlador debe reconocer
+    let formData = $(this).serializeArray(); // convierte a array de objetos
+    formData.push({ name: "accion", value: "editar_cliente" });
+    formData.push({ name: "creditos_asignados", value: creditosSeleccionados.join(',') });
 
     $.ajax({
         url: '/nueva_plataforma/controller/ClientesController.php',
         type: 'POST',
-        data: formData,
+        data: $.param(formData), // convertir a string
         dataType: 'json',
         success: function(resp) {
             if (resp.success) {
                 alert('Cliente actualizado correctamente.');
                 $('#modalServicioAuto').modal('hide');
 
-                // Si tienes DataTables, refresca
                 if ($.fn.DataTable.isDataTable('#miTablaClientes')) {
                     $('#miTablaClientes').DataTable().ajax.reload();
                 }
@@ -450,6 +469,42 @@ $(document).on('submit', '#formNuevoServicioAuto', function(e) {
         }
     });
 });
+
+
+
+    
+
+  document.getElementById('selectCredito').addEventListener('change', function() {
+    const idCredito = this.value;
+    const nombreCredito = this.options[this.selectedIndex].text;
+
+    if (idCredito && !creditosSeleccionados.includes(idCredito)) {
+      // Guardar el ID en el array
+      creditosSeleccionados.push(idCredito);
+
+      // Crear la etiqueta con el nombre
+      const div = document.createElement('div');
+      div.className = "badge bg-primary m-1 p-2 d-inline-flex align-items-center";
+      div.setAttribute("data-id", idCredito);
+      div.innerHTML = `
+        ${nombreCredito}
+        <button type="button" class="btn-close btn-close-white ms-2" aria-label="Eliminar"></button>
+      `;
+
+      // Acción al eliminar
+      div.querySelector('button').addEventListener('click', function() {
+        creditosSeleccionados = creditosSeleccionados.filter(c => c !== idCredito);
+        div.remove();
+        console.log("Creditos:", creditosSeleccionados);
+      });
+
+      document.getElementById('creditoSeleccionados').appendChild(div);
+      console.log("Creditos:", creditosSeleccionados);
+    }
+
+    // Resetear select
+    this.value = "";
+  });
 </script>
 </body>
 </html>
