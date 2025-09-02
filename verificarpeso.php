@@ -408,7 +408,7 @@ include("layout.php");
     }
   </style>
 
-<iframe src="/nueva_plataforma/controller/DescargasOficinaController.php?acceso=<?=$nivel_acceso?>&sede=<?=$id_sedes?>" width="100%"
+<iframe src="https://sistema.transmillas.com/nueva_plataforma/controller/DescargasOficinaController.php?acceso=<?=$nivel_acceso?>&sede=<?=$id_sedes?>" width="100%"
         style="border: none;"></iframe>
 <script>
   function ajustarAlturaIframe() {
