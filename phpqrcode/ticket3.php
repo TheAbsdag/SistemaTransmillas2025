@@ -95,12 +95,42 @@ if($modulo==2){
 	$conde4 ="and (ser_idresponsable='$param33' and ser_fechaasignacion like '$param34%') ";
 	$sql="SELECT `idservicios`,ser_guiare,ser_consecutivo,ciu_nombre,`ser_direccioncontacto`,ser_piezas,`ser_telefonocontacto`,`ser_destinatario`
 	FROM serviciosdia   where ser_estado>=3 and ser_estado<=11  and ser_estado!='100' and ser_estado!='5' $conde1 $conde3 $conde4  $conde5 ORDER BY ser_fechafinal $asc ";
-	
+	if ($id_usuario==523) {
+		echo$sql;
+		echo"<script>console.log('$sql')</script>";
+	}
 }elseif($modulo==4){ 
 	$conde4 ="and (ser_idresponsable='$param33' and ser_fechafinal like '$param34%') ";
 	$sql="SELECT `idservicios`,ser_guiare,ser_consecutivo,ciu_nombre,`ser_direccioncontacto`,ser_piezas,`ser_telefonocontacto`,`ser_destinatario`
 	FROM serviciosdia   where ser_idverificadopeso=0  and ser_estado=6  $conde1 $conde3 $conde4  $conde5 ORDER BY ser_fechafinal $asc ";
 	
+}elseif ($modulo==5) {
+	$conde1 ="and (ser_idresponsable='$param33' and ser_fechafinal like '$param34%') ";
+	
+	$idcidades=ciudadesedes($param36,$DB);
+	if($idcidades=='0'){
+		$conde1="";
+
+	}else {
+	$conde2=" and cli_idciudad in $idcidades "; 	
+	}
+	$conde5 = 
+	$sql="SELECT 
+	`idservicios`,
+	ser_guiare,
+	ser_consecutivo,
+	ciu_nombre,
+	`ser_direccioncontacto`,
+	ser_piezas,
+	`ser_telefonocontacto`,
+	`ser_destinatario` 
+	FROM serviciosdia 
+	inner join usuarios on idusuarios=ser_idresponsable 
+	where ser_idverificadopeso=0 
+	$conde1
+	and ser_estado in (6,4) 
+    $conde2
+	ORDER BY idservicios,ser_fechafinal asc;";
 }
 
 

@@ -8,13 +8,14 @@ class DescargasOficinaModel{
         $this->db = (new Database())->connect();
     }
 
-    public function obtenerSerProgramados($filtroFecha = '', $filtroCiudad = '', $filtroOperador= '') {
+    public function obtenerSerProgramados($filtroFecha = '', $filtroCiudad = '', $filtroOperador= '',$filtroCreditos ) {
 
         // Establecer zona horaria de Bogotá
         date_default_timezone_set('America/Bogota');
         // Si no se pasa una fecha, usa la fecha actual
         $conde1 ='';
         $conde2='';
+        $conde3='';
         $hoy= date("Y-m-d");
         $conde ="and ser_fechafinal > '$hoy 00:00:00'";
         if($filtroOperador != ''){
@@ -28,6 +29,11 @@ class DescargasOficinaModel{
             $conde ="and ser_fechafinal > '$filtroFecha 00:00:00'";
         }
 
+        if ($filtroCreditos != '') {
+            $conde3 ="and ser_idresponsable='$filtroCreditos'";
+            $conde1='';
+            $conde2='';
+        }
         
         
         $sql = "SELECT 
@@ -44,15 +50,16 @@ class DescargasOficinaModel{
         `ser_pendientecobrar`,
         cli_idciudad,ser_estado,
         ser_guiare,
-        ser_fechafinal
+        ser_fechafinal,
+        ser_idverificadopeso
         FROM serviciosdia 
         inner join usuarios on idusuarios=ser_idresponsable  
         where   ser_idverificadopeso=0 
-        $conde and ser_estado in (6,4) $conde1 $conde2
+        $conde and ser_estado in (6,4) $conde1 $conde2 $conde3
         ORDER BY idservicios,ser_fechafinal asc ";
 
-        // ✅ Guardar consulta en log para depuración
-        // $logPath = __DIR__ . '/log_consultas.txt'; // puedes cambiar el nombre/ruta si quieres
+        //✅ Guardar consulta en log para depuración
+        // $logPath = __DIR__ . '/log_obtenerSerProgramados.txt'; // puedes cambiar el nombre/ruta si quieres
         // $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
         // file_put_contents($logPath, $logMessage, FILE_APPEND);
         
@@ -102,8 +109,19 @@ class DescargasOficinaModel{
 
         return $valor;
     }
-    public function obtenerOperadores() {
-        $sql = "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) AND roles_idroles IN (2,3,5,8) ";
+    public function obtenerOperadores($ciudad="") {
+        $cond="";
+        if ($ciudad!="") {
+            $cond="and `usu_idsede`='$ciudad'"; 
+        }
+        $sql = "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) $cond AND roles_idroles IN (2,3,5,8) ";
+        $result = $this->db->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+    public function obtenerCreditos() {
+        $cond="";
+
+        $sql = "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) AND roles_idroles IN (6) ";
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
@@ -138,7 +156,9 @@ class DescargasOficinaModel{
             i.ima_fecha,
             s.ser_piezas,
             sv.ser_img_recog,
-            sv.ser_img_entre
+            sv.ser_img_entre,
+            s.ser_idverificadopeso,
+            s.idservicios
         FROM serviciosdia s
         LEFT JOIN imagenguias i 
             ON s.idservicios = i.ima_idservicio 
@@ -155,6 +175,123 @@ class DescargasOficinaModel{
         return $result ? $result->fetch_assoc() : null;
     }
 
+    
+        public function buscarServicioPorGuia($guia) {
+        // $sql = "SELECT `ser_peso`,
+        // `ser_valor`,
+        // `ser_pendientecobrar`,
+        // `ser_clasificacion`,
+        // ser_volumen,
+        // ser_guiare,
+        // ser_descripcion,
+        // ser_ciudadentrega 
+        // FROM `servicios` 
+        // WHERE `idservicios`=$id";
+
+        $sql = "SELECT  
+            s.ser_peso,
+            s.ser_valor,
+            s.ser_pendientecobrar,
+            s.ser_clasificacion,
+            s.ser_volumen,
+            s.ser_descripcion,
+            s.ser_guiare,
+            s.ser_ciudadentrega,
+            s.ser_telefonocontacto,
+            s.cli_telefono,
+            s.cli_idciudad,
+            i.idimagenguias,
+            i.ima_ruta,
+            i.ima_tipo,
+            i.ima_fecha,
+            s.ser_piezas,
+            sv.ser_img_recog,
+            sv.ser_img_entre,
+            s.ser_idverificadopeso,
+            s.idservicios
+        FROM serviciosdia s
+        LEFT JOIN imagenguias i 
+            ON s.idservicios = i.ima_idservicio 
+            AND i.ima_tipo = 'Recogida'
+        LEFT JOIN servicios sv
+            ON s.idservicios = sv.idservicios
+        WHERE s.ser_guiare = ?";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("s", $guia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result ? $result->fetch_assoc() : null;
+    }
+
+    
+public function buscarRemesas($filtroFecha = '', $filtroCiudad = '', $filtroOperador= '') {
+    date_default_timezone_set('America/Bogota');
+
+    $conde1 = '';
+    $conde2 = '';
+    $hoy = date("Y-m-d");
+    $conde = "and ser_fechafinal > '$hoy 00:00:00'";
+    if($filtroCiudad==''){   $conde2=""; } 
+    else{
+        $conde2="and gas_idciudaddes=$filtroCiudad";
+    }
+    if ($filtroOperador == '') {   
+        $conde3 = ""; 
+    } else {
+        $conde3 = "and gas_iduserrecoge=$filtroOperador";
+    }
+
+    $sql = "SELECT g.idgastos, 
+                   g.gas_fecharegistro, 
+                   u.usu_nombre AS usuario_registro, 
+                   g.gas_idciudadori, 
+                   s.sed_nombre AS sede_destino, 
+                   g.gas_empresa, 
+                   g.gas_bus,
+                   g.gas_telconductor,
+                   g.gas_pagar,
+                   g.gas_iduserremesa, 
+                   g.gas_nomremesa,
+                   g.gas_descripcion,
+                   g.gas_peso,
+                   g.gas_piezas,
+                   g.gas_valor,
+                   g.gas_usucom,
+                   g.gas_cantcom,
+                   g.gas_feccom,
+                   g.gas_idciudaddes,
+                   g.gas_iduserrecoge,
+                   g.gas_recogio,
+                   g.gas_entrego,
+                   g.gas_fecrecogida, 
+                   g.gas_descrecogio,
+                   g.gas_nomvalida, 
+                   g.gas_fechavalida,
+
+                   so.sed_nombre AS sede_origen,
+                   ur.usu_nombre AS usuario_recoge
+
+            FROM gastos g
+            INNER JOIN usuarios u ON g.gas_idusuario = u.idusuarios
+            INNER JOIN sedes s ON g.gas_idciudaddes = s.idsedes
+            LEFT JOIN sedes so ON g.gas_idciudadori = so.idsedes
+            LEFT JOIN usuarios ur ON g.gas_iduserrecoge = ur.idusuarios
+
+            WHERE g.idgastos > 0 
+              AND g.gas_iduserrecoge > 0  
+              AND g.gas_recogio = 1 
+              AND g.gas_nomvalida = '' 
+              $conde1 $conde2 $conde3
+            ORDER BY g.gas_fecrecogida DESC";
+        //✅ Guardar consulta en log para depuración
+        // $logPath = __DIR__ . '/log_buscarRemesas.txt'; // puedes cambiar el nombre/ruta si quieres
+        // $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
+        // file_put_contents($logPath, $logMessage, FILE_APPEND);
+    $result = $this->db->query($sql);
+    return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+}
 
     public function enviarAlertaWhat($telefono, $tipo) {
         $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
@@ -191,5 +328,29 @@ class DescargasOficinaModel{
         }
 
         curl_close($curl);
+    }
+
+
+
+    public function validarRemesa($id_param, $descripcion, $id_nombre) {
+        // Configurar zona horaria a Bogotá
+        date_default_timezone_set('America/Bogota');
+        $fechatiempo = date('Y-m-d H:i:s'); // formato datetime
+        // Armamos la consulta
+        $sql = "UPDATE `gastos` 
+                SET `gas_descrecogio` = '$descripcion',
+                    `gas_nomvalida`  = '$id_nombre',
+                    `gas_fechavalida`= '$fechatiempo'
+                WHERE `idgastos` = '$id_param'";
+        //✅ valida remesa
+        $logPath = __DIR__ . '/log_consultasRemesas.txt'; // puedes cambiar el nombre/ruta si quieres
+        $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
+        file_put_contents($logPath, $logMessage, FILE_APPEND);
+        // Ejecutamos
+        $result = $this->db->query($sql);
+        $result = true;
+
+        // Retornamos true o false según el resultado
+        return $result ? true : false;
     }
 }
