@@ -605,6 +605,7 @@ if (@$actuliza == "si") {
 					$LT->llenaselect($sql,0,1, $valortservicio, $DB);
 		echo "</select>";
 		echo "</td>";
+		
 		if($valortservicio=='1000'){
 		echo "<td id='convenir'>";
 		echo '<input name="param101" id="param101" class="form-control" 0="" type="text" value="'.$rw[26].'" onkeypress="return noenter();">';

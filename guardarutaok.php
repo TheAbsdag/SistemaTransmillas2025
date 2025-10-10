@@ -10,7 +10,7 @@ if(isset($_POST["id_param"])) {$id_param=$_POST["id_param"]; } else { $id_param=
 if($condecion=='general'){  $tabla='General'; }
 $id_sedes=$_SESSION['usu_idsede'];
 $id_nombre=$_SESSION['usuario_nombre'];
-$param1=;
+$param1;
 switch($tabla)
 {
 	case "seguimientoruta":

@@ -516,8 +516,19 @@ function obtenerprecio(prekilo, preadicional,volumen,peso,prestamo,abono,pordecl
 function tipopago(valor, destino, div, nombre, profundidad, para)
 {
 	if (valor==1) {
-		document.getElementById("param10").required = true;
-		console.log("Peso obligatorio");
+		// Obtener el valor seleccionado al cargar la página
+		const param34 = document.getElementById("param34");
+		const valorparam34 = param34.value;
+
+		if (valorparam34 === "1000") {
+			console.log("Es a convenir");
+			// Aquí pones lo que quieres que pase
+		}else{
+			document.getElementById("param10").required = true;
+			console.log("Peso obligatorio");
+			alert("Verifica si este servicio tiene volumen antes de guardarr");
+		}
+
 	}else if (valor==2){
 		document.getElementById("param10").required = false;
 		console.log("Peso no obligatorio");
@@ -525,10 +536,7 @@ function tipopago(valor, destino, div, nombre, profundidad, para)
 		document.getElementById("param10").required = false;
 		console.log("Peso no obligatorio");
 	}
-if (valor==1) {
-	alert("Verifica si este servicio tiene volumen antes de guardarr");
 
-}
 	var valorprecio=document.getElementById("param35").value;
 	var valortservicio=document.getElementById("param34").value;
 	document.getElementById(div).innerHTML="";

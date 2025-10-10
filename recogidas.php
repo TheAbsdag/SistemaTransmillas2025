@@ -16,7 +16,7 @@ else {
 
 	</head>
 <body onLoad="llena_datos(0,<?php echo $nivel_acceso;?> , '', 'ASC'); 
- cambio_ajax2(0, 16, 'llega_sub1', 'param33', 1, <?php echo $param35;?>);
+ cambio_ajax2(0, 108, 'llega_sub1', 'param33', 1, <?php echo $param35;?>);
 ">
 <script>
 
@@ -83,7 +83,7 @@ $FB->abre_form("form1","","post");
 
 
 $FB->llena_texto("Fecha de Busqueda:", 34, 10, $DB, "", "", "$fechaactual", 1, 0);
-$FB->llena_texto("Sede :",35,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 $conde2 )", "cambio_ajax2(this.value, 16, \"llega_sub1\", \"param33\", 1, 0)", "$id_sedes",4, 0);
+$FB->llena_texto("Sede :",35,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 $conde2 )", "cambio_ajax2(this.value, 108, \"llega_sub1\", \"param33\", 1, 0)", "$id_sedes",4, 0);
 $FB->llena_texto("Operario:", 33, 444, $DB, "llega_sub1", "", "",1,0);
 $FB->llena_texto("Estado:",37,82,$DB,$estadosguias,"","$param37",4,0); 
 $FB->llena_texto("Busqueda por:",31,82,$DB,$busqueda,"",$param1,1,0);

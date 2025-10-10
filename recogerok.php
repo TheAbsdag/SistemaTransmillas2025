@@ -653,7 +653,7 @@ else if($param1=='ENTREGADO'){
 			$fechayhora=date("$fecha1 H:i:s");
 
 			
-		$sql1="UPDATE `servicios` SET `ser_estentrega`='$param1',ser_idverificadopeso=0,ser_fechafinal='$fechatiempo',ser_fechaguia='$fechatiempo', `ser_descentrega`='$param2',`ser_estado`='11',ser_descllamada='No entregado',ser_esatdollamando='',ser_img_evidencia='$img_evidencia', ser_fecha_evidencia ='$fechayhora' WHERE `idservicios`=$id_param2";
+		$sql1="UPDATE `servicios` SET `ser_estentrega`='$param1',ser_fechafinal='$fechatiempo',ser_fechaguia='$fechatiempo', `ser_descentrega`='$param2',`ser_estado`='11',ser_descllamada='No entregado',ser_esatdollamando='',ser_img_evidencia='$img_evidencia', ser_fecha_evidencia ='$fechayhora' WHERE `idservicios`=$id_param2";
 		
 		if($nivel_acceso==3){
 			

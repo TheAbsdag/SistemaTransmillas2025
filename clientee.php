@@ -57,4 +57,3 @@ $DB->conectar();
      }
 	echo "<li class=\"btn\"><a href=\"?pag=".$IncrimentNum."\">▶</a></li></ul>";
   
-}

@@ -341,6 +341,7 @@ if($nivel_acceso==6){
 						if($nivel_acceso==2){
 						echo "<td align='center' >";
 						echo "<p style='color: #808080;' >&nbsp;<i></i>&nbsp;Ver Foto Guia </p>";
+						echo"<button onclick='pop_dis5($id_p,\"Enviar Guia R\")' class='whatsapp-button'>Whatsapp</button>";
 						}else {
 						echo "<td align='center' >";
 						
@@ -402,6 +403,8 @@ if($nivel_acceso==6){
 						if($nivel_acceso==2){
 							echo "<td align='center' >";
 							echo "<p style='color: #808080;' >&nbsp;<i></i>&nbsp;Ver Foto Guia </p>";
+							echo"<button onclick='pop_dis5($id_p,\"Enviar Guia E\")' class='whatsapp-button'>Whatsapp</button>";
+
 							}else {
 								echo "<td align='center' >";
 								if ($fechaent<"2024-12-01") {
@@ -485,7 +488,7 @@ if($nivel_acceso==6){
 			
 			}
 
-	}else {
+}else {
 
 	$fechaactual=date('Y-m-d');	 
 	/*  $Querydrag_drop = ("SELECT  orden_idservicio FROM ord_recoentregas WHERE orden_iduserencargado =$id_usuario and orden_fechadiaejecucion ='$fechaactual' and ord_estado='Ordenado' order by orden asc ");
@@ -543,7 +546,7 @@ if($nivel_acceso==6){
 			include("preoperacional.php");
 		}  
 	//include("recogidasentregas.php");	
-  }
+}
   $FB->llena_texto("id_usuario", 1, 13, $DB, "", "", "$id_usuario", 5, 0);
 	 ?>
 

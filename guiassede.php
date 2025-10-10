@@ -92,8 +92,8 @@ if($param2!="" and $param1!=""){
 
 //SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,`ser_guiare`,ser_piezas FROM serviciosdia where ser_estado='6' and ser_idverificadopeso=1 and cli_idciudad in (1,15,16,17,18,19,29,37,47,55,71,72,77,79,82,83,84,85,89,90,91,96,97,100,103,105,107,108,109,110,112) ORDER BY ser_fechafinal ASC
 
-$sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,`ser_guiare`,ser_piezas 
- FROM serviciosdia  where ser_estado='6' and  ser_idverificadopeso=1  $conde1 $conde  $conde3 ORDER BY ser_fechafinal $asc ";
+ $sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,`ser_guiare`,ser_piezas 
+ FROM serviciosdia  where ser_estado='6' and  ser_idverificadopeso=1  $conde1 $conde  $conde3   ORDER BY ser_fechafinal $asc  ";
 
 $DB->Execute($sql); $va=0; 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -143,7 +143,7 @@ $DB->Execute($sql); $va=0;
 					<select class='form-select mb-3' name='tipoVehiculo' id='tipoVehiculo'  onchange=\"enviarDatos(this.value, '$idpieza')\">>
 					<option value=''>Seleccione el tipo de vehículo o situacion del paquete:</option>
 						<option value='Bus'" . ($transporta == "Bus" ? "selected" : "") . ">Bus</option>
-						<option value='Jurgon'" . ($transporta == "Jurgon" ? "selected" : "") . ">Jurgón</option>
+						<option value='Jurgon'" . ($transporta == "Jurgon" ? "selected" : "") . ">Furgón</option>
 						<option value='En escala temporal'" . ($transporta == "En escala temporal" ? "selected" : "") . "> En escala temporal</option>
 						<option value='Devuelto a centro de distribucion'" . ($transporta == "Devuelto a centro de distribucion" ? "selected" : "") . ">Devuelto a centro de distribucion</option>
 					</select></td>";
@@ -193,7 +193,7 @@ $DB->Execute($sql); $va=0;
 				<select class='form-select mb-3' name='tipoVehiculo' id='tipoVehiculo'  onchange=\"enviarDatos(this.value, '$idpieza')\">
 				<option value=''>Seleccione el tipo de vehículo o situacion del paquete:</option>
 					<option value='Bus'" . ($transporta == "Bus" ? "selected" : "") . ">Bus</option>
-					<option value='Jurgon'" . ($transporta == "Jurgon" ? "selected" : "") . ">Jurgón</option>
+					<option value='Jurgon'" . ($transporta == "Jurgon" ? "selected" : "") . ">Furgón</option>
 					<option value='En escala temporal'" . ($transporta == "En escala temporal" ? "selected" : "") . "> En escala temporal</option>
 					<option value='Devuelto a centro de distribucion'" . ($transporta == "Devuelto a centro de distribucion" ? "selected" : "") . ">Devuelto a centro de distribucion</option>
 				</select></td>";

@@ -104,6 +104,11 @@ if (strtolower($tipoPago) == "al cobro") {
     <h2>Por favor, Firma la Guía: <?php echo $_GET['idguia']; ?></h2><br>
 
     <h2 <?php echo $colorPago;?>>Pago: <?php echo $_GET['p']; ?>  <?php echo$textoPago;?></h2>
+        <p style='color:#c0392b; font-weight:bold; font-size:14px; line-height:1.4;'>
+        <br>
+        Aviso: Transmillas no se hace responsable por daños o suciedad en mercancías sin embalaje 
+        (ejemplo: colchones, vidrios u objetos frágiles). El embalaje es responsabilidad del cliente.
+        </p>
     <div class="content">
         <div id="canvas-container">
             <canvas id="canvas">

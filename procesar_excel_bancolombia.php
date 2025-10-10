@@ -37,9 +37,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Iterar sobre las filas
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $data = $sheet->rangeToArray('A' . $row . ':' . $sheet->getHighestColumn() . $row, null, true, false)[0];
+                    // Convertir fecha desde Excel (columna A)
+                    $fechaExcel = $data[0];
+                    $fechaSQL = '0000-00-00'; // valor por defecto en caso de error
 
+                    // Intentar convertir usando formato de fecha de Excel
+                    if (is_numeric($fechaExcel)) {
+                        $fechaPHP = PHPExcel_Shared_Date::ExcelToPHPObject($fechaExcel);
+                        $fechaSQL = $fechaPHP->format('Y-m-d');
+                    } elseif (is_string($fechaExcel)) {
+                        $fechaPHP = DateTime::createFromFormat('d-M-y', $fechaExcel); // ej: 29-jul-25
+                        if ($fechaPHP) {
+                            $fechaSQL = $fechaPHP->format('Y-m-d');
+                        }
+                    }
+
+                    $valorOriginal = $data[4];
+
+                    // Eliminar "COP", "$", espacios, puntos de mil y cambiar coma decimal por punto
+                    $valorLimpio = str_replace(['COP', '$', '.', ' '], '', $valorOriginal);
+                    $valorLimpio = str_replace(',', '.', $valorLimpio); // para MySQL decimal
                     // Asignar valores a los parámetros de la consulta
-                    $sql = "INSERT INTO `transbancolombia`(`Fecha`, `Descripcion`, `SucursalCanal`, `Referencia1`, `Referencia2`, `Documento`, `Valor`,`archivo`,`Factura`) VALUES ('$data[0]', '$data[1]', '$data[2]', '$data[3]', '$data[4]', '$data[5]', '$data[6]','$nombre_original','Sin facturar')";
+                    $sql = "INSERT INTO `transbancolombia`(`Fecha`, `Descripcion`, `SucursalCanal`, `Referencia1`, `Valor`,`archivo`,`Factura`) VALUES ('$fechaSQL', '$data[2]', '$data[1]', '$data[3]', '$valorLimpio','$nombre_original','Sin facturar')";
                     
                     // Ejecutar la consulta
                     $DB->Execute($sql);

@@ -195,7 +195,7 @@ thead.azul-blanco th {
 <div class="container-fluid mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
     <div class="card-header text-center mi-header">
-      <h3 class="mb-0">Descargas de Oficina</h3>
+      <h3 class="mb-0">Enviar Guias a Sede</h3>
     </div>
 
     <div class="card-body">
@@ -219,7 +219,7 @@ thead.azul-blanco th {
                 <?php endforeach; ?>
                 </select>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <label for="filtroOperador" class="form-label">Operador</label>
                 <select name="filtroOperador" id="filtroOperador" class="form-select" >
                 <option value="">Seleccione...</option>
@@ -227,8 +227,8 @@ thead.azul-blanco th {
                     <option value="<?= $c['idusuarios'] ?>"><?= $c['usu_nombre'] ?></option>
                 <?php endforeach; ?>
                 </select>
-            </div>
-            <div class="col-md-4">
+            </div> -->
+            <!-- <div class="col-md-4">
                 <label for="filtroCreditos" class="form-label">Creditos</label>
                 <select name="filtroCreditos" id="filtroCreditos" class="form-select" >
                 <option value="">Seleccione...</option>
@@ -236,7 +236,7 @@ thead.azul-blanco th {
                     <option value="<?= $c['idusuarios'] ?>"><?= $c['usu_nombre'] ?></option>
                 <?php endforeach; ?>
                 </select>
-            </div>
+            </div> -->
             <div class="col-md-4 text-end">
             <label class="form-label d-block invisible">Botón</label>
             <button class="btn btn-success text-white w-100" data-bs-toggle="modal" data-bs-target="#modalEscaneo">
@@ -244,12 +244,12 @@ thead.azul-blanco th {
             </button>
             </div>
            
-            <div class="col-md-4 text-end">
+            <!-- <div class="col-md-4 text-end">
             <label class="form-label d-block invisible">Botón</label>
             <button class="btn btn-primary text-white w-100" onclick="imprimirCodigos()">
                 <i class="bi bi-printer me-1"></i> Imprimir Códigos
             </button>
-            </div>
+            </div> -->
            
 
         </div>
@@ -286,47 +286,7 @@ thead.azul-blanco th {
     </div>
     
   </div>
-   <div class="card shadow p-3 mb-4 bg-body rounded">
-    <div class="card-header text-center mi-header">
-      <h3 class="mb-0">Remesas</h3>
-    </div>
 
-    <div class="card-body">
-
-      <div class="table-responsive">
-        <table id="tablaRemesasOficina" class="table table-hover table-bordered align-middle text-center">
-          <thead class="table-primary">
-            <tr>
-
-
-
-                
-                <th>Sede Origen</th>
-                <th>Sede Destino</th>
-                <th>Datos TR</th>
-                <th>Tel Conductor</th>
-                <th>Pagar en?</th>
-                <th>Descripcion</th>
-                <th>Peso</th>
-                <th>Piezas</th>
-                <th>Confirmo</th>
-                <th>Valor Aprobado</th>
-                <th>Fecha Confirmacion</th>
-                <th>Asigno Recogida</th>
-                <th>Fecha Recogida</th>
-                <th>Operario Recoge</th>
-                <th>Validar</th>
-                
-
-
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-    
-  </div>
 </div>
 
 <!-- Modal Validar Peso -->
@@ -334,7 +294,7 @@ thead.azul-blanco th {
   <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-lg-down">
     <form id="formValidarPeso" class="modal-content" enctype="multipart/form-data">
       <div class="modal-header mi-header">
-        <h5 class="modal-title" id="modalValidarPesoLabel">Validar Peso</h5>
+        <h5 class="modal-title" id="modalValidarPesoLabel">Enviar Guias</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
 
@@ -499,43 +459,43 @@ thead.azul-blanco th {
 <script src="https://unpkg.com/html5-qrcode"></script>   
 
 <script>
-$(document).ready(function () {
-  const tabla = $('#tablaDescargasOficina').DataTable({
-    ajax: {
-      url: '/nueva_plataforma/controller/DescargasOficinaController.php',
-      type: 'POST',
-      data: function (d) {
-        d.ajax = true;
-        d.fecha = $('#filtroFecha').val();
-        d.ciudad = $('#filtroCiudad').val();
-        d.operador = $('#filtroOperador').val();
-        d.creditos = $('#filtroCreditos').val();
+// $(document).ready(function () {
+//   const tabla = $('#tablaDescargasOficina').DataTable({
+//     ajax: {
+//       url: '/nueva_plataforma/controller/ValidarGuiasController.php',
+//       type: 'POST',
+//       data: function (d) {
+//         d.ajax = true;
+//         d.fecha = $('#filtroFecha').val();
+//         d.ciudad = $('#filtroCiudad').val();
+//         d.operador = $('#filtroOperador').val();
+//         d.creditos = $('#filtroCreditos').val();
         
-      },
-      dataSrc: ''
-    },
-    columns: [
-        { data: 'ser_fechafinal' },
-        { data: 'cli_nombre' },
-        { data: 'cli_direccion' },
-        { data: 'ser_destinatario' },
-        { data: 'ciu_nombre' },
-        { data: 'ser_direccioncontacto' },
-        { data: 'ser_paquetedescripcion' },
-        { data: 'ser_piezas' },
-        { data: 'usu_nombre' },
-        { data: 'ser_clasificacion' },
-        { data: 'ser_consecutivo' },
-        { data: 'ser_estado' },
-        {
-            data: 'idservicios',
-            render: function (data) {
-            return `<button class="btn btn-sm btn-warning pesar-paquete" data-id="${data}">
-                <i class="bi bi-box"></i> Pesar
-            </button>`;
+//       },
+//       dataSrc: ''
+//     },
+//     columns: [
+//         { data: 'ser_fechafinal' },
+//         { data: 'cli_nombre' },
+//         { data: 'cli_direccion' },
+//         { data: 'ser_destinatario' },
+//         { data: 'ciu_nombre' },
+//         { data: 'ser_direccioncontacto' },
+//         { data: 'ser_paquetedescripcion' },
+//         { data: 'ser_piezas' },
+//         { data: 'usu_nombre' },
+//         { data: 'ser_clasificacion' },
+//         { data: 'ser_consecutivo' },
+//         { data: 'ser_estado' },
+//         {
+//             data: 'idservicios',
+//             render: function (data) {
+//             return `<button class="btn btn-sm btn-warning pesar-paquete" data-id="${data}">
+//                 <i class="bi bi-box"></i> Pesar
+//             </button>`;
 
-            }
-        }
+//             }
+//         }
         
 
 
@@ -543,66 +503,18 @@ $(document).ready(function () {
         
 
  
-      ]
-  });
-   $('#filtroFecha, #filtroCiudad,#filtroOperador,#filtroCreditos').on('change', function () {
-    tabla.ajax.reload();
-  });
+//       ]
+//   });
+//    $('#filtroFecha, #filtroCiudad,#filtroOperador,#filtroCreditos').on('change', function () {
+//     tabla.ajax.reload();
+//   });
 
 
-  const tablaRemesas = $('#tablaRemesasOficina').DataTable({
-    ajax: {
-        url: '/nueva_plataforma/controller/DescargasOficinaController.php',
-        type: 'POST',
-        data: function (d) {
-        d.accion = 'buscarRemesas'; // 👈 ahora sí va por POST
-        d.fecha = $('#filtroFecha').val();
-        d.ciudad = $('#filtroCiudad').val();
-        d.operador = $('#filtroOperador').val();
-        },
-        dataSrc: function (json) {
-        console.log("Respuesta Remesas:", json);
-        return json;
-        }
-    },
-    columns: [
-        { data: 'sede_origen' },
-        { data: 'sede_destino' },
-        {
-        data: null,
-        render: function (data) {
-            return data.gas_empresa + ' ' + data.gas_bus;
-        }
-        },
-        { data: 'gas_telconductor' },
-        { data: 'gas_pagar' },
-        { data: 'gas_descripcion' },
-        { data: 'gas_peso' },
-        { data: 'gas_piezas' },
-        { data: 'gas_usucom' },
-        { data: 'gas_valor' },
-        
-        { data: 'gas_feccom' },
-        { data: 'gas_cantcom' },
-        { data: 'gas_fecrecogida' },
-        { data: 'usuario_recoge' },
-        {
-        data: 'idgastos',
-        render: function (data) {
-            return `<button class="btn btn-sm btn-success validar-remesa" data-id="${data}">
-                    <i class="bi bi-check2-circle"></i> Validar
-                    </button>`;
-        }
-        }
-    ]
-    });
-    $('#filtroFecha, #filtroCiudad,#filtroOperador').on('change', function () {
-    tablaRemesas.ajax.reload();
-  });
+  
 
  
 
-});
+// });
 
 
 
@@ -614,7 +526,7 @@ $(document).on('click', '.pesar-paquete', function () {
     $('#modalValidarPeso').modal('show');
 
   $.ajax({
-    url: '../controller/DescargasOficinaController.php',
+    url: '../controller/ValidarGuiasController.php',
     type: 'GET',
     data: { accion: 'buscarServicio', id: id },
     dataType: 'json',
@@ -792,7 +704,7 @@ $('#filtroCiudad').on('change', function () {
 
   if (ciudadId) {
     $.ajax({
-      url: '/nueva_plataforma/controller/DescargasOficinaController.php',
+      url: '/nueva_plataforma/controller/ValidarGuiasController.php',
       type: 'POST',
       data: {
         accion: 'listarOperadoresPorCiudad',
@@ -828,33 +740,35 @@ document.addEventListener("DOMContentLoaded", () => {
     lector.start(
       { facingMode: "environment" }, 
       { fps: 10, qrbox: { width: 250, height: 250 } },
-        codigo => {
+      codigo => {
         console.log("Código leído:", codigo);
         document.getElementById("resultado").innerText = "Leído: " + codigo;
 
-        // ✅ Extraer solo la guía del link
         let guia = null;
+        let pieza = null;
+
         try {
-            const params = new URL(codigo).searchParams;
-            guia = params.get("guia"); // ej: "BGT283634"
+          const params = new URL(codigo).searchParams;
+          guia = params.get("guia");   // ej: "BGT283634"
+          pieza = params.get("pieza"); // ej: "1"
         } catch (e) {
-            console.error("No es un link válido:", e);
+          console.error("No es un link válido:", e);
         }
 
-        if (guia) {
-            // ✅ detener lectura
-            lector.stop();
+        if (guia && pieza) {
+          lector.stop();
 
-            // ✅ cerrar modal de escaneo
-            const modalBootstrap = bootstrap.Modal.getInstance(modalEscaneo);
-            modalBootstrap.hide();
+          // Cerrar el modal
+          const modalBootstrap = bootstrap.Modal.getInstance(modalEscaneo);
+          modalBootstrap.hide();
 
-            // ✅ ejecutar la lógica con la guía
-            abrirModalValidarPeso(guia);
+          // 👉 Enviar por POST a otra página con ambos valores
+          enviarPorPOST('../../validaenviadaqr.php', { guia: guia, pieza: pieza });
+
         } else {
-            alert("No se pudo obtener la guía del código");
+          alert("No se pudo obtener la guía o la pieza del código");
         }
-        },
+      },
       error => {}
     ).catch(err => console.error("Error al iniciar cámara:", err));
   });
@@ -865,13 +779,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// ✅ Función para enviar por POST
+function enviarPorPOST(url, datos, abrirEnNuevaPestaña = false) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = url;
+
+  if (abrirEnNuevaPestaña) form.target = '_blank'; // Abre en nueva pestaña si lo deseas
+
+  for (const clave in datos) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = clave;
+    input.value = datos[clave];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+  form.remove();
+}
 // 🔹 Función que replica la lógica del click en .pesar-paquete
 function abrirModalValidarPeso(id) {
   $('#formValidarPeso')[0].reset();
   $('#modalValidarPeso').modal('show');
 
   $.ajax({
-    url: '../controller/DescargasOficinaController.php',
+    url: '../controller/ValidarGuiasController.php',
     type: 'GET',
     data: { accion: 'buscarServicioPorGuia', id: id },
     dataType: 'json',
@@ -964,72 +899,10 @@ function abrirModalValidarPeso(id) {
   });
 }
 
-$(document).on('click', '.validar-remesa', function () {
-    let id = $(this).data('id');
-
-    $('#formValidarRemesas')[0].reset();
-    $('#modalValidarRemesas').modal('show');
-    $('[name="id_param"]').val(id);
-    
-
-});
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("formValidarRemesas");
 
-  form.addEventListener("submit", function(e){
-    e.preventDefault(); // evita recarga
-
-    const formData = new FormData(form);
-
-    // Validaciones opcionales
-    const descripcion = formData.get("descripcion");
-    if (!descripcion) {
-      alert("Por favor debe escribir una descripción.");
-      return;
-    }
-
-    $.ajax({
-      url: "/nueva_plataforma/controller/DescargasOficinaController.php",
-      type: "POST",
-      data: formData,
-      contentType: false,
-      processData: false,
-      dataType: "json",
-      success: function(data) {
-        // Reiniciar formulario
-        form.reset();
-
-        // 🔄 Recargar DataTable
-        $('#tablaRemesasOficina').DataTable().ajax.reload(null, false);
-
-        // ✅ Cerrar el modal
-        $('#modalValidarRemesas').modal('hide');
-
-        alert("Datos enviados correctamente");
-      },
-      error: function(xhr, status, error) {
-        console.error("Error en la solicitud:", error);
-        alert("Error inesperado al guardar el servicio.");
-      }
-    });
-
-  });
-});
-  function imprimirCodigos() {
-    // Capturar valores de los filtros
-    let operario = document.getElementById("filtroOperador").value;
-    let fecha = document.getElementById("filtroFecha").value;
-    let ciudad = document.getElementById("filtroCiudad").value;
-    
-    
-    let destino = "../../phpqrcode/ticket3.php?param33=" + operario + "&param34=" + fecha + "&param36=" + ciudad + "&modulo=5";
-    
-    // abrir en nueva pestaña
-    window.open(destino, '_blank');
-  }
 </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 <?php
 require("login_autentica.php"); 
 // include("layout.php");
@@ -31,14 +32,14 @@ $precioinicialkilos=$_SESSION['precioinicial'];
   }
 </style>
 
-<form id="redirectForm" action="https://sistema.transmillas.com/nueva_plataforma/controller/ValidarGuiasController.php" method="post">
+<form id="redirectForm" action="https://historico.transmillas.com/nueva_plataforma/controller/EnviarGuiasController.php" method="post">
   <input type="hidden" name="acceso" value="<?= $nivel_acceso ?>">
   <input type="hidden" name="sede" value="<?= $id_sedes ?>">
   <input type="hidden" name="usuario" value="<?= $id_nombre ?>">
-  <input type="hidden" name="id_usuario" value="<?= $id_usuario ?>">
 </form>
 
 <script>
   // Enviar automáticamente el formulario al cargar la página
   document.getElementById("redirectForm").submit();
 </script>
+

@@ -72,7 +72,7 @@ $DB->Execute($sql); $va=0;
 
 		echo "<td>".$rw1[1]."</td>
 		<td>".$rw1[2]."</td>";
-				if($rw1[20]!=''){
+		if($rw1[20]!=''){
 			
 			 $sql2="SELECT `idcreditos` FROM `creditos` WHERE cre_nombre='$rw1[20]'";
 			$DB1->Execute($sql2);
@@ -110,7 +110,13 @@ $DB->Execute($sql); $va=0;
 			$sqlW="SELECT ser_num_whatsapp_crea,ser_img_whatsapp FROM `servicios` WHERE idservicios='$rw1[0]' ";
 			$DB1->Execute($sqlW);
 			$telW=mysqli_fetch_row($DB1->Consulta_ID);
-			$telWhatsapp="Tel: ".$telW[0]."";
+			if ($telW[0]!="") {
+				$telWhatsapp="Tel: ".$telW[0]."";
+			}else{
+				$telWhatsapp="";
+				$rw1[13]="AUTOMATICO";
+			}
+			
 			$imgWhatsapp=$telW[1];
 		}
 		echo"

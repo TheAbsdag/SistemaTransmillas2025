@@ -108,10 +108,7 @@ function validarllegada(des)
 
 var valorguia= document.getElementById("codigoEscaneado").value;
 
-//var operario= document.getElementById("param2").value;
-//var ciudado= document.getElementById("param1").value;
-//alert(des);
-//alert(valorguia);
+
 
 	var guia="";
 	var trueorfalse = false;
@@ -150,18 +147,15 @@ if(isset($_REQUEST["param1"])){ if($param1!=""){   $id_sedes=$param1; } } else {
  if($param2!=""){
 	  $conde1 ="and asi_idpromotor='$param2'";
 	  $condet1 ="and asi_idautoriza='$param2'";
-	 //$conde3="and (cue_idoperador='$param2'  or cue_idoperentrega='$param2')";
 	 $conde3="and (cue_idoperador='$param2'  or cue_idoperentrega='$param2' or cue_idoperpendiente='$param2')";
 	 $conde11="and ((gas_iduserremesa='$param2' AND gas_feccom like '$param4%' and gas_pagar='Sede Origen')  or (gas_iduserrecoge='$param2' AND gas_fechavalida like '$param4%' and gas_pagar='Sede Destino' and gas_nomvalida!=''))";
 	}
 	 else { $conde3="and cue_idoperador=0";}
 
 
-//if($param2!=""){ $conde1 ="and asi_idpromotor='$param2'";  $conde3="and ((cue_idoperador='$param2' and cue_fecharecogida like '$fechaactual%') or (cue_idoperentrega='$param2' and cue_fecha like '$fechaactual%') )";  } else { $conde3="and cue_idoperador=0"; }
 if($param4!=''){
 	 $conde1.=" and asi_fechaconf like '$param4%'";
 	 $condet1.=" and asi_fechaconf like '$param4%'";
-	// $conde11.=" and (gas_feccom like '$param4%' or gas_fecrecogida like '$param4%' )";
 	 $fechaactual=$param4;
 
 	} else {
@@ -230,7 +224,7 @@ while($rw23=mysqli_fetch_row($DB1->Consulta_ID))
 }
 
 
-//$FB->titulo_azul1("OPERADOR",1,0,7);
+
 $FB->titulo_azul1("VALIDAR",1,0,7);
 $FB->titulo_azul1("GUIAS",1,0,0);
 $FB->titulo_azul1("GUIA R",1,0,0);
@@ -281,7 +275,7 @@ $va6=0;
 	$descripcion=array();
 	$asi_idValida=array();
     $idasigna=array();
-	// $asi_tabla=array();
+	
 	$esgasto="nogasto";//jose armando
 	while($rw1=mysqli_fetch_row($DB1->Consulta_ID))
 	{
@@ -342,11 +336,22 @@ while($rw1=mysqli_fetch_row($DB1->Consulta_ID))
 $comprobados = array();
 $descargado = array();
 
-$sql1="SELECT `idcuentaspromotor`, `cue_validar`, `cue_numeroguia`, `cue_tipoevento`, `cue_idciudadori`, `cue_idciudaddes`, `cue_pordeclarado`,
-`cue_valorflete`,`cue_porprestamo`, `cue_prestamo`, `cue_idservicio`, `cue_idoperador`,  `cue_pordeclarado`, `cue_vrdeclarado`, `cue_valorflete`,
-`cue_abono`, `cue_tipopago`, `cue_fecha`, `cue_pendientecobrar`,cue_idoperentrega ,cue_fecharecogida,ser_guiare,ser_valorpendiente,cue_validado,
-cue_idservicio,cue_validadoentrega,cue_idoperpendiente,cue_fechapcobrar,cue_estado,cue_transferencia,ser_numerofactura,ser_pendientecobrar,`ser_confimgrec`,`ser_idverificado`
-FROM `cuentaspromotor`  inner join servicios on cue_idservicio=idservicios   WHERE  cue_estado<100  $conde3 order by ser_guiare ASC ";
+$sql1="SELECT `idcuentaspromotor`, `cue_validar`,
+`cue_numeroguia`, `cue_tipoevento`, `cue_idciudadori`,
+`cue_idciudaddes`, `cue_pordeclarado`,
+`cue_valorflete`,`cue_porprestamo`, `cue_prestamo`,
+`cue_idservicio`, `cue_idoperador`,  `cue_pordeclarado`,
+`cue_vrdeclarado`, `cue_valorflete`,
+`cue_abono`, `cue_tipopago`, `cue_fecha`, 
+`cue_pendientecobrar`,cue_idoperentrega ,
+cue_fecharecogida,ser_guiare,ser_valorpendiente,
+cue_validado,cue_idservicio,cue_validadoentrega,
+cue_idoperpendiente,cue_fechapcobrar,cue_estado,
+cue_transferencia,ser_numerofactura,ser_pendientecobrar,
+`ser_confimgrec`,`ser_idverificado`,ser_idverificadopeso,ser_estado 
+FROM `cuentaspromotor`  
+inner join servicios on cue_idservicio=idservicios   
+WHERE  cue_estado<100  $conde3 order by ser_guiare ASC ";
 
 $DB->Execute($sql1);
 $compras=array();
@@ -373,7 +378,7 @@ while($rw2=mysqli_fetch_row($DB->Consulta_ID))
 	$entregas=0;
 	$entregas2=0;
 	$id_p=$rw2[24];
-	
+	$numeroGuia=$rw2[2];
 	$por=1;
 	$rw2[20]=substr ($rw2[20], 0, -9);
 	$rw2[17]=substr ($rw2[17], 0, -9);
@@ -387,12 +392,7 @@ while($rw2=mysqli_fetch_row($DB->Consulta_ID))
     $cue_idoperentrega=$rw2[19];
 	
 
-	if ($rw2[33]=="" or $rw2[33]==0) {
-		$descargado[] = "no descargado";
-		
-	}else {
-		$descargado[] = "0";
-	}
+
 
 	$color4="";
 	$color6="";
@@ -424,8 +424,7 @@ if($rw2[18]==1  and (($rw2[11]==$param2 and $rw2[20]==$fechaactual) or ($rw2[26]
 	$recogida=0;
 	$por=1;
 	$impri=1;
-	//$rw2[18] pendienteporcobrar
-	//$rw2[19] cue_idoperentrega
+
 
 }else if($rw2[18]==2 and $rw2[26]==$param2 and $rw2[27]==$fechaactual) // pendiente por cobrar cobrada $rw2[18]=cue_pendientecobrar, $rw2[26]== cue_idoperpendiente  $rw2[27]=cue_fechapcobrar
 {
@@ -464,7 +463,7 @@ if($rw2[18]==1  and (($rw2[11]==$param2 and $rw2[20]==$fechaactual) or ($rw2[26]
 		$xcobrar=$rw2[6]+$rw2[7]-$rw2[15];
 		$xcancelar=$rw2[22];
 		$compras=$rw2[9];
-		//$prestamo=$rw2[8];
+		
 	}else {
 		$xcobrar=$rw2[6]+$rw2[7]-$rw2[15];
 		$compras=0;
@@ -568,12 +567,12 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 
 			}else if($rw2[16]=='Envio Oficina') {
 				$por=-1;
-				//$impri=0;		//$prestamo=0;
+				
 				$entregas2=$rw2[6]+$rw2[7];
 
 			}else {
 					$por=-1;
-					//$impri=0; 	//$prestamo=0;
+					
 					$entregas2=$rw2[6]+$rw2[7];
 			}
 
@@ -582,22 +581,16 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 	}
 
 
-	if($rw2[17]==$fechaactual and $rw2[19]==$param2){  //$rw2[19]=cue_fecha  $rw2[19]=cue_idoperentrega ENtregas
+	if($rw2[17]==$fechaactual and $rw2[19]==$param2){  
 
 		$impri=1;
 
-/* 		if($rw2[21]=='BGT60582'){
-			echo $entregas."pruebass";
-			echo $rw2[3];
-		} */
 
 		if($rw2[3]=='1'){  // decontado
 
 				if($rw2[16]=='Compra'){
 
-					//$rw2[15]=0;
-					//$prestamo=0;
-					//$entregas=$rw2[6]+$rw2[7];
+
 
 				}else {
 
@@ -620,9 +613,7 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 				$entregas=$rw2[6]+$rw2[7];
 			}
 
-		/* 	if($rw2[21]=='BGT60582'){
-				echo $entregas."prueba1";
-			} */
+
 
 		}
 
@@ -633,7 +624,6 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 	$recogida=0;
 	$xcobrar=$rw2[6]+$rw2[7]-$rw2[15];
 
-	//	$totalxcobrar=$totalxcobrar+$xcobrar;
 
 }
 
@@ -654,6 +644,21 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 
 
 	if($impri==1){
+	
+		//Verificar guias no Pesadas/descargadas 
+		if (($rw2[34] == "" || $rw2[34] == 0) and $rw2[35]<=6) {
+			$descargado[] = [
+				"estado" => "no descargado",
+				"numeroGuia" => $numeroGuia
+			];
+		} else {
+			$descargado[] = [
+				"estado" => "0",
+				"numeroGuia" => $numeroGuia
+			];
+		}
+
+
 		if($prestamo<=0 and $rw2[15]>=1 and $rw2[3]=='1' and $rw2[19]==$param2){ //$rw2[15] =abono
 
 			$faltante=$recogida+$entregas3-$rw2[15];
@@ -787,17 +792,7 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 							}
 
 							$comprobados[] = "0";
-							// $contfoto="<a href='https://sistema.transmillas.com/editarImg.php?img=".$fotorec."&guia=".$guiare."&idser=".$id_p."' target='_blank'>Ver✏️$confirma</a><br>-------<br><a href='del_admin.php?id_param=$guiasi[2]&tabla=Elimina Archivo2&ruta=$fotorec' title='Eliminar' 
-							// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'><i class='fa fa-trash-o'></i></a>";	
-				
-
-							// $contfoto="<a href='".$fotorec."' target='_blank'>Ver/a><br>-------<br><a href='del_admin.php?id_param=$guiasi[2]&tabla=Elimina Archivo2&ruta=$fotorec' title='Eliminar' 
-							// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'><i class='fa fa-trash-o'></i></a>";
-							
-							//Para el cambio de guias 
-							                    
-							// $contfoto="<a href='".$fotorec."&vis=adm' target='_blank'>Ver/a><br>-------<br><a href='del_admin.php?id_param=$guiasi[2]&tabla=Elimina Archivo2&ruta=$fotorec' title='Eliminar' 
-							// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'><i class='fa fa-trash-o'></i></a>";
+	
 						}
 				}elseif ($cue_idoperentrega==$param2){
 
@@ -834,14 +829,7 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 								}
 
 							    
-								// $contfoto="<a href='https://sistema.transmillas.com/editarImg.php?img=".$fotorec."&guia=".$guiare."&idser=".$id_p."' target='_blank'>Ver✏️ $confirma</a><br>-------<br><a href='del_admin.php?id_param=$guiasi[2]&tabla=Elimina Archivo2&ruta=$fotorec' title='Eliminar' 
-								// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'><i class='fa fa-trash-o'></i></a>";	
-								// $contfoto="<a href='".$fotorec."' target='_blank'>Ver</a><br>-------<br><a href='del_admin.php?id_param=$guiasi[2]&tabla=Elimina Archivo2&ruta=$fotorec' title='Eliminar' 
-								// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'><i class='fa fa-trash-o'></i></a>";	
-							//Para el cambio de guias 
-							                    
-							// $contfoto="<a href='".$fotorec."&vis=adm' target='_blank'>Ver/a><br>-------<br><a href='del_admin.php?id_param=$guiasi[2]&tabla=Elimina Archivo2&ruta=$fotorec' title='Eliminar' 
-							// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'><i class='fa fa-trash-o'></i></a>";
+	
 							}
 		
 				}
@@ -952,7 +940,7 @@ $descripremesa=$idremesas[$va4]."_gastos";
 
 		if($confirmaGasto[$va4]!=""){
 			$colorfondorem="#074f91"; $sirem="selected"; $norem="";
-			// $verselectrem="";
+			
 			$verselectrem="<td>
 			<div id='campo$idremesas[$va4]'>
 			<select  style='$verselectrem width:120px;border:1px solid #f9f9f9;background-color:$colorfondorem;color:#f9f9f9;font-size:15px'  name='$idremesas[$va4]' id='$idremesas[$va4]'   onChange='cambio_ajax2(this.value,802, \"campo".$idremesas[$va4]."\", \"$idremesas[$va4]\", 1, \"$descripremesa\" ); checkSelects();'    class='borrar' required>
@@ -962,7 +950,7 @@ $descripremesa=$idremesas[$va4]."_gastos";
 			</td>";
 		} else {
 			$colorfondorem="#941727"; $norem="selected"; $sirem="";
-			// $verselectrem="";
+			
 			$verselectrem="<td>
 			<div id='campo$idremesas[$va4]'>
 			<select  style='$verselectrem width:120px;border:1px solid #f9f9f9;background-color:$colorfondorem;color:#f9f9f9;font-size:15px'  name='$idremesas[$va4]' id='$idremesas[$va4]'   onChange='cambio_ajax2(this.value,802, \"campo".$idremesas[$va4]."\", \"$idremesas[$va4]\", 1, \"$descripremesa\" ); checkSelects();'    class='borrar' required>
@@ -972,7 +960,7 @@ $descripremesa=$idremesas[$va4]."_gastos";
 			</td>";
 		}
 	}else{
-		// $verselectrem="display: none;";
+		
 		$verselectrem="<td></td>";
 		
 
@@ -1007,18 +995,11 @@ $descripgasto=  $idasigna[$va4]."_$asi_tabla";
 	}
 
 	echo $html1[$va4]."<td align='center' ><a  onclick='pop_dis5($idremesas[$va4],\"remesas\")';  style='cursor: pointer;' title='Remesas' >$ ".@$remesas[$va4]."</td>";
-	// $LT->llenadocs2($DB1, "asignaciondinero", $idasignaciones[$va4], 1, 35, 1);
 	$LT->llenadocs2($DB, "gastos", $idremesas[$va4], 2, 35, 'Historico');
 	
 
-	echo$verselectrem;
-		// echo"<td>
-		// <div id='campo$idremesas[$va4]'>
-		// <select  style='$verselectrem width:120px;border:1px solid #f9f9f9;background-color:$colorfondorem;color:#f9f9f9;font-size:15px'  name='$idremesas[$va4]' id='$idremesas[$va4]'   onChange='cambio_ajax2(this.value,802, \"campo".$idremesas[$va4]."\", \"$idremesas[$va4]\", 1, \"$descripremesa\" ); checkSelects();'    class='borrar' required>
-		// <option value='NO' $norem>NO</option>
-		// <option value='SI' $sirem>SI</option>
-		// </select></td>
-		// </td>";
+
+
 		echo"<td align='center' ><a  onclick='pop_dis5($idtranspaso[$va4],\"asignar dinero\")';  style='cursor: pointer;' title='transpasos' >$ ".@$transpaso[$va4]."</td>
 		<td align='center' ><a  onclick='pop_dis5($idasignaciones[$va4],\"asignar dinero\")';  style='cursor: pointer;' title='Compras' >$ ".@$asignaciones[$va4]."</td>
 		<td>$ ".@$gastos[$va4]."</td>";
@@ -1029,11 +1010,6 @@ $descripgasto=  $idasigna[$va4]."_$asi_tabla";
 
 		";
 	echo "</tr>";
-	// $html.= "<td><div id='campo$va'>";
-	// if($rw1[10]!=""){ $st="SI"; $colorfondo="#074f91";  } else { $st="Selecccione..."; $colorfondo="#941727"; }
-	// $html.= " <select  style='width:120px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:15px'  name='$va' id='$va'   onChange='cambio_ajax2(this.value,78, \"campo$va\", \"$va\", 1, \"$descrip\")'    class='borrar' required>";
-	// $html.=$LT->llenaselect_re($st,$estados);
-	// $html.="</select></div></td>";
 
 }
 
@@ -1046,18 +1022,18 @@ $descripgasto=  $idasigna[$va4]."_$asi_tabla";
 	$totalremesas=number_format($totalremesas,0,".",".");
 	$totaltranspaso=number_format($totaltranspaso,0,".",".");
 
-//	$totalprestamo=number_format($totalprestamo,0,".",".");
+
 	$totalfantante=number_format($totalfantante,0,".",".");
 	$totalCancelar=number_format($totalCancelar,0,".",".");
 	$totalxcobrar=number_format($totalxcobrar,0,".",".");
 
 
 
-//$FB->titulo_azul1("TOTALES:",1,0,10);
+
 $FB->titulo_azul1(" $va3",1,0,10);
 $FB->titulo_azul1(" $va3",1,0,0);
 
-//$FB->titulo_azul1("$ $totalprestamo",1,0,0);
+
 
 $FB->titulo_azul1(" $va3",1,0,0);
 $FB->titulo_azul1("______________ ",1,0,0);
@@ -1104,16 +1080,12 @@ $DB1->Execute($slq4);
  $pagostoral=$DB1->recogedato(0);
 
 $saldopendiente=$prestamostotal-$pagostoral;
-//$valorenviar=0;
-//$saldopendiente=0;
+
 
 if($param2!=''){
 
-/* 	$sql5="SELECT `idusuarios`,`roles_idroles` FROM `usuarios` WHERE `idusuarios`='$param2' ";
-$DB->Execute($sql5);
-$iduser=$DB->recogedato(1); */
 
-// $slq12="SELECT sum(`ser_valorabono`) FROM `servicios` INNER JOIN guias ON idservicios=gui_idservicio where  gui_idusuario='$param2' and gui_fechacreacion like '$param4%' and ser_estado<100 ";
+
 $slq12="SELECT sum(abo_valor) FROM `abonosguias` WHERE abo_iduser='$param2' and abo_fecha like '$param4%' and `abo_estado`='abono'";
  $DB->Execute($slq12);
  $valorabono=$DB->recogedato(0);
@@ -1153,9 +1125,9 @@ $FB->titulo_azul1("_________",1,0,0);
 
 echo "<td colspan='1' width='0' align='center' ><a id='link' onclick='pop_dis6($param2,\"Devolucionescuentas\",\"$param4\")';  style='cursor: pointer;' title='Detalle Abonos' >$ $devoluciong</td>";
 }
-//SELECT `ser_valorabono`,ser_guiare FROM `servicios` INNER JOIN guias ON idservicios=gui_idservicio where gui_idusuario='218' and gui_fechacreacion like '2019-12-12%' and ser_estado<100 and ser_valorabono>0
+
 if($idrol!=3 and $param2!=''){
-//SELECT `idasignaciondinero`, `asi_idpromotor`, `asi_valor`, `asi_fecha`, `asi_idautoriza`, `asi_tipo`, `asi_idciudad`, `asi_descripcion` FROM `asignaciondinero` WHER
+
  $slq8="SELECT  sum(`asi_valor`) FROM `asignaciondinero` WHERE `asi_fecha`='$param4' and asi_idautoriza='$param2' and asi_tipo='entregado' and asi_idpromotor>0";
 $DB1->Execute($slq8);
  $dinerorecogido=$DB1->recogedato(0);
@@ -1232,28 +1204,15 @@ while($Rem=mysqli_fetch_row($DB1->Consulta_ID))
 
 
 $valorABuscar = "Subir Foto Guia";
-// print_r($comprobados);
+
 if($recoger==0 or $id_usuario==2){
 
-
-	// Comprobar si el valor está en el array
-	// if (in_array($valorABuscar, $comprobados)) {
-	// 	// existe en el array.";
-	// 	if ($credinom[2]=="CROYDON" or $credinom[2]=="SWISSJUST LATINOAMERICA") {
-	// 		$FB->titulo_azul1("Entregar",1,0,0);
-	// 		$FB->titulo_azul1("saldo",1,0,0);
-	// 		$FB->titulo_azul1("dia",1,0,0);
-	// 		$FB->titulo_azul1("<a onclick='pop_dis225($param2,\"Entregar valor\",$id_sedes,$valorenviar,$totalentregasinformatear)';  style='cursor: pointer;' title='Entregar valor' id='entregad' ><img src='img/usar.png'></a>", 1,0,0);
-	// 	}else{
-	// 		$FB->titulo_azul1("EL Operador aun tiene Guias SIN FOTO, por favor verifique!",1,0,0);
-
-	// 	}
-
-	// } else {
-	
-		$valorABuscar1 = "no descargado";
-		if (in_array($valorABuscar1, $descargado)) {
-			$FB->titulo_azul1("EL Operador aún tiene GUIAS SIN DESCARGAR por favor  Verifique!",1,0,0);
+		
+		$estados = array_column($descargado, "estado");
+        
+		if (in_array("no descargado", $estados)) {
+			$FB->titulo_azul1("EL Operador aún tiene GUIAS SIN DESCARGAR por favor  ¡Valide el PESO!",1,0,0);
+		   
 		}
 		elseif($remesasPendientes>0){
 			$FB->titulo_azul1("EL Operador aún tiene REMESAS PENDIENTES por favor  Verifique!",1,0,0);
@@ -1265,7 +1224,7 @@ if($recoger==0 or $id_usuario==2){
 			$FB->titulo_azul1("dia",1,0,0);
 			$FB->titulo_azul1("<a onclick='pop_dis225($param2,\"Entregar valor\",$id_sedes,$valorenviar,$totalentregasinformatear)';  style='cursor: pointer;' title='Entregar valor' id='entregad' ><img src='img/usar.png'></a>", 1,0,0);
 		}
-	// }
+
 }else{
 	$FB->titulo_azul1("EL Operador aún tiene GUIAS Asignadas POR RECOGER O ENTREGAR Verifique!",1,0,0);
 }
@@ -1354,6 +1313,25 @@ if ($remesasPendientes>0) {
 
 
 echo'<button id="myButton" style="display: none;">Submit</button>';
+
+	$estados = array_column($descargado, "estado");
+        
+	if (in_array("no descargado", $estados)) {
+		// Tu contador ya lo tienes hecho antes
+		echo '<div class="alert alert-danger" role="alert">';
+		echo '¡Hay '.$contsinpesar.' guías sin pesar, verifique!<br>';
+
+		// Recorremos el array $descargado
+		foreach ($descargado as $guia) {
+			if ($guia['estado'] === "no descargado") {
+				echo "Guía N°: " . $guia['numeroGuia'] . "<br>";
+			}
+		}
+
+		echo '</div>';
+	}
+	
+
 include("footer.php"); ?>
 
 

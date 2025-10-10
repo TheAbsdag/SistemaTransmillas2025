@@ -374,8 +374,46 @@ $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
 $pdf->Cell(40, 5, ''.$ajustesresB.'', 1);
 $pdf->Ln(); // Salto de línea
 
-// Lista 11
 $totaldeveng_formateado = number_format($totaldeveng, 0, ',', '.');
+$valorTotal=($totaldeveng+$ajustessumB)-($totaldeduccion+$ajustesresB);
+
+if (isset($_GET["otros"])) {
+    $otrsodv=$_GET["otros"];
+    $otrsodv_formateado = number_format($otrsodv, 0, ',', '.');
+    // Lista 11
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(60, 5, 'OTROS DEVENGOS', 1);
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(35, 5, ''.$otrsodv_formateado.'', 1);
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(55, 5, '', 1);
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(40, 5, '', 1);
+    $pdf->Ln(); // Salto de línea
+
+    $pagoSemanal=200000*2;
+    $pagoSemanal_formateado = number_format($pagoSemanal, 0, ',', '.');
+    // Lista 11
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(60, 5, 'PAGO FIJO SEMANAL', 1);
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(35, 5, ''.$pagoSemanal_formateado.'', 1);
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(55, 5, '', 1);
+    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+    $pdf->Cell(40, 5, '', 1);
+    $pdf->Ln(); // Salto de línea
+
+    $totaldeveng_formateado = number_format($totaldeveng+$otrsodv+$pagoSemanal, 0, ',', '.');
+    $valorTotal=($totaldeveng+$ajustessumB+$otrsodv+$pagoSemanal)-($totaldeduccion+$ajustesresB);
+
+}
+
+
+
+
+// Lista 11
+
 $totaldeduccion_formateado = number_format($totaldeduccion, 0, ',', '.');
 $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
 $pdf->Cell(60, 10, 'TOTAL DEVENGADO', 1);
@@ -393,7 +431,7 @@ $pdf->Ln(); // Salto de línea
 
 
 
-$valorTotal=($totaldeveng+$ajustessumB)-($totaldeduccion+$ajustesresB);
+
 $valorTotal_formateado = number_format($valorTotal, 0, ',', '.');
 $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
 $pdf->Cell(190, 10, 'TOTAL                                                                                                                    VALOR A PAGAR:  '.$valorTotal_formateado.'', 1);

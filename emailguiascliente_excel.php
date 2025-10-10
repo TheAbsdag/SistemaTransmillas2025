@@ -219,7 +219,7 @@ echo"<script>console.log('Se envio al correo');</script>";
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'ventastransmillas@gmail.com';
-        $mail->Password   = 'gega vsfg okti mpum'; // Usa la contraseña de app de Gmail
+        $mail->Password   = 'tpwv clpk qqdo dbgx'; // Usa la contraseña de app de Gmail
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 

@@ -518,7 +518,8 @@ $html .= "
         </tr>
         <tr>
         <th class='columna1'> SERVICIO:</th>
-        <td class='columna2'>$tiposervicio</td>
+        <td class='columna2'>$tiposervicio / Entrega de 24-48 horas</td>
+        
       </tr>";
       
       // echo"$rw[16] <= $precioinicialkilos";
@@ -655,6 +656,18 @@ $html .= " <tr><td colspan=2 class='columna3' >
 <br>consulte nuestra politica de contrato en www.transmillas.com/politica.php</p>
 </td>
 </tr>";
+$html .= "
+<tr>
+  <td colspan=2 class='columna3'>
+    <p style='color:#c0392b; font-weight:bold; font-size:14px; line-height:1.4;'>
+      <br>
+      Aviso: Transmillas no se hace responsable por daños o suciedad en <br> mercancías sin embalaje 
+      (ejemplo: colchones, vidrios u objetos <br> frágiles). El embalaje es responsabilidad del cliente.
+    </p>
+  </td>
+</tr>";
+
+
 
 if ($imprimir == "Recogida") {
 

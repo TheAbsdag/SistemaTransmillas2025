@@ -24,7 +24,7 @@ class FacturaMailer {
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'ventastransmillas@gmail.com';
-            $mail->Password   = 'gega vsfg okti mpum';
+            $mail->Password   = 'tpwv clpk qqdo dbgx';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 

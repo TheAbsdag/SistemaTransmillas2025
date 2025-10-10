@@ -127,9 +127,8 @@ if($param4=="1"){
 }else{
 	$conde4=" and ser_fechafinal<='$fecha 23:59:59'";
 }
-
-   $sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,`ser_guiare`,ser_estado,ser_descentrega,ser_fechafinal,ser_idasignacion
- FROM serviciosdia where ser_estado in (8,11) and ser_llego='SI'  $conde1 $conde3 $conde4   ORDER BY ser_estado,ser_fechafinal DESC ";
+$sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,`ser_guiare`,ser_estado,ser_descentrega,ser_fechafinal,ser_idasignacion
+ FROM serviciosdia where ser_estado in (8,11) and ser_llego='SI'  $conde1 $conde3 $conde4   ORDER BY ser_estado,ser_fechafinal DESC  ";
 
 $DB->Execute($sql); $va=0; 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))

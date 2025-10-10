@@ -25,19 +25,45 @@ if($param35!=''){ $id_sedes=$param35;
 	}	
 }
 echo $param38;
-if($param38!=''){  
-	echo "haaa";
-	$idcidadesdes=ciudadesedes($param38,$DB);
-	if($idcidadesdes=='0'){
-		$conde4="";
+// if($param38!=''){  
+	
+// 	$idcidadesdes=ciudadesedes($param38,$DB);
+// 	if($idcidadesdes=='0'){
+// 		$conde4="";
 
-	}else {
-	  $conde4=" and (ser_ciudadentrega in $idcidadesdes )"; 	
-	}	
+// 	}else {
+// 	  $conde4=" and (ser_ciudadentrega in $idcidadesdes )"; 	
+// 	}	
+// }
+if ($param38 != '') {
+    // Separar los IDs que llegan en la cadena
+    $ids = explode(',', $param38);
+
+    $ciudadesdes = [];
+
+    foreach ($ids as $id) {
+        $id = trim($id); // limpiar espacios
+        $resultado = ciudadesedes($id, $DB);
+
+        if ($resultado != '0') {
+            // Quitar los paréntesis que devuelve la función
+            $resultado = str_replace(['(', ')'], '', $resultado);
+            $ciudadesdes[] = $resultado; 
+        }
+    }
+
+    if (count($ciudadesdes) > 0) {
+        // Unir todos los resultados y encerrar en un solo par de paréntesis
+        $lista = implode(',', $ciudadesdes);
+        $conde4 = " AND ser_ciudadentrega IN ($lista)";
+    } else {
+        $conde4 = "";
+    }
 }
+if($param42=='NoRecibe'){ $conde5=" and (ser_llego !='SI' and ser_idverificadopeso !='1') or ser_estado='7'";   }else if($param42=='SiRecibe'){ $conde5=" and (ser_llego ='SI' )";   }
 	
-	
-$FB->titulo_azul1("Fecha Recogida ",1,0,7); 
+echo "<table class='table table-hover' ><tr bgcolor='#074F91' class='tittle3'><td colspan='0' width='0' align='center'>Trabajador <br>Todo<input type='checkbox' id='check_todos' onclick='seleccionarTodos()' ></td>";	
+$FB->titulo_azul1("Fecha Recogida ",1,0,0); 
 $FB->titulo_azul1("Fecha Entrega",1,0,0); 
 $FB->titulo_azul1("#Guia",1,0,0); 
 $FB->titulo_azul1("Pre-guia",1,0,0); 
@@ -60,6 +86,7 @@ $FB->titulo_azul1("Manifiesto-Codigo",1,0,0);
 
 $FB->titulo_azul1("Datos",1,0,0); 
 
+
 $conde1=""; 
 $conde3="and (cue_idoperador>0 )"; 
 
@@ -73,10 +100,11 @@ if($param32!="" and $param31!=""){
 //if($param8!=''){ $conde3 =" and $param8='$param9'"; }
 
 
-$sql="SELECT `idservicios`,cue_fecharecogida,`cue_fecha`,ser_consecutivo,ser_guiare,cue_tipoevento, `cue_valorflete`, `cue_prestamo`,`cue_porprestamo`,`cue_vrdeclarado`, `cue_pordeclarado`,  `cue_abono`,cue_tipopago,cue_validar,cue_usuvalido,ciu_nombre,ser_manifiesto,ser_peso
- FROM servicios inner join cuentaspromotor on cue_idservicio=idservicios inner join ciudades on ser_ciudadentrega=idciudades  where date(cue_fecharecogida)>='$fechaactual' and  date(cue_fecharecogida)<='$fechainicial' $conde $conde1 $conde2   $conde3 $conde4 ORDER BY ser_guiare  $asc ";
+$sql="SELECT `idservicios`,cue_fecharecogida,`cue_fecha`,ser_consecutivo,ser_guiare,cue_tipoevento, `cue_valorflete`, `cue_prestamo`,`cue_porprestamo`,`cue_vrdeclarado`, `cue_pordeclarado`,  `cue_abono`,cue_tipopago,cue_validar,cue_usuvalido,ciu_nombre,ser_manifiesto,ser_peso,ser_telefonocontacto
+ FROM servicios inner join cuentaspromotor on cue_idservicio=idservicios inner join ciudades on ser_ciudadentrega=idciudades  where date(cue_fecharecogida)>='$fechaactual' and  date(cue_fecharecogida)<='$fechainicial' $conde $conde1 $conde2   $conde3 $conde4 $conde5 ORDER BY ser_guiare  $asc ";
 
 $DB->Execute($sql); 
+
 $va=0; 
 $contsinpesar=0;
 $totalcontado=0;
@@ -99,11 +127,14 @@ if($param40=='' && $param41=''){
 	{
 		$id_p=$rw1[0];
 		$va++; $p=$va%2;
+		$telefonoDes=$rw1[18];
+		$consecutivo=$rw1[3];
 		if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
 		echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 		//$direc1=str_replace("&"," ", $rw1[4]);
 		//$direct2=str_replace("&"," ", $rw1[7]);
 
+		echo"<td align='center' ><input type='checkbox'  onchange='selecionado1($id_p,\"$telefonoDes\",\"$consecutivo\")' class='check_hijo' id='".$id_p."s1' value='$id_p'></td>";
 
 		echo "<td>".$rw1[1]."</td>
 		<td>".$rw1[2]."</td>
@@ -184,7 +215,7 @@ if($param40=='' && $param41=''){
 
 
 
-		echo "<td bgcolor='$colorflete' title='$texto'> $".$totales."</td><td> ".$rw1[12]."</td>
+		echo "<td bgcolor='$colorflete' title='$texto'>$".$totales."</td><td> ".$rw1[12]."</td>
 		";
 		$totalguias=$totales+$totalguias;
 		echo "<td> ".$rw1[15]."</td><td> ".$rw1[14]."</td>
@@ -197,8 +228,10 @@ if($param40=='' && $param41=''){
 		}
 
 		echo "<td align='center' ><a  onclick='pop_dis5($id_p,\"Recogidas\")';  style='cursor: pointer;' title='Recogidas' ><img src='img/recogidas.png'></a></td>";
+		
 		echo "</tr>"; 
 		
+
 		array_push($ids, $id_p);
 	}
 	

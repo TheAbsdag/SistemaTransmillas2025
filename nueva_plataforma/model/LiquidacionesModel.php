@@ -1,7 +1,7 @@
 <?php
 require_once "../config/database.php";
 
-class DescargasOficinaModel{
+class LiquidacionesModel{
     private $db;
 
     public function __construct() {
@@ -114,7 +114,7 @@ class DescargasOficinaModel{
         if ($ciudad!="") {
             $cond="and `usu_idsede`='$ciudad'"; 
         }
-        $sql = "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) $cond AND roles_idroles IN (2,3,5,8) ";
+        $sql = "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) $cond  ";
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }

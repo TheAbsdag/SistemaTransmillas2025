@@ -347,7 +347,7 @@ if($tipoguia=='sedes'){
 	$idfactura=$_REQUEST["idfactura"];
 
    $cond1="  fac_numeroref='$idfactura' ";
-    $sql4="SELECT count(*) FROM servicios  where $cond1 ";
+    $sql4="SELECT count(*) FROM facturascreditos  where $cond1 ";
 	$DB->Execute($sql4);
 	$rw1=mysqli_fetch_row($DB->Consulta_ID);
 	

@@ -2,12 +2,12 @@
 
 require_once "../model/layoutModel.php";
 
-$modelo = new serviciosAuto();
+$modelo = new menu();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     $fecha = $_POST['fecha'] ?? '';
     $tipo = $_POST['tipo'] ?? '';
-    $usuarios = $modelo->obtenerSerProgramados($fecha, $tipo);
+    // $usuarios = $modelo->obtenerSerProgramados($fecha, $tipo);
     echo json_encode($usuarios);
     exit;
 }
@@ -21,3 +21,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) 
     echo json_encode(['ok' => true]);
     exit;
 }
+$itemsMenu = $modelo->obtenerMenu();
+include "../view/layout/index.php";

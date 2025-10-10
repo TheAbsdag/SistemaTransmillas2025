@@ -38,11 +38,12 @@ if ($tabla == "Verificar Datos") {
     `ser_paquetedescripcion`, `ser_fechaentrega`,`ser_prioridad`,
     `ser_valorprestamo`, `ser_valorabono`, `ser_valorseguro`, 
     `idservicios`,cli_retorno,idclientesdir,ser_descllamada,
-    date(ser_fecharegistro),ser_clasificacion,ser_tipopaq,ser_valor,ser_piezas,ser_cotizacion 
+    date(ser_fecharegistro),ser_clasificacion,ser_tipopaq,ser_valor,ser_piezas,ser_cotizacion,gui_tiposervicio
     FROM servicios 
     inner join rel_sercli  on idservicios=ser_idservicio  
     inner join clientesservicios on idclientesdir=ser_idclientes 
     inner join clientes on idclientes=cli_idclientes  
+    inner join guias on idservicios=gui_idservicio
     where idservicios=$id_param ";
     $DB->Execute($sql);
     $rw = mysqli_fetch_array($DB->Consulta_ID);
@@ -3224,7 +3225,7 @@ print_r($pagadas);
          echo '<div class="messageruta">¡Que tenga un buen viaje! <a href="'.$url.'"  target="_blank">📍ir</a> </div>';
                                                     
          
-            $trans = "SELECT ser_visto,ser_estado,ser_consecutivo,ser_destinatario,ser_piezas,cli_idciudad,cli_nombre,ciu_nombre,ser_valor FROM serviciosdia  where idservicios =$idservicioguia";
+            $trans = "SELECT ser_visto,ser_estado,ser_consecutivo,ser_destinatario,ser_piezas,cli_idciudad,cli_nombre,ciu_nombre,ser_valor,ser_piezas FROM serviciosdia  where idservicios =$idservicioguia";
             $DB1->Execute($trans);
             $transp = mysqli_fetch_array($DB1->Consulta_ID);
             $va=1;
@@ -3256,7 +3257,9 @@ print_r($pagadas);
         
                 echo '</div>';
             }else if ($transp[1] == 9) {
-                echo '<div class="messageruta">#GUIA:  '.$transp[2].'  Piezas '.$transp[4].' </div>';
+                echo '<div class="messageruta">#GUIA:  '.$transp[2].' </div>';
+        		echo "<p><strong style='font-size:18px; color:#941727; font-weight:bold;'>PIEZAS: $transp[9]</strong></p>";
+
                 if ($transp[0] == 1) {
                     $st = "SI";
                     $colorfondo = "#074f91";
@@ -3316,13 +3319,38 @@ print_r($pagadas);
 }
 else if ($tabla == "Editar datos") {
 
-    $sql = "SELECT `idclientes`, `cli_iddocumento`, `cli_telefono`, `cli_email`, `cli_idciudad`, `cli_direccion`, `cli_nombre`, `cli_clasificacion`,`ser_telefonocontacto`, `ser_destinatario`, `ser_direccioncontacto`,`ser_ciudadentrega`, `ser_tipopaquete`, `ser_paquetedescripcion`, `ser_fechaentrega`,`ser_prioridad`,  `ser_valorprestamo`, `ser_valorabono`, `ser_valorseguro`, `idservicios`,cli_retorno,idclientesdir,ser_idusuarioguia FROM 
-			serviciosdia  where idservicios=$id_param";
+    $sql = "SELECT 
+        `idclientes`,
+        `cli_iddocumento`,
+        `cli_telefono`,
+        `cli_email`, 
+        `cli_idciudad`, 
+        `cli_direccion`, 
+        `cli_nombre`, 
+        `cli_clasificacion`,
+        `ser_telefonocontacto`, 
+        `ser_destinatario`, 
+        `ser_direccioncontacto`,
+        `ser_ciudadentrega`, 
+        `ser_tipopaquete`, 
+        `ser_paquetedescripcion`, 
+        `ser_fechaentrega`,
+        `ser_prioridad`,  
+        `ser_valorprestamo`, 
+        `ser_valorabono`, 
+        `ser_valorseguro`, 
+        `idservicios`,
+        cli_retorno,
+        idclientesdir,
+        ser_idusuarioguia 
+    FROM serviciosdia  
+    where idservicios=$id_param";
+
     $DB1->Execute($sql);
     $rw = mysqli_fetch_array($DB1->Consulta_ID);
     $blo = 0;
     $blo2 = "";
-
+    $bloC = 1; 
     @$param4 = $rw[4];
     if ($nivel_acceso != 1) {
         $cond6 = " WHERE inner_sedes='$id_sedes' and inner_estados=1";
@@ -3332,6 +3360,7 @@ else if ($tabla == "Editar datos") {
     if ($rw[22] != 0) {
         $blo = 2;
         $blo2 = "disabled";
+        $bloC = 2; 
     }
 
     $FB->titulo_azul1("Remitente", 10, 0, 5);
@@ -3344,7 +3373,13 @@ else if ($tabla == "Editar datos") {
     echo " <input name='param6' id='param6' class='trans'  type='text' value='$rw[6]' onkeypress='return noenter();' $blo2>
 		</div></td>";
 
-    $FB->llena_texto("Ciudad:", 4, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $blo);
+    if ($bloC == 2) {
+        $FB->llena_texto("Ciudad:", 00, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $bloC);
+        echo'<input type="hidden" id="param4" name="param4" value="'.$param4.'">';
+    }else {
+        $FB->llena_texto("Ciudad:", 4, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, 0);
+
+    }
 
     @$direcc = explode("&", $rw[5]);
     @$param5 = $direcc[0];
@@ -3379,8 +3414,13 @@ else if ($tabla == "Editar datos") {
     $FB->llena_texto("Tel&eacute;fono:", 28, 120, $DB, "", "", "*****", 17, 1);
     $FB->llena_texto("param8", 1, 13, $DB, "", "", $rw[8], 5, 0);
     $FB->llena_texto("Nombre:", 9, 1, $DB, "", "", $rw[9], 17, 1);
-    $FB->llena_texto("Ciudad:", 11, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades`  where inner_estados=1)", "", "$rw[11]", 1, 1);
-
+    if ($nivel_acceso!=1) {
+        $FB->llena_texto("Ciudad:", 0, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades`  where inner_estados=1)", "", "$rw[11]", 1, "disabled");
+         echo'<input type="hidden" id="param11" name="param11" value="'.$rw[11].'">';
+    }else{
+        $FB->llena_texto("Ciudad:", 11, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades`  where inner_estados=1)", "", "$rw[11]", 1, 0);
+    }
+   
     @$direcc2 = explode("&", $rw[10]);
     @$param10 = $direcc2[0];
     @$param101 = $direcc2[1];
@@ -3786,15 +3826,28 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
         $nomcobro= $pagada2[0];
     }
 
-    
+    $FB->titulo_azul1("Comentarios", 10, 0, 5);
+
+    $sqlP = "SELECT desc_valida_guia_llega,img_pieza_llega,numeropieza FROM piezasguia WHERE numeroguia='$rw[23]'";
+    $DB->Execute($sqlP);
+    while ($infPiez = mysqli_fetch_row($DB->Consulta_ID)){
+        echo "<tr bgcolor='#FFFFFF' >";
+        if ($infPiez[1]!="") {
+           echo" <td>Pieza: " . $infPiez[2] . "</td>
+            <td>" . $infPiez[0] . "</td>";
+            if ($infPiez[1]!="") {
+                echo "<td><a href='imgServicios/" . $infPiez[1] . "' target='_blank'>ver</a></td>";
+            }else {
+                echo "<td></td>";
+            }
+        
+        }
+        echo "</tr>";
+
+    }
 
 
-    // if ($rw[43]==1) {
-    //     $pendi="";
-    //  }else {
-    //     $pendi="";
-    
-    //  }
+
     $pagoconta="";
     $pagoalco="";
     $FB->titulo_azul1("Pago", 10, 0, 5);
@@ -3886,9 +3939,9 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     $FB->llena_texto("param37", 1, 13, $DB, "", "", "$tipo", 5, 0);
     $FB->llena_texto("id_param", 1, 13, $DB, "", "", $id_param, 5, 0);
     
-} else if ($tabla == "validapeso") {
+} else if ($tabla == "validapeso"){
 
-    $sql = "SELECT `ser_peso`,`ser_valor`,`ser_pendientecobrar`,`ser_clasificacion`,ser_volumen,ser_descripcion,ser_guiare,ser_ciudadentrega FROM `servicios` WHERE `idservicios`=$id_param";
+    $sql = "SELECT `ser_peso`,`ser_valor`,`ser_pendientecobrar`,`ser_clasificacion`,ser_volumen,ser_descripcion,ser_guiare,ser_ciudadentrega,ser_telefonocontacto,cli_telefono FROM `serviciosdia` WHERE `idservicios`=$id_param";
     $DB->Execute($sql);
     $rw = mysqli_fetch_array($DB->Consulta_ID);
     if ($nivel_acceso != 1) {
@@ -3922,6 +3975,16 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     $FB->llena_texto("FOTO GUIA", 10, 60, $DB, "", "", "$idmagen", 1, 0);
     $FB->llena_texto("VERIFICADO:", 3, 5, $DB, "", "", "", 1, 1);
 
+    if ($rw[3]==2) {
+        $slqc = "SELECT `idrelsercre`, `idservicio`, `rel_nom_credito`  FROM `rel_sercre`  WHERE idservicio=$id_param";
+        $DB1->Execute($slqc);
+        $cre=mysqli_fetch_row($DB1->Consulta_ID);
+        
+        $FB->titulo_azul1("Credito	", 8, 0, 5);
+        echo "<tr><td>Cedito</td><td><input type='radio' name='credito' id='credito' align='left'  value='1' checked  disabled >SI  $cre[2]</td></tr>";
+		
+    }
+    
 
     if ($rw[3] == 1 and $rw[2] == 0) {
         $clasificacion = 1;
@@ -5030,7 +5093,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     $FB->titulo_azul1("Quien?",1,0,0);
     $FB->titulo_azul1("Fecha",1,0,0);  
     $FB->titulo_azul1("# pieza",1,0,0);  
-    $sql3="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,ser_piezas,`ser_guiare`,numeropieza,ser_estado, `transporta`,`quien_escanea`,fecha_escanea FROM serviciosdia inner join piezasguia on ser_consecutivo=numeroguia where  ser_guiare like '%$id_param%' ORDER BY numeropieza ASC";
+    $sql3="SELECT  `transporta`,`quien_escanea`,fecha_escanea,numeropieza FROM piezasguia  where  numeroguia like '%$id_param%' ORDER BY numeropieza ASC";
 
     $DB1->Execute($sql3);  
    
@@ -5039,12 +5102,12 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     {
         echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 
+            echo "<td>$id_param</td>";
+            echo "<td>".$rw3[0]."</td>";
             echo "<td>$rw3[1]</td>";
-            echo "<td>$rw3[11]</td>";
-            echo "<td>$rw3[12]</td>";
-            echo "<td>$rw3[13]</td>";
-            echo "<td>$rw3[9]</td>";
-  
+            echo "<td>$rw3[2]</td>";
+            echo "<td>$rw3[3]</td>";
+            echo "</tr>";
      } 
 
 }else if ($tabla == "Reporte_de_nomina"){
@@ -5281,6 +5344,69 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
         <a class="btn btn-primary btn-lg" href="#" onclick=\'aceptarCompa(' .$idCompa. ',' .$idSeg. '); return false;\'>Confirmar</a>
         </div>';
         
+}elseif ($tabla=="Notificacion_Whatsapp") {
+    print_r($myArray);
+    $fechaactual = date("Y-m-d");
+    $FB->titulo_azul1("Mensajes para clientes",1,0,7); 
+        echo '
+        <tr>
+        <td class="text"><label>Mensaje </label></td>
+        </tr>
+        <tr>
+        <td class="text">
+            <textarea id="mensajeFijo" readonly rows="4" cols="40">Transmillas le informa
+        Queremos informarle que su 🚚 encomienda #_____ se encuentra
+            </textarea>
+        </td>
+        </tr>
+
+        <tr>
+        <td class="text"><label>Continuación del mensaje</label></td>
+        </tr>
+        <tr>
+        <td class="text">
+            <textarea id="mensajeExtra" rows="4" cols="40" placeholder="Escriba aquí la continuación..."></textarea>
+        </td>
+        </tr>
+        ';
+   
+    if (isset($_GET['ide'])) {
+        // Decodifica el parámetro 'ide' de JSON a un array PHP
+        $myArray = json_decode(urldecode($_GET['ide']), true);
+
+        // Verifica que $myArray es realmente un array
+        if (is_array($myArray)) {
+            // Imprime la estructura del array para depuración
+            // Genera la tabla
+             echo '<table border="1">';
+             echo '<th>Conductor</th><th>Numero Whatsapp</th>';
+             $zona="Bogota";
+            foreach ($myArray as $dato) {
+               
+                $sql2="SELECT `condid`, `cond_nombre`, `cond_celular`, `cond_whatsapp`, `cond_cedula`, `cond_foto_celula`, `cond_num_licen`, `cond_foto_licen`, `cond_foto_conductor`, `cond_firma`,con_antec FROM `conductor_mani` where condid='$dato'  ";
+                
+                $DB1->Execute($sql2); 
+                // $iddoc=$DB1->recogedato(0);
+                $rw1=mysqli_fetch_row($DB1->Consulta_ID);
+                echo "<tr><td>$rw1[1]</td><td>$rw1[2]</td></tr>";
+                if ($rw1) {
+                    // id, contacto, consecutivo, telefono
+                    $fileNames[] = [$rw1[0],"",$zona,$rw1[3]]; // Agrega el resultado al nuevo array
+                }
+            }
+            echo '</table>';
+            
+        } else {
+            // echo "El dato recibido no es un array.";
+        }
+    } else {
+        // echo "No se recibió ningún dato.";
+    }
+    echo '<tr><td><a class="btn btn-primary btn-lg" href="#" onclick=\'sendWhatsapp(); return false;\'>Enviar</a></td></tr>';
+
+    
+    echo'<div id="loading"  style="display: none;">
+    <img src="images/loading.gif" alt="Cargando..."></div>';
 }
 
 

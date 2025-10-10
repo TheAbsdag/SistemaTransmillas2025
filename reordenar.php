@@ -70,6 +70,15 @@ $id_usuario = $_SESSION['usuario_id'];
         .inactivo {
             background-color: red;
         }
+        .orden-boton {
+        display: inline-block;
+        padding: 4px 10px;
+        background-color: #17a2b8; /* celeste/azul suave */
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 20px; /* tipo pastilla */
+        }
     </style>
    
 
@@ -225,8 +234,12 @@ $id_usuario = $_SESSION['usuario_id'];
         $ordenultimo++;
     }
 
-    $Querydrag_drop = ("SELECT  orden_idservicio,orden_iduserencargado,orden_id,orden,ord_estado,ord_tipo FROM ord_recoentregas WHERE orden_iduserencargado =$id_usuario and orden_fechadiaejecucion ='$fechaactual' order by orden asc ");
+    $Querydrag_drop = ("SELECT  orden_idservicio,orden_iduserencargado,orden_id,orden,ord_estado,ord_tipo, ser_consecutivo, ser_piezas FROM ord_recoentregas INNER JOIN servicios on idservicios=orden_idservicio WHERE orden_iduserencargado =$id_usuario and orden_fechadiaejecucion ='$fechaactual' order by orden asc ");
     $DB->Execute($Querydrag_drop);
+
+    // if ($nivel_acceso==1) {
+    //      echo$Querydrag_drop;
+    // }
     ?>
 
 
@@ -310,6 +323,9 @@ $id_usuario = $_SESSION['usuario_id'];
 
                 <div id="<?php echo $dataDrag_Drop['orden_id']; ?>" class="<?php echo $clasesse; ?>" data-index="<?php echo $dataDrag_Drop['orden_id']; ?>" data-position="<?php echo $orden1; ?>">
                     <li class="ui-state-default"><?php echo "<span class='numeros'>$orden1</span>";
+                                                    if ($dataDrag_Drop['ord_tipo'] == 'Entrega') {
+                                                        echo "<span class='orden-boton'>" . $dataDrag_Drop['ser_consecutivo']. " / Piezas".$dataDrag_Drop['ser_piezas']."</span>";
+                                                    }
                                                     echo "<span class='hora'>" . $dataDrag_Drop['ord_tipo'] . $hora . "</span>";
                                                     echo "<span class='orden'> " . $dataDrag_Drop['ord_estado'] . "</span>";
                                                     echo $dir;

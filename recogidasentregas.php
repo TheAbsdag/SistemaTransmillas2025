@@ -48,7 +48,7 @@ function alertaDinero(){
 			$conde1 = "";
 
 			$sql = "SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`,`cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,
- `ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_estado,ser_visto,usu_nombre,`ser_fechaasignacion`,`ser_consecutivo`,ser_valorprestamo,ser_guiare
+ `ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_estado,ser_visto,usu_nombre,`ser_fechaasignacion`,`ser_consecutivo`,ser_valorprestamo,ser_guiare,ser_piezas
  FROM serviciosdia inner join usuarios on ser_idresponsable=idusuarios   where ser_estado in (3,9) $conde3  and  idservicios='$idservicio' ORDER BY ser_fechaentrega $asc ";
 
 			$DB->Execute($sql);
@@ -80,7 +80,6 @@ function alertaDinero(){
 					echo "<p  align='left'>RECOGIDA: $rw1[1]<br>";
 					echo "CLIENTE: $rw1[2]<br>";
 					echo "TELÉFONO: *********<br></p>";
-
 					echo "<div class='alert alert-info'>DIRECCIÓN: $rw1[4]</div>";
 					echo "<p  align='left'>DESTINATARIO: $rw1[5]<br>";
 					//echo "TELÉFONO: $rw1[6]<br>";
@@ -108,6 +107,7 @@ function alertaDinero(){
 					echo "<div class='alert alert-info'>DIRECCIÓN: $rw1[7]</div>";
 					echo "<p  align='left'>DESTINATARIO: $rw1[5]<br>";
 					echo "TELÉFONO: *********<br>";
+					echo "<p><strong style='font-size:18px; color:#941727; font-weight:bold;'>PIEZAS: $rw1[17]</strong></p>";
 					echo "CIUDAD: $rw1[8]<br>";
 					echo "Pre GUIA: $rw1[16]<br>";
 					echo "GUIA: $rw1[14]<br></p>";

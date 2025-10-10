@@ -1696,7 +1696,12 @@ ORDER BY hoj_nombre ASC";
 					}
 					$totaldevengado=$valordediastrabajados+$totalauxilio+$valorDiasIncapadidad+$valorDiasVacaciones;
 					$totaldeduccion=$valorSalud+$valorPension+$restaABasico+$totaldeduccion;
-					$rutaDeComproBas="desprendibleBasico.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaactual&fechafin=$fechafinal&cuenta=&diastrabajados=$diassitrabajoParaMostrar&sueldo=$valordediastrabajados&auxilitrans=$totalauxilio&pagdiasinca=$valorDiasIncapadidad&totaldeveng=$totaldevengado&salud=$valorSalud&pension=$valorPension&prestamos=$restaABasico&totaldeduccion=$totaldeduccion&confirmado=$validadoDesprendible&diasIncapacidad=$diasincapacidad&firma=$rw1[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=$diasVacaciones&sede=$rw1[7]&valorAjuste=$valorAjusteB&tipoAjuste=$tipoAjusteB&descripcionAjuste=$descripcionAjusteB&descriprestamos=$descripcionBasico";
+					if ($rw1[5]=="1073711329") {
+						$prov="&otros=$totalOtrosDias";
+					}else {
+						$prov="";
+					}
+					$rutaDeComproBas="desprendibleBasico.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaactual&fechafin=$fechafinal&cuenta=&diastrabajados=$diassitrabajoParaMostrar&sueldo=$valordediastrabajados&auxilitrans=$totalauxilio&pagdiasinca=$valorDiasIncapadidad&totaldeveng=$totaldevengado&salud=$valorSalud&pension=$valorPension&prestamos=$restaABasico&totaldeduccion=$totaldeduccion&confirmado=$validadoDesprendible&diasIncapacidad=$diasincapacidad&firma=$rw1[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=$diasVacaciones&sede=$rw1[7]&valorAjuste=$valorAjusteB&tipoAjuste=$tipoAjusteB&descripcionAjuste=$descripcionAjusteB&descriprestamos=$descripcionBasico".$prov."";
 					$tabla.="<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
 					<button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarCuenCobro\",\"Basico\")' id='Basico".$idusuario."guardarCuenCobro'>$textEnviar</button>
 					<input  type='checkbox' id='Basico".$idusuario."confirmaAdmin1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdmin\",\"Basico\",1)' $cheked1>

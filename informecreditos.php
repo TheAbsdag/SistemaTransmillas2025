@@ -229,7 +229,7 @@ if($nivel_acceso==1){
 echo "<td><button type='button' class='btn btn-warning' onclick='llena_datos(2, $nivel_acceso, \"id_nombre\", \"ASC\");'>Consultar Facturas</button></td>
 <td><button type='button' class='btn btn-primary' onclick='crearfaactura();'>Crear Factura Externa</button>
 <button type='button' class='btn btn-success' onclick='llena_datos(3, $nivel_acceso, \"id_nombre\", \"ASC\");'>Crear PRE-Factura</button></td></tr>";
-
+$aumento=0;
 $sqlalert="SELECT DISTINCT rs.rel_nom_credito FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$inicio' AND '$fin' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito";
 $DB1->Execute($sqlalert);
 while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
@@ -244,8 +244,8 @@ if ($aumento>0) {
     }
 $sqlPre="SELECT `idfacturascreditos` FROM `facturascreditos` WHERE date(fac_fechafactura)>='2024-01-01' and date(fac_fechafactura)<='$fin' and fac_estado='Pre-Facturado' ORDER BY fac_numeroref ASC";
 $DB1->Execute($sqlPre);
-while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
-                    $preFacturasN.=" ".$rw1[0];
+while ($rw2 = mysqli_fetch_row($DB1->Consulta_ID)) {
+                    $preFacturasN.=" ".$rw2[0];
                     $aumentoPre++;
 }
     if ($aumentoPre>0) {

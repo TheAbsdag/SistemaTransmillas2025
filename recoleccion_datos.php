@@ -474,7 +474,7 @@ $FB->llena_texto("Tel&eacute;fonos :",2, $tcampot, $DB, "", "", $rw[2], 4, 1);
 	
 
 // $FB->llena_texto("Ciudad:",4,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` )", "", "$param4", 4, 1);
-$FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1  order by idciudades)", "buscarservicio(param11.value,this.value,param113.value,\"Recogida\");", "$param4", 4, 1);
+$FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1  order by idciudades)", "buscarservicio(param11.value,this.value,param113.value,\"Recogida\",$rw[29]);", "$param4", 4, 1);
 
 //$FB->llena_texto("Direccion:",5, 1, $DB, "", "", $rw[5], 1, 0);
 
@@ -522,7 +522,7 @@ echo " <input name='param9' id='param9' class='trans'  type='text' value='$rw[9]
 </div></td>";
 
 // $FB->llena_texto("Ciudad:",11,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades`  where inner_estados=1)", "", "$rw[11]", 4, 1);
-$FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1  order by ciu_nombre )","buscarservicio(param4.value,this.value,param113.value,\"Recogida\");","$rw[11]",4,1);
+$FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1  order by ciu_nombre )","buscarservicio(param4.value,this.value,param113.value,\"Recogida\",$rw[29]);","$rw[11]",4,1);
 
 //$FB->llena_texto("Direccion del Contacto:",10, 1, $DB, "", "", $rw[10], 4, 1);
 

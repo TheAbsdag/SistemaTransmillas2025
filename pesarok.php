@@ -37,7 +37,7 @@ $rw = mysqli_fetch_row($DB->Consulta_ID);
 @$preciokilo=$rw[1];
 @$precioadicional=$rw[2];
  @$serciudad=$param16;
-//$id_ciudad="";
+
 $llego="";
 if(@$serciudad>0){
 
@@ -88,11 +88,6 @@ if($_FILES["param10"]!=''){
 
  }
 
-/* if($clasificacion==1){
-  $sql1="UPDATE `servicios` SET ser_descripcion='$param2',ser_idverificadopeso='$param3',ser_volumen='$param4',ser_idverificado='$id_usuario',`ser_estado`='$estado', ser_visto=0,ser_guiare='$param6',`ser_fechafinal`='$fechatiempo' $llego WHERE `idservicios`=$id_param2";
-//@$precio=$param4;	
- }
-else { */
 
  $kilosvolumen=$param1+$param4;
  $clasificacion=$_REQUEST["clasificacion"];
@@ -170,13 +165,7 @@ $sqlop="SELECT cue_idoperador FROM `cuentaspromotor` WHERE cue_idservicio='$id_p
 		$rwop=mysqli_fetch_row($DB->Consulta_ID); 
 		$rwop[0];
 
-/* echo $sql22="UPDATE `cuentaspromotor` SET  cue_estado='$estado' where cue_idservicio=$id_param2";
-$DB1->Execute($sql22);	 */
 
-	
-/*  $sql="INSERT INTO `cuentaspromotor`(`idcuentaspromotor`, `cue_idservicio`, `cue_porprestamo`, `cue_prestamo`, `cue_pordeclarado`, `cue_totalprestamo`, `cue_totalflete`, `cue_totalfinal`, `cue_abono`, `cue_vrdeclarado`, `cue_tipopago`) 
- VALUES ('','$id_param2',[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11])";
- $DB1->Execute($sql); */
  
 
 }else {
@@ -198,7 +187,7 @@ $DB1->Execute($sql22);	 */
 	}
 }	
 
-echo$sql4 = "SELECT `idclientes`,`ser_telefonocontacto`,`cli_telefono`,ser_consecutivo FROM serviciosdia where idservicios='$id_param2'  ";
+$sql4 = "SELECT `idclientes`,`ser_telefonocontacto`,`cli_telefono`,ser_consecutivo FROM serviciosdia where idservicios='$id_param2'  ";
 $DB->Execute($sql4);
  $rw1=mysqli_fetch_row($DB->Consulta_ID); 
  $telefono=$rw1[1];

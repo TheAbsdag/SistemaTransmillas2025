@@ -1,11 +1,31 @@
+<?php 
+if (!isset($_GET['sede']) || !isset($_GET['acceso'])) {
+    echo "<script>
+            alert('No tiene acceso a esta página');
+            window.close(); // cierra la pestaña
+          </script>";
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Transmillas - Web</title>
+
+  
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- jQuery (antes que DataTables) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -102,10 +122,10 @@
       ?>
       <?php
         
-        require_once "../../model/layoutModel.php";
+        // require_once "../../model/layoutModel.php";
 
-        $menuClass = new menu();
-        $itemsMenu = $menuClass->obtenerMenu();
+        // $menuClass = new menu();
+        // $itemsMenu = $menuClass->obtenerMenu();
       ?>
 
       <nav class="col-auto col-lg-2 sidebar d-flex flex-column p-3" id="sidebar">
@@ -113,7 +133,7 @@
           <ul class="nav flex-column gap-2">
               <?php foreach ($itemsMenu as $item): ?>
                   <li class="nav-item">
-                      <a class="nav-link" href="#" onclick="cargarContenido('<?php echo $item['men_url']; ?>')">
+                      <a class="nav-link" href="#" onclick="cargarContenido('../controller/DescargasOficinaController.php?acceso=1&sede=1')">
                           <?php echo htmlspecialchars($item['men_nombre']); ?>
                       </a>
                   </li>

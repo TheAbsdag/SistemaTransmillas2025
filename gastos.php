@@ -108,11 +108,38 @@ if($nivel_acceso!=3){
 if($nivel_acceso==1){
 	$FB->titulo_azul3("Acciones",2,0,2,$param_edicion);
 	}
-
-  $sql="SELECT `idgastos`, `gas_fecharegistro`, `usu_nombre`, `gas_idciudadori`, `sed_nombre`, `gas_empresa`, `gas_bus`, `gas_telconductor`,`gas_pagar`,`gas_iduserremesa`, `gas_nomremesa`,
-  `gas_descripcion`,`gas_peso`,`gas_piezas`,`gas_valor`,gas_usucom,gas_cantcom,gas_feccom ,gas_idciudaddes,gas_iduserrecoge,gas_recogio,gas_entrego,gas_fecrecogida,`gas_descrecogio`, `gas_nomvalida`, `gas_fechavalida`
-  FROM `gastos` inner join usuarios on gas_idusuario=idusuarios inner join sedes on idsedes=gas_idciudaddes
-   WHERE idgastos>0  $conde1 $conde2 $conde3 ORDER BY idgastos asc";
+echo$sql="SELECT `idgastos`,
+		`gas_fecharegistro`, 
+		`usu_nombre`, 
+		`gas_idciudadori`, 
+		`sed_nombre`, 
+		`gas_empresa`, 
+		`gas_bus`, 
+		`gas_telconductor`,
+		`gas_pagar`,
+		`gas_iduserremesa`, 
+		`gas_nomremesa`,
+		`gas_descripcion`,
+		`gas_peso`,
+		`gas_piezas`,
+		`gas_valor`,
+		gas_usucom,
+		gas_cantcom,
+		gas_feccom ,
+		gas_idciudaddes,
+		gas_iduserrecoge,
+		gas_recogio,
+		gas_entrego,
+		gas_fecrecogida,
+		`gas_descrecogio`, 
+		`gas_nomvalida`, 
+		`gas_fechavalida`
+		FROM `gastos` 
+		inner join usuarios on gas_idusuario=idusuarios 
+		inner join sedes on idsedes=gas_idciudaddes
+		WHERE idgastos>0  
+		$conde1 $conde2 $conde3 
+		ORDER BY idgastos asc";
 $DB1->Execute($sql); $va=0;
 while($rw1=mysqli_fetch_row($DB1->Consulta_ID))
 {

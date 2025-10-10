@@ -195,19 +195,30 @@ thead.azul-blanco th {
 <div class="container-fluid mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
     <div class="card-header text-center mi-header">
-      <h3 class="mb-0">Descargas de Oficina</h3>
+      <h3 class="mb-0">Liquidaciones</h3>
     </div>
 
     <div class="card-body">
         <div class="row mb-3 align-items-end">
-            <div class="col-md-4">
-                <label for="filtroFecha" class="form-label">📅 Fecha</label>
-                <input type="date" id="filtroFecha" value="<?= date('Y-m-d') ?>" class="form-control" />
-            </div>
+        <div class="col-md-4">
+            <label for="filtroAnio" class="form-label">📅 Año</label>
+            <select id="filtroAnio" name="anio" class="form-control">
+                <?php
+                    $anioActual = date('Y');
+                    $anioInicio = 2020; // puedes poner desde donde quieres que empiece el listado
+                    $anioFin = $anioActual; // o puedes poner un rango fijo si lo prefieres
+                    
+                    for ($i = $anioInicio; $i <= $anioFin; $i++) {
+                        $selected = ($i == $anioActual) ? 'selected' : '';
+                        echo "<option value='$i' $selected>$i</option>";
+                    }
+                ?>
+            </select>
+        </div>
 
             <!-- Ciudad -->
             <div class="col-md-4">
-                <label class="form-label">Ciudad (*)</label>
+                <label class="form-label">Sede (*)</label>
                 <select name="filtroCiudad" id="filtroCiudad" class="form-select" >
                 <option value="">Seleccione...</option>
                 <?php foreach($ciudades as $c): ?>
@@ -220,7 +231,7 @@ thead.azul-blanco th {
                 </select>
             </div>
             <div class="col-md-4">
-                <label for="filtroOperador" class="form-label">Operador</label>
+                <label for="filtroOperador" class="form-label">Empleado</label>
                 <select name="filtroOperador" id="filtroOperador" class="form-select" >
                 <option value="">Seleccione...</option>
                 <?php foreach($operadores as $c): ?>
@@ -228,26 +239,18 @@ thead.azul-blanco th {
                 <?php endforeach; ?>
                 </select>
             </div>
-            <div class="col-md-4">
-                <label for="filtroCreditos" class="form-label">Creditos</label>
-                <select name="filtroCreditos" id="filtroCreditos" class="form-select" >
-                <option value="">Seleccione...</option>
-                <?php foreach($creditos as $c): ?>
-                    <option value="<?= $c['idusuarios'] ?>"><?= $c['usu_nombre'] ?></option>
-                <?php endforeach; ?>
-                </select>
-            </div>
+
             <div class="col-md-4 text-end">
             <label class="form-label d-block invisible">Botón</label>
             <button class="btn btn-success text-white w-100" data-bs-toggle="modal" data-bs-target="#modalEscaneo">
-                <i class="bi bi-qr-code-scan me-1"></i> Escanear Guía
+                <i class="bi bi-qr-code-scan me-1"></i> boton 1
             </button>
             </div>
            
             <div class="col-md-4 text-end">
             <label class="form-label d-block invisible">Botón</label>
             <button class="btn btn-primary text-white w-100" onclick="imprimirCodigos()">
-                <i class="bi bi-printer me-1"></i> Imprimir Códigos
+                <i class="bi bi-printer me-1"></i> Boton 2
             </button>
             </div>
            
@@ -262,19 +265,18 @@ thead.azul-blanco th {
 
 
                 
-                <th>📆 Fecha</th>
-                <th>Remitente</th>
-                <th>Direcci&oacute;n</th>
-                <th>Destinatario</th>
-                <th>Ciudad</th>
-                <th>Direcci&oacute;n</th>
-                <th>Descripci&oacute;n</th>
-                <th>Piezas</th>
-                <th>Mensajero</th>
-                <th>Pago</th>
-                <th># Guia</th>
-                <th>Estado</th>
-                <th>Pesar</th>
+                <th>Nombre</th>
+                <th>Cédula</th>
+                <th>Contrato</th>
+                <th>Cargo</th>
+                <th>Salario</th>
+                <th>Auxilio</th>
+                <th>Dias trabajados</th>
+                <th>Dias no trabajados</th>
+                <th>Días Prima</th>
+                <th>Total Prima</th>
+                <th>Confirmado</th>
+                <th>Pagado</th>
                 
 
 
@@ -286,47 +288,7 @@ thead.azul-blanco th {
     </div>
     
   </div>
-   <div class="card shadow p-3 mb-4 bg-body rounded">
-    <div class="card-header text-center mi-header">
-      <h3 class="mb-0">Remesas</h3>
-    </div>
 
-    <div class="card-body">
-
-      <div class="table-responsive">
-        <table id="tablaRemesasOficina" class="table table-hover table-bordered align-middle text-center">
-          <thead class="table-primary">
-            <tr>
-
-
-
-                
-                <th>Sede Origen</th>
-                <th>Sede Destino</th>
-                <th>Datos TR</th>
-                <th>Tel Conductor</th>
-                <th>Pagar en?</th>
-                <th>Descripcion</th>
-                <th>Peso</th>
-                <th>Piezas</th>
-                <th>Confirmo</th>
-                <th>Valor Aprobado</th>
-                <th>Fecha Confirmacion</th>
-                <th>Asigno Recogida</th>
-                <th>Fecha Recogida</th>
-                <th>Operario Recoge</th>
-                <th>Validar</th>
-                
-
-
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-    
-  </div>
 </div>
 
 <!-- Modal Validar Peso -->
@@ -500,42 +462,42 @@ thead.azul-blanco th {
 
 <script>
 $(document).ready(function () {
-  const tabla = $('#tablaDescargasOficina').DataTable({
-    ajax: {
-      url: '/nueva_plataforma/controller/DescargasOficinaController.php',
-      type: 'POST',
-      data: function (d) {
-        d.ajax = true;
-        d.fecha = $('#filtroFecha').val();
-        d.ciudad = $('#filtroCiudad').val();
-        d.operador = $('#filtroOperador').val();
-        d.creditos = $('#filtroCreditos').val();
+//   const tabla = $('#tablaDescargasOficina').DataTable({
+//     ajax: {
+//       url: '/nueva_plataforma/controller/DescargasOficinaController.php',
+//       type: 'POST',
+//       data: function (d) {
+//         d.ajax = true;
+//         d.fecha = $('#filtroFecha').val();
+//         d.ciudad = $('#filtroCiudad').val();
+//         d.operador = $('#filtroOperador').val();
+//         d.creditos = $('#filtroCreditos').val();
         
-      },
-      dataSrc: ''
-    },
-    columns: [
-        { data: 'ser_fechafinal' },
-        { data: 'cli_nombre' },
-        { data: 'cli_direccion' },
-        { data: 'ser_destinatario' },
-        { data: 'ciu_nombre' },
-        { data: 'ser_direccioncontacto' },
-        { data: 'ser_paquetedescripcion' },
-        { data: 'ser_piezas' },
-        { data: 'usu_nombre' },
-        { data: 'ser_clasificacion' },
-        { data: 'ser_consecutivo' },
-        { data: 'ser_estado' },
-        {
-            data: 'idservicios',
-            render: function (data) {
-            return `<button class="btn btn-sm btn-warning pesar-paquete" data-id="${data}">
-                <i class="bi bi-box"></i> Pesar
-            </button>`;
+//       },
+//       dataSrc: ''
+//     },
+//     columns: [
+//         { data: 'ser_fechafinal' },
+//         { data: 'cli_nombre' },
+//         { data: 'cli_direccion' },
+//         { data: 'ser_destinatario' },
+//         { data: 'ciu_nombre' },
+//         { data: 'ser_direccioncontacto' },
+//         { data: 'ser_paquetedescripcion' },
+//         { data: 'ser_piezas' },
+//         { data: 'usu_nombre' },
+//         { data: 'ser_clasificacion' },
+//         { data: 'ser_consecutivo' },
+//         { data: 'ser_estado' },
+//         {
+//             data: 'idservicios',
+//             render: function (data) {
+//             return `<button class="btn btn-sm btn-warning pesar-paquete" data-id="${data}">
+//                 <i class="bi bi-box"></i> Pesar
+//             </button>`;
 
-            }
-        }
+//             }
+//         }
         
 
 
@@ -543,62 +505,62 @@ $(document).ready(function () {
         
 
  
-      ]
-  });
-   $('#filtroFecha, #filtroCiudad,#filtroOperador,#filtroCreditos').on('change', function () {
-    tabla.ajax.reload();
-  });
+//       ]
+//   });
+//    $('#filtroFecha, #filtroCiudad,#filtroOperador,#filtroCreditos').on('change', function () {
+//     tabla.ajax.reload();
+//   });
 
 
-  const tablaRemesas = $('#tablaRemesasOficina').DataTable({
-    ajax: {
-        url: '/nueva_plataforma/controller/DescargasOficinaController.php',
-        type: 'POST',
-        data: function (d) {
-        d.accion = 'buscarRemesas'; // 👈 ahora sí va por POST
-        d.fecha = $('#filtroFecha').val();
-        d.ciudad = $('#filtroCiudad').val();
-        d.operador = $('#filtroOperador').val();
-        },
-        dataSrc: function (json) {
-        console.log("Respuesta Remesas:", json);
-        return json;
-        }
-    },
-    columns: [
-        { data: 'sede_origen' },
-        { data: 'sede_destino' },
-        {
-        data: null,
-        render: function (data) {
-            return data.gas_empresa + ' ' + data.gas_bus;
-        }
-        },
-        { data: 'gas_telconductor' },
-        { data: 'gas_pagar' },
-        { data: 'gas_descripcion' },
-        { data: 'gas_peso' },
-        { data: 'gas_piezas' },
-        { data: 'gas_usucom' },
-        { data: 'gas_valor' },
+//   const tablaRemesas = $('#tablaRemesasOficina').DataTable({
+//     ajax: {
+//         url: '/nueva_plataforma/controller/DescargasOficinaController.php',
+//         type: 'POST',
+//         data: function (d) {
+//         d.accion = 'buscarRemesas'; // 👈 ahora sí va por POST
+//         d.fecha = $('#filtroFecha').val();
+//         d.ciudad = $('#filtroCiudad').val();
+//         d.operador = $('#filtroOperador').val();
+//         },
+//         dataSrc: function (json) {
+//         console.log("Respuesta Remesas:", json);
+//         return json;
+//         }
+//     },
+//     columns: [
+//         { data: 'sede_origen' },
+//         { data: 'sede_destino' },
+//         {
+//         data: null,
+//         render: function (data) {
+//             return data.gas_empresa + ' ' + data.gas_bus;
+//         }
+//         },
+//         { data: 'gas_telconductor' },
+//         { data: 'gas_pagar' },
+//         { data: 'gas_descripcion' },
+//         { data: 'gas_peso' },
+//         { data: 'gas_piezas' },
+//         { data: 'gas_usucom' },
+//         { data: 'gas_valor' },
         
-        { data: 'gas_feccom' },
-        { data: 'gas_cantcom' },
-        { data: 'gas_fecrecogida' },
-        { data: 'usuario_recoge' },
-        {
-        data: 'idgastos',
-        render: function (data) {
-            return `<button class="btn btn-sm btn-success validar-remesa" data-id="${data}">
-                    <i class="bi bi-check2-circle"></i> Validar
-                    </button>`;
-        }
-        }
-    ]
-    });
-    $('#filtroFecha, #filtroCiudad,#filtroOperador').on('change', function () {
-    tablaRemesas.ajax.reload();
-  });
+//         { data: 'gas_feccom' },
+//         { data: 'gas_cantcom' },
+//         { data: 'gas_fecrecogida' },
+//         { data: 'usuario_recoge' },
+//         {
+//         data: 'idgastos',
+//         render: function (data) {
+//             return `<button class="btn btn-sm btn-success validar-remesa" data-id="${data}">
+//                     <i class="bi bi-check2-circle"></i> Validar
+//                     </button>`;
+//         }
+//         }
+//     ]
+//     });
+//     $('#filtroFecha, #filtroCiudad,#filtroOperador').on('change', function () {
+//     tablaRemesas.ajax.reload();
+//   });
 
  
 

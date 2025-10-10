@@ -668,10 +668,23 @@ $activo=true;
                              </li>
                              <?php      
                          }elseif($nivel_acceso==3){
-                            
+
+                            $resultado = procesarSeguimiento($id_usuario, $DB, $DB1);
+                            $mensaje   = $resultado['mensaje'];
+                            $opcion    = $resultado['opcion'];
+                            $accion    = $resultado['accion'];
 
                             ?>
-
+                            <li>
+                                <a href="javascript:void(0);" 
+                                onclick="seguimientoruta2('<?= $mensaje ?>','<?= $opcion ?>','<?= $accion ?>')">
+                                    
+                                    <span>
+                                        Me dirijo a
+                                        <i id="notif23"><?= $remesascomfirmar ?></i>
+                                    </span>
+                                </a>
+                            </li>
                             <li >
                                 <a href="gastos.php?idmen=194" ><i class="glyphicon glyphicon-bell"></i><span>Remesas 
                                     <i id='notif23'>
@@ -902,20 +915,7 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
                 </a>";
             }
  
-        else if($link=="chatTransmillas.php" ){
-            $sql1 = "SELECT COUNT(*)FROM `salasChatTransmillas` WHERE sl_id_deReceptor ='$id_usuario'and sl_numMensajes='1' ";
-            $DB1->Execute($sql1); 
-            $numMensajes=$DB1->recogedato(0);
-            echo'<input type="hidden"  id="mensajesN" value="'.$numMensajes.'">';
-                    echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
-                    $LT->llenadocs1($DB_m1, "Menu", $id_menu, 1, 15, 1);
-                    echo "<span > $rw_m[0] ";
-            echo ' <div class="notichat" id="notichat">'.$numMensajes.'</div>';
-            echo "</span>
-            </a>";
-            
-
-        }else if($link=="confirmacioncambios.php" && $id_sedes==1){
+        else if($link=="confirmacioncambios.php" && $id_sedes==1){
             $sql1 = "SELECT count(*) FROM `modificaciones` WHERE mod_userverificado='' ";
             $DB1->Execute($sql1); 
             $canttrancambios=$DB1->recogedato(0);
@@ -992,11 +992,97 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
             echo "</ul></li>";
             $va++;
     } 
+     if($link=="EnviarGuiasaSede.php" and $activo== false){
+
+                    echo "<li  class='$class'><a href='$link' title='$rw_m[3]'>";
+                    $LT->llenadocs1($DB_m1, "Menu", $id_menu, 1, 15, 1);
+                    echo "<span > $rw_m[0] ";
+            
+            echo "</span>
+            </a>";
+            
+
+        }
 
 } 
 
 
+function procesarSeguimiento($id_usuario, $DB, $DB1) {
+    // Fecha actual
+    $fechaactual = date('Y-m-d');	 
+    
+    // --- Consultar compañero ---
+    $compañero = "SELECT seg_compañero 
+                  FROM seguimiento_user 
+                  WHERE seg_fechaalcohol LIKE '$fechaactual%'  
+                  AND seg_idusuario = '$id_usuario'";
 
+    $DB1->Execute($compañero); 
+    $rwcom = mysqli_fetch_row($DB1->Consulta_ID);
+    $compa = $rwcom[0] ?? "";
+
+    if ($compa != "") {
+        $condeCom = "(seg_idusuario ='$id_usuario' OR seg_idusuario ='$compa')";
+    } else {
+        $condeCom = "seg_idusuario ='$id_usuario'"; 
+    }
+
+    // --- Consultar pre-operacional ---
+    $preoper = "SELECT idpreoperacinal 
+                FROM `pre-operacional` 
+                WHERE prefechaingreso LIKE '$fechaactual%' 
+                AND preidusuario = $id_usuario";
+
+    $DB->Execute($preoper);
+    $preop = $DB->recogedato(0);
+
+    // --- Consultar estado de guía ---
+    $idestadoguia = "SELECT CONCAT(seg_estado,'|',seg_direccion,'|',seg_tipo,'|',seg_idservicio) AS id 
+                     FROM seguimientoruta 
+                     WHERE $condeCom 
+                     AND seg_fecha LIKE '%$fechaactual%' 
+                     AND seg_estado != 'Cambioruta' 
+                     ORDER BY seg_fechaestado DESC 
+                     LIMIT 1";
+
+    $DB->Execute($idestadoguia);
+    $estadoguia = $DB->recogedato(0);
+
+    // --- Procesar resultado ---
+    $datos = explode("|", $estadoguia);
+    $estadoguia = $datos[0] ?? "";
+    $direccion = $datos[1] ?? "";
+    $tipo = $datos[2] ?? "";
+    $idservicioruta = $datos[3] ?? "";
+
+    // --- Preparar retorno ---
+    $direccion = addslashes($direccion); // Escapar comillas
+    $mensaje = $direccion;
+
+    if ($estadoguia == 'completado' || $tipo == 'opcionruta') {
+        $opcion = 1;
+        $accion = "seguimientoruta";
+    } else if ($estadoguia == "En ruta") {
+        $opcion = 2;
+        $accion = "cambiarruta";
+    } else {
+        $opcion = 1;
+        $accion = "seguimientoruta";
+    }
+
+    // Devolver array con valores
+    return [
+        "mensaje"        => $mensaje,
+        "opcion"         => $opcion,
+        "accion"         => $accion,
+        "estado"         => $estadoguia,
+        "direccion"      => $direccion,
+        "tipo"           => $tipo,
+        "idservicioruta" => $idservicioruta,
+        "preoper"        => $preop,
+        "compa"          => $compa
+    ];
+}
 
 ?>
 

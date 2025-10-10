@@ -66,7 +66,20 @@ if($tipo==1){
 	}
 
 	if($nivel_acceso==9 or $nivel_acceso==10 or $nivel_acceso==1){
-	$sql9="SELECT count(*) as faltantes  FROM servicios  where ser_estado in (7) and ser_llego!='SI' and ser_fechafinal<='$fechaactual%'";	
+	// Crear objeto de fecha con zona horaria de Bogotá
+	$fecharesta = new DateTime("now", new DateTimeZone("America/Bogota"));
+	// Restar 3 días
+	$fecharesta->modify("-3 days");
+	// Mostrar la fecha en formato YYYY-MM-DD
+	$fechaLimite = $fecharesta->format("Y-m-d");
+
+	$sql9="SELECT 
+	count(*) as faltantes  
+	FROM serviciosdia  
+	WHERE (ser_estado IN (7) OR (ser_estado > 4 AND ser_estado < 7)) 
+	AND ser_llego != 'SI' 
+	AND DATE(ser_fechafinal) > '2025-01-01' 
+	AND DATE(ser_fechafinal) < '$fechaLimite'";	
 	$DB1->Execute($sql9);
 	$rw6=mysqli_fetch_row($DB1->Consulta_ID);
 	$faltantes=$rw6[0];

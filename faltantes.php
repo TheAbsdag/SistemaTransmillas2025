@@ -90,6 +90,8 @@ echo "<td><button type='submit' class='btn btn-danger btn-lg' >Renviar</button><
 
 $FB->titulo_azul1("#",1,0,12); 
 $FB->titulo_azul1("Fecha",1,0,0); 
+$FB->titulo_azul1("Dias retraso",1,0,0); 
+
 $FB->titulo_azul1("idservicio",1,0,0); 
 $FB->titulo_azul1("Guia",1,0,0); 
 $FB->titulo_azul1("Pre-Guia",1,0,0); 
@@ -113,8 +115,39 @@ if($param2!="" and $param1!=""){
   }else { $conde="  "; } 
 
 
+// Crear objeto de fecha con zona horaria de Bogotá
+$fecharesta = new DateTime("now", new DateTimeZone("America/Bogota"));
 
-   $sql="SELECT `idservicios`, `ser_consecutivo`,`ser_tipopaquete`,`ser_paquetedescripcion`, `ser_destinatario`, `ciu_nombre`,`ser_direccioncontacto`,`ser_guiare` ,ser_llego,ser_desvaliguia,ser_estado,ser_fechafinal FROM serviciosdia  where ser_estado in (7) and ser_llego!='SI' and ser_fechafinal<='$fechaactual%' $conde4  $conde1 $conde  $conde3 ORDER BY ser_fechafinal desc ";
+// Restar 3 días
+$fecharesta->modify("-3 days");
+
+// Mostrar la fecha en formato YYYY-MM-DD
+ $fechaLimite = $fecharesta->format("Y-m-d");
+
+
+
+   $sql="SELECT 
+   idservicios, 
+   ser_consecutivo, 
+   ser_tipopaquete, 
+   ser_paquetedescripcion, 
+   ser_destinatario, 
+   ciu_nombre, 
+   ser_direccioncontacto, 
+   ser_guiare, ser_llego, 
+   ser_desvaliguia, 
+   ser_estado, 
+   ser_fechafinal, DATEDIFF(CURDATE(), 
+   DATE(ser_fechafinal)) AS dias_transcurridos 
+   FROM serviciosdia 
+   WHERE (ser_estado IN (7) OR (ser_estado > 4 AND ser_estado < 7)) 
+   AND ser_llego != 'SI' 
+   AND DATE(ser_fechafinal) > '2025-01-01' 
+   AND DATE(ser_fechafinal) < '$fechaLimite' 
+   
+	
+	$conde4 $conde1 $conde $conde3 
+	ORDER BY ser_fechafinal DESC;";
 
 $DB->Execute($sql); $va=0; 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -132,6 +165,7 @@ $DB->Execute($sql); $va=0;
 		echo "
 		<td>".$va."</td>
 		<td>".$rw1[11]."</td>";
+		echo"<td style='background-color: red;'>".$rw1[12]."</td>";
 		echo "<td align='center' ><a  onclick='pop_dis5($id_p,\"Recogidas\")';  style='cursor: pointer;' title='Detalle Guia' >$id_p</td>";
 		echo "<td>".$rw1[1]."</td>
 		<td>".$rw1[7]."</td>

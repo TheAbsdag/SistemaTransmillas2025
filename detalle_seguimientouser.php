@@ -790,7 +790,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 									
 								} else {
 									// Sí hay resultados, puedes usarlos
-									$caso="";
+									$caso="SeguimientoUser";
 									$parame1=$id_p;
 									$textoing="Sin Ingreso";
 

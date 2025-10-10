@@ -13,6 +13,10 @@ use PHPMailer\PHPMailer\Exception;
 // Crear una nueva instancia de PHPMailer
 $mail = new PHPMailer(true);
 
+
+
+    $numCorreos = 0;
+    $numWhatsApp = 0;
 try {
 
 
@@ -20,7 +24,7 @@ try {
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'ventastransmillas@gmail.com';
-    $mail->Password   = 'gega vsfg okti mpum'; // Asegúrate de usar la contraseña de la aplicación si tienes 2FA habilitado
+    $mail->Password   = 'tpwv clpk qqdo dbgx'; // Asegúrate de usar la contraseña de la aplicación si tienes 2FA habilitado
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
@@ -121,7 +125,7 @@ try {
 
     // Enviar el correo
     $mail->send();
-
+    
 
     if ($_POST['numero']!="") {
         $numero=$_POST['numero'];
@@ -158,7 +162,13 @@ try {
                 if ($_POST['numero']!="") {
                     $numero=$_POST['numero'];
                     $link="https://sistema.transmillas.com/".$existingFileName;
-                    enviarAlertaWhat($contenido,$numero,"34",$link);
+                    $resultado = enviarAlertaWhat($contenido,$numero,"34",$link);
+                    if ($resultado["status"]) {
+                        echo $resultado["mensaje"]; 
+                        $numWhatsApp++; // solo cuenta si se envió bien
+                    } else {
+                        echo $resultado["mensaje"]; // muestra el error
+                    }
                 }                
                 // // 4. Adjunta al correo si quieres
                 // $mail->addAttachment($dest, $name);
@@ -169,19 +179,19 @@ try {
 
 
 
-
     // Incluir la clase de conexión
-    require_once 'config/database.php';
+    require_once 'nueva_plataforma/config/database.php';
 
     // Crear instancia y conectar
     $db = new Database();
     $conn = $db->connect();
 
     // Asegúrate de tener un valor válido de $idFactura
-    $idFactura = isset($_GET['idFactura']) ? intval($_GET['idFactura']) : 0;
+    $idFactura = isset($_POST['idfac']) ? intval($_POST['idfac']) : 0;
 
     if ($idFactura > 0) {
         // Obtener el valor actual de fac_correofac
+        
         $sql = "SELECT fac_correofac FROM facturascreditos WHERE idfacturascreditos = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $idFactura);
@@ -195,23 +205,26 @@ try {
             $nummensajes = $fac_correofac + 1;
 
             // Actualizar el valor
+            
             $sqlUpdate = "UPDATE facturascreditos SET fac_correofac = ? WHERE idfacturascreditos = ?";
             $stmtUpdate = $conn->prepare($sqlUpdate);
             $stmtUpdate->bind_param("ii", $nummensajes, $idFactura);
             $stmtUpdate->execute();
 
             if ($stmtUpdate->affected_rows > 0) {
-                echo 'El mensaje ha sido enviado y el contador actualizado.';
+                // echo 'El mensaje ha sido enviado y el contador actualizado.';
+                 
             } else {
-                echo 'El mensaje ha sido enviado pero no se pudo actualizar el contador.';
+                // echo 'El mensaje ha sido enviado pero no se pudo actualizar el contador.';
+                // $numCorreos++;
             }
 
             $stmtUpdate->close();
         } else {
-            echo 'Factura no encontrada.';
+            // echo 'Factura no encontrada.';
         }
     } else {
-        echo 'ID de factura inválido.';
+        // echo 'ID de factura inválido.';
     }
 
     // Cerrar conexión
@@ -222,68 +235,72 @@ try {
     echo "El mensaje no pudo ser enviado. Error de correo: {$mail->ErrorInfo}";
 }
 
+ echo "✅ Correos enviados.";
+function enviarAlertaWhat($numguia, $telefono, $tipo, $text2) {
+    $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
 
-function enviarAlertaWhat($numguia,$telefono,$tipo,$text2){
+    $data = array(
+        "numero_guia" => $numguia,
+        "telefono"    => $telefono,
+        "tipo_alerta" => $tipo,
+        "texto2"      => $text2
+    );
 
-	// if (preg_match('/^\d{10}$/', $telefono)) {
-		// echo "La variable tiene exactamente 10 números.";
+    $data_json = json_encode($data);
 
-			// URL de la API
-		$url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $data_json,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            'Authorization: Bearer MiSuperToken123'
+        ),
+    ));
 
-		// Datos que enviarás en la solicitud
-		$data = array(
-			"numero_guia" => "$numguia", // Número de guía
-			"telefono" => "$telefono",  // Número de teléfono 3160490959
-			"tipo_alerta" => "$tipo",
-            "texto2" => "$text2"
-		);
+    $response = curl_exec($curl);
 
+    if ($response === false) {
+        $error = curl_error($curl);
+        curl_close($curl);
+        return [
+            "status" => false,
+            "mensaje" => "❌ Error en la solicitud: $error"
+        ];
+    }
 
-		// Convertir los datos a formato JSON
-		$data_json = json_encode($data);
+    curl_close($curl);
 
-		// Iniciar una sesión cURL
-		$curl = curl_init();
+    // Decodificar la respuesta
+    $response_data = json_decode($response, true);
 
-		// Configurar las opciones cURL
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => $url, // URL de la API
-			CURLOPT_RETURNTRANSFER => true, // Retorna el resultado como cadena
-			CURLOPT_POST => true, // Indica que la solicitud será POST
-			CURLOPT_POSTFIELDS => $data_json, // Los datos que se envían en la solicitud
-			CURLOPT_HTTPHEADER => array(
-				'Content-Type: application/json', // Tipo de contenido
-				'Authorization: Bearer MiSuperToken123' // Si la API requiere autenticación
-			),
-		));
+    if (json_last_error() === JSON_ERROR_NONE) {
+        // Si existe un error en la respuesta de la API
+        if (isset($response_data["error"])) {
+            return [
+                "status" => false,
+                "mensaje" => "❌ Error API: " . $response_data["error"] . 
+                             " (Código: " . ($response_data["status_code"] ?? "N/A") . ")"
+            ];
+        }
 
-		// Ejecutar la solicitud y obtener la respuesta
-		$response = curl_exec($curl);
+        // Si tiene un "success" u otro campo que confirme envío
+        if (isset($response_data["success"]) && $response_data["success"]) {
+            return [
+                "status" => true,
+                "mensaje" => "✅ WhatsApp enviado correctamente"
+            ];
+        }
+    }
 
-		// Manejar errores cURL
-		if($response === false) {
-			$error = curl_error($curl);
-			echo "Error en la solicitud: $error";
-		} else {
-			// Decodificar la respuesta (si es JSON)
-			$response_data = json_decode($response, true);
-			
-			// Mostrar la respuesta
-			echo "Respuesta de la API: ";
-			print_r($response_data);
-		}
-
-		// Cerrar la sesión cURL
-		curl_close($curl);
-	// } else {
-	// 	echo "La variable no cumple con el formato.";
-	// }
-
-
-
-
- }	
+    // Si la API no responde JSON válido
+    return [
+        "status" => false,
+        "mensaje" => "⚠️ Respuesta inesperada de la API: $response"
+    ];
+}
 
 
 

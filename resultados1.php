@@ -707,8 +707,8 @@ if($param1==1){
 
 		$FB->titulo_azul1("Relacione un crédito más aquí",8,0,5);  
 		
-			$FB->llena_texto("Credito:", 126, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 1);
-			$FB->llena_texto("Tel Cliente:", 121, 1, $DB, "", "", "", 2, 1);
+			$FB->llena_texto("Credito:", 126, 2, $DB, "(SELECT `idcreditos`, `cre_nombre` FROM `creditos`  ORDER BY cre_nombre)", "", "", 2, 0);
+			$FB->llena_texto("Tel Cliente:", 121, 1, $DB, "", "", "", 2, 0);
 			echo "<td><button type='button' class='btn btn-outline-primary btn-lg' onclick='buscarcliente2(109);'  >Buscar Cliente</button></td></tr>";
 			echo '</tr><td colspan=4><div id="llega_sub3" ></div></td></tr>';
 

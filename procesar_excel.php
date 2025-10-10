@@ -161,9 +161,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 for ($row = 2; $row <= $highestRow; $row++) {
                     $data = $sheet->rangeToArray('A' . $row . ':' . $sheet->getHighestColumn() . $row, null, true, false)[0];
 
-                    // Asignar valores a los parámetros de la consulta
-                    $sql = "INSERT INTO transdavivienda (Fecha_Sistema, Documento, Descripcion_Motivo,Transaccion,  Oficina_Recaudo, Nit_Originador, Valor_Cheque,  Valor_Total, archivo, factura) VALUES ('$data[0]', '$data[1]', '$data[2]', '$data[3]','$data[4]', '$data[5]','$data[6]', '$data[7]', '$nombre_original', 'Sin facturar')";
-                    
+                    // Convertir la fecha si es un valor numérico (formato Excel)
+                    $fechaExcel = $data[0];
+                    $fechaConvertida = null;
+
+                                        // Validar si es un número de Excel válido
+                    if (is_numeric($fechaExcel) && $fechaExcel > 0) {
+                        // Convertir número de Excel a timestamp
+                        $timestamp = PHPExcel_Shared_Date::ExcelToPHP($fechaExcel);
+
+                        // Crear DateTime desde timestamp y zona horaria
+                        $fechaDateTime = new DateTime('@' . $timestamp); // evita el warning del plugin
+                        $fechaDateTime->setTimezone(new DateTimeZone('America/Bogota'));
+
+                        // (Opcional) Corregir desfase si persiste
+                        $fechaDateTime->modify('+1 day');
+
+                        $fechaConvertida = $fechaDateTime->format('Y-m-d');
+                    } elseif (!empty($fechaExcel)) {
+                        $fechaConvertida = date('Y-m-d', strtotime(str_replace('/', '-', $fechaExcel)));
+
+                        if ($fechaConvertida === '1970-01-01') {
+                            echo "❌ Error: La fecha en la fila $row no tiene un formato válido: '$fechaExcel'<br>";
+                            exit;
+                        }
+                    } else {
+                        echo "❌ Error: La fecha en la fila $row está vacía<br>";
+                        exit;
+                    }
+                    // Ahora usa $fechaConvertida en el INSERT
+                    $sql = "INSERT INTO transdavivienda (
+                        Fecha_Sistema, Documento, Descripcion_Motivo, Transaccion, Oficina_Recaudo, Nit_Originador, Valor_Cheque, Valor_Total, archivo, factura
+                    ) VALUES (
+                        '$fechaConvertida', '$data[1]', '$data[2]', '$data[3]', '$data[4]', '$data[5]', '$data[6]', '$data[7]', '$nombre_original', 'Sin facturar'
+                    )";
                     // Ejecutar la consulta
                     $DB->Execute($sql);
                 }

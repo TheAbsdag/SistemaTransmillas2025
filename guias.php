@@ -215,7 +215,7 @@ alert('Seleccione el operario');
 <?php
 
 $FB->nuevo("", "$id_sedes", "asignar_planillas.php");
-$FB->abre_form("form1","NuevoSistema/asignarOperadores.php","post");
+$FB->abre_form("form1","guiasok.php","post");
 
 $conde="and usu_idsede=$id_sedes"; 
 $conde1=" and inner_sedes=$id_sedes"; 
@@ -245,8 +245,7 @@ if($param32!="" and $param33!=""){
   }else { $conde3="  "; } 
 
 echo "<tr><td><button type='button' class='btn btn-primary btn-lg' onclick='buscarsede();'>Buscar</button></td><td></td>";
-echo "<td><button type='button' class='btn btn-danger btn-lg' onclick='enviarFormulario()'>RR Enviar</button><div id='loader' style='display: none; text-align: center; margin: 20px 0;'>
-  <img src='https://i.gifer.com/ZZ5H.gif' alt='Cargando...' width='20px'></div></td><td style='text-align: right;'><button type='button'  onclick='enviarids(\"$id_p\",\"Whatsapp operador\")' >Mensaje a clientes</button></td><tr>";
+echo "<td><button type='submit' class='btn btn-danger btn-lg' >Enviar</button></td><td style='text-align: right;'><button type='button'  onclick='enviarids(\"$id_p\",\"Whatsapp operador\")' >Mensaje a clientes</button></td><tr>";
 
 
 $FB->titulo_azul1("IDguia",1,0,7); 
@@ -285,7 +284,7 @@ $DB->Execute($sql); $va=0;
 			$color='#0A3F7B';
 		}
 		else if($rw1[8]==11){ $color="#F39C12";  }
-		echo "<tr class='text' bgcolor='$color' id='tr_$id_p' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
+		echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 		$rw1[6]=str_replace("&"," ", $rw1[6]);
 				echo "<td align='center' ><a  onclick='pop_dis5($id_p,\"Recogidas\")';  style='cursor: pointer;' title='Detalle Guia' >$id_p</td>";
 
@@ -494,44 +493,6 @@ include("footer.php");
     }
 }
 
-function enviarFormulario() {
-    var form = $('#form1')[0]; // Formulario como objeto DOM
-    var formData = new FormData(form); // Captura todo (inputs, archivos)
 
-    // Mostrar el loader
-    $('#loader').show();
-
-    $.ajax({
-      url: $('#form1').attr('action'),
-      type: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        console.log("Respuesta del servidor:", response);
-        alert('Se han asignado correctamente');
-
-        // Ocultar el loader
-        $('#loader').hide();
-
-        // Asegúrate que response sea un JSON. Si es texto, parsea:
-        try {
-          var res = typeof response === 'string' ? JSON.parse(response) : response;
-          
-          if (res.ids && Array.isArray(res.ids)) {
-            res.ids.forEach(function(id) {
-              $('#tr_' + id).hide(); // Oculta los <tr id="tr_5"> por ejemplo
-            });
-          }
-        } catch (e) {
-          console.error("Error al parsear respuesta:", e);
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error("Error en la solicitud AJAX:", error);
-        $('#loader').hide();
-      }
-    });
-  }
 
 </script>
