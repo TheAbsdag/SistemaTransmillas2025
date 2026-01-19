@@ -3,13 +3,7 @@ require_once "../model/UsuarioModel.php";
 
 $modelo = new UsuarioModel();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
-    $rol = $_POST['rol'] ?? '';
-    $estado = $_POST['estado'] ?? '';
-    $usuarios = $modelo->obtenerUsuarios($rol, $estado);
-    echo json_encode($usuarios);
-    exit;
-}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) {
     $id = $_POST['id'];
     $campo = $_POST['campo'];
@@ -25,6 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) 
     $modelo = new UsuarioModel();
     $modelo->eliminarUsuario($id);
     echo json_encode(['ok' => true]);
+    exit;
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
+    $rol = $_POST['rol'] ?? '';
+    $estado = $_POST['estado'] ?? '';
+    $usuarios = $modelo->obtenerUsuarios($rol, $estado);
+    echo json_encode($usuarios);
     exit;
 }
 

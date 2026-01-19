@@ -41,7 +41,8 @@ if($param32!='' and $param32!=0){ $conde1="and `seg_motivo`= '$param33' ";  }
 
 
 $conde3=""; 
-$ano=date('Y');
+// $ano=date('Y');
+$ano=$param34;
 if($param34!=''){ $fechaactual=$param34." 00:00:00";  }
 if($param36!=''){ $fechafinal=$param36." 23:59:59";  }
 
@@ -54,7 +55,7 @@ if($param36=='Primera'){
 	$fechafinalSinTiempo=date($ano.'-'.$param34.'-15');
 
 }elseif($param36=='Segunda'){
-	$fecha_aux = date('Y-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
+	$fecha_aux = date($ano.'-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
 	$fin = date('t', strtotime($fecha_aux));
 	$fechaactual=date($ano.'-07-01'.' 00:00:00');
 	$fechafinal=date($ano.'-12-31 23:59:59');
@@ -62,7 +63,7 @@ if($param36=='Primera'){
 	$fechaactualSinTiempo=date($ano.'-'.$param34.'-16');
 	$fechafinalSinTiempo=date($ano.'-'.$param34.'-'.$fin);
 }elseif($param36=='Completo'){
-	$fecha_aux = date('Y-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
+	$fecha_aux = date($ano.'-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
 	$fin = date('t', strtotime($fecha_aux));
 
 	$fechaactual=date($ano.'-'.$param34.'-01'.' 00:00:00');
@@ -75,6 +76,62 @@ if($param36=='Primera'){
 
 }
 
+function diasHastaFinDeAno() {
+    // Definimos la fecha de inicio como mañana a las 00:00:00
+    $mañana = new DateTime('tomorrow'); 
+    $finDeAno = new DateTime(date('Y-12-31'));
+
+    // Si hoy fuera 31 de diciembre, mañana sería 1 de enero.
+    // Esta validación evita errores si ejecutas el código el último día del año.
+    if ($mañana > $finDeAno) {
+        return 0;
+    }
+
+    $diferencia = $mañana->diff($finDeAno);
+    
+    // Sumamos 1 para que incluya el último día (31 de dic) en la cuenta
+    return $diferencia->days + 1;
+}
+function contarMesesCompletosDe31Dias($fechaInicio, $fechaFin) {
+    // Usamos DateTimeImmutable para evitar que las fechas cambien accidentalmente
+    $inicio = new DateTimeImmutable($fechaInicio);
+    $fin = new DateTimeImmutable($fechaFin);
+    
+    if ($inicio > $fin) return 0;
+
+    $contador = 0;
+    $temp = $inicio;
+
+    // 1. Si el rango no empieza el día 1, saltamos al primer día del mes siguiente
+    // if ($temp->format('d') !== '01') {
+    //     $temp = $temp->modify('first day of next month');
+    // }
+
+    // 2. Iteramos mientras el mes actual esté dentro del rango
+    // Usamos 'midnight' para comparar solo fechas sin que las horas afecten
+    while ($temp->modify('midnight') <= $fin->modify('midnight')) {
+        
+        $diasEnEsteMes = (int)$temp->format('t');
+        
+        // Creamos el objeto del último día de este mes
+        $ultimoDiaMes = $temp->modify('last day of this month midnight');
+
+        // CONDICIONES PARA CONTAR:
+        // - El mes debe tener 31 días.
+        // - El último día de este mes debe estar dentro del rango (menor o igual a $fin).
+        if ($diasEnEsteMes === 31 && $ultimoDiaMes <= $fin->modify('midnight')) {
+            $contador++;
+        }
+        
+        // Saltamos al primer día del mes siguiente
+        $temp = $temp->modify('first day of next month');
+        
+        // Seguridad para evitar bucles infinitos si la fecha es inválida
+        if ($temp > $fin->modify('+1 month')) break;
+    }
+
+    return $contador;
+}
 //cuantos dias tiene la quincena
 echo'<input type="hidden" value="'.$fechaactual.'" id="fechaactual">';
 echo'<input type="hidden" value="'.$fechafinal.'" id="fechafin">';
@@ -127,7 +184,7 @@ if($param34 == 2 and $param36=='Segunda'){
 
 	$diasParaSumar=0;
 }
-if($param38=='' or $param38=='Trabajando'){   $conde3="and hoj_fechatermino is  null"; }else{$conde3="and hoj_fechatermino is not null";}  
+if($param38=='' or $param38=='Trabajando'){   $conde3="and ( hoj_fechatermino is  null or hoj_fechatermino = '0000-00-00')"; }else{$conde3="and hoj_fechatermino is not null";}  
 
 $valorTotalDePrimas=0;
 $tablaPago="";
@@ -144,9 +201,7 @@ ORDER BY hoj_nombre ASC";
 	  while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 	  {
 
-		//   $user="SELECT `idusuarios` FROM `usuarios` WHERE `usu_identificacion`='$rw1[5]' and usu_ver_nomina='1'";
-		//   $DB1->Execute($user); 
-		//   $idusuario=$DB1->recogedato(0);
+
 
 		$idusuario = obtenerUsuarioConNomina($rw1[5]);
 		$nombreCompleto=$rw1[1].$rw1[2];
@@ -211,11 +266,14 @@ ORDER BY hoj_nombre ASC";
 			echo "<td>".$rw1[4]."</td>";
 			echo "<td>".$rw1[5]."</td>";
 
-			$cargosaldo = obtenerDatosCargo($rw1[3]);
+			$cargosaldo = obtenerDatosCargo($rw1[3],$ano);
 			// Ejemplo de acceso a los datos:
 			$nombreCargo = $cargosaldo[1];
 			$salario     = $cargosaldo[2];
 			$auxilio     = $cargosaldo[3];
+			$salud     	 = $cargosaldo[7];
+			$pension     = $cargosaldo[8];
+
 			echo "<td>".$nombreCargo."</td>";
 			echo "<td>".$salario     ."</td>";//Salario Mes
 			echo "<td>".$auxilio    ."</td>";//Auxilio
@@ -247,35 +305,47 @@ ORDER BY hoj_nombre ASC";
 			$Incapacidad50            = $conteo['incapasidad al 50 porciento'];
 			$DiaSalarioMinimo         = $conteo['dia salario minimo'];
 			$IngresoHoras			  = $conteo['IngresoHoras'];
+			$IncapasidadEPS           = $conteo['Incapasidad paga por la EPS'];	
 
 			$licenciasPermisos = $LicenciaMaternidad+$LicenciaPorLuto;
 			$inicio = new DateTime($fechaInicia);
 			$fin = new DateTime($fechaFinaliza);
 
-			if ($inicio->format('Y-m') === $fin->format('Y-m')) {
-				$resta=0;
-			} else {
-				$resta=1;
-			}
-			$Ingreso=($Ingreso+$ReposicionPorFalla+$IngresoPorHoras+$IngresoHoras)-$resta;
-			$totalDiasPrima=($Ingreso+$descanso+$Incapacidad+$Vacaciones+$licenciasPermisos);
+
+			$Ingreso=($Ingreso+$ReposicionPorFalla+$IngresoPorHoras+$IngresoHoras);
+			
+
+			$totalDiasPrima=($Ingreso+$descanso+$Incapacidad+$Vacaciones+$licenciasPermisos+$IncapasidadEPS);
+			
+			
 
 			//==================================================
 			//               CALCULO DE PRECIO DE PRIMA
 			//==================================================
+
+			if($param36=='Segunda'){
+				// Ejemplo de uso
+
+				$DiasRestantes = diasHastaFinDeAno();
+				// echo"Otro$totalDiasPrima+$DiasRestantes __";
+				$totalDiasPrima=$totalDiasPrima+$DiasRestantes;
+
+				$con31=contarMesesCompletosDe31Dias($fechaInicia, $fechaFinaliza);
+				$totalDiasPrima=$totalDiasPrima-$con31;
+				// echo"$totalDiasPrima=$totalDiasPrima-$con31";
+
+					
+			}
 			$ValorDiaPrima=($salario+$auxilio)/360;
 			$valorDiasPrima=$totalDiasPrima*$ValorDiaPrima;
 			$valorTotalDePrimas=$valorDiasPrima+$valorTotalDePrimas;
 			$valorDiasPrima_formateado = number_format($valorDiasPrima, 0, ',', '.');
-			// // Ejemplo: mostrar todo en tabla
-			// echo "<table border='1'><tr><th>Motivo</th><th>Cantidad</th></tr>";
-			// foreach ($conteo as $motivo => $cantidad) {
-			// 	echo "<tr><td>$motivo</td><td>$cantidad</td></tr>";
-			// }
-			// echo "</table>";
 
 
-			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$Ingreso Dias </td>"; //Ingreso?
+
+
+
+			echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$Ingreso</td>"; //Ingreso?
 			echo "<td>".$descanso     ."</td>";//cantidad de descansos
 			echo "<td>".$NoTrabajo  ."</td>";//cantidad de no trabajados
 			echo "<td>".$Incapacidad  ."</td>";//cantidad de incapacidad
@@ -336,6 +406,8 @@ ORDER BY hoj_nombre ASC";
 				}
 				if ($rw1[19]=="DAVIVIENDA" or $rw1[19]=="DAVIPLATA") {
 					$codigoBanco="51";
+				}elseif ($rw1[19]=="BBVA"){
+					$codigoBanco="13";
 				}
 				$tablaPago.="<td>$tipoCuenta</td>";
 				$tablaPago.="<td>$codigoBanco</td>";
@@ -384,13 +456,15 @@ function obtenerUsuarioConNomina($identificacion) {
     $DB1->Execute($query);
     return $DB1->recogedato(0);
 }
-function obtenerDatosCargo($idCargo) {
+function obtenerDatosCargo($idCargo,$ano) {
     global $DB1;
 
-    $sql = "SELECT `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, 
-                   `car_otros`, `car_Recogida`, `car_ValorRecogida`
-            FROM `cargo` 
-            WHERE `idcargo` = '$idCargo'";
+    // $sql = "SELECT `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, 
+    //                `car_otros`, `car_Recogida`, `car_ValorRecogida`
+    //         FROM `cargo` 
+    //         WHERE `idcargo` = '$idCargo'";
+    $sql="SELECT  `idcargo`, `car_Cargo`, `salario`, `auxilio`, `otros`,car_Recogida,car_ValorRecogida,des_salud,des_pension FROM `cargo`INNER JOIN salarios_cargos on idcargo=id_relCargo  WHERE idcargo='$idCargo' and anio='$ano'";
+
 
     $DB1->Execute($sql);
     return mysqli_fetch_row($DB1->Consulta_ID); // Devuelve array con los datos del cargo
@@ -422,7 +496,8 @@ function obtenerConteoPorMotivo($fechaInicio, $fechaFin, $idUsuario) {
         'PAGO DE INCAPACIDAD AL 66',
         'incapasidad al 50 porciento',
         'dia salario minimo',
-		'IngresoHoras'	
+		'IngresoHoras',
+		'Incapasidad paga por la EPS'	
     ];
 
     // Escapar motivos para SQL

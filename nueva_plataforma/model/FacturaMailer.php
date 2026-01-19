@@ -23,8 +23,8 @@ class FacturaMailer {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'ventastransmillas@gmail.com';
-            $mail->Password   = 'tpwv clpk qqdo dbgx';
+            $mail->Username   = 'facturaciontransmillas@gmail.com';
+            $mail->Password   = 'qxlh uxsh ilgp xojp';//tpwv clpk qqdo dbgx 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
@@ -36,7 +36,7 @@ class FacturaMailer {
             $linkFac = $_POST['linkFac'] ?? '';
             $linkfac1 = $_POST['linkfac1'] ?? '';
 
-            $mail->setFrom('ventastransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.');
+            $mail->setFrom('facturaciontransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.');
 
             if (!empty($destinatario)) {
                 $mail->addAddress($destinatario);

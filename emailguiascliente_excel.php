@@ -218,13 +218,13 @@ echo"<script>console.log('Se envio al correo');</script>";
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'ventastransmillas@gmail.com';
-        $mail->Password   = 'tpwv clpk qqdo dbgx'; // Usa la contraseña de app de Gmail
+        $mail->Username   = 'facturaciontransmillas@gmail.com';
+        $mail->Password   = 'qxlh uxsh ilgp xojp'; // Usa la contraseña de app de Gmail
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
         // Configurar remitente y destinatario
-        $mail->setFrom('ventastransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.');
+        $mail->setFrom('facturaciontransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.');
         $mail->addAddress($destinatario);
 
         // Adjuntar archivo

@@ -108,7 +108,7 @@ if($nivel_acceso!=3){
 if($nivel_acceso==1){
 	$FB->titulo_azul3("Acciones",2,0,2,$param_edicion);
 	}
-echo$sql="SELECT `idgastos`,
+$sql="SELECT `idgastos`,
 		`gas_fecharegistro`, 
 		`usu_nombre`, 
 		`gas_idciudadori`, 

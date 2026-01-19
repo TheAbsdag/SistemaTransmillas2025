@@ -1486,6 +1486,7 @@ function validaexistencia(valor, div, tipo)
 			echo "</select>";
 
 			break;	
+
 			case 280:
 
 				if($label==""){ $label="Seleccione"; }

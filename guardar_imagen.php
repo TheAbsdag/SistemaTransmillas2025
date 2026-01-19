@@ -41,7 +41,7 @@ if (isset($_POST['idfirma'])) {
             $fechatiempo = date('Y-m-d H:i:s');
     
             // Actualizar la tabla con la firma
-                echo$sql = "UPDATE firma_clientes SET fecha_registro='$fechatiempo', firma='$imagen_contenido', estado='pendiente',tipo='imagen' WHERE id='$idfirma'";
+                $sql = "UPDATE firma_clientes SET fecha_registro='$fechatiempo', firma='$imagen_contenido', estado='pendiente',tipo='imagen' WHERE id='$idfirma'";
     
             // Ejecutar la consulta SQL y manejar los errores
             if ($DB->Execute($sql)) {

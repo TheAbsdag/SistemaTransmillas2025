@@ -1,4 +1,21 @@
 
+
+<?php
+require("login_autentica.php"); 
+
+// include("layout.php");
+$id_sedes= $_SESSION['usu_idsede'];
+$id_usuario= $_SESSION['usuario_id'];
+$id_nombre=$_SESSION['usuario_nombre'];
+$nivel_acceso=$_SESSION['usuario_rol'];
+$precioinicialkilos=$_SESSION['precioinicial'];
+
+if ($nivel_acceso!=1) { 
+	include("layout.php");
+?>
+
+
+
 <style>
         .container{
             float: left;
@@ -56,8 +73,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <?php
-require("login_autentica.php"); 
-include("layout.php");
+
  $conde="";
 $conde="pre_idciudadori";
 $conde1="";
@@ -227,3 +243,51 @@ include("footer.php"); ?>
             <i class="fas fa-file"></i> Documento
         </button>
     </div>
+
+
+
+
+<?php  } else{?>
+
+
+	
+<?php
+
+
+?>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<?php 
+
+?>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden; /* Evita scroll doble */
+  }
+
+  .iframe-container {
+    width: 100%;
+    height: 100vh; /* Ocupa toda la pantalla */
+    display: flex;
+  }
+
+  .iframe-container iframe {
+    flex: 1;
+    border: none;
+  }
+</style>
+
+<form id="redirectForm" action="https://sistema.transmillas.com/nueva_plataforma/controller/PreciosCreditoController.php" method="post">
+  <input type="hidden" name="acceso" value="<?= $nivel_acceso ?>">
+  <input type="hidden" name="sede" value="<?= $id_sedes ?>">
+  <input type="hidden" name="usuario" value="<?= $id_nombre ?>">
+</form>
+
+<script>
+  // Enviar automáticamente el formulario al cargar la página
+  document.getElementById("redirectForm").submit();
+</script>
+
+<?php  } ?>

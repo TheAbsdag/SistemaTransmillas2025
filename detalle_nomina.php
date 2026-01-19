@@ -236,7 +236,7 @@ $sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipoc
 				echo "<td>".$rw1[4]."</td>";//Tipo Contrato
 				echo "<td>".$rw1[5]."</td>";//Cedula
 				$valordediastrabajados=0;
-				$sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida FROM `cargo` WHERE idcargo='$rw1[3]'";
+				$sql2="SELECT  `idcargo`, `car_Cargo`, `salario`, `auxilio`, `otros`,car_Recogida,car_ValorRecogida,des_salud,des_pension FROM `cargo`INNER JOIN salarios_cargos on idcargo=id_relCargo  WHERE idcargo='$rw1[3]' and anio='$ano'";
 				$DB1->Execute($sql2);
 				$cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
 				if($idusuario>=1){
@@ -812,6 +812,8 @@ $FB->titulo_azul1("Valor dias con auxilio",1,0,0);
 $FB->titulo_azul1("Dias No Trabajados",1,0,0);
 
 $FB->titulo_azul1("Dias de Incapacidad Empresa",1,'5%',0);
+$FB->titulo_azul1("Dias de Incapacidad EPS",1,'5%',0);
+
 $FB->titulo_azul1("Valor dias de incapacidad",1,'5%',0);
 // $FB->titulo_azul1("Dias de Incapacidad %",1,'5%',0);
 // $FB->titulo_azul1("Valor dias de incapacidad %",1,'5%',0);
@@ -1013,7 +1015,7 @@ ORDER BY hoj_nombre ASC";
 					$va++; $p=$va%2;
 
 					$valordediastrabajados=0;
-					$sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida	 FROM `cargo` WHERE idcargo='$rw1[3]'";
+					$sql2="SELECT  `idcargo`, `car_Cargo`, `salario`, `auxilio`, `otros`,car_Recogida,car_ValorRecogida,des_salud,des_pension FROM `cargo`INNER JOIN salarios_cargos on idcargo=id_relCargo  WHERE idcargo='$rw1[3]' and anio='$ano'";
 					$DB1->Execute($sql2);
 					$cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
 					if($idusuario>=1){
@@ -1021,6 +1023,7 @@ ORDER BY hoj_nombre ASC";
 						$descuadre=0;
 						$pago=0;
 						$malenviados=0;
+						
 						//Prestamos
 						$slq3="SELECT deu_tipo, deu_valor FROM `duedapromotor` WHERE  deu_idpromotor='$idusuario'  ";
 						$DB1->Execute($slq3);
@@ -1179,12 +1182,12 @@ ORDER BY hoj_nombre ASC";
 														$dia31=0;
 													}else {
 														$dia31=1;
-														echo"2";
+														// echo"2";
 													}
 
 												}else{
 													$dia31=1;
-													echo"3";
+													// echo"3";
 												}
 
 
@@ -1382,22 +1385,37 @@ ORDER BY hoj_nombre ASC";
 					if ($idusuario=="1718" and $rw5[0]==0 and $fin ==29) {
 
 
-						echo"OKKK";
+						// echo"OKKK";
 						$diasincapacidad=1;
 					}
 				}
 
-				if($diasincapacidad>=2){
-					$valorDiasIncapadidad=($diasvalor)*(2*0.6667);
 
-					$valorDiasIncapadidad_formateado = number_format($valorDiasIncapadidad, 0, ',', '.');
+				//Incapacidades EPS
+
+				$inceps="SELECT count(*) FROM `seguimiento_user`  where seg_motivo ='Incapasidad paga por la EPS' and seg_fechaingreso>='$fechaAhora' and seg_fechaingreso<='$fechafin'  and seg_idusuario='$idusuario' ";
+				$DB1->Execute($inceps);
+				$ineps=mysqli_fetch_row($DB1->Consulta_ID);
+				if(empty($ineps)){
+
+						$diasincapacidadEPS=0;
 
 				}else{
+					$diasincapacidadEPS=$ineps[0];
+					// excepcion con usuario 423 andres
+				}
+
+				// if($diasincapacidad>=2){
+				// 	$valorDiasIncapadidad=($diasvalor)*(2*0.6667);
+
+				// 	$valorDiasIncapadidad_formateado = number_format($valorDiasIncapadidad, 0, ',', '.');
+
+				// }else{
 
 					$valorDiasIncapadidad=($diasvalor)*($diasincapacidad*0.6667);
 
 					$valorDiasIncapadidad_formateado = number_format($valorDiasIncapadidad, 0, ',', '.');
-				}
+				// }
 
 
 
@@ -1445,29 +1463,34 @@ ORDER BY hoj_nombre ASC";
 
 					//SALUD Y PENSION
 
-					$Salud=28470;
-					$Pension=28470;
+					// $Salud=28470;
+					// $Pension=28470;
+					
+					$Salud=$cargosaldo[7];
+					$Pension=$cargosaldo[8];
+					
+					
 
-					$saludPorDia=28470/15;
-					$pensionPorDia=28470/15;
+					$saludPorDia=$Salud/30;
+					$pensionPorDia=$Pension/30;
 
 					if ($terminaContrato=="" and $mesdeingreso==false) {
 
 						if ($diasVacaciones>0) {
-							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicSalud+$diasincapacidad);
-							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicPension+$diasincapacidad);
+							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicSalud+$diasincapacidad+$diasincapacidadEPS);
+							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicPension+$diasincapacidad+$diasincapacidadEPS);
 						}else {
-							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$valorPermisosLicSalud+$diasincapacidad+$diasnotrabajo);
-							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$valorPermisosLicPension+$diasincapacidad+$diasnotrabajo);
+							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$valorPermisosLicSalud+$diasincapacidad+$diasnotrabajo+$diasincapacidadEPS);
+							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$valorPermisosLicPension+$diasincapacidad+$diasnotrabajo+$diasincapacidadEPS);
 						}
 
 					}else{
 						if ($diasVacaciones>0) {
-							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicSalud+$diasincapacidad);
-							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicPension+$diasincapacidad);
+							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicSalud+$diasincapacidad+$diasincapacidadEPS);
+							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$diasVacaciones+$valorPermisosLicPension+$diasincapacidad+$diasincapacidadEPS);
 						}else {
-							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$valorPermisosLicSalud+$diasincapacidad+$diasnotrabajo);
-							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$valorPermisosLicPension+$diasincapacidad+$diasnotrabajo);
+							$valorSalud=$saludPorDia*($diassitrabajoParaSumar+$valorPermisosLicSalud+$diasincapacidad+$diasnotrabajo+$diasincapacidadEPS);
+							$valorPension=$pensionPorDia*($diassitrabajoParaSumar+$valorPermisosLicPension+$diasincapacidad+$diasnotrabajo+$diasincapacidadEPS);
 						}
 
 
@@ -1559,6 +1582,7 @@ ORDER BY hoj_nombre ASC";
 
 
 					$tabla.="<td>".$diasincapacidad."</td>";
+					$tabla.="<td>".$diasincapacidadEPS."</td>";
 					$tabla.="<td>$valorDiasIncapadidad_formateado</td>";
 
 		
@@ -1691,8 +1715,8 @@ ORDER BY hoj_nombre ASC";
 					$tabla.="<td style='background-color:#F4D03F'>$TotalDevengado_formateado</td>";//Valor quincena
 
 					if ($nombreMotivo="PAGO DE INCAPACIDAD AL 66") {
-						$diasincapacidad=$diasincapacidad+$permisosLic;
-						$valorDiasIncapadidad=$valorDiasIncapadidad+$diasPerLicBasValortotalfinal;
+						
+						// $valorDiasIncapadidad=$valorDiasIncapadidad+$diasPerLicBasValortotalfinal;
 					}
 					$totaldevengado=$valordediastrabajados+$totalauxilio+$valorDiasIncapadidad+$valorDiasVacaciones;
 					$totaldeduccion=$valorSalud+$valorPension+$restaABasico+$totaldeduccion;
@@ -1701,7 +1725,7 @@ ORDER BY hoj_nombre ASC";
 					}else {
 						$prov="";
 					}
-					$rutaDeComproBas="desprendibleBasico.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaactual&fechafin=$fechafinal&cuenta=&diastrabajados=$diassitrabajoParaMostrar&sueldo=$valordediastrabajados&auxilitrans=$totalauxilio&pagdiasinca=$valorDiasIncapadidad&totaldeveng=$totaldevengado&salud=$valorSalud&pension=$valorPension&prestamos=$restaABasico&totaldeduccion=$totaldeduccion&confirmado=$validadoDesprendible&diasIncapacidad=$diasincapacidad&firma=$rw1[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=$diasVacaciones&sede=$rw1[7]&valorAjuste=$valorAjusteB&tipoAjuste=$tipoAjusteB&descripcionAjuste=$descripcionAjusteB&descriprestamos=$descripcionBasico".$prov."";
+					$rutaDeComproBas="desprendibleBasico.php?cedula=".$rw1[5]."&nombre=".$rw1[1]." ".$rw1[2]."&cargo=$cargosaldo[1]&fechaini=$fechaactual&fechafin=$fechafinal&cuenta=&diastrabajados=$diassitrabajoParaMostrar&sueldo=$valordediastrabajados&auxilitrans=$totalauxilio&pagdiasinca=$valorDiasIncapadidad&totaldeveng=$totaldevengado&salud=$valorSalud&pension=$valorPension&prestamos=$restaABasico&totaldeduccion=$totaldeduccion&confirmado=$validadoDesprendible&diasIncapacidad=$diasincapacidad&firma=$rw1[17]&vacaciones=$valorDiasVacaciones&diasvacaciones=$diasVacaciones&sede=$rw1[7]&valorAjuste=$valorAjusteB&tipoAjuste=$tipoAjusteB&descripcionAjuste=$descripcionAjusteB&descriprestamos=$descripcionBasico".$prov."&licencias=$permisosLic&valorlicencias=$diasPerLicBasValortotalfinal";
 					$tabla.="<td><a href='$rutaDeComproBas' target='_blank'>ver</a>
 					<button style='display: $botonEnviar1;  width:120px;border:1px solid #f9f9f9;background-color: ".$colorEnviar.";color:#f9f9f9; font-size:15px' onclick='enviarDesprendible(\"$rutaDeComproBas\",$idusuario,\"$fechaactual\",\"$fechafinal\",\"guardarCuenCobro\",\"Basico\")' id='Basico".$idusuario."guardarCuenCobro'>$textEnviar</button>
 					<input  type='checkbox' id='Basico".$idusuario."confirmaAdmin1' onchange='confirmaAdmin($idusuario,\"$fechaactual\",\"$fechafinal\",\"confirmaAdmin\",\"Basico\",1)' $cheked1>

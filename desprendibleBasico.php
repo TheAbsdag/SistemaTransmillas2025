@@ -29,6 +29,8 @@ $diasIncapacidad=$_GET["diasIncapacidad"];
 $valordiasVacaciones=$_GET["vacaciones"];
 $diasVacaciones=$_GET["diasvacaciones"];
 $firma=$_GET["firma"];
+$licencias=$_GET["licencias"];
+$valorlicencias=$_GET["valorlicencias"];
 
 $descriprestamos=$_GET["descriprestamos"];
 $valorAjusteB=$_GET["valorAjuste"];
@@ -322,6 +324,30 @@ $pdf->Cell(55, 5, 'PRESTAMOS', 1);
 $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
 $pdf->Cell(40, 5, ''.$prestamos.'', 1);
 $pdf->Ln(); // Salto de línea
+
+// $prestamos_formateado = number_format($licencia, 0, ',', '.');
+// $pension_formateado = number_format($pension, 0, ',', '.');
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(60, 5, 'DIAS LIC. PERMISOS', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(35, 5, ''.$licencias.'', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(55, 5, '', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(40, 5, '', 1);
+$pdf->Ln(); // Salto de línea
+
+$valorlicencias_formateado = number_format($valorlicencias, 0, ',', '.');
+// $pension_formateado = number_format($pension, 0, ',', '.');
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(60, 5, 'PAGO LIC. PERMISOS', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(35, 5, ''.$valorlicencias_formateado.'', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(55, 5, '', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(40, 5, '', 1);
+$pdf->Ln(); // Salto de línea
 // Lista 8
 $prestamos_formateado = number_format($prestamos, 0, ',', '.');
 // $pension_formateado = number_format($pension, 0, ',', '.');
@@ -374,40 +400,40 @@ $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
 $pdf->Cell(40, 5, ''.$ajustesresB.'', 1);
 $pdf->Ln(); // Salto de línea
 
-$totaldeveng_formateado = number_format($totaldeveng, 0, ',', '.');
-$valorTotal=($totaldeveng+$ajustessumB)-($totaldeduccion+$ajustesresB);
+$totaldeveng_formateado = number_format($totaldeveng+$valorlicencias, 0, ',', '.');
+$valorTotal=($totaldeveng+$ajustessumB+$valorlicencias)-($totaldeduccion+$ajustesresB);
 
-if (isset($_GET["otros"])) {
-    $otrsodv=$_GET["otros"];
-    $otrsodv_formateado = number_format($otrsodv, 0, ',', '.');
-    // Lista 11
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(60, 5, 'OTROS DEVENGOS', 1);
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(35, 5, ''.$otrsodv_formateado.'', 1);
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(55, 5, '', 1);
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(40, 5, '', 1);
-    $pdf->Ln(); // Salto de línea
+// if (isset($_GET["otros"])) {
+//     $otrsodv=$_GET["otros"];
+//     $otrsodv_formateado = number_format($otrsodv, 0, ',', '.');
+//     // Lista 11
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(60, 5, 'OTROS DEVENGOS', 1);
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(35, 5, ''.$otrsodv_formateado.'', 1);
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(55, 5, '', 1);
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(40, 5, '', 1);
+//     $pdf->Ln(); // Salto de línea
 
-    $pagoSemanal=200000*2;
-    $pagoSemanal_formateado = number_format($pagoSemanal, 0, ',', '.');
-    // Lista 11
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(60, 5, 'PAGO FIJO SEMANAL', 1);
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(35, 5, ''.$pagoSemanal_formateado.'', 1);
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(55, 5, '', 1);
-    $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
-    $pdf->Cell(40, 5, '', 1);
-    $pdf->Ln(); // Salto de línea
+//     $pagoSemanal=200000*2;
+//     $pagoSemanal_formateado = number_format($pagoSemanal, 0, ',', '.');
+//     // Lista 11
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(60, 5, 'PAGO FIJO SEMANAL', 1);
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(35, 5, ''.$pagoSemanal_formateado.'', 1);
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(55, 5, '', 1);
+//     $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+//     $pdf->Cell(40, 5, '', 1);
+//     $pdf->Ln(); // Salto de línea
 
-    $totaldeveng_formateado = number_format($totaldeveng+$otrsodv+$pagoSemanal, 0, ',', '.');
-    $valorTotal=($totaldeveng+$ajustessumB+$otrsodv+$pagoSemanal)-($totaldeduccion+$ajustesresB);
+//     $totaldeveng_formateado = number_format($totaldeveng+$otrsodv+$pagoSemanal, 0, ',', '.');
+//     $valorTotal=($totaldeveng+$ajustessumB+$otrsodv+$pagoSemanal+$valorlicencias)-($totaldeduccion+$ajustesresB);
 
-}
+// }
 
 
 

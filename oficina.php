@@ -599,9 +599,10 @@ if (@$actuliza == "si") {
 		
 		echo "<td style='background-color: #F5B7B1;'>Tipo de servicio(*)</td>
 		<td id='respuesta'>";
-		$sql="SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$rw[4] and pre_idciudaddes=$rw[11] order by tip_nom";
+		$sql="SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$rw[4] and pre_idciudaddes=$rw[11]  AND pre_estado = 1 order by tip_nom";
 		echo '<select name="param34" id="param34" onchange="valorpagar(this.value,202,\"llega_sub3\",\"total valor\",1,$id_usuario)" class="form-control" type="number" required="">';
-		echo 	"<option value='0'>Carga via terrestre</option>";
+		
+		// echo 	"<option value='0'>Carga via terrestre</option>";
 					$LT->llenaselect($sql,0,1, $valortservicio, $DB);
 		echo "</select>";
 		echo "</td>";

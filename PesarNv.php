@@ -29,7 +29,7 @@ if($idprecios==0 or $idprecios==''){
 }
 
   $sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-  where con_tipo='normal'  and pre_idciudadori=$param5  and pre_idciudaddes=$param16 and pre_tiposervicio=$rw6[0] and con_idprecios='$idprecios'";
+  where con_tipo='normal'  and pre_idciudadori=$param5  and pre_idciudaddes=$param16 and pre_tiposervicio=$rw6[0] and con_idprecios='$idprecios' and pre_estado=1";
  $DB->Execute($sql);
 
 $rw = mysqli_fetch_row($DB->Consulta_ID); 
@@ -171,7 +171,27 @@ if($rw7[0]==0 and $clasificacion!=2){ //si no tiene precios en tiposervicio y es
 		 $creditouser=$rw21[0];
 		 $idcredito=$rw21[1];
 
-		$sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param5'  and `pre_idciudades`='$param16' and pre_tiposervicio='$rw6[0]' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' ";
+		date_default_timezone_set('America/Bogota'); // ajusta a tu país
+		$fechaHoy = date('Y-m-d');
+
+		// if ($hoy === '2026-01-01') {
+
+		// 	$sql3="SELECT `pre_preciokilo`,`con_precios` 
+		// 	FROM `precios_credito`  
+		// 	inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  
+		// 	WHERE   con_tipo='Credito'  
+		// 	and   `pre_idciudadori`='$param5'  
+		// 	and `pre_idciudades`='$param16' 
+		// 	and pre_tiposervicio='$rw6[0]' 
+		// 	and pre_idcredito='$idcredito' 
+		// 	and con_idprecios='$idprecios'
+		// 	AND ($fechaHoy BETWEEN pre_fecha_inicial 
+		// 	AND pre_fecha_final ) AND pre_estado= 1";
+
+		// }else {
+			$sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param5'  and `pre_idciudades`='$param16' and pre_tiposervicio='$rw6[0]' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' and pre_estado=1 ";
+
+		// }
 		$DB->Execute($sql3);
 		$rw2=mysqli_fetch_row($DB->Consulta_ID); 
 	
@@ -183,7 +203,7 @@ if($rw7[0]==0 and $clasificacion!=2){ //si no tiene precios en tiposervicio y es
 			@$precio=$rw2[0]+$precio1;
 		}
 			
-	}
+}
 
 if($rw6[0]!='1000'){
 

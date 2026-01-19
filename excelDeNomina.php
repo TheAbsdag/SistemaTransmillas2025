@@ -167,7 +167,7 @@ $conde="and `hoj_cedula`= '$CedulaUser' "; }
 
 
 $conde3="";
-$ano=date('Y');
+$ano=$param39;
 if($param34!=''){ $fechaactual=$param34." 00:00:00";  }
 if($param36!=''){ $fechafinal=$param36." 23:59:59";  }
 
@@ -182,7 +182,7 @@ if($param36=='Primera'){
 }elseif($param36=='Segunda'){
 	// $fin = date("t");
 
-	$fecha_aux = date('Y-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
+	$fecha_aux = date($ano.'-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
 	$fin = date('t', strtotime($fecha_aux));
 
 	$fechaactual=date($ano.'-'.$param34.'-16'.' 00:00:00');
@@ -196,7 +196,7 @@ if($param36=='Primera'){
 
 	// $fin = date("t");
 
-	$fecha_aux = date('Y-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
+	$fecha_aux = date($ano.'-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
 	$fin = date('t', strtotime($fecha_aux));
 
 	$fechaactual=date($ano.'-'.$param34.'-01'.' 00:00:00');
@@ -291,7 +291,7 @@ echo'<th colspan="20">NIT. 901.089.478-8</th>';
 
 echo'</tr>';
 echo'<tr bgcolor="#074F91" style="color:#FFFFFF;">';
-echo'<th colspan="20">NOMINA '.$param36.' del mes '.$param34.' del  A&ntilde;o '.$año.' </th>';
+echo'<th colspan="20">NOMINA '.$param36.' del mes '.$param34.' del  A&ntilde;o '.$ano.' </th>';
 
 echo'</tr>';
 echo'<tr bgcolor="#074F91" style="color:#FFFFFF;">';

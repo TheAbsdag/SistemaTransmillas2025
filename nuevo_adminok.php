@@ -481,14 +481,14 @@ break;
 case "Agregar cotizacion":
 
 	$fecha=date("Y-m-d");
-	echo$sql="INSERT INTO `cotozaciones`(`cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,`cot_correo`,cot_Whatsapp,cot_id_ingresa) VALUES ('$param1','$param2','$param3','$param4','$param5','$param6','$param7','$param8','$param9','$param10','$param11','$param12','$param13','$param14','$param15','$param16','$param17','$fecha','$param18','$param19','$id_usuario')";
+	echo$sql="INSERT INTO `cotozaciones`(`cot_clirente`, `cot_nit`, `cot_origen`, `cot_destino`, `cot_direc_origen`, `cot_direc_destino`, `cot_desc_merc`, `cot_tipo_servi`, `cot_peso`, `cot_val_minima`, `cot_kilo_adi`, `cot_vol`, `cot_val_asegurado`, `cot_val_seguro`, `cot_val_kilos_adi`, `cot_val_servicio`, `cot__val_total`,cot_fecha,`cot_correo`,cot_Whatsapp,cot_id_ingresa,cot_observaciones) VALUES ('$param1','$param2','$param3','$param44','$param5','$param6','$param7','$param88','$param9','$param10','$param11','$param12','$param13','$param14','$param15','$param166','$param30','$fecha','$param188','$param19','$id_usuario','$param21')";
 	$valores[7]=$sql; $valores[4]="cotizaciones.php"; $valores[8]=1; 
 	
 break;
 case "Editar cotizacion":
 
 		$fecha=date("Y-m-d");
-	    $sql="UPDATE `cotozaciones` SET `cot_clirente`='$param1',`cot_nit`='$param2',`cot_origen`='$param3',`cot_destino`='$param4',`cot_direc_origen`='$param5',`cot_direc_destino`='$param6',`cot_desc_merc`='$param7',`cot_tipo_servi`='$param8',`cot_peso`='$param9',`cot_val_minima`='$param10',`cot_kilo_adi`='$param11',`cot_vol`='$param12',`cot_val_asegurado`='$param13',`cot_val_seguro`='$param14',`cot_val_kilos_adi`='$param15',`cot_val_servicio`='$param16',`cot__val_total`='$param17',`cot_correo`='$param18',cot_Whatsapp='$param19',cot_piezas='$param20',cot_observaciones='$param21' WHERE cot_id='$id_param'";
+	    $sql="UPDATE `cotozaciones` SET `cot_clirente`='$param1',`cot_nit`='$param2',`cot_origen`='$param3',`cot_destino`='$param44',`cot_direc_origen`='$param5',`cot_direc_destino`='$param6',`cot_desc_merc`='$param7',`cot_tipo_servi`='$param88',`cot_peso`='$param9',`cot_val_minima`='$param10',`cot_kilo_adi`='$param111',`cot_vol`='$param12',`cot_val_asegurado`='$param13',`cot_val_seguro`='$param14',`cot_val_kilos_adi`='$param15',`cot_val_servicio`='$param166',`cot__val_total`='$param30',`cot_correo`='$param188',cot_Whatsapp='$param19',cot_piezas='$param20',cot_observaciones='$param21' WHERE cot_id='$id_param'";
 		        
 
 		$valores[7]=$sql; $valores[4]="cotizaciones.php"; $valores[8]=1; 
@@ -1838,7 +1838,7 @@ echo$rw2[0];
 	break;
 	case "subirFactura": 
 
-		$sql="UPDATE `facturascreditos` SET   `fac_fecharafacturado`='$param1',fac_preciofinal='$param4' WHERE idfacturascreditos='$param2'";				
+		$sql="UPDATE `facturascreditos` SET   `fac_fecharafacturado`='$param1',fac_preciofinal='$param4',fac_precio='$param4' WHERE idfacturascreditos='$param2'";				
 		$QL->addDocumento1($_FILES["param3"], 3, "facturascreditos", $param2, "facturascreditos", $DB);
 
 		$valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 

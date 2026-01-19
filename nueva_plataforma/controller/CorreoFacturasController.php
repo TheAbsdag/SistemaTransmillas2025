@@ -1,0 +1,46 @@
+<?php
+require_once "../model/UsuarioModel.php";
+require_once '../helpers/CorreoHelper.php';
+
+$modelo = new UsuarioModel();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
+
+    $respuesta = obtenerCorreos(30);
+
+    if (!$respuesta['ok']) {
+        http_response_code(500);
+        echo json_encode([]);
+        exit;
+    }
+
+    echo json_encode($respuesta['data']);
+    exit;
+}
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) {
+//     $id = $_POST['id'];
+//     $campo = $_POST['campo'];
+//     $valor = $_POST['valor'];
+
+//     $modelo = new UsuarioModel();
+//     $modelo->actualizarCampo($id, $campo, $valor);
+//     echo json_encode(['ok' => true]);
+//     exit;
+// }
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) {
+//     $id = $_POST['id'];
+//     $modelo = new UsuarioModel();
+//     $modelo->eliminarUsuario($id);
+//     echo json_encode(['ok' => true]);
+//     exit;
+// }
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
+//     $rol = $_POST['rol'] ?? '';
+//     $estado = $_POST['estado'] ?? '';
+//     $usuarios = $modelo->obtenerUsuarios($rol, $estado);
+//     echo json_encode($usuarios);
+//     exit;
+// }
+
+$roles = $modelo->obtenerRoles();
+include "../view/CorreoFacturas/index.php";

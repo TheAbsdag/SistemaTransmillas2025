@@ -509,7 +509,7 @@ function recoger($idser,$fechatiempo){
 				elseif($param11>=1 and $kilos>0){  //si configuraron precios y la opcion es contado
 					
 					$sql8="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-					WHERE con_tipo='normal'  and  `pre_idciudadori`='$param13'  and `pre_idciudaddes`='$param9'  and pre_tiposervicio='$rw6[0]' and con_idprecios='$idprecios'";
+					WHERE con_tipo='normal'  and  `pre_idciudadori`='$param13'  and `pre_idciudaddes`='$param9'  and pre_tiposervicio='$rw6[0]' and con_idprecios='$idprecios'  AND pre_estado = 1";
 						$DB1->Execute($sql8);
 						$rw2=mysqli_fetch_row($DB1->Consulta_ID); 
 							$kilos=$param10+$param20;

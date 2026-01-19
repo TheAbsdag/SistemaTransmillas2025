@@ -526,9 +526,9 @@ if ($valortservicio == 1000) {
 
 echo "<td style='background-color: #F5B7B1;'>Tipo de servicio(*)</td>
 <td id='respuesta'>";
-$sql="SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$rw[4] and pre_idciudaddes=$rw[11] order by tip_nom";
+$sql="SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$rw[4] and pre_idciudaddes=$rw[11] and pre_estado=1 order by tip_nom";
 echo '<select name="param37" id="param37" onchange="valorpagaredit(this.value,20,\"llega_sub2\",\"total valor\",1,1)" class="form-control" type="number" required="">';
-echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
+// echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
 echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
 $LT->llenaselect($sql,0,1, $valortservicio, $DB);
 echo "</select>";
@@ -577,7 +577,7 @@ if($valortservicio=='1000'){
 	$creditouser=$rw21[0];
 	$idcredito=$rw21[1];
 
-   $sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$rw[4]'  and `pre_idciudades`='$rw[11]' and pre_tiposervicio='$valortservicio' and pre_idcredito='$idcredito'  and con_idprecios='$idprecios'";
+   $sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$rw[4]'  and `pre_idciudades`='$rw[11]' and pre_tiposervicio='$valortservicio' and pre_idcredito='$idcredito'  and con_idprecios='$idprecios' and pre_estado=1";
    $DB->Execute($sql3);
    $rw2=mysqli_fetch_row($DB->Consulta_ID); 
 
@@ -587,7 +587,7 @@ if($valortservicio=='1000'){
 } else if($valortservicio==0 and $rw[31]!=2){
 
 	$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-	where con_tipo='normal'  and pre_idciudadori='$rw[4]' and pre_idciudaddes='$rw[11]' and pre_tiposervicio=0 and con_idprecios='$idprecios' ";
+	where con_tipo='normal'  and pre_idciudadori='$rw[4]' and pre_idciudaddes='$rw[11]' and pre_tiposervicio=0 and con_idprecios='$idprecios' and pre_estado=1 ";
 	 $DB->Execute($sql);
 	$rw3 = mysqli_fetch_row($DB->Consulta_ID); 
 	
@@ -598,7 +598,7 @@ if($valortservicio=='1000'){
 else {
 
 	$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-	where con_tipo='normal'  and pre_idciudadori='$rw[4]' and pre_idciudaddes='$rw[11]' and pre_tiposervicio=$valortservicio and   con_idprecios='$idprecios' ";
+	where con_tipo='normal'  and pre_idciudadori='$rw[4]' and pre_idciudaddes='$rw[11]' and pre_tiposervicio=$valortservicio and   con_idprecios='$idprecios' and pre_estado=1";
 	$DB->Execute($sql);
 	$rw3 = mysqli_fetch_row($DB->Consulta_ID); 
 

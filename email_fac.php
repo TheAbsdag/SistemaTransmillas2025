@@ -23,8 +23,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'ventastransmillas@gmail.com';
-    $mail->Password   = 'tpwv clpk qqdo dbgx'; // Asegúrate de usar la contraseña de la aplicación si tienes 2FA habilitado
+    $mail->Username   = 'facturaciontransmillas@gmail.com';
+    $mail->Password   = 'qxlh uxsh ilgp xojp'; // Asegúrate de usar la contraseña de la aplicación si tienes 2FA habilitado
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 

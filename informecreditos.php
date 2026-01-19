@@ -4,6 +4,61 @@ require("login_autentica.php");
 include("layout.php");
 //include("cabezote4.php"); 
 
+function contarCorreosNoLeidos() {
+    $resultado = [
+        'ok' => false,
+        'total' => 0,
+        'error' => null
+    ];
+
+    $correo = 'facturaciontransmillas@gmail.com';
+    $password = 'qxlh uxsh ilgp xojp'; // contraseña de aplicación
+
+    if (!$password) {
+        $resultado['error'] = 'La variable MAIL_PASSWORD no existe o está vacía';
+        return $resultado;
+    }
+
+    $inbox = imap_open(
+        '{imap.gmail.com:993/imap/ssl}INBOX',
+        $correo,
+        $password
+    );
+
+    if (!$inbox) {
+        $resultado['error'] = imap_last_error();
+        return $resultado;
+    }
+
+    $emails = imap_search($inbox, 'UNSEEN');
+
+    if ($emails === false) {
+        $resultado['error'] = 'No se encontraron correos no leídos (o búsqueda fallida)';
+        imap_close($inbox);
+        return $resultado;
+    }
+
+    $resultado['ok'] = true;
+    $resultado['total'] = count($emails);
+
+    imap_close($inbox);
+    return $resultado;
+}
+
+$respuesta = contarCorreosNoLeidos();
+
+if (!$respuesta['ok']) {
+    // SOLO PARA DEPURACIÓN
+    // echo "❌ Error IMAP: " . $respuesta['error'];
+    $cantidad=0;
+
+} else {
+    // echo "📩 Correos no leídos: " . $respuesta['total'];
+    $cantidad=$respuesta['total'];
+}
+
+
+
 $FB->titulo_azul1("Creditos",9,0,5);  
 $FB->abre_form("form1","","post");
 // $fechainicial=date("01/m/Y");
@@ -172,7 +227,12 @@ echo "<tr>
     <td>
         <button type='button' class='btn btn-primary btn-with-davivienda' onclick=\"abrirPopup('davivienda.php','DAVIVIENDA')\"></button>
     </td>
-</tr>";
+    <td><button type='button' class='btn btn-danger' onclick=\"location.href='nueva_plataforma/controller/CorreoFacturasController.php'\">Correo Factutracion";
+     if ($cantidad > 0): 
+        echo"<span class='badge'>$cantidad </span>";
+     endif;
+    echo"</button></td>";
+echo"</tr>";
 
     // Fecha actual
     $hoy = new DateTime('now');

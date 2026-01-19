@@ -606,7 +606,7 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Nit:", 2, 1, $DB, "", "", "", 4, 0);
 
     $FB->llena_texto("Ciudad origen:", 3, 1, $DB, "", "", "", 1, 0);
-    $FB->llena_texto("Ciudad destino:", 4, 1, $DB, "", "", "", 4, 0);
+    $FB->llena_texto("Ciudad destino:", 44, 1, $DB, "", "", "", 4, 0);
     $FB->llena_texto("Direccion Origen:", 5, 1, $DB, "", "", "", 1, 0);
     $FB->llena_texto("Direccion destino:", 6, 1, $DB, "", "", "", 4, 0);
     // $FB->llena_texto("Fecha inicial:", 4, 10, $DB, "", "", "$rw2[4]", 2, 0);
@@ -614,22 +614,66 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Descripcion mercancia:", 7, 1, $DB, "", "", "", 1, 0);
     // $FB->llena_texto("id_param", 8, 13, $DB, "", "", $id_param, 4, 0);
    
-    $FB->llena_texto("Tipo de servicio:", 8, 1, $DB, "", "", "", 1, 0);
+    $FB->llena_texto("Tipo de servicio:", 88, 1, $DB, "", "", "", 1, 0);
     $FB->llena_texto("Peso en kilos:", 9, 1, $DB, "", "", "", 4, 0);
 
 
     $FB->llena_texto("Valor Carga Mínima:", 10, 1, $DB, "", "", "", 1, 0);
-    $FB->llena_texto("Valor Kilo adicional:", 11, 1, $DB, "", "", "", 4, 0);
+    $FB->llena_texto("Valor Kilo adicional:", 111, 1, $DB, "", "", "", 4, 0);
     
     $FB->llena_texto("Volumen:", 12, 1, $DB, "", "", "", 1, 0);
     $FB->llena_texto("Valor Asegurado:", 13, 1, $DB, "", "", "", 4, 0);
     $FB->llena_texto("Valor seguro:", 14, 1, $DB, "", "", "", 1, 0);
     $FB->llena_texto("Valor kilos adicionales:", 15, 1, $DB, "", "", "", 4, 0);
-    $FB->llena_texto("Valor servicio:", 16, 1, $DB, "", "", "", 1, 0);
-    $FB->llena_texto("Valor Total (servicio + seguro):", 17, 1, $DB, "", "", "", 4, 0);
-    $FB->llena_texto("Correo :", 18, 1, $DB, "", "", "", 4, 0);
+    $FB->llena_texto("Valor servicio:", 166, 1, $DB, "", "", "", 1, 0);
+    $FB->llena_texto("Valor Total (servicio + seguro):", 30, 1, $DB, "", "", "", 4, 0);
+    $FB->llena_texto("Correo :", 188, 1, $DB, "", "", "", 4, 0);
     $FB->llena_texto("Numero Whatsapp:", 19, 1, $DB, "", "", "", 4, 0);
+    $FB->llena_texto("Cantidad de piezas:", 20, 1, $DB, "", "", "$rw2[21]", 1, 0);
+    $FB->llena_texto("Observaciones:", 21, 1, $DB, "", "", "$rw2[22]", 1, 0);
+    
+    $FB->titulo_azul1("Cotizar",9,0,7);  
+    echo "</tr>";
 
+
+    echo"<input  type='hidden' class='form-control'  name='nrespuestas' id='nrespuestas'  size='20' value=''>";
+    $FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1)", "calculoo(this.value,param11.value,param8.value, \"cotizar.php\", 1);", "$valor20", 1, 0);
+    $FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1 )","calculoo(param4.value,this.value ,param8.value, \"cotizar.php\", 1);","$valor21",1,0);
+
+    // $FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` where inner_estados=1 )", "", "$param4", 1, 1);
+    // $FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades`  where inner_estados=1)", "verificar(this.value)", "$rw[11]", 1, 1);
+
+    //echo "<div id='mensaje2'></div>";
+    $FB->llena_texto("Valor de Prestamo:",16, 118, $DB, "", "", $rw[16],17, 0);
+    //$FB->llena_texto("Abono:",17, 118, $DB, "", "", $rw[17], 4, 0);
+    $FB->llena_texto("param17", 1, 13, $DB, "", "", "0", 5, 0); 
+
+    $sql12="SELECT seg_nombre FROM `seguro`  order by idseguro desc limit 1";
+    $DB1->Execute($sql12);
+    $porcentaje=mysqli_fetch_array($DB1->Consulta_ID);
+    $seguro=$porcentaje['0'];
+
+    $FB->llena_texto("Seguro:",18, 126, $DB, "", "$seguro", $seguro, 17, 0);
+    $FB->llena_texto("Peso KG:",26,1, $DB, "", "","$rw[24]" ,1, 0);	
+    $FB->llena_texto("Volumen:",27,1, $DB, "", "","$rw[26]",17, 0);
+    $valorapagar=0;
+    //$FB->llena_texto("&iquest;Credito?:",7, 212, $DB, "3", "habilitarcredito(this.value,24,\"llega_sub3\",\"total valor\",1,0)","", 1,0);	
+    $FB->llena_texto("&iquest;Credito?:", 28, 216, $DB, "3", "habilitarcredito(this.value,85,\"llega_sub3\",\"total valor\",1,0)", "$creditos", 1, 0);
+
+    echo "</br>";
+    //$FB->llena_texto("Credito:",8,2, $DB, "(SELECT `idcreditos`,`cre_nombre` FROM `creditos`)", "", "", 17, 1);
+    echo "<tr><td colspan=2><div id='llega_sub3' >";
+    $FB->llena_texto("param8", 1, 13, $DB, "", "", "0", 5, 0);
+    echo '</div></td></tr>';
+
+    echo"<tr><td>Tipo de servicio</td><td id='respuesta'>";
+
+    echo"</td></tr>";
+
+    echo "<tr><td><button type='button' class='btn btn-success' onclick='cotizarguia(23,\"llega_sub2\")'>Consultar</button></td></tr>";
+
+    $FB->div_valores("mensaje2",6); 
+    $FB->div_valores("destino_vesr",6); 
 
 } elseif ($tabla == "Editar cotizacion"){
 
@@ -645,25 +689,69 @@ terrorismo, secuestro, lavado de activos, financiación del terrorismo, administ
     $FB->llena_texto("Cliente:", 1, 1, $DB, "", "", "$rw2[1]", 1, 0);
     $FB->llena_texto("Nit:", 2, 1, $DB, "", "", "$rw2[2]", 4, 0);
     $FB->llena_texto("Ciudad origen:", 3, 1, $DB, "", "", "$rw2[3]", 1, 0);
-    $FB->llena_texto("Ciudad destino:", 4, 1, $DB, "", "", "$rw2[4]", 4, 0);
+    $FB->llena_texto("Ciudad destino:", 44, 1, $DB, "", "", "$rw2[4]", 4, 0);
     $FB->llena_texto("Direccion Origen:", 5, 1, $DB, "", "", "$rw2[5]", 1, 0);
     $FB->llena_texto("Direccion destino:", 6, 1, $DB, "", "", "$rw2[6]", 4, 0);
     $FB->llena_texto("Descripcion mercancia:", 7, 1, $DB, "", "", "$rw2[7]", 1, 0);
-    $FB->llena_texto("Tipo de servicio:", 8, 1, $DB, "", "", "$rw2[8]", 4, 0);
+    $FB->llena_texto("Tipo de servicio:", 88, 1, $DB, "", "", "$rw2[8]", 4, 0);
     $FB->llena_texto("Peso en kilos:", 9, 1, $DB, "", "", "$rw2[9]", 1, 0);
     $FB->llena_texto("Valor Carga Mínima:", 10, 1, $DB, "", "", "$rw2[10]", 4, 0);
-    $FB->llena_texto("Valor Kilo adicional:", 11, 1, $DB, "", "", "$rw2[11]", 1, 0);
+    $FB->llena_texto("Valor Kilo adicional:", 111, 1, $DB, "", "", "$rw2[11]", 1, 0);
     $FB->llena_texto("Volumen:", 12, 1, $DB, "", "", "$rw2[12]", 4, 0);
     $FB->llena_texto("Cantidad de piezas:", 20, 1, $DB, "", "", "$rw2[21]", 1, 0);
     $FB->llena_texto("Valor Asegurado:", 13, 1, $DB, "", "", "$rw2[13]", 4, 0);
     $FB->llena_texto("Valor seguro:", 14, 1, $DB, "", "", "$rw2[14]", 1, 0);
     $FB->llena_texto("Valor kilos adicionales:", 15, 1, $DB, "", "", "$rw2[15]", 4, 0);
-    $FB->llena_texto("Valor servicio:", 16, 1, $DB, "", "", "$rw2[16]", 1, 0);
-    $FB->llena_texto("Valor Total (servicio + seguro):", 17, 1, $DB, "", "", "$rw2[17]", 4, 0);
+    $FB->llena_texto("Valor servicio:", 166, 1, $DB, "", "", "$rw2[16]", 1, 0);
+    $FB->llena_texto("Valor Total (servicio + seguro):", 30, 1, $DB, "", "", "$rw2[17]", 4, 0);
     $FB->llena_texto("id_param", 20, 13, $DB, "", "", $id_param, 1, 0);
-    $FB->llena_texto("Correo :", 18, 1, $DB, "", "", "$rw2[19]", 4, 0);
+    $FB->llena_texto("Correo :", 188, 1, $DB, "", "", "$rw2[19]", 4, 0);
     $FB->llena_texto("Numero Whatsapp:", 19, 1, $DB, "", "", "$rw2[20]", 1, 0);
     $FB->llena_texto("Observaciones:", 21, 1, $DB, "", "", "$rw2[22]", 1, 0);
+    
+    $FB->titulo_azul1("Cotizar",9,0,7);  
+    echo "</tr>";
+
+
+    echo"<input  type='hidden' class='form-control'  name='nrespuestas' id='nrespuestas'  size='20' value=''>";
+    $FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1)", "calculoo(this.value,param11.value,param8.value, \"cotizar.php\", 1);", "$valor20", 1, 0);
+    $FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`, `ciu_nombre` FROM `ciudades`  where inner_estados=1 )","calculoo(param4.value,this.value ,param8.value, \"cotizar.php\", 1);","$valor21",1,0);
+
+    // $FB->llena_texto("Ciudad Origen:",4,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` where inner_estados=1 )", "", "$param4", 1, 1);
+    // $FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`,`ciu_nombre` FROM `ciudades`  where inner_estados=1)", "verificar(this.value)", "$rw[11]", 1, 1);
+
+    //echo "<div id='mensaje2'></div>";
+    $FB->llena_texto("Valor de Prestamo:",16, 118, $DB, "", "", $rw[16],17, 0);
+    //$FB->llena_texto("Abono:",17, 118, $DB, "", "", $rw[17], 4, 0);
+    $FB->llena_texto("param17", 1, 13, $DB, "", "", "0", 5, 0); 
+
+    $sql12="SELECT seg_nombre FROM `seguro`  order by idseguro desc limit 1";
+    $DB1->Execute($sql12);
+    $porcentaje=mysqli_fetch_array($DB1->Consulta_ID);
+    $seguro=$porcentaje['0'];
+
+    $FB->llena_texto("Seguro:",18, 126, $DB, "", "$seguro", $seguro, 17, 0);
+    $FB->llena_texto("Peso KG:",26,1, $DB, "", "","$rw[24]" ,1, 0);	
+    $FB->llena_texto("Volumen:",27,1, $DB, "", "","$rw[26]",17, 0);
+    $valorapagar=0;
+    //$FB->llena_texto("&iquest;Credito?:",7, 212, $DB, "3", "habilitarcredito(this.value,24,\"llega_sub3\",\"total valor\",1,0)","", 1,0);	
+    $FB->llena_texto("&iquest;Credito?:", 28, 216, $DB, "3", "habilitarcredito(this.value,85,\"llega_sub3\",\"total valor\",1,0)", "$creditos", 1, 0);
+
+    echo "</br>";
+    //$FB->llena_texto("Credito:",8,2, $DB, "(SELECT `idcreditos`,`cre_nombre` FROM `creditos`)", "", "", 17, 1);
+    echo "<tr><td colspan=2><div id='llega_sub3' >";
+    $FB->llena_texto("param8", 1, 13, $DB, "", "", "0", 5, 0);
+    echo '</div></td></tr>';
+
+    echo"<tr><td>Tipo de servicio</td><td id='respuesta'>";
+
+    echo"</td></tr>";
+
+    echo "<tr><td><button type='button' class='btn btn-success' onclick='cotizarguia(23,\"llega_sub2\")'>Consultar</button></td></tr>";
+
+    $FB->div_valores("mensaje2",6); 
+    $FB->div_valores("destino_vesr",6); 
+    
     echo'</table>';
     $link="https://sistema.transmillas.com/cotizaciones/Cotizacion$rw2[0].pdf";
     if ($rw2[20]!="") {
@@ -3151,6 +3239,48 @@ print_r($pagadas);
     $FB->llena_texto("valores2js", 1, 13, $DB, "", "", $valor2json, 5, 0);
 } else if ($tabla == "Recoger Paquete") {
 
+
+
+    // if ($id_usuario==2068) {
+    // if ($id_usuario==523) {
+    
+        echo '
+		<div style="width: 100%; height: 100vh;">
+		<iframe 
+			src="/nueva_plataforma/controller/RecogerController.php?accion=vista&idServicio='.$id_param.'&sede='.$id_sedes.'&acceso='.$nivel_acceso.'&nombre='.$id_nombre.'&porcobrar='.$cambio.'&usuario='.$id_usuario.'"
+			style="width: 100%; height: 100%; border: 0;"
+			allowfullscreen
+			loading="lazy">
+		</iframe>
+		</div>';
+    //  }else{
+    // $FB->llena_texto("¿Paquete Recogido?:", 1, 82, $DB, $recogido, "cambio_ajax2(this.value, 11, \"llega_sub1\", \"param2\", 1,$id_param)", @$rw[1], 17, 1);
+    // $FB->llena_texto("", 2, 4, $DB, "llega_sub1", "", "", 4, 0);
+    // $FB->llena_texto("id_param", 1, 13, $DB, "", "", $id_param, 5, 0);
+
+    // $FB->llena_texto("id_param2", 1, 13, $DB, "", "", $id_param, 5, 0);
+    // $FB->llena_texto("id_param1", 1, 13, $DB, "", "", "", 5, 0);
+    // $FB->llena_texto("encomiendas", 1, 13, $DB, "", "", "0", 5, 0);
+
+    //  }
+
+} else if ($tabla == "Recoger") {
+
+
+
+    // if ($id_usuario==2068) {
+    // if ($id_usuario==523) {
+    
+        // echo '
+		// <div style="width: 100%; height: 100vh;">
+		// <iframe 
+		// 	src="/nueva_plataforma/controller/RecogerController.php?accion=vista&idServicio='.$id_param.'&sede='.$id_sedes.'&acceso='.$nivel_acceso.'&nombre='.$id_nombre.'&porcobrar='.$cambio.'&usuario='.$id_usuario.'"
+		// 	style="width: 100%; height: 100%; border: 0;"
+		// 	allowfullscreen
+		// 	loading="lazy">
+		// </iframe>
+		// </div>';
+    //  }else{
     $FB->llena_texto("¿Paquete Recogido?:", 1, 82, $DB, $recogido, "cambio_ajax2(this.value, 11, \"llega_sub1\", \"param2\", 1,$id_param)", @$rw[1], 17, 1);
     $FB->llena_texto("", 2, 4, $DB, "llega_sub1", "", "", 4, 0);
     $FB->llena_texto("id_param", 1, 13, $DB, "", "", $id_param, 5, 0);
@@ -3158,6 +3288,8 @@ print_r($pagadas);
     $FB->llena_texto("id_param2", 1, 13, $DB, "", "", $id_param, 5, 0);
     $FB->llena_texto("id_param1", 1, 13, $DB, "", "", "", 5, 0);
     $FB->llena_texto("encomiendas", 1, 13, $DB, "", "", "0", 5, 0);
+
+    //  }
 
 } else if ($tabla == "Recoger oficina") {
 
@@ -3168,6 +3300,8 @@ print_r($pagadas);
     $FB->llena_texto("id_param2", 1, 13, $DB, "", "", $id_param, 5, 0);
     $FB->llena_texto("id_param1", 1, 13, $DB, "", "", "operadoroficina", 5, 0);
     $FB->llena_texto("encomiendas", 1, 13, $DB, "", "", "0", 5, 0);
+
+    
 } else if ($tabla == "Entregar Guias") {
 
 	
@@ -3176,12 +3310,21 @@ print_r($pagadas);
     } else {
         $cambio=0;
     }
-	$FB->llena_texto("¿Paquete Entregado?:",1,82, $DB, $entregado, "cambio_ajax2(this.value, 12, \"llega_sub1\",\"$cambio\", 1,$id_param)",@$rw[1], 17, 1);
-	$FB->llena_texto("", 2, 4, $DB, "llega_sub1", "", "",4,0);
-	$FB->llena_texto("id_param", 1, 13, $DB, "", "", $id_param, 5, 0);
-	$FB->llena_texto("id_param2", 1, 13, $DB, "", "", $id_param, 5, 0);
-	$FB->llena_texto("porcobrar", 1, 13, $DB, "", "",$cambio, 5, 0);
 
+	// $FB->llena_texto("¿Paquete Entregado?:",1,82, $DB, $entregado, "cambio_ajax2(this.value, 12, \"llega_sub1\",\"$cambio\", 1,$id_param)",@$rw[1], 17, 1);
+	// $FB->llena_texto("", 2, 4, $DB, "llega_sub1", "", "",4,0);
+	// $FB->llena_texto("id_param", 1, 13, $DB, "", "", $id_param, 5, 0);
+	// $FB->llena_texto("id_param2", 1, 13, $DB, "", "", $id_param, 5, 0);
+	// $FB->llena_texto("porcobrar", 1, 13, $DB, "", "",$cambio, 5, 0);
+		echo '
+		<div style="width: 100%; height: 100vh;">
+		<iframe 
+			src="/nueva_plataforma/controller/EntregarController.php?accion=vista&idServicio='.$id_param.'&sede='.$id_sedes.'&acceso='.$nivel_acceso.'&nombre='.$id_nombre.'&porcobrar='.$cambio.'&usuario='.$id_usuario.'"
+			style="width: 100%; height: 100%; border: 0;"
+			allowfullscreen
+			loading="lazy">
+		</iframe>
+		</div>';
 
  } 
  else if ($tabla == "seguimientoruta") {
@@ -3250,7 +3393,7 @@ print_r($pagadas);
                 echo "</select>";
             
                 if($transp[0]==1){
-                echo "<a  onclick='pop_dis133($idservicioguia,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
+                echo "<a  onclick='pop_dis114($idservicioguia,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
                 }	
                 echo "</div>";
                 
@@ -3280,7 +3423,8 @@ print_r($pagadas);
                 }
 
 
-                echo "<a  onclick='pop_dis13($idservicioguia,\"Entregar Guias\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Entregar Guias' role='button' >Entregar</a>";
+                echo "<a  onclick='pop_dis113($idservicioguia,\"Entregar Guias\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Entregar Guias' role='button' >Entregar</a>";
+                echo "</div>";
                 echo "</div>";
             }
         }
@@ -4256,7 +4400,8 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
             $FB->titulo_azul1("Novedades de Factura:",1,0,0);
 
 
-            $sql="SELECT `idhojadevida`,`hoj_nit`,`hoj_cedula`,`hoj_razonsocial`,`hoj_telefono1`, `hoj_telefono2`,   `hoj_email`, `hoj_direccionrf`, `hoj_fechanaradicacion`,`hoj_fechanacorte`,`hoj_novedadesfactura`,  `hoj_numerocuenta`, `hoj_plazopago`, `hoj_novedadesfactura` FROM `hojadevidacliente` left join creditos on idcreditos=hoj_clientecredito where cre_nombre='$id_param' and hoj_estado='Activo' ORDER BY  hoj_nombre asc ";
+            $sql="SELECT `idhojadevida`,`hoj_telefono1`, `hoj_telefono2`,   `hoj_email` FROM `hojadevidacliente` left join creditos on idcreditos=hoj_clientecredito where cre_nombre='$id_param' and hoj_estado='Activo' ORDER BY  hoj_nombre asc ";
+            $sql="SELECT   `cont_celular`, `cont_correo`FROM `contactofacturacion` WHERE  cont_idhojavida=$idhojadevida";
 
             $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar); 
                 while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -5068,12 +5213,16 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
     // print_r($myArray);
     if ($tabla == "Enviar Guia R") {
         $tipo="Recogida";
+        $tipo2="R";
     }else {
         $tipo="Entrega";
+        $tipo2="E";
+
     }
-    $sql2="SELECT ima_ruta,ima_tipo,idimagenguias,ima_fecha from imagenguias where ima_idservicio=$id_param and ima_tipo='$tipo' ";
+        $sql2="SELECT ima_ruta,ima_tipo,idimagenguias,ima_fecha,ser_consecutivo from imagenguias INNER JOIN servicios on  ima_idservicio=idservicios  where ima_idservicio=$id_param and ima_tipo='$tipo' ";
         $DB1->Execute($sql2); 
         $rw1=mysqli_fetch_row($DB1->Consulta_ID);
+        $idEnvio=$rw1[4].$tipo2;
 
     $fechaactual = date("Y-m-d");
     $FB->titulo_azul1("Enviar guia",1,0,7); 
@@ -5081,7 +5230,7 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
    
    
 
-    echo '<tr><td class="text"><a class="btn btn-primary btn-lg" href="#" onclick="enviarAlertaWhat(\''.$id_param.'\', 24, \''.$id_param.'\', \''.$rw1[0].'\');">Enviar</a></td></tr>';
+    echo '<tr><td class="text"><a class="btn btn-primary btn-lg" href="#" onclick="enviarAlertaWhat(\''.$id_param.'\', 42, \''.$id_param.'\', \''.$rw1[0].'\', \''.$idEnvio.'\');">Enviar</a></td></tr>';
     // echo '<tr><td><a class="icon-button file-button" href="#" onclick=\'sendEmailfac('.$_GET['ide'].'); return false;\'>Enviar</a><td></tr>';
     echo'<div id="loading"  style="display: none;">
     <img src="images/loading.gif" alt="Cargando..."></div>';
@@ -5354,9 +5503,14 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
         </tr>
         <tr>
         <td class="text">
-            <textarea id="mensajeFijo" readonly rows="4" cols="40">Transmillas le informa
-        Queremos informarle que su 🚚 encomienda #_____ se encuentra
-            </textarea>
+            <select id="mensajeFijo" style="width: 100%;">
+                <option value="1">
+                Transmillas le informa Queremos informarle que su 🚚 encomienda #_____ se encuentra 
+                </option>
+                <option value="2">
+                    Transmillas les desea una feliz navidad🎄 y un prospero año nuevo✨. Gracias por preferirnos😊.
+                </option>
+            </select>
         </td>
         </tr>
 

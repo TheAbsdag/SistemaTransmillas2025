@@ -8,7 +8,7 @@ $nivel_acceso=$_SESSION['usuario_rol'];
 $id_sedes=$_SESSION['usu_idsede'];
 $idServicio=$_POST['id_param'];
 $imprimir=$_POST['imprimir'];
-$idguia=$_POST['idguia'];;
+$idguia=$_POST['idguia'];
 // Obtener los datos de la solicitud
 $data = json_decode(file_get_contents('php://input'), true);
 

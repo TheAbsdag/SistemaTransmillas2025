@@ -96,7 +96,7 @@ $seguro=($rw[12]*1)/100;
 		
 		if($rw[9]=="Contado" and $rw[14]==0){
 		
-		 $sql1="SELECT `pre_kilo`,`pre_adicional` FROM `precios` WHERE `pre_idciudadori`=$rw[17]  and `pre_idciudaddes`=$rw[18]";
+		 $sql1="SELECT `pre_kilo`,`pre_adicional` FROM `precios` WHERE `pre_idciudadori`=$rw[17]  and `pre_idciudaddes`=$rw[18]  AND pre_estado = 1";
 		$DB->Execute($sql1);
 		$rw1=mysqli_fetch_row($DB->Consulta_ID); 
 		

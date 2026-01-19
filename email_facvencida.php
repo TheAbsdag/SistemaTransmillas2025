@@ -23,15 +23,15 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'ventastransmillas@gmail.com';
-    $mail->Password   = 'tpwv clpk qqdo dbgx'; // Asegúrate de usar la contraseña de la aplicación si tienes 2FA habilitado
+    $mail->Username   = 'facturaciontransmillas@gmail.com';
+    $mail->Password   = 'qxlh uxsh ilgp xojp'; // Asegúrate de usar la contraseña de la aplicación si tienes 2FA habilitado  tpwv clpk qqdo dbgx
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
 
     $destinatario = $_POST['correo'];
 
     // Remitente y destinatarios
-    $mail->setFrom('ventastransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.'); // Reemplaza con tu correo y nombre
+    $mail->setFrom('facturaciontransmillas@gmail.com', 'TRANSMILLAS LOGISTICA Y TRANSPORTADORA S.A.S.'); // Reemplaza con tu correo y nombre
     $mail->addAddress($destinatario, ''); // Reemplaza con el correo del destinatario
    
 

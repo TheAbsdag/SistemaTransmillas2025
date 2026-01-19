@@ -204,7 +204,8 @@ while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 	$pnalcobro=$rw1[1];
 }
 	
-  $slq2="SELECT (sum(cue_valorflete)+sum(cue_pordeclarado)) valor,count(idcuentaspromotor) FROM `cuentaspromotor`  inner join ciudades on idciudades=cue_idciudadori WHERE `cue_fecharecogida` like '$param4%'  and cue_estado<=14  and cue_tipoevento=1 and cue_pendientecobrar=0 and inner_sedes=$id_sedes and cue_idservicio not in ($transidser) order by `cue_fecha` ";
+$slq2="SELECT (sum(cue_valorflete)+sum(cue_pordeclarado)) valor,count(idcuentaspromotor) FROM `cuentaspromotor`  inner join ciudades on idciudades=cue_idciudadori WHERE `cue_fecharecogida` like '$param4%'  and cue_estado<=14  and cue_tipoevento=1 and cue_pendientecobrar=0 and inner_sedes=$id_sedes and cue_idservicio not in ($transidser) order by `cue_fecha` ";
+
 $DB->Execute($slq2); 
 while($rw2=mysqli_fetch_row($DB->Consulta_ID))
 {
@@ -354,6 +355,9 @@ $prestamoscreditos=str_replace(".","", $prestamoscreditos);
 $comprasprestamos=$totalasignacion-$presta;
 $totalremesas=str_replace(".","", $totalremesas);
 $totalsededia=$contado+$palcobroo+$valorabono-$devoluciong3-$totalgastos-$totalremesas+$comprasprestamos+$pxc+$pxca+$pagospxp+$exedente+$prestamoscreditos;
+// echo"$totalsededia=$contado+$palcobroo+$valorabono-$devoluciong3-$totalgastos-$totalremesas+$comprasprestamos+$pxc+$pxca+$pagospxp+$exedente+$prestamoscreditos";
+
+
 $totalsededia=number_format($totalsededia,0,".",".");	
 
 echo "</table><table><tr><td><table class='table table-hover'>";

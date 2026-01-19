@@ -93,12 +93,12 @@ function alertaDinero(){
 						$st = "NO";
 						$colorfondo = "#941727";
 					}
-					echo " ¿EN RUTA?<select  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:12px'  name='param$va' id='param$va'  onChange='cambio_ajax2(this.value, 71, \"campo$va\", \"$va\", 1, $id_p)'  required>";
+					echo " ¿EN RUTA?<select  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:12px'  name='param$va' id='param$va'  onChange='cambio_ajax2(this.value, 110, \"campo$va\", \"$va\", 1, $id_p)'  required>";
 					$LT->llenaselect_ar($st, $estado_rec);
 					echo "</select>";
 
 					if ($rw1[11] == 1) {
-						echo "<a  onclick='pop_dis133($id_p,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
+						// echo "<a  onclick='pop_dis133($id_p,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
 					}
 					echo "</div>";
 				} else  if ($rw1[10] == 9) {
@@ -125,12 +125,12 @@ function alertaDinero(){
 						$st = "NO";
 						$colorfondo = "#941727";
 						echo "<div id='campo$va'>";
-						echo " ¿EN RUTA?<select  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:12px'  name='param$va' id='param$va'  onChange='cambio_ajax2(this.value, 70, \"campo$va\", \"$va\", 1, $id_p)'  required>";
+						echo " ¿EN RUTA?<select  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:12px'  name='param$va' id='param$va'  onChange='cambio_ajax2(this.value, 111, \"campo$va\", \"$va\", 1, $id_p)'  required>";
 						$LT->llenaselect_ar($st, $estado_rec);
 						echo "</select>";
 						echo "</div>";
 					}
-					echo "<a  onclick='pop_dis13($id_p,\"Entregar Guias\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Entregar Guias' role='button' >Entregar</a>";
+					// echo "<a  onclick='pop_dis13($id_p,\"Entregar Guias\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Entregar Guias' role='button' >Entregar</a>";
 				}
 				echo "</p></div></td>";
 
@@ -217,7 +217,7 @@ function alertaDinero(){
 					echo "</select>";
 					echo "</div>";
 				} else if ($id_usuario == $rw1[9] and $rw1[15] != '') {
-					$modo = " ENTREGAGO";
+					$modo = " ENTREGADO";
 					$rw1[16] = number_format($rw1[16], 0, ".", ".");
 					if ($rw1[8] == 'Sede Origen') {
 						echo "<h4><span class='label label-warning'>VALOR  APROBADO A PAGAR: $rw1[16]</span></h4>";

@@ -81,7 +81,7 @@ $DB->Execute($sql); $va=0;
 		echo "</select>";
 	
 		if($rw1[11]==1){
-		echo "<a  onclick='pop_dis133($id_p,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
+		// echo "<a  onclick='pop_dis133($id_p,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
 		 }	
 		 echo "</div>";
 		echo "</p></div></td>";

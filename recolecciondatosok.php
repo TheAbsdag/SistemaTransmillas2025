@@ -163,7 +163,7 @@ if($param8!=''){
 		$idprecios=1;
 	}
 
-	$sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param4'  and `pre_idciudades`='$param11' and pre_tiposervicio='$param34' and pre_idcredito='$idcredito' and con_idprecios='$idprecios'";
+	$sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param4'  and `pre_idciudades`='$param11' and pre_tiposervicio='$param34' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' and pre_estado=1";
 	$DB->Execute($sql3);
 	$rw2=mysqli_fetch_row($DB->Consulta_ID);  
 
@@ -275,6 +275,10 @@ if (is_uploaded_file($_FILES['param91']['tmp_name'])){
 			$img_transaccion = "";
 		}
 
+
+	$res = guardarLinkServicio($DB, $idser, "Recogida", $idconsecutivo,$param26,$param27,$param18,$precio);
+	$linkGuia = $res['url'];	
+
 	if($tipopago>1){
 
 		$sql5="INSERT INTO `pagoscuentas`(`pag_tipopago`,`pag_cuenta`, `pag_valor`, `pag_idoperario`, `pag_idservicio`,`pag_guia`, `pag_estado`, `pag_fecha`,pag_img_transaccion) 
@@ -315,14 +319,18 @@ if (is_uploaded_file($_FILES['param91']['tmp_name'])){
 	// 	$pagina2="configuracion.php?idmen=163";
 	// 	header ("Location: ticketfactura.php?pagina2=$pagina2&id_param=$idser");
 	// }
-	
+
 	if($nivel_acceso!=3){
 		$pagina2="imprimirfactura.php";
-		header ("Location: firmadigital.php?pagina2=$pagina2&param15='reenviar'&id_param=$idser&idfirma=$idfirma&idguia=$planilla&imprimir=Recogida&p=$tipopago");
+		header ("Location: nueva_plataforma/view/recogerEntregar/firmar.php?para=$idser&accion=guardarFirmaRecogida&de=R");
+
+		// header ("Location: firmadigital.php?pagina2=$pagina2&param15='reenviar'&id_param=$idser&idfirma=$idfirma&idguia=$planilla&imprimir=Recogida&p=$tipopago");
 	} else {
 		
 		$pagina2="configuracion.php";
-		header ("Location: firmadigital.php?pagina2=$pagina2&id_param=$idser&idfirma=$idfirma&idguia=$planilla&imprimir=Recogida&p=$tipopago");
+		// header ("Location: firmadigital.php?pagina2=$pagina2&id_param=$idser&idfirma=$idfirma&idguia=$planilla&imprimir=Recogida&p=$tipopago");
+		header ("Location: nueva_plataforma/view/recogerEntregar/firmar.php?para=$idser&accion=guardarFirmaRecogida&de=R");
+	
 	}
 
  }else {
@@ -330,6 +338,35 @@ if (is_uploaded_file($_FILES['param91']['tmp_name'])){
 	header ("Location: inicio.php");
 }
 
+
+function guardarLinkServicio($DB, $id_param2, $imprimir, $idguia, $ser_peso, $ser_volumen, $ser_valorseguro, $ser_valor) {
+    $guiaruta = "https://sistema.transmillas.com/ticketfacturacorreoimprimir.php?imprimir=$imprimir&id_param=$id_param2";
+    $guiarutauser = "https://sistema.transmillas.com/ticketfacturacorreoimprimir.php?imprimir=$imprimir&id_param=$id_param2" .
+                    "&peso={$ser_peso}&volumen={$ser_volumen}&seguro={$ser_valorseguro}&valorf={$ser_valor}";
+
+    $sqls = "SELECT * FROM imagenguias WHERE ima_idservicio = $id_param2 AND ima_tipo LIKE '%$imprimir%'";
+    $DB->Execute($sqls);
+    $rws = mysqli_fetch_array($DB->Consulta_ID);
+
+    if (!empty($rws[0])) {
+        $sql_ins = "UPDATE imagenguias 
+                    SET ima_ruta = '$guiaruta', 
+                        ima_dir = '$guiarutauser', 
+                        ima_nombre = '$idguia' 
+                    WHERE ima_idservicio = $id_param2 
+                    AND ima_tipo = '$imprimir'";
+        $DB->Execute($sql_ins);
+    } else {
+        $sql_ins = "INSERT INTO imagenguias (ima_nombre, ima_ruta, ima_tipo, ima_fecha, ima_idservicio, ima_dir)
+                    VALUES ('$idguia', '$guiaruta', '$imprimir', '" . date("Y-m-d") . "', '$id_param2', '$guiarutauser')";
+        $DB->Execute($sql_ins);
+    }
+
+    return [
+        "status" => "ok",
+        "url" => $guiarutauser
+    ];
+}
 function enviarAlertaWhat($numguia,$telefono,$tipo,$idservi){
 
 	if (preg_match('/^\d{10}$/', $telefono)) {

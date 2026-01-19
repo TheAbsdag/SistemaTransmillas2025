@@ -125,16 +125,23 @@ if($param40=='' && $param41=''){
 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
 	{
+
+		
 		$id_p=$rw1[0];
 		$va++; $p=$va%2;
 		$telefonoDes=$rw1[18];
+		$sql1="SELECT cli_idciudad,cli_telefono FROM `serviciosdia` WHERE idservicios='$id_p'";
+		$DB1->Execute($sql1);
+		$rw2=mysqli_fetch_row($DB1->Consulta_ID);
+		
+		$telefonoRemi=$rw2[1];
 		$consecutivo=$rw1[3];
 		if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
 		echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 		//$direc1=str_replace("&"," ", $rw1[4]);
 		//$direct2=str_replace("&"," ", $rw1[7]);
 
-		echo"<td align='center' ><input type='checkbox'  onchange='selecionado1($id_p,\"$telefonoDes\",\"$consecutivo\")' class='check_hijo' id='".$id_p."s1' value='$id_p'></td>";
+		echo"<td align='center' ><input type='checkbox'  onchange='selecionado1($id_p,\"$telefonoDes\",\"$consecutivo\",\"$telefonoRemi\")' class='check_hijo' id='".$id_p."s1' value='$id_p'></td>";
 
 		echo "<td>".$rw1[1]."</td>
 		<td>".$rw1[2]."</td>
@@ -180,9 +187,7 @@ if($param40=='' && $param41=''){
 		<td>$ ".$rw1[10]."</td>
 		<td>$ ".$rw1[11]."</td>
 		";
-		$sql1="SELECT cli_idciudad FROM `serviciosdia` WHERE idservicios='$id_p'";
-		$DB1->Execute($sql1);
-		$rw2=mysqli_fetch_row($DB1->Consulta_ID);
+
 
 
 		$totalprestamos=$rw1[7]+$totalprestamos;
@@ -207,6 +212,7 @@ if($param40=='' && $param41=''){
 		}else {
 			$colorflete="";
 		}
+		
 		if($rw2[0]==0 or $rw2[0]==""){
 			$colorflete="#e73c3c";
 			$texto.="Falta la ciudad de origen";

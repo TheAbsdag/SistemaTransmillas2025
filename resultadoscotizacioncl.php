@@ -38,7 +38,7 @@ $LT = new llenatablas;
 	if($valortservicio==0 and $param1!=1){ // tipo servicio normal y no credito
 	
 		 $sql="SELECT `idprecios`, `pre_kilo`, `pre_adicional` FROM `precios` 
-		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio'  ";
+		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio'  AND pre_estado = 1  ";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
 	   
@@ -108,7 +108,7 @@ $LT = new llenatablas;
 
 	{
 		$sql="SELECT `idprecios`, `pre_kilo`, `pre_adicional` FROM `precios` 
-		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' ";
+		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio'  AND pre_estado = 1 ";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
 	   

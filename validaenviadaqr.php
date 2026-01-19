@@ -2,7 +2,7 @@
 
 <?php
 
-// $redirectIfNotLogged = "nueva_plataforma/controller/ValidarQrController.php?guia=".$_REQUEST["guia"]."&pieza=".$_REQUEST["pieza"].""; 
+$redirectIfNotLogged = "nueva_plataforma/controller/ValidarQrController.php?guia=".$_REQUEST["guia"]."&pieza=".$_REQUEST["pieza"].""; 
 require("login_autentica.php"); // conexión base de datos
 $DB1 = new DB_mssql;
 $DB1->conectar();

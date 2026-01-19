@@ -91,7 +91,7 @@ $FB->llena_texto("Ciudad Destino:",11,2,$DB,"(SELECT `idciudades`, `ciu_nombre` 
 
 
 
-$FB->llena_texto("Tipo de servicio: $descripcion",37,279,$DB,"(SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$valor20 and pre_idciudaddes=$valor21)","cambioo(param4.value,param11.value,this.value,\"cotiza_clientes.php\",1);",$valor3,17,0);
+$FB->llena_texto("Tipo de servicio: $descripcion",37,279,$DB,"(SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$valor20 and pre_idciudaddes=$valor21  AND pre_estado = 1)","cambioo(param4.value,param11.value,this.value,\"cotiza_clientes.php\",1);",$valor3,17,0);
 
 // $FB->llena_texto("Tipo de servicio: $descripcion",37,279,$DB,"SELECT `idtiposervicio`,`tip_nom` FROM `tiposervicio` where tip_pagina='si'","cambioo(param4.value,param11.value,this.value,\"cotiza_clientes.php\",1);",$valor3,17,0);
 

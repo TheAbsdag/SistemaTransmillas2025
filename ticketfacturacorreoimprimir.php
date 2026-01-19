@@ -267,7 +267,7 @@ $date = date("Y-m-d");
 
 
 
- $sql = "SELECT `idclientes`,`ser_consecutivo`, `cli_nombre`,  `ser_destinatario`, `ser_telefonocontacto`,`ciu_nombre`,
+$sql = "SELECT `idclientes`,`ser_consecutivo`, `cli_nombre`,  `ser_destinatario`, `ser_telefonocontacto`,`ciu_nombre`,
  `ser_direccioncontacto`, `ser_paquetedescripcion`, `ser_piezas`,`ser_clasificacion`, `ser_valorprestamo`, 
  `ser_valorabono`, `ser_valorseguro`,`ser_resolucion`, `ser_pendientecobrar`,ser_valor,ser_peso,`cli_idciudad`,`ser_ciudadentrega`,
  `ser_tipopaq` ,`cli_telefono`, `cli_direccion`,ser_volumen,ser_verificado,ser_prioridad,ser_guiare,ser_estado,ser_devolverreci,ser_fecharegistro,ser_descripcion,cli_iddocumento FROM serviciosdia where idservicios=$id_param ";
@@ -300,7 +300,7 @@ if (isset($_GET['valorf'])) {
   // echo "$var llegó con el valor: " . $_GET[$var] . "<br>";
 } 
 
-if ($imprimir == "Entrega" or $imprimir == "Entregar") {
+if ($imprimir == "Entrega" or $imprimir == "Entregar"){
     $sql0 = "SELECT idciudades,inner_sedes FROM `ciudades`  where  ciu_nombre=$rw[5]";
     $DB1->Execute($sql0);
     $rw0 = mysqli_fetch_array($DB1->Consulta_ID);
@@ -309,7 +309,7 @@ if ($imprimir == "Entrega" or $imprimir == "Entregar") {
     $DB1->Execute($sql2);
     $rw2 = mysqli_fetch_array($DB1->Consulta_ID);
 
-  }elseif ($imprimir == "Recogida") {
+}elseif ($imprimir == "Recogida") {
     $sql0 = "SELECT idciudades,inner_sedes FROM `ciudades`  where  idciudades=$rw[17]";
     $DB1->Execute($sql0);
     $rw0 = mysqli_fetch_array($DB1->Consulta_ID);
@@ -350,10 +350,10 @@ if ($rw[26] >= 10) {
   $DB->Execute($sql);
   $usuguia = $DB->recogedato(0);
 }
-$userg = explode(" ", $usuguia);
-$Usuariog = $userg[0] . " " . $userg[1];
-if ($rw[9] == 'Credito') {
-  $fechatiempo = $rw[28];
+  $userg = explode(" ", $usuguia);
+  $Usuariog = $userg[0] . " " . $userg[1];
+  if ($rw[9] == 'Credito') {
+    $fechatiempo = $rw[28];
 }
 
 // <img src='img/logofactura.png' alt='Logotipo' />
@@ -671,7 +671,7 @@ $html .= "
 
 if ($imprimir == "Recogida") {
 
-  $sql1 = "SELECT firma,`nombre`, `numero_documento`,`correo_electronico`, `telefono`,tipo FROM firma_clientes WHERE tipo_firma = 'Recogida' and id_guia='$id_param' order by id desc limit 1";
+  $sql1 = "SELECT firma,`nombre`, `numero_documento`,`correo_electronico`, `telefono`,tipo,firma_clientes FROM firma_clientes WHERE tipo_firma = 'Recogida' and id_guia='$id_param' order by id desc limit 1";
   $resultado = $DB1->Execute($sql1);
   $fila = mysqli_fetch_assoc($resultado);
   $imagen = $fila['firma'];
@@ -680,23 +680,27 @@ if ($imprimir == "Recogida") {
 
 
 
+  if ($fila['firma_clientes']=="") {
+    if ($tipo == 'imagen') {
 
-  if ($tipo == 'imagen') {
+      if($enviarcorreo!=2 and $enviarcorreo!=3){
+        // Codificar el contenido del ArrayBuffer como una cadena base64
+        $imagen_base64 = 'tmp_img/imagen_' . $rw[1] . '.png';
+      }else{
+            // Codificar el contenido del ArrayBuffer como una cadena base64
+            $base64Data = base64_encode($imagen);
+            // Construir el data URL
+            $imagen_base64 = 'data:image/png;base64,'. $base64Data;
+      }
 
-    if($enviarcorreo!=2 and $enviarcorreo!=3){
-      // Codificar el contenido del ArrayBuffer como una cadena base64
-      $imagen_base64 = 'tmp_img/imagen_' . $rw[1] . '.png';
-    }else{
-          // Codificar el contenido del ArrayBuffer como una cadena base64
-          $base64Data = base64_encode($imagen);
-          // Construir el data URL
-          $imagen_base64 = 'data:image/png;base64,'. $base64Data;
+    } else {
+
+      // Decodificar los datos base64
+      $imagen_base64 = $imagen;
     }
 
-  } else {
-
-    // Decodificar los datos base64
-    $imagen_base64 = $imagen;
+  }else {
+    $imagen_base64 = $fila['firma_clientes'];
   }
 
   $nombre = $fila['nombre'];
@@ -721,33 +725,37 @@ if ($imprimir == "Recogida") {
 if ($imprimir == "Entrega" or $imprimir == "Entregar") {
 
 
-  $sql1 = "SELECT firma,`nombre`, `numero_documento`,`correo_electronico`, `telefono`,tipo FROM firma_clientes WHERE tipo_firma = 'Entrega' and id_guia='$id_param' order by id desc limit 1";
+  $sql1 = "SELECT firma,`nombre`, `numero_documento`,`correo_electronico`, `telefono`,tipo,firma_clientes FROM firma_clientes WHERE tipo_firma = 'Entrega' and id_guia='$id_param' order by id desc limit 1";
   $resultado = $DB1->Execute($sql1);
   $fila = mysqli_fetch_assoc($resultado);
   $imagen = $fila['firma'];
   $tipo = $fila['tipo'];
   $telefono1 = $fila['telefono'];
 
-  
-  if ($tipo == 'imagen') {
+  if ($fila['firma_clientes']=="") {
+    if ($tipo == 'imagen') {
 
-    if($enviarcorreo!=2 and $enviarcorreo!=3){
-      // Codificar el contenido del ArrayBuffer como una cadena base64
-      $imagen_base64 = 'tmp_img/imagen_' . $rw[1] . '.png';
-    }else{
-          // Codificar el contenido del ArrayBuffer como una cadena base64
-          $base64Data = base64_encode($imagen);
-          // Construir el data URL
-          $imagen_base64 = 'data:image/png;base64,'. $base64Data;
+      if($enviarcorreo!=2 and $enviarcorreo!=3){
+        // Codificar el contenido del ArrayBuffer como una cadena base64
+        $imagen_base64 = 'tmp_img/imagen_' . $rw[1] . '.png';
+      }else{
+            // Codificar el contenido del ArrayBuffer como una cadena base64
+            $base64Data = base64_encode($imagen);
+            // Construir el data URL
+            $imagen_base64 = 'data:image/png;base64,'. $base64Data;
+      }
+
+
+
+    } else {
+
+      // Decodificar los datos base64
+      $imagen_base64 = $imagen;
     }
-
-
-
-  } else {
-
-    // Decodificar los datos base64
-    $imagen_base64 = $imagen;
+  }else {
+    $imagen_base64 = $fila['firma_clientes'];
   }
+  
 
   $nombre = $fila['nombre'];
   $documento = $fila['numero_documento'];

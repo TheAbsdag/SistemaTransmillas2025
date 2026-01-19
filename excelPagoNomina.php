@@ -146,9 +146,7 @@ error_reporting(0);
 
 
 
-$año=date('Y');
-
-$NombreExcel = "Pago de Primas".$param36." del mes ".$param34." del  Año ".$año."";
+$NombreExcel = "Pago de Primas".$param36." del mes ".$param34." del  Año ".$param39."";
 
 if ($descargar=="descargar") {
     header('Content-type:application/xls');
@@ -216,7 +214,7 @@ $conde="and `hoj_cedula`= '$CedulaUser' "; }
 
 
 $conde3=""; 
-$ano=date('Y');
+$ano=$param39;
 if($param34!=''){ $fechaactual=$param34." 00:00:00";  }
 if($param36!=''){ $fechafinal=$param36." 23:59:59";  }
 
@@ -231,7 +229,7 @@ if($param36=='Primera'){
 }elseif($param36=='Segunda'){
 	// $fin = date("t");
 
-	$fecha_aux = date('Y-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
+	$fecha_aux = date($ano.'-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
 	$fin = date('t', strtotime($fecha_aux));
 
 	$fechaactual=date($ano.'-'.$param34.'-16'.' 00:00:00');
@@ -245,7 +243,7 @@ if($param36=='Primera'){
 
 	// $fin = date("t");
 
-	$fecha_aux = date('Y-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
+	$fecha_aux = date($ano.'-'.$param34.'-d'); // Obtener la fecha actual en formato 'YYYY-MM-DD'
 	$fin = date('t', strtotime($fecha_aux));
 
 	$fechaactual=date($ano.'-'.$param34.'-01'.' 00:00:00');
@@ -355,7 +353,8 @@ function diasSegundaQuince($year, $month) {
                       }else{
                       
                       $valordediastrabajados=0;
-                      $sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida FROM `cargo` WHERE idcargo='$rw11[3]'";		
+                        $sql2="SELECT  `idcargo`, `car_Cargo`, `salario`, `auxilio`, `otros`,car_Recogida,car_ValorRecogida,des_salud,des_pension FROM `cargo`INNER JOIN salarios_cargos on idcargo=id_relCargo  WHERE idcargo='$rw1[3]' and anio='$ano'";
+		
                       $DB1->Execute($sql2);
                       $cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
                       if($idusuario>=1){
@@ -950,7 +949,9 @@ function diasSegundaQuince($year, $month) {
                         $va++; $p=$va%2;
                       
                         $valordediastrabajados=0;
-                        $sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida	 FROM `cargo` WHERE idcargo='$rw16[3]'";		
+                        // $sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros`,car_Recogida,car_ValorRecogida	 FROM `cargo` WHERE idcargo='$rw16[3]'";		
+				        $sql2="SELECT  `idcargo`, `car_Cargo`, `salario`, `auxilio`, `otros`,car_Recogida,car_ValorRecogida,des_salud,des_pension FROM `cargo`INNER JOIN salarios_cargos on idcargo=id_relCargo  WHERE idcargo='$rw1[3]' and anio='$ano'";
+                       
                         $DB1->Execute($sql2);
                         $cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
                         if($idusuario>=1){
@@ -1301,11 +1302,13 @@ function diasSegundaQuince($year, $month) {
                 
             //SALUD Y PENSION
             
-                        $Salud=28470;
-                        $Pension=28470;
-            
-                        $saludPorDia=28470/15;
-                        $pensionPorDia=28470/15;
+					$Salud=$cargosaldo[7];
+					$Pension=$cargosaldo[8];
+					
+					
+
+					$saludPorDia=$Salud/30;
+					$pensionPorDia=$Pension/30;
             
                         if ($terminaContrato=="" and $mesdeingreso==false) {
 
@@ -1347,13 +1350,13 @@ function diasSegundaQuince($year, $month) {
                             $partes = explode(".", $rw6[0]);
                             $numeroAntesDelPunto = $partes[0];
             
-                            $valorHorasDomini=$numeroAntesDelPunto*10831;
-                            $valorMitadDomini=10831/2;
+                            $valorHorasDomini=$numeroAntesDelPunto*11140;
+                            $valorMitadDomini=11140/2;
             
                             $valorTotalHorasDomini=$valorHorasDomini+$valorMitadDomini;
                         } else {
                             
-                            $valorHorasDomini=$rw6[0]*10831;
+                            $valorHorasDomini=$rw6[0]*11140;
                             $valorTotalHorasDomini=$valorHorasDomini;
                             
                         }	
@@ -1395,48 +1398,13 @@ function diasSegundaQuince($year, $month) {
             
             
                         $sueldo_formateado = number_format($cargosaldo[2], 0, ',', '.');
-                        // echo "<td>".$cargosaldo[1]." </td>";//Nombre del cargo
-                        
-                        // echo "<td>$".$sueldo_formateado."</td>";//Salario basico por mes
-                        // echo "<td>$".$cargosaldo[3]."</td>";//Auxilio por mes
+
                         
                         
                         $diasvalor_formateado = number_format($diasvalor, 0, ',', '.');
-                    //     echo "<td>$".$diasvalor_formateado."</td>";//Valor por dias
-                        
-                        
-                    //     echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($idusuario,\"Resumen_Quincena\",\"$fechas\")';  title='Ingreso de Usuario' >$diassitrabajoParaMostrar Dias  $suamdedias </td>"; //Ingreso?
-                    //     echo "<td>".$diasDescanso."</td>";// dias de descanso
-                    //     echo "<td>$".$valordediastrabajados_formateado."</td>";//Dias trabajados con dias de descanso
-            
-            
+
                      
-            
-                    //       echo "<td>$".$totalauxilio."</td>";//total auxilio segun dias
-                    
-                    // echo "<td>".$diasnotrabajo."</td>";
-            
-                  
-                    // echo "<td>".$diasincapacidad."</td>";
-                    // echo "<td>$valorDiasIncapadidad_formateado</td>";
-                    
-                    // // echo "<td>".$incaoacidadporce."</td>";
-                    // // echo "<td>$valorDiasIncapadidad_formateado</td>";
-            
-                    // echo "<td>$diasVacaciones</td>"; //VACACIONES
-                     
-                    // echo "<td>$valorDiasVacaciones_formateado</td>";//VACACIONES
-            
-                    // echo "<td>".$nombreMotivo."<br>".$permisosLic." Dias</td>"; 
-                    // echo "<td>$diasPerLicBasValortotalfinal_formateado</td>"; 
-                    
-                    // echo "<td>$valorSalud_formateado</td>"; 
-                     
-                    // echo "<td>$valorPension_formateado</td>";
-                      
-                    // echo "<td>$".$TotalDebe."</td>"; //DEUDAS
-                    // echo "<td> <a id='link'  onclick='pop_dis16($idusuario,\"Abono_A_Deuda\",\"$rw16[13]\")';  title='Click para agregar un abono' >$$restaABasico +</a></td>";//abonos a deudas
-            
+
             
             
                     
@@ -1462,10 +1430,10 @@ function diasSegundaQuince($year, $month) {
                          
                           $tablaNomina="SELECT  nom_confirma,nom_img_compro,nom_cuentaCobro,nom_confirmaUsu,nom_motivoObser,nom_fechaconfirmaUsus,`nom_confiAdmi`,`nom_fechaConfiAdmi`,nom_confirmaAdmin,nom_valor_ajuste1,nom_tipo_ajuste1,nom_ajuste_descripcion1 from nomina where nom_id_usu='$idusuario' and nom_fecha_inicio='$fechaactual' and nom_tipo_pago='Basico'  ";
                           $DB1->Execute($tablaNomina); 
-                          // $prestamostotal=mysqli_fetch_row($DB1->Consulta_ID);
+                        
                           while($Nomina=mysqli_fetch_row($DB1->Consulta_ID))
                           {
-                            // echo"AAAAAAAAAAAAAA".$Nomina[0];
+      
                             $valorAjusteB=$Nomina[9];
                             $tipoAjusteB=$Nomina[10];
                             $descripcionAjusteB=$Nomina[11];
@@ -1501,9 +1469,7 @@ function diasSegundaQuince($year, $month) {
                             }
             
                             if ($Nomina[3]=="Si") {
-                                // $user0="SELECT `usu_nombre` FROM `usuarios` WHERE `idusuarios`='$Nomina[6]' ";
-                                // $DB1->Execute($user0); 
-                                // $nombre1=$DB1->recogedato(0);
+
                                 $validadoDesprendible="Validado el $Nomina[5]  Por ".$rw16[1]." ".$rw16[2]." ";
                                 $validado="Validado✅ <br> $Nomina[5]";
                             }elseif($Nomina[3]=="no"){
@@ -1677,6 +1643,7 @@ function diasSegundaQuince($year, $month) {
                         $rutaDeComp="desprendibleOtros.php?cedula=".$rw16[5]."&nombre=".$rw16[1].$rw16[2]."&valor=".$totalOtrosConHD."&deudas=".$restaAOtros."&fechaini=".$fechaactualSinTiempo."&fechafin=".$fechafinalSinTiempo."&recogidas=".$cantRecogidas."&valorRecogidas=".$valorRecogidas."&otrosdeve=0&confirmado=$validadoDesprendible1&firma=$rw16[17]&valorAjuste=$valorAjusteO&tipoAjuste=$tipoAjusteO&descripcionAjuste=$descripcionAjusteO&descripcionOtros=$descripcionOtros";
 
                         $TotalDevengoyOtros=$TotalDevengado+$totalOtrosAPagar;
+                       
                         $TotalDevengoyOtros_formateado = number_format($TotalDevengoyOtros, 0, ',', '.');
 
                        
@@ -1714,7 +1681,9 @@ function diasSegundaQuince($year, $month) {
                       }
                       if ($rw1[17]=="DAVIVIENDA" or $rw1[17]=="DAVIPLATA") {
                           $codigoBanco="51";
-                      }
+                      }elseif ($rw1[17]=="BBVA"){
+                            $codigoBanco="13";
+                        }
                       echo "<td>$codigoBanco</td>";
                       
                       echo "<td>$tipoCuenta</td>";
@@ -1749,9 +1718,7 @@ function diasSegundaQuince($year, $month) {
     
 
     
-    
-        /* $FB->titulo_azul1("$ $totalalcobro",1,0,0); 
-        $FB->titulo_azul1("$ $totalprestamos",1,0,0);  */
+
 
 
 

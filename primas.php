@@ -104,7 +104,7 @@ $semestres['Segunda']='Segundo';
 // $FB->llena_texto("Año:", 34, 82, $DB, $mesd, "", "$mes", 1, 0);
 $añoA=date('Y');
 $startYear = 2024; // Año inicial
-$currentYear = 2025; // Año actual
+$currentYear = 2027; // Año actual
 for ($year = $startYear; $year <= $currentYear; $year++){
 	
 	$años["$year"]="$year";

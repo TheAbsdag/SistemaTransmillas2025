@@ -334,6 +334,7 @@ $bancos[0]='Seleccione...';
 $bancos['DAVIPLATA']='DAVIPLATA'; 
 $bancos['DAVIVIENDA']='DAVIVIENDA'; 
 $bancos['BANCOLOMBIA']='BANCOLOMBIA'; 
+$bancos['BBVA']='BBVA'; 
 
 $tipoPagoNomina[0]='Seleccione...'; 
 $tipoPagoNomina['TRANSFERENCIA']='TRANSFERENCIA'; 
@@ -530,6 +531,8 @@ $teleweb["LLamar despues"]="Llamar despues";
 
 $tipocliente['Natural']='Natural'; 
 $tipocliente['Juridico']='Juridico'; 
+
+
 
 $plazocliente['30']='30'; 
 $plazocliente['60']='60'; 

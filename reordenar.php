@@ -133,7 +133,7 @@ $id_usuario = $_SESSION['usuario_id'];
                 $compañero="SELECT seg_compañero from seguimiento_user where seg_fechaalcohol like '$fechaactual%'  and seg_idusuario='$id_usuario'  ";
                     $DB1->Execute($compañero); 
                     $rwcom=mysqli_fetch_row($DB1->Consulta_ID);
-                    echo$compa=$rwcom[0];
+                    $compa=$rwcom[0];
                 ?>
 
             </table>
@@ -156,7 +156,7 @@ $id_usuario = $_SESSION['usuario_id'];
     $conde1 = "";
     //entregas y recogidas asignadas al usuario
 
- $sql = "SELECT `idservicios`,`ser_fechaasignacion`,ser_estado,cli_direccion,ser_direccioncontacto
+ echo$sql = "SELECT `idservicios`,`ser_fechaasignacion`,ser_estado,cli_direccion,ser_direccioncontacto
  FROM serviciosdia inner join usuarios on ser_idresponsable=idusuarios where ser_estado in (3,9) 
  and idservicios not in (SELECT  orden_idservicio FROM ord_recoentregas WHERE orden_iduserencargado='$id_usuario' 
  and orden_fechadiaejecucion='$fechaactual' and ord_tipo in ('Recogida','Entrega'))  $conde3  ORDER BY ser_fechaentrega $asc ";

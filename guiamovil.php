@@ -471,6 +471,9 @@ $FB->llena_texto("Telefono Whatsapp:",93, 1, $DB, "", "","", 1, 1);
 echo '<tr><td colspan=2 align="right" class="text"><div id="llega_sub3">';
 $FB->titulo_azul1("Valor",8,0,5);  
 $FB->llena_texto("",111, 118, $DB, "", "","0", 1, 0);
+
+
+
 echo '</div></td></tr></table>';
 
  $FB->llena_texto("", 1, 142, $DB, "Guardar", "", 0, 12, 0);

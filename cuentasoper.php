@@ -336,7 +336,7 @@ while($rw1=mysqli_fetch_row($DB1->Consulta_ID))
 $comprobados = array();
 $descargado = array();
 
-$sql1="SELECT `idcuentaspromotor`, `cue_validar`,
+echo$sql1="SELECT `idcuentaspromotor`, `cue_validar`,
 `cue_numeroguia`, `cue_tipoevento`, `cue_idciudadori`,
 `cue_idciudaddes`, `cue_pordeclarado`,
 `cue_valorflete`,`cue_porprestamo`, `cue_prestamo`,
@@ -351,7 +351,7 @@ cue_transferencia,ser_numerofactura,ser_pendientecobrar,
 `ser_confimgrec`,`ser_idverificado`,ser_idverificadopeso,ser_estado 
 FROM `cuentaspromotor`  
 inner join servicios on cue_idservicio=idservicios   
-WHERE  cue_estado<100  $conde3 order by ser_guiare ASC ";
+WHERE  cue_estado<100 and cue_numeroguia='AR75739' $conde3 order by ser_guiare ASC ";
 
 $DB->Execute($sql1);
 $compras=array();
@@ -852,7 +852,7 @@ if($rw2[20]==$fechaactual and $rw2[11]==$param2){  //recogida
 			<td $color6 > ".$xcancelar."</td>
 			<td>$ ".$recogida2."</td>
 			<td>$ ".$compras."</td>
-			<td $color2 >$ ".$entregas3."</td>
+			<td $color2 >$ ".$entregas3." es al cobro $entregas3 + $faltante</td>
 			<td>$ ".$prestamo."</td>
 			<td>$ ".$rw2[15]."</td>
 			<td  $color3 >$ ".$faltante."</td>

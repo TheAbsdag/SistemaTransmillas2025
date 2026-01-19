@@ -292,21 +292,32 @@ else if($cond==12){
 			$FB->llena_texto("param30", 4, 13, $DB, "", "", "0", 5,2);
 		}
 		//Nuevo
-		$FB->titulo_azul1("Datos quien entrega",14,0, 5); 
+		$FB->titulo_azul1("Datos quien entrega",8,0, 5); 
 		// $FB->llena_texto("Foto:",87,6, $DB, "", "","", 1, 1);
+
+		
 		if ($nombre!=0) {
 			echo'<input type="hidden" id="param87" name="param87" value="no">';
 		}else {
-			echo"<tr class='text'><td><label>Foto (*)</label></td><td><input type='file' accept='image/*' id='param87' name='param87' required capture='environment'></td></tr>";
+			echo"<tr bgcolor='#EFEFEF' class='text'><td><label>Foto (*)</label></td><td align='right' class='text'><input type='file' accept='image/*' id='param87' name='param87' required capture='environment' class='form-control'></td></tr>";
 
 		}
-		echo'<tr class="text"><td><label for="nombre">Nombre completo:</label></td>
-		<td><input type="text" id="param82" name="param82" required oninput="validarNombre()"><p id="errorNombre" class="error"  style="color: red;font-size: 14px; display: none;" >Debe ingresar nombre y apellido.</p><td></tr>';
+		echo'<tr bgcolor="#EFEFEF" class="text"><td ><label for="nombre">Nombre completo:</label></td>
+		<td align="right" class="text"><input type="text" id="param82" name="param82" required ><p id="errorNombre" class="error"  style="color: red;font-size: 14px; display: none;" >Debe ingresar nombre y apellido.</p><td></tr>';
 
 		// $FB->llena_texto("Nombre:",82, 1, $DB, "", "", "", 1, 1);
 		// $FB->llena_texto("Documento:",83, 1, $DB, "", "","", 1, 0);
 		$FB->llena_texto("Telefono Whatsapp:",85, 1, $DB, "", "","+57", 1, 1);
-
+		echo"</table>";
+		echo '
+		<div style="width: 100%; height: 100vh;">
+		<iframe 
+			src="/nueva_plataforma/view/recogerEntregar/firmar.php?para='.urlencode($para).'&accion=guardarFirmaEntrega&tipo_pago='.$rw[4].'"
+			style="width: 100%; height: 100%; border: 0;"
+			allowfullscreen
+			loading="lazy">
+		</iframe>
+		</div>';
 		$kiliostotal=$rw[8]+$rw[14];
 		$FB->llena_texto("param9", 4, 13, $DB, "", "", $rw[5], 5,2);
 		$FB->llena_texto("param22", 4, 13, $DB, "", "", $rw[10], 5,2);
@@ -317,12 +328,15 @@ else if($cond==12){
 		$FB->llena_texto("param19", 4, 13, $DB, "", "", $devolucion, 5,2);
 		$FB->llena_texto("param20", 4, 13, $DB, "", "", $kiliostotal, 5,2);
 		$FB->llena_texto("param21", 4, 13, $DB, "", "", $rw[15], 5,2);
+		echo '<tr><td><button type="button" id="btnRecoger" style="background:#4CAF50;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-size:16px;" onclick="guardarEntregar()">Guardar</button></td></tr>';
+		
 		$FB->cierra_tabla();
 
 	}else if($param1=='NO ENTREGADO'){
 		
 		$FB->llena_texto("MOTIVO :",2,9, $DB, "", "",@$rw1[11] ,1, 0);
 		$FB->llena_texto("Foto evidencia", 40, 6, $DB, "", "", "", 1, 0);
+		echo '<tr><td><button type="button" id="btnRecoger" style="background:#4CAF50;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-size:16px;" onclick="guardarNoEntregar()">Guardar</button></td></tr>';
 
 	}
 
@@ -403,6 +417,7 @@ else if($cond==12){
 			$FB->llena_texto("Numero de piezas:",113, 118, $DB, "", "", "$rw[13]", 1, 2);
 			$FB->llena_texto("param2", 4, 13, $DB, "", "", $rw[13], 5, 0);
 		}else{
+			$FB->llena_texto("param113",4, 13, $DB, "", "", "$rw[13]", 5, 0);
 			$FB->llena_texto("Numero de piezas:",2, 123, $DB, "", "", "$rw[13]", 1, 'min=1');
 		}
 		$FB->llena_texto("&iquest;Verificado?:",19, 214, $DB, "", "",$rw[12], 1, 1);	
@@ -521,7 +536,9 @@ else if($cond==12){
 		// $FB->llena_texto("Nombre:",82, 1, $DB, "", "", "", 1, 1);
 		// $FB->llena_texto("Documento:",83, 1, $DB, "", "","", 1, 0);
 		$FB->llena_texto("Telefono Whatsapp:",85, 1, $DB, "", "","+57", 1, 1);
-	
+	 
+
+
 		$FB->llena_texto("param9", 4, 13, $DB, "", "", $rw[5], 5, 0);
 		$FB->cierra_tabla();
 		$FB->llena_texto("", 2, 4, $DB, "llega_sub2", "", "",1,0);
@@ -540,10 +557,33 @@ else if($cond==12){
 		$FB->llena_texto("param27", 4, 13, $DB, "", "", $rw[15], 5, 0);
 		$FB->llena_texto("param34", 1, 13, $DB, "", "", "$rw[16]", 5, 0);  // tipoidservicio
 
+		// echo"</table>";
+		// echo '
+		// <div style="width: 100%; height: 100vh;">
+		// <iframe 
+		// 	src="/nueva_plataforma/view/recogerEntregar/firmar.php?para='.urlencode($para).'&accion=guardarFirmaRecogida"
+		// 	style="width: 100%; height: 100%; border: 0;"
+		// 	allowfullscreen
+		// 	loading="lazy">
+		// </iframe>
+		// </div>';
+		echo '
+		<div style="width: 100%; height: 100vh;">
+			<iframe 
+				id="iframeFirma"
+				src="/nueva_plataforma/view/recogerEntregar/firmar.php?para='.urlencode($para).'&accion=guardarFirmaRecogida"
+				style="width: 100%; height: 100%; border: 0;"
+				allowfullscreen
+				loading="lazy">
+			</iframe>
+		</div>';
+
+		echo '<tr><td><button type="button" id="btnRecoger" style="background:#4CAF50;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-size:16px;" onclick="guardarRecoger()">Guardar</button></td></tr>';
 
 	}else if($param1=='NO RECOGIDO'){
 	
 		$FB->llena_texto("MOTIVO :",2,9, $DB, "", "",@$rw1[11] ,1, 0);
+		echo '<tr><td><button type="button" id="btnRecoger" style="background:#4CAF50;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer;font-size:16px;" onclick="guardarNoRecoger()">Guardar</button></td></tr>';
 	
 	}
 	else if($param1=='EDITAR DATOS'){
@@ -946,7 +986,7 @@ else if($cond==17) {
 if($valortservicio==0 and $param1!=2){
 
 		$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios' ";
+		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios'  AND pre_estado = 1 ";
 		$DB->Execute($sql);
 		$rw = mysqli_fetch_row($DB->Consulta_ID); 
 		$precio=0;
@@ -962,7 +1002,7 @@ if($valortservicio==0 and $param1!=2){
 }else{
 
 	$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios  
-	where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio and con_idprecios='$idprecios' ";
+	where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio and con_idprecios='$idprecios'  AND pre_estado = 1 ";
 	$DB->Execute($sql);
    $rw = mysqli_fetch_row($DB->Consulta_ID); 
    $precio=0;
@@ -1109,7 +1149,7 @@ else if($cond==203) {
 	if($valortservicio==0 and $param1!=2){
 	
 		$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios'";
+		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios'  AND pre_estado = 1";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
 	   
@@ -1139,7 +1179,7 @@ else if($cond==203) {
 		   
 	}else{
 		$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios' ";
+		where pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios'  AND pre_estado = 1 ";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
 	   
@@ -1240,7 +1280,7 @@ if($valortservicio=='1000'){
 }elseif($valortservicio==0 and $param1!=2){
 
 	$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-	where con_tipo='normal'  and pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio and con_idprecios='$idprecios' ";
+	where con_tipo='normal'  and pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio and con_idprecios='$idprecios' and pre_estado=1";
 	$DB->Execute($sql);
    $rw = mysqli_fetch_row($DB->Consulta_ID); 
    
@@ -1261,7 +1301,7 @@ if($valortservicio=='1000'){
 	$creditouser=$rw21[0];
 	$idcredito=$rw21[1];
 
-   $sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param2'  and `pre_idciudades`='$param3' and pre_tiposervicio='$valortservicio' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' ";
+   $sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param2'  and `pre_idciudades`='$param3' and pre_tiposervicio='$valortservicio' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' and pre_estado=1";
    $DB->Execute($sql3);
    $rw2=mysqli_fetch_row($DB->Consulta_ID);  
 
@@ -1270,7 +1310,7 @@ if($valortservicio=='1000'){
 	   
 }else{
 	$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-	where con_tipo='normal'  and pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios'";
+	where con_tipo='normal'  and pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios'  AND pre_estado = 1";
 	$DB->Execute($sql);
    $rw = mysqli_fetch_row($DB->Consulta_ID); 
    
@@ -1397,7 +1437,7 @@ if($valortservicio=='1000'){
 if($valortservicio==0 and $param1!=2){
 
 		$sqlpre="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios' ";
+		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios' and pre_estado=1 ";
 		$DB->Execute($sqlpre);
 		$rw = mysqli_fetch_row($DB->Consulta_ID); 
 		$precio=0;
@@ -1413,7 +1453,7 @@ if($valortservicio==0 and $param1!=2){
 }else{
 
 	$sqlpre="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-	where con_tipo='normal'  and pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios' ";
+	where con_tipo='normal'  and pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio=$valortservicio  and con_idprecios='$idprecios' and pre_estado=1 ";
 	$DB->Execute($sqlpre);
    $rw = mysqli_fetch_row($DB->Consulta_ID); 
    $precio=0;
@@ -1504,7 +1544,7 @@ $param6=str_replace(".","", $param6);
 	if($valortservicio==0 and $param1!=1){ // tipo servicio normal y no credito
 	
 		$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios' ";
+		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios' and pre_estado=1 ";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
 	   
@@ -1520,7 +1560,7 @@ $param6=str_replace(".","", $param6);
 	}else if($param1==1){ // credito diferente a tipo servicio normal
 	
 	
-	   $sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param2'  and `pre_idciudades`='$param3' and pre_tiposervicio='$valortservicio' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' ";
+	   $sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito  WHERE   con_tipo='Credito'  and   `pre_idciudadori`='$param2'  and `pre_idciudades`='$param3' and pre_tiposervicio='$valortservicio' and pre_idcredito='$idcredito' and con_idprecios='$idprecios' and pre_estado=1";
 	   $DB->Execute($sql3);
 	   $rw2=mysqli_fetch_row($DB->Consulta_ID);  
 	
@@ -1531,7 +1571,7 @@ $param6=str_replace(".","", $param6);
 		 $sql="SELECT `idprecios`, `pre_kilo`, `con_precios` 
 		 FROM `precios` 
 		 inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio'  and con_idprecios='$idprecios'";
+		where con_tipo='normal' and  pre_idciudadori='$param2' and pre_idciudaddes='$param3' and pre_tiposervicio='$valortservicio'  and con_idprecios='$idprecios' and pre_estado=1";
 		$DB->Execute($sql);
 	   $rw = mysqli_fetch_row($DB->Consulta_ID); 
 	   
@@ -1690,6 +1730,7 @@ else if($cond==67) {
 	$LT->llenaselect_ar($param1,$estado_rec);
 	echo "</select>";
 	 }
+	 echo "<a  onclick='pop_dis114($para,\"Entregar Guias\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Entregar Guias' role='button' >Entregar</a>";
 	$sql="UPDATE servicios SET ser_visto=$st WHERE idservicios='$para' ";
 	$DB1->Execute($sql);
 
@@ -1703,7 +1744,7 @@ else if($cond==67) {
 	$LT->llenaselect_ar($param1,$estado_rec);
 	echo "</select>";
 	if($param1=="SI"){
-		echo "<a  onclick='pop_dis133($para,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
+		echo "<a  onclick='pop_dis113($para,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
 		 }	
 
 }else if($cond==72) {
@@ -2031,6 +2072,38 @@ else if($cond==109){
 		echo "<tr><td><button type='button' class='btn btn-outline-primary btn-lg' onclick='atar(109);'  >Relacionar</button></td></tr>";
 	
 	} 
+}else if($cond==110) {
+
+	$param1=$_REQUEST["param1"]; if($param1=="SI"){ $st=1; $colorfondo="#074f91"; } else { $st=0; $colorfondo="#941727"; } 
+	 $sql="UPDATE servicios SET ser_visto=$st WHERE idservicios='$para' ";
+	$DB1->Execute($sql);
+
+	echo "<select name='param14' id='param14' class='form-control'  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:18px'  onChange='cambio_ajax2(this.value,110, \"campo$nombre\", \"$nombre\", 1, $para)' required>";
+	$LT->llenaselect_ar($param1,$estado_rec);
+	echo "</select>";
+	if($param1=="SI"){
+		// echo "<a  onclick='pop_dis133($para,\"Recoger Paquete\")';  style='cursor: pointer;' class='btn btn-primary btn-lg' title='Recoger Paquete' role='button' >Recoger</a>";
+		 }	
+
+}else if($cond==111) {
+
+	$param1=$_REQUEST["param1"]; 
+	 
+	if($param1=="SI"){ $st=1; $colorfondo="#074f91"; 
+		$estado_rec2[0]="SI";
+		echo "<select name='param14' id='param14' class='form-control'  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:18px'  required>";
+		$LT->llenaselect_ar($param1,$estado_rec2);
+		echo "</select>";
+	
+	} else { $st=0; $colorfondo="#941727";  
+
+	echo "<select name='param14' id='param14' class='form-control'  style='width:100px;border:1px solid #f9f9f9;background-color:$colorfondo;color:#f9f9f9;font-size:18px'  onChange='cambio_ajax2(this.value,70, \"campo$nombre\", \"$nombre\", 1, $para)' required>";
+	$LT->llenaselect_ar($param1,$estado_rec);
+	echo "</select>";
+	 }
+	$sql="UPDATE servicios SET ser_visto=$st WHERE idservicios='$para' ";
+	$DB1->Execute($sql);
+
 }
 
 $DB->cerrarconsulta();

@@ -33,59 +33,62 @@ if ($idservicio =='null') {
 if ($cro == "Compra" or $cro == "Recogida") {
 	echo "<select class='trans'  name='param27' id='param27' onchange='precioconvenir(84,this.value,0,\"convenir\")' required>";
 	echo "<option value='' $aux0 >Seleccione...</option>";
-	echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
+	// echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
 	if($nivel_acceso!=3 ){
 		echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
 	}
 
 	if ($paramservici != '' && $paramservici != null) {
 
-		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici'";
+		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici' and pre_estado=1";
 	} else {
 
-		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 order by tip_nom";
+		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 and pre_estado=1 order by tip_nom";
 	}
 
 	$LT->llenaselect($sql, 0, 1, $idservicio, $DB);
 } else if ($cro == "Todo") {
 	echo "<select class='trans'  name='param37' id='param37'  onchange='precioconvenir(84,this.value,0,\"convenir\")' required>";
 	echo "<option  value=''>Seleccione...</option>";
-	echo "<option  value='0' " . $aux . ">Carga via terrestre</option>";
+	// echo "<option  value='0' " . $aux . ">Carga via terrestre</option>";
 	if($nivel_acceso==1 ){
 		echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
 	}
-	echo $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 union SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 order by tip_nom";
+	echo $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 union SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21  AND pre_estado = 1 order by tip_nom";
 	$LT->llenaselect($sql, 0, 1, $idservicio, $DB);
 }  else if ($cro == "Editar") {
 	echo "<select class='trans'  name='param37' id='param37'  onchange='precioconvenir(84,this.value,0,\"convenir\")' required>";
 	echo "<option value='' $aux0 >Seleccione...</option>";
-	echo "<option  value='0'" . $aux . ">Carga via terrestremal</option>";
+	// echo "<option  value='0'" . $aux . ">Carga via terrestremal</option>";
 	if($nivel_acceso==1 ){
 		echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
 	}
 	if ($paramservici != '') {
 
-		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici'";
+		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici' and pre_estado=1";
 	} else {
 
-		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 order by tip_nom";
+		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 and pre_estado=1 order by tip_nom";
 	}
 
 	$LT->llenaselect($sql, 0, 1, $idservicio, $DB);
 }else if ( $cro == "oficina") {
-	echo "<select class='trans'  name='param34' id='param34' onchange='precioconvenir(84,this.value,0,\"convenir\")' required>";
+	// echo "<select class='trans'  name='param34' id='param34' onchange='precioconvenir(84,this.value,0,\"convenir\")' required>";
+	echo "<select class='trans'  name='param34' id='param34' onchange=	'valorpagar(this.value,202,\"llega_sub3\",\"total valor\",1,$id_usuario)' required>";
+
 	echo "<option value='' $aux0 >Seleccione...</option>";
-	echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
+	
 	if($nivel_acceso!=3 ){
-		echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
+		echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
+		echo "<option  value='1000' " . $aux2 . " >Servicio cotizado</option>";
 	}
 
 	if ($paramservici != '' && $paramservici != null) {
 
-		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici'";
+		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici' and pre_estado=1";
 	} else {
 
-		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 order by tip_nom";
+		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 and pre_estado=1 order by tip_nom";
 	}
 
 	$LT->llenaselect($sql, 0, 1, $idservicio, $DB);
@@ -99,10 +102,10 @@ if ($cro == "Compra" or $cro == "Recogida") {
 	
 	if ($paramservici != '') {
 
-		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici'";
+		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici' and pre_estado=1";
 	} else {
 
-		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 order by tip_nom";
+		$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 and pre_estado=1 order by tip_nom";
 	}
 
 	$LT->llenaselect($sql, 0, 1, $idservicio, $DB);

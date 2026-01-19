@@ -822,7 +822,7 @@ function valorguia($DB,$idciudadori,$idciudaddes,$valortservicio,$tipopago,$kilo
 	else if($valortservicio==0 and $tipopago!=2){
 
 		$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios
-		where con_tipo='normal'  and pre_idciudadori='$idciudadori' and pre_idciudaddes='$idciudaddes' and pre_tiposervicio='$valortservicio'  and con_idprecios='$idprecios' ";
+		where con_tipo='normal'  and pre_idciudadori='$idciudadori' and pre_idciudaddes='$idciudaddes' and pre_tiposervicio='$valortservicio'  and con_idprecios='$idprecios' AND pre_estado = 1 ";
 		$DB->Execute($sql);
 		$rw = mysqli_fetch_row($DB->Consulta_ID); 
 		$precio=0;
@@ -834,7 +834,7 @@ function valorguia($DB,$idciudadori,$idciudaddes,$valortservicio,$tipopago,$kilo
 
 
 	$sql="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios 
-	where con_tipo='normal'  and pre_idciudadori='$idciudadori' and pre_idciudaddes='$idciudaddes' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios'";
+	where con_tipo='normal'  and pre_idciudadori='$idciudadori' and pre_idciudaddes='$idciudaddes' and pre_tiposervicio='$valortservicio' and con_idprecios='$idprecios' AND pre_estado = 1";
 	$DB->Execute($sql);
    $rw = mysqli_fetch_row($DB->Consulta_ID); 
    $precio=0;

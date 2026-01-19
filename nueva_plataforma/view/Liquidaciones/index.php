@@ -26,6 +26,8 @@ if (!isset($_POST['sede']) || !isset($_POST['acceso'])) {
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<!-- ✅ Librería de SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script></style>
 <style>
 
 .sidebar {
@@ -182,6 +184,84 @@ thead.azul-blanco th {
     max-width: 600px; /* o deja que Bootstrap decida */
   }
 }
+
+
+
+/* 🎨 Estilos personalizados para la tabla de liquidaciones */
+#tablaLiquidaciones td:nth-child(2),
+#tablaLiquidaciones td:nth-child(3),
+#tablaLiquidaciones td:nth-child(4),
+#tablaLiquidaciones td:nth-child(5) {
+  background-color: #f8f9fa; /* Gris muy claro */
+  color: #212529;
+  font-weight: 500;
+}
+
+/* 💰 Salario y Auxilio */
+#tablaLiquidaciones td:nth-child(6),
+#tablaLiquidaciones td:nth-child(7) {
+  background-color: #fff3cd; /* Verde suave */
+  color: #664d03;
+  font-weight: bold;
+}
+
+/* 📅 Fechas (Inicio y Corte) */
+/* #tablaLiquidaciones td:nth-child(7),
+#tablaLiquidaciones td:nth-child(8) {
+  background-color: #fff3cd; 
+  color: #664d03;
+} */
+
+/* 📆 Días Totales / No trabajados / Trabajados */
+/* #tablaLiquidaciones td:nth-child(9),
+#tablaLiquidaciones td:nth-child(10),
+#tablaLiquidaciones td:nth-child(11) {
+  background-color: #e7f1ff; 
+  color: #084298;
+} */
+
+/* 🏦 Cesantías e Intereses */
+#tablaLiquidaciones td:nth-child(13),
+#tablaLiquidaciones td:nth-child(14) {
+  background-color: #d1e7dd; /* Verde agua */
+  color: #0f5132;
+  
+}
+
+/* 🎁 Prima */
+#tablaLiquidaciones td:nth-child(15), */
+#tablaLiquidaciones td:nth-child(16) {
+  background-color: #d1e7dd; /* Verde agua */
+  color: #0f5132;
+}
+
+/* 🌴 Vacaciones */
+/* #tablaLiquidaciones td:nth-child(16), */
+/* #tablaLiquidaciones td:nth-child(17), */
+#tablaLiquidaciones td:nth-child(17) {
+  background-color: #d1e7dd; /* Verde agua */
+  color: #0f5132;
+}
+
+/* 💸 Valor total a liquidar */
+#tablaLiquidaciones td:nth-child(22) {
+  background-color: #fde2e1; /* Rojo pálido */
+  color: #7b1913;
+  font-weight: bold;
+}
+
+/* 📎 Acciones (Desprendible, Liquidar, Comprobante, Pagado) */
+#tablaLiquidaciones td:nth-child(23),
+#tablaLiquidaciones td:nth-child(24),
+#tablaLiquidaciones td:nth-child(25),
+#tablaLiquidaciones td:nth-child(26) {
+  background-color: #f1f1f1; /* Gris neutro */
+  color: #333;
+}
+.fila-vencida td {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+}
 </style>
 <body>
             
@@ -202,7 +282,7 @@ thead.azul-blanco th {
         <div class="row mb-3 align-items-end">
         <div class="col-md-4">
             <label for="filtroAnio" class="form-label">📅 Año</label>
-            <select id="filtroAnio" name="anio" class="form-control">
+            <select id="filtroAnio" name="filtroAnio" class="form-control">
                 <?php
                     $anioActual = date('Y');
                     $anioInicio = 2020; // puedes poner desde donde quieres que empiece el listado
@@ -239,26 +319,30 @@ thead.azul-blanco th {
                 <?php endforeach; ?>
                 </select>
             </div>
+            <div class="col-md-4">
+                <label for="filtroEstado" class="form-label">Estado</label>
+                <select name="filtroEstado" id="filtroEstado" class="form-select" >
+                  <option value="">Seleccione...</option>
+                  <option value="Sin liquidar" selected>Sin liquidar</option>
+                  <option value="Liquidado">Liquidado</option>
+                </select>
+            </div>
 
+            <!-- BOTÓN -->
             <div class="col-md-4 text-end">
-            <label class="form-label d-block invisible">Botón</label>
-            <button class="btn btn-success text-white w-100" data-bs-toggle="modal" data-bs-target="#modalEscaneo">
-                <i class="bi bi-qr-code-scan me-1"></i> boton 1
-            </button>
+              <label class="form-label d-block invisible">Botón</label>
+              <button class="btn btn-success text-white w-100" data-bs-toggle="modal" data-bs-target="#modalComprobante">
+                <i class="bi bi-qr-code-scan me-1"></i> Cargar comprobante
+              </button>
             </div>
            
-            <div class="col-md-4 text-end">
-            <label class="form-label d-block invisible">Botón</label>
-            <button class="btn btn-primary text-white w-100" onclick="imprimirCodigos()">
-                <i class="bi bi-printer me-1"></i> Boton 2
-            </button>
-            </div>
+
            
 
         </div>
 
       <div class="table-responsive">
-        <table id="tablaDescargasOficina" class="table table-hover table-bordered align-middle text-center">
+        <table id="tablaLiquidaciones" class="table table-hover table-bordered align-middle text-center">
           <thead class="table-primary">
             <tr>
 
@@ -271,12 +355,27 @@ thead.azul-blanco th {
                 <th>Cargo</th>
                 <th>Salario</th>
                 <th>Auxilio</th>
-                <th>Dias trabajados</th>
+                <th>Inicio Contrato</th>
+                <th>Fecha de corte</th>
+                <th>Total dias</th>
                 <th>Dias no trabajados</th>
-                <th>Días Prima</th>
+                <th>Dias trabajados</th>
+                <th>Total Cesantias</th>
+                <th>Total Int. de cesantias</th>
+                <th>Dias Prima1</th>
+                <th>Dias Prima2</th>
                 <th>Total Prima</th>
-                <th>Confirmado</th>
-                <th>Pagado</th>
+                <th>Dias Vacaciones </th>
+                <th>Dias Vacaciones tomados</th>
+                <th>Total Dias Vacaciones por pagar</th>
+                <th>Deudas</th>
+                <th>Valor total a liquidar</th>
+                <th>Desprendible</th>      
+                <th>Examenes medicos</th>
+                <th>Liquidar</th>
+                <th>Comprobante de pago</th>
+                <th></th>
+
                 
 
 
@@ -291,163 +390,119 @@ thead.azul-blanco th {
 
 </div>
 
-<!-- Modal Validar Peso -->
-<div class="modal fade" id="modalValidarPeso" tabindex="-1" aria-labelledby="modalValidarPesoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-lg-down">
-    <form id="formValidarPeso" class="modal-content" enctype="multipart/form-data">
-      <div class="modal-header mi-header">
-        <h5 class="modal-title" id="modalValidarPesoLabel">Validar Peso</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+<!-- MODAL -->
+<div class="modal fade" id="modalComprobante" tabindex="-1" aria-labelledby="modalComprobanteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <!-- Encabezado -->
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalComprobanteLabel">
+          <i class="bi bi-upload me-2"></i> Subir comprobante de pago
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-
+      
+      <!-- Cuerpo -->
       <div class="modal-body">
-        <div id="alertaVerificado"></div>
-        <!-- Peso -->
-        <div class="mb-3">
-          <label for="peso" class="form-label">Peso KG: (*)</label>
-          <input type="number" step="0.01" id="peso" name="peso" class="form-control" required>
-        </div>
-
-        <!-- Volumen -->
-        <div class="mb-3">
-          <label for="volumen" class="form-label">Volumen</label>
-          <input type="number" step="0.01" id="volumen" name="volumen" class="form-control">
-        </div>
-
-        <!-- Piezas -->
-        <div class="mb-3">
-          <label for="piezas" class="form-label">Piezas</label>
-          <input type="number" step="0.01" id="piezas" name="piezas" class="form-control">
-        </div>
-
-        <!-- Estado paquete -->
-        <div class="mb-3">
-          <label for="estado" class="form-label">Estado paquete</label>
-          <select id="estado" name="estado" class="form-select" required>
-            <option value="Bueno">Bueno</option>
-            <option value="Dañado">Dañado</option>
-            <option value="Revisar">Revisar</option>
-          </select>
-        </div>
-
-        <!-- Número de guía -->
-        <div class="mb-3">
-          <label for="guia" class="form-label"># Guía</label>
-          <input type="text" id="guia" name="guia" class="form-control" required>
-        </div>
-
-        <!-- Foto de la guía -->
-        <!-- <div class="mb-3 d-none">
-        <label for="foto" class="form-label">Foto Guía</label>
-        <input type="file" id="foto" name="foto" class="form-control" accept="image/*">
-        </div> -->
-
-        <!-- Verificado -->
-        <div class="mb-3">
-          <label for="verificado" class="form-label">Verificar (*)</label>
-          <select id="verificado" name="verificado" class="form-select" required>
-            <option value="">Seleccione...</option>
-            <option value="1">Verificado</option>
-          </select>
-        </div>
-
-        <input type="hidden" name="id_param" id="id_param" value="">
-        <input type="hidden" name="id_param2" id="id_param2" value="">
-        <input type="hidden" name="clasificacion" id="clasificacion" value="">
-        <input type="hidden" name="caso" id="caso" value="2">
-        <input type="hidden" name="param5" id="param5" value="">
-        <input type="hidden" name="param16" id="param16" value="">
-        <input type="hidden" name="tipoServicio" id="tipoServicio" value="">
-        
-
-        <!-- Galería de imágenes -->
-        <div class="mb-3">
-          <label class="form-label">Galería de imágenes</label>
-            <div class="d-flex flex-wrap gap-3 align-items-start">
-            <!-- Imagen 1 -->
-            <img id="img1" src="" class="img-thumbnail" alt="" style="max-width: 150px;">
-
-            <!-- Imagen 2 con botón actualizar -->
-            <div class="d-flex flex-column align-items-center">
-                <img id="img2" src="ruta/imagen2.jpg" class="img-thumbnail mb-2" alt="Imagen 2" style="max-width: 150px;">
-                
-                <!-- Botón que abre el input file oculto -->
-                <label for="foto" class="btn btn-warning w-100 text-white" style="max-width: 150px;">
-                <i class="bi bi-upload me-1"></i> Actualizar
-                </label>
-                <input type="file" name="foto" id="foto" class="d-none" accept="image/*">
-            </div>
-            </div>
-
-        </div>
+        <form id="formComprobante" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="comprobante" class="form-label">Selecciona el comprobante (PDF o imagen)</label>
+            <input type="file" class="form-control" id="comprobante" name="comprobante" accept=".pdf, image/*" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-cloud-upload me-1"></i> Subir
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
-<!-- Modal -->
-<div id="modal">
-  <img id="modal-img" src="">
-</div>
-<!-- Modal escaner -->
-<div class="modal fade" id="modalEscaneo" tabindex="-1" aria-labelledby="modalEscaneoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen"> <!-- 👈 Aquí está el truco -->
+
+<!-- Modal modalVerComprobante de pago  -->
+<div class="modal fade" id="modalVerComprobante" tabindex="-1" aria-labelledby="modalComprobanteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header mi-header">
-        <h5 class="modal-title" id="modalEscaneoLabel">Escanear Código</h5>
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalComprobanteLabel">Comprobante de liquidación</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body p-0 text-center">
-        <!-- Contenedor del lector -->
-        <div id="lectorQR" style="width: 100%; height: 100%;"></div>
-        <p id="resultado" class="mt-3 fw-bold"></p>
+      <div class="modal-body p-0" style="height: 80vh;">
+        <iframe id="iframeComprobante" src="" width="100%" height="100%" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Enviar Comprobante -->
+<div class="modal fade" id="modalEnviarComprobante" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="bi bi-send"></i> Enviar comprobante</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEnviarComprobante">
+          <input type="hidden" id="idhojadevida" name="idhojadevida">
+
+          <div class="mb-3">
+            <label for="celular" class="form-label">Número de celular</label>
+            <input type="text" class="form-control" id="celular" name="celular" required>
+            <input type="hidden" id="jsonData" name="jsonData">
+          </div>
+
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo del operador</label>
+            <input type="email" class="form-control" id="correo" name="correo" required>
+          </div>
+
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-success" id="btnEnviarWhatsapp">
+              <i class="bi bi-whatsapp"></i> Enviar por WhatsApp
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-envelope"></i> Enviar correo
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
 
-
-
-<div class="modal fade" id="modalValidarRemesas" tabindex="-1" aria-labelledby="modalValidarRemesasLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-lg-down">
-    <form id="formValidarRemesas" class="modal-content" enctype="multipart/form-data">
-      <div class="modal-header mi-header">
-        <h5 class="modal-title" id="modalValidarRemesasLabel">Validar Remesa</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-
-      <div class="modal-body">
-        <div id="alertaVerificado"></div>
-
-
-        <!-- Número Descripcion -->
-        <div class="mb-3">
-        <label for="descripcion" class="form-label">Descripción</label>
-        <textarea id="descripcion" name="descripcion" class="form-control" rows="4" required></textarea>
+<div class="modal fade" id="modalEnviarExamen" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formEnviarExamen">
+        <div class="modal-header">
+          <h5 class="modal-title">Enviar examen médico</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
-      
-
-        <input type="hidden" name="id_param" id="id_param" value="">
-        <input type="hidden" name="accion" id="accion" value="Verificar Remesa">
-        <input type="hidden" name="usuario" id="usuario" value="<?=$_POST['usuario']?>">
-
-      
-
-
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </div>
-    </form>
+        <div class="modal-body">
+          <input type="hidden" id="idhojadevidaExamen">
+          <div class="mb-3">
+            <label for="correoExamen" class="form-label">Correo</label>
+            <input type="email" id="correoExamen" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="celularExamen" class="form-label">Celular</label>
+            <input type="text" id="celularExamen" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Enviar por correo</button>
+          <button type="button" id="btnEnviarExamenWhatsapp" class="btn btn-success">Enviar por WhatsApp</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -461,288 +516,453 @@ thead.azul-blanco th {
 <script src="https://unpkg.com/html5-qrcode"></script>   
 
 <script>
+  let seleccionados = [];
 $(document).ready(function () {
-//   const tabla = $('#tablaDescargasOficina').DataTable({
-//     ajax: {
-//       url: '/nueva_plataforma/controller/DescargasOficinaController.php',
-//       type: 'POST',
-//       data: function (d) {
-//         d.ajax = true;
-//         d.fecha = $('#filtroFecha').val();
-//         d.ciudad = $('#filtroCiudad').val();
-//         d.operador = $('#filtroOperador').val();
-//         d.creditos = $('#filtroCreditos').val();
-        
-//       },
-//       dataSrc: ''
-//     },
-//     columns: [
-//         { data: 'ser_fechafinal' },
-//         { data: 'cli_nombre' },
-//         { data: 'cli_direccion' },
-//         { data: 'ser_destinatario' },
-//         { data: 'ciu_nombre' },
-//         { data: 'ser_direccioncontacto' },
-//         { data: 'ser_paquetedescripcion' },
-//         { data: 'ser_piezas' },
-//         { data: 'usu_nombre' },
-//         { data: 'ser_clasificacion' },
-//         { data: 'ser_consecutivo' },
-//         { data: 'ser_estado' },
-//         {
-//             data: 'idservicios',
-//             render: function (data) {
-//             return `<button class="btn btn-sm btn-warning pesar-paquete" data-id="${data}">
-//                 <i class="bi bi-box"></i> Pesar
-//             </button>`;
+  // Array donde guardaremos las filas seleccionadas
 
-//             }
-//         }
-        
-
-
-
-        
-
- 
-//       ]
-//   });
-//    $('#filtroFecha, #filtroCiudad,#filtroOperador,#filtroCreditos').on('change', function () {
-//     tabla.ajax.reload();
-//   });
-
-
-//   const tablaRemesas = $('#tablaRemesasOficina').DataTable({
-//     ajax: {
-//         url: '/nueva_plataforma/controller/DescargasOficinaController.php',
-//         type: 'POST',
-//         data: function (d) {
-//         d.accion = 'buscarRemesas'; // 👈 ahora sí va por POST
-//         d.fecha = $('#filtroFecha').val();
-//         d.ciudad = $('#filtroCiudad').val();
-//         d.operador = $('#filtroOperador').val();
-//         },
-//         dataSrc: function (json) {
-//         console.log("Respuesta Remesas:", json);
-//         return json;
-//         }
-//     },
-//     columns: [
-//         { data: 'sede_origen' },
-//         { data: 'sede_destino' },
-//         {
-//         data: null,
-//         render: function (data) {
-//             return data.gas_empresa + ' ' + data.gas_bus;
-//         }
-//         },
-//         { data: 'gas_telconductor' },
-//         { data: 'gas_pagar' },
-//         { data: 'gas_descripcion' },
-//         { data: 'gas_peso' },
-//         { data: 'gas_piezas' },
-//         { data: 'gas_usucom' },
-//         { data: 'gas_valor' },
-        
-//         { data: 'gas_feccom' },
-//         { data: 'gas_cantcom' },
-//         { data: 'gas_fecrecogida' },
-//         { data: 'usuario_recoge' },
-//         {
-//         data: 'idgastos',
-//         render: function (data) {
-//             return `<button class="btn btn-sm btn-success validar-remesa" data-id="${data}">
-//                     <i class="bi bi-check2-circle"></i> Validar
-//                     </button>`;
-//         }
-//         }
-//     ]
-//     });
-//     $('#filtroFecha, #filtroCiudad,#filtroOperador').on('change', function () {
-//     tablaRemesas.ajax.reload();
-//   });
-
- 
-
-});
-
-
-
-
-$(document).on('click', '.pesar-paquete', function () {
-    let id = $(this).data('id');
-
-    $('#formValidarPeso')[0].reset();
-    $('#modalValidarPeso').modal('show');
-
-  $.ajax({
-    url: '../controller/DescargasOficinaController.php',
-    type: 'GET',
-    data: { accion: 'buscarServicio', id: id },
-    dataType: 'json',
-    success: function (servicio) {
-        
-
-      if (servicio) {
-        $('[name="peso"]').val(servicio.ser_peso);
-        $('[name="volumen"]').val(servicio.ser_volumen);
-        $('[name="estado"]').val(servicio.ser_descripcion);
-        $('[name="guia"]').val(servicio.ser_guiare);
-        $('[name="piezas"]').val(servicio.ser_piezas);
-
-        $('[name="id_param"]').val(id);
-        $('[name="id_param2"]').val(id);
-        
-        $('[name="caso"]').val(servicio.ser_guiare);
-        $('[name="param5"]').val(servicio.cli_idciudad);
-        $('[name="param16"]').val(servicio.ser_ciudadentrega);
-
-
-        $('[name="verificado"]').val(servicio.ser_idverificadopeso);
-        $('[name="tipoServicio"]').val(servicio.gui_tiposervicio);
-        if (servicio.gui_tiposervicio==1000) {
-          $('[name="peso"]').prop('required', false);
-          $('label[for="peso"]').html(function(_, oldHtml) {
-            return oldHtml.replace(
-              /\(\*\)/g,
-              '<span style="font-size:0.8em; color:#6c757d; font-style:italic;">(a convenir)</span>'
-            );
-          });
-        }
-        
-
-            if (servicio.ser_clasificacion == 1 && servicio.ser_pendientecobrar == 0) {
-                clasificacion = 1;
-            } else if (servicio.ser_clasificacion == 2) {
-                clasificacion = 2;
-            } else {
-                clasificacion = 0;
-            }
-
-        $('[name="clasificacion"]').val(clasificacion);
-
-
-        let img1 = document.getElementById("img1");
-        let img2 = document.getElementById("img2");
-        let modal = document.getElementById("modal");
-        let modalImg = document.getElementById("modal-img");
-
-        // 🔹 Primero limpiamos cualquier src previo
-        img1.src = "";
-        img2.src = "";
-
-        // 🔹 Ahora asignamos las rutas nuevas
-        img1.src = '../../imagesguias/_Recogida.jpg';
-        img2.src = "../../imgServicios/"+servicio.ser_img_recog;
-
-
-        // 🔹 URL que abrirá la imagen 1
-        let urlPagina = servicio.ima_ruta+'&vis=adm'; // aquí pones tu PHP/HTML real
-
-        // 🔹 Click en img1 → abrir página en ventana emergente
-        img1.addEventListener("click", () => {
-            window.open(
-            urlPagina,
-            "VentanaEmergente",
-            "width=800,height=600,top=100,left=100,resizable=yes,scrollbars=yes"
-            );
-        });
-
-        // Click imagen 2
-        img2.addEventListener("click", () => {
-            if (img2.src) { // solo si tiene imagen
-            modal.style.display = "flex";
-            modalImg.src = img2.src;
-            }
-        });
-
-        // Cerrar modal al hacer click en el fondo
-        modal.addEventListener("click", () => {
-            modal.style.display = "none";
-            modalImg.src = ""; // 🔹 limpiar al cerrar
-        });
-        
-
-
-
-      } else {
-        alert('No se encontro la info del servicio.');
-      }
+  const tabla = $('#tablaLiquidaciones').DataTable({
+    ajax: {
+      url: '/nueva_plataforma/controller/LiquidacionesController.php',
+      type: 'POST',
+      data: function (d) {
+        d.ajax = true;
+        d.Anio = $('#filtroAnio').val();
+        d.ciudad = $('#filtroCiudad').val();
+        d.operador = $('#filtroOperador').val();
+        d.estado = $('#filtroEstado').val();
+      },
+      dataSrc: ''
     },
-    error: function () {
-      alert('Error al buscar la info del servicio.');
+    columns: [
+      {
+        data: null,
+        orderable: false,
+        className: 'text-center',
+        render: function (data, type, row) {
+          return `<input type="checkbox" class="chk-liquidacion" data-id="${row.idhojadevida}">`;
+        }
+      },
+      { data: 'nombre_completo' },
+      { data: 'hoj_cedula' },
+      { data: 'hoj_tipocontrato' },
+      { data: 'car_cargo' },
+      { data: 'car_salario' },
+      { data: 'car_Auxilio' },
+      { data: 'hoj_fechaInicial' },
+      { data: 'hoj_fechaFinal' },
+      { data: 'diasDefechaaFecha' },
+      { data: 'total_no_laborados' },
+      { data: 'diasEfectivos' },
+      { data: 'valor_cesantias' },
+      { data: 'intereses_cesantias' },
+      { data: 'diasEfectivosPrimas1' },
+      { data: 'diasEfectivosPrimas2' },
+      { data: 'valor_prima' },
+      { data: 'diasAPagarVacaciones' },
+      { data: 'dias_vacaciones' },
+      { data: 'valor_vacaciones' },
+      { data: 'valorDeudas' },
+      { data: 'valorTotalLiquidar' },
+      {
+        data: null,
+        render: function (data, type, row) {
+          const info = {
+            idLiquidado: row.idLiquidado || '',
+            nombre: row.nombre_completo || '',
+            cedula: row.hoj_cedula || '',
+            fecha_ingreso: row.hoj_fechaInicial || '',
+            fecha_retiro: row.hoj_fechaFinal || '',
+            dias_trabajados: row.diasEfectivos || 0,
+            dias_cesantias: row.diasEfectivos || 0,
+            dias_prima1: row.diasEfectivosPrimas1 || 0,
+            dias_prima2: row.diasEfectivosPrimas2 || 0,
+            dias_vacaciones: row.diasAPagarVacaciones || 0,
+            sueldobasico: row.car_salario || 0,
+            transporte: row.car_Auxilio || 0,
+            cesantias: row.valor_cesantias || 0,
+            intereses: row.intereses_cesantias || 0,
+            prima: row.valor_prima || 0,
+            vacaciones: row.valor_vacaciones || 0,
+            valorTotalDevengado: row.valorTotalDevengado || 0,
+            valor_total: row.valorTotalLiquidar || 0,
+            cargo: row.car_cargo || '',
+            noTrabajados: row.dias_noTrabajados || 0,
+            valorVacacionesCompletas: row.valorVacacionesCompletas || 0,
+            valorDeudas: row.valorDeudas || 0,
+            valorVacacionestomadas: row.valorVacacionestomadas || 0,
+            dias_vacacionesTomadas: row.dias_vacaciones || 0,
+            firma: row.firma || 0,
+            cant_vacaciones_tomadas: row.cant_vacaciones_tomadas || 0,
+            dias_sanciones: row.dias_sanciones || 0
+          };
+
+          const jsonData = encodeURIComponent(JSON.stringify(info));
+          const envios = parseInt(row.liq_enviosDes || 0);
+          const examenes = parseInt(row.liq_enviosEx || 0);
+
+          // 🔴 Burbujita roja si hay envíos
+          const badge = envios > 0
+            ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">${envios}</span>`
+            : '';
+
+          // 💛 Burbuja amarilla con chulito si firma no está vacía
+          const badgeConfi = row.firma !== ''
+            ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-success" style="font-size: 0.8rem;">
+                <i class="bi bi-check-lg"></i>
+              </span>`
+            : '';
+
+          // 🧩 Agregar espacio entre botones con gap y display flex
+          return `
+            <div class="d-flex justify-content-center align-items-center" style="gap: 5px;">
+              <button class="btn btn-sm btn-primary btn-ver-pdf position-relative" data-json="${jsonData}">
+                <i class="bi bi-file-earmark-pdf"></i> Ver
+                ${badgeConfi}
+              </button>
+              <button class="btn btn-sm btn-success btn-enviar-comprobante position-relative"
+                      data-id="${row.idhojadevida || ''}"
+                      data-celular="${row.celular || ''}"
+                      data-correo="${row.correo || ''}"
+                      data-json="${jsonData}">
+                <i class="bi bi-send"></i> Enviar
+                ${badge}
+              </button>
+            </div>
+          `;
+        }
+      },
+      { 
+        data: null,
+        render: function (data, type, row) {
+          let firmaExamen = '';
+          let confiExamen = '';
+
+          // ✅ Verificar si el campo existe y parsearlo
+          if (row.liq_docLiqui) {
+            try {
+              const datosLiqui = JSON.parse(row.liq_docLiqui);
+              firmaExamen = datosLiqui.firma_examenes || '';
+              confiExamen = datosLiqui.examenes || '';
+            } catch (e) {
+              console.error('Error al parsear liq_docLiqui:', e);
+            }
+          }
+
+          // ✅ Crear objeto infoExamen con datos combinados
+          const infoExamen = {
+            nombre: row.nombre_completo || '',
+            cedula: row.hoj_cedula || '',
+            fecha_examen: row.fecha_examen || '',
+            tipo_examen: row.tipo_examen || '',
+            resultado_examen: row.resultado_examen || '',
+            observaciones: row.observaciones_examen || '',
+            cargo: row.car_cargo || '',
+            empresa: row.empresa || '',
+            firma:  firmaExamen || '',
+            confiExamen: confiExamen || ''
+          };
+
+          const jsonExamen = encodeURIComponent(JSON.stringify(infoExamen));
+          const examenes = parseInt(row.liq_enviosEx || 0);
+
+          // 🔴 Burbuja roja para "Enviar"
+          const badge1 = examenes > 0
+            ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">${examenes}</span>`
+            : '';
+
+          // 💛 Burbuja amarilla con chulito si confiExamen no está vacío
+          const badgeConfi = confiExamen !== ''
+            ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-success" style="font-size: 0.8rem;">
+                <i class="bi bi-check-lg"></i>
+              </span>`
+            : '';
+
+          // ✅ Botones con separación
+          return `
+            <div class="d-flex align-items-center justify-content-center" style="gap: 6px;">
+              <button class="btn btn-sm btn-primary btn-ver-examen position-relative" data-json="${jsonExamen}">
+                <i class="bi bi-file-earmark-medical"></i> Ver Examen
+                ${badgeConfi}
+              </button>
+              <button class="btn btn-sm btn-success btn-enviar-examen position-relative"
+                      data-id="${row.idhojadevida || ''}"
+                      data-celular="${row.celular || ''}"
+                      data-correo="${row.correo || ''}">
+                <i class="bi bi-send"></i> Enviar
+                ${badge1}
+              </button>
+            </div>
+          `;
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          const id = row.idhojadevida;
+          const valor = Number(row.EstadoLiquidacion);
+
+          let selectHtml = '';
+          if (valor === 1) {
+            selectHtml = `
+              <select class="form-select form-select-sm estado-liquidacion bg-success text-white" data-id="${id}">
+                <option value="0">No</option>
+                <option value="1" selected>Sí</option>
+              </select>
+            `;
+          } else {
+            selectHtml = `
+              <select class="form-select form-select-sm estado-liquidacion bg-danger text-white" data-id="${id}">
+                <option value="0" selected>No</option>
+                <option value="1">Sí</option>
+              </select>
+            `;
+          }
+
+          return selectHtml;
+        }
+      },
+      {
+        data: 'comprobante',
+        render: function (data, type, row) {
+          if (!data) {
+            return '';
+          } else {
+            return `
+              <button 
+                class="btn btn-sm btn-outline-primary" 
+                onclick="verComprobante('${data}')">
+                <i class="bi bi-eye"></i> Ver comprobante
+              </button>
+            `;
+          }
+        }
+      }
+    ],
+
+    createdRow: function (row, data, dataIndex) {
+      if (data.hoj_fechaFinal) {
+        const fechaFinal = new Date(data.hoj_fechaFinal);
+        const hoy = new Date();
+
+        // Normalizar horas para comparar solo fechas
+        hoy.setHours(0, 0, 0, 0);
+        fechaFinal.setHours(0, 0, 0, 0);
+
+        // Calcular diferencia en milisegundos y convertir a días
+        const diferenciaDias = (hoy - fechaFinal) / (1000 * 60 * 60 * 24);
+
+        // Si ya pasaron 3 días o más
+        if (diferenciaDias >= 3 && data.EstadoLiquidacion != 1) {
+          $(row).addClass('fila-vencida');
+        }
+      }
     }
+  });
+
+  // Filtros
+  $('#filtroAnio, #filtroCiudad,#filtroOperador,#filtroEstado').on('change', function () {
+    tabla.ajax.reload();
+  });
+
+  // 🟡 Manejar los checkboxes
+  $('#tablaLiquidaciones tbody').on('change', '.chk-liquidacion', function () {
+    const fila = tabla.row($(this).closest('tr')).data();
+    const id = fila.idhojadevida;
+    const checkbox = this;
+
+    if (checkbox.checked) {
+      // ✅ Verificar si el ID está liquidado antes de agregarlo
+      $.ajax({
+        url: '/nueva_plataforma/controller/LiquidacionesController.php',
+        type: 'POST',
+        data: {
+          accion: 'verificarLiquidado',
+          idhojadevida: id
+        },
+        dataType: 'json',
+        success: function (response) {
+          if (response.success && response.liquidado) {
+            // Si está liquidado, agregarlo al array
+            if (!seleccionados.includes(id)) {
+              seleccionados.push(id);
+            }
+            console.log('Seleccionados:', seleccionados);
+          } else {
+            // ❌ No está liquidado
+            alert('Esta persona aún no está liquidada.');
+            checkbox.checked = false;
+          }
+        },
+        error: function () {
+          alert('Error al verificar el estado de la liquidación.');
+          checkbox.checked = false;
+        }
+      });
+    } else {
+      // Si se desmarca, quitar del array
+      seleccionados = seleccionados.filter(item => item !== id);
+      console.log('Seleccionados:', seleccionados);
+    }
+  });
+
+
+  // Agrega al inicio del <thead>
+  $('#tablaLiquidaciones thead tr').prepend('<th><input type="checkbox" id="chk-todos"></th>');
+
+  // Al cambiar el general, marcar todos los demás
+  $('#tablaLiquidaciones thead').on('change', '#chk-todos', function() {
+    const isChecked = this.checked;
+    $('.chk-liquidacion', tabla.rows().nodes()).prop('checked', isChecked).trigger('change');
+  });
+
+
+  //para ver el Desprendible de liquidacion
+  $(document).on('click', '.btn-ver-pdf', function() {
+    const jsonData = $(this).data('json');
+    const datos = JSON.parse(decodeURIComponent(jsonData));
+
+    // Crear un objeto FormData y agregar los datos
+    const formData = new FormData();
+    for (const key in datos) {
+      formData.append(key, datos[key]);
+    }
+
+    // Enviar por POST y abrir el PDF
+    fetch('../view/Pdfs/DesprendibleLiquidacion.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank'); // abrir en nueva pestaña
+    })
+    .catch(error => console.error('Error al generar PDF:', error));
+  });
+
+  // Función para aplicar color al select según el valor
+  function aplicarColorSelect($select, valor) {
+    $select.removeClass('bg-success bg-danger text-white');
+    if (Number(valor) === 1) {
+      $select.addClass('bg-success text-white'); // verde: liquidado
+    } else {
+      $select.addClass('bg-danger text-white'); // rojo: por liquidar
+    }
+  }
+
+  // Cada vez que se redibuja la tabla (por filtros o carga AJAX)
+  $('#tablaLiquidaciones').on('draw.dt', function () {
+    $('.estado-liquidacion').each(function () {
+      aplicarColorSelect($(this), $(this).val());
+    });
+  });
+
+  // ✅ Manejo del cambio de estado con envío de todos los datos
+  $(document).on('change', '.estado-liquidacion', function () {
+    const $select = $(this);
+    const nuevoEstado = $select.val();
+    const id = $select.data('id');
+    const row = tabla.row($select.closest('tr')).data();
+
+    aplicarColorSelect($select, nuevoEstado); // cambia color visual inmediatamente
+
+    // Crear objeto con todos los datos del form
+    const datos = {
+      accion: 'actualizarEstadoLiquidacion',
+      idLiquidado: row.idLiquidado,
+      idQuienLiqd: row.idLiquidado,
+      liquidado: nuevoEstado,
+      idhojadevida: row.idhojadevida,
+      nombre: row.nombre_completo || '',
+      cedula: row.hoj_cedula || '',
+      fecha_ingreso: row.hoj_fechaInicial || '',
+      fecha_retiro: row.hoj_fechaFinal || '',
+      dias_trabajados: row.diasEfectivos || 0,
+      dias_cesantias: row.diasEfectivos || 0,
+      dias_prima1: row.diasEfectivosPrimas1 || 0,
+      dias_prima2: row.diasEfectivosPrimas2 || 0,
+      dias_vacaciones: row.diasAPagarVacaciones || 0,
+      sueldobasico: row.car_salario || 0,
+      transporte: row.car_Auxilio || 0,
+      cesantias: row.valor_cesantias || 0,
+      intereses: row.intereses_cesantias || 0,
+      prima: row.valor_prima || 0,
+      vacaciones: row.valor_vacaciones || 0,
+      valor_total: row.valorTotalLiquidar || 0,
+      cargo: row.car_cargo || '',
+      valorTotalDevengado: row.valorTotalDevengado || 0,
+      dias_noTrabajados: row.dias_noTrabajados || 0,
+      valorVacacionesCompletas: row.valorVacacionesCompletas || 0,
+      valorDeudas: row.valorDeudas || 0,
+      valorVacacionestomadas: row.valorVacacionestomadas || 0,
+      dias_vacacionesTomadas: row.dias_vacaciones || 0,
+      firma: row.firma || '',
+      cant_vacaciones_tomadas: row.cant_vacaciones_tomadas || 0,
+      dias_sanciones: row.dias_sanciones || 0
+
+
+      
+    };
+
+    // Enviar al servidor
+    $.ajax({
+      url: '/nueva_plataforma/controller/LiquidacionesController.php',
+      type: 'POST',
+      data: datos,
+      success: function (response) {
+        console.log('✅ Estado y datos enviados:', response);
+        // Mostrar alerta si quieres
+        
+        Swal.fire({ icon: 'success', title: 'Actualizado correctamente', timer: 1200, showConfirmButton: false });
+        $('#tablaLiquidaciones').DataTable().ajax.reload();
+      },
+      error: function (xhr, status, error) {
+        console.error('❌ Error al actualizar:', error);
+        alert('Error al actualizar el estado');
+        // opcional: revertir cambio visual si hay error
+        $select.val(nuevoEstado === '1' ? '0' : '1');
+        aplicarColorSelect($select, $select.val());
+      }
+    });
   });
 });
 
+$('#formComprobante').on('submit', function (e) {
+  e.preventDefault();
 
+  let formData = new FormData(this);
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("formValidarPeso");
+  // 🔹 Agregamos los IDs seleccionados
+  formData.append('seleccionados', JSON.stringify(seleccionados));
 
-  form.addEventListener("submit", function(e){
-    e.preventDefault(); // evita recarga
+  // 🔹 Agregamos una acción para que el controlador sepa qué método llamar
+  formData.append('accion', 'subirComprobante');
 
-    // Capturar valores
-    const peso   = document.getElementById("peso").value.trim();
-    const piezas = document.getElementById("piezas").value.trim();
-    const tipoServicio = document.getElementById("tipoServicio").value.trim();
+  $.ajax({
+    url: '/nueva_plataforma/controller/LiquidacionesController.php',
+    type: 'POST',
+    data: formData,
+    contentType: false, // necesario para enviar archivos
+    processData: false, // no procesar los datos (FormData se maneja crudo)
+    success: function (response) {
+      console.log('✅ Respuesta del servidor:', response);
 
-    //  Validar antes de enviar
-    if ((peso === "" || parseFloat(peso) <= 0 ) && tipoServicio != 1000 ) {
-      alert("⚠️ Debe ingresar el peso ");
-      document.getElementById("peso").focus();
-      return; // no continúa
+      Swal.fire({
+        icon: 'success',
+        title: 'Comprobante subido correctamente',
+        timer: 1500,
+        showConfirmButton: false
+      });
+
+      // Cerrar modal si estás usando Bootstrap
+      const modal = bootstrap.Modal.getInstance(document.getElementById('modalComprobante'));
+      modal.hide();
+      $('#tablaLiquidaciones').DataTable().ajax.reload();
+    },
+    error: function (xhr, status, error) {
+      console.error('❌ Error al subir el comprobante:', error);
+      Swal.fire({ icon: 'error', title: 'Error al subir el comprobante' });
     }
-
-
-    // Capturar los demás valores
-    const volumen    = document.getElementById("volumen").value;
-    const estado     = document.getElementById("estado").value;
-    const guia       = document.getElementById("guia").value;
-    const verificado = document.getElementById("verificado").value;
-    const foto       = document.getElementById("foto").files[0]; // archivo
-    const id_param   = document.getElementById("id_param").value;
-    const id_param2  = document.getElementById("id_param2").value;
-    const clasificacion  = document.getElementById("clasificacion").value;
-    const caso  = document.getElementById("caso").value;
-    const param5  = document.getElementById("param5").value;
-    const param16  = document.getElementById("param16").value;
-
-    // Armar FormData con NOMBRES PERSONALIZADOS
-    let data = new FormData();
-    data.append("param1", peso);
-    data.append("param4", volumen);
-    data.append("cantidad_piezas", piezas);
-    data.append("param2", estado);
-    data.append("param6", guia);
-    data.append("param3", verificado);
-    data.append("param10", foto); // archivo
-    data.append("id_param", id_param);
-    data.append("id_param2", id_param2);
-    data.append("caso", "2"); // fijo
-    data.append("clasificacion", clasificacion); // fijo
-    data.append("param5", param5); // fijo
-    data.append("param16", param16); // fijo
-    data.append("tabla", "validapeso"); // fijo
-
-    // Enviar por fetch
-    fetch("../../PesarNv.php", {
-      method: "POST",
-      body: data
-    })
-    .then(res => res.text())
-    .then(respuesta => {
-        console.log("Respuesta servidor:", respuesta);
-        
-        form.reset(); // opcional
-        // 🔄 Recargar DataTable inmediatamente
-        $('#tablaDescargasOficina').DataTable().ajax.reload(null, false);
-        // ✅ Cerrar el modal
-        $('#modalValidarPeso').modal('hide');
-        alert("Datos enviados correctamente");
-    })
-    .catch(err => console.error("Error:", err));
   });
 });
 
@@ -777,221 +997,230 @@ $('#filtroCiudad').on('change', function () {
   }
 
   // recargo tabla también cuando cambia ciudad
-  $('#tablaDescargasOficina').DataTable().ajax.reload();
+  $('#tablaLiquidaciones').DataTable().ajax.reload();
 });
- 
-let lector;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const modalEscaneo = document.getElementById('modalEscaneo');
+function verComprobante(nombreArchivo) {
+  const ruta = `/nueva_plataforma/uploads/comprobantesLiqui/${nombreArchivo}`;
 
-  modalEscaneo.addEventListener('shown.bs.modal', () => {
-    lector = new Html5Qrcode("lectorQR");
-    lector.start(
-      { facingMode: "environment" }, 
-      { fps: 10, qrbox: { width: 250, height: 250 } },
-        codigo => {
-        console.log("Código leído:", codigo);
-        document.getElementById("resultado").innerText = "Leído: " + codigo;
+  // Insertamos el archivo dentro del iframe del modal
+  document.getElementById('iframeComprobante').src = ruta;
 
-        // ✅ Extraer solo la guía del link
-        let guia = null;
-        try {
-            const params = new URL(codigo).searchParams;
-            guia = params.get("guia"); // ej: "BGT283634"
-        } catch (e) {
-            console.error("No es un link válido:", e);
-        }
-
-        if (guia) {
-            // ✅ detener lectura
-            lector.stop();
-
-            // ✅ cerrar modal de escaneo
-            const modalBootstrap = bootstrap.Modal.getInstance(modalEscaneo);
-            modalBootstrap.hide();
-
-            // ✅ ejecutar la lógica con la guía
-            abrirModalValidarPeso(guia);
-        } else {
-            alert("No se pudo obtener la guía del código");
-        }
-        },
-      error => {}
-    ).catch(err => console.error("Error al iniciar cámara:", err));
-  });
-
-  modalEscaneo.addEventListener('hidden.bs.modal', () => {
-    if (lector) {
-      lector.stop().then(() => lector.clear()).catch(err => console.error(err));
-    }
-  });
-});
-// 🔹 Función que replica la lógica del click en .pesar-paquete
-function abrirModalValidarPeso(id) {
-  $('#formValidarPeso')[0].reset();
-  $('#modalValidarPeso').modal('show');
-
-  $.ajax({
-    url: '../controller/DescargasOficinaController.php',
-    type: 'GET',
-    data: { accion: 'buscarServicioPorGuia', id: id },
-    dataType: 'json',
-    success: function (servicio) {
-            if (servicio.ser_idverificadopeso == 1) {
-            // Desactivar todos los inputs, selects y textareas dentro del formulario
-            // $("#formValidarPeso :input").prop("disabled", true);
-            
-        $('[name="peso"]').prop('disabled', true);
-        $('[name="volumen"]').prop('disabled', true);
-        $('[name="estado"]').prop('disabled', true);
-        $('[name="guia"]').prop('disabled', true);
-        $('[name="piezas"]').prop('disabled', true);
-        $('[name="verificado"]').prop('disabled', true);
-         $('button[type="submit"]').prop('disabled', true);
-          // Mostrar alerta Bootstrap
-        $('#alertaVerificado').html(`
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Atención:</strong> Esta guía ya fue <b>pesada y verificada</b>, no se puede modificar.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            </div>
-        `);
-
-            }
-      if (servicio) {
-        $('[name="peso"]').val(servicio.ser_peso);
-        $('[name="volumen"]').val(servicio.ser_volumen);
-        $('[name="estado"]').val(servicio.ser_descripcion);
-        $('[name="guia"]').val(servicio.ser_guiare);
-        $('[name="piezas"]').val(servicio.ser_piezas);
-
-        $('[name="id_param"]').val(servicio.idservicios);
-        $('[name="id_param2"]').val(servicio.idservicios);
-        $('[name="caso"]').val(servicio.ser_guiare);
-        $('[name="param5"]').val(servicio.cli_idciudad);
-        $('[name="param16"]').val(servicio.ser_ciudadentrega);
-        $('[name="verificado"]').val(servicio.ser_idverificadopeso);
-        $('[name="tipoServicio"]').val(servicio.gui_tiposervicio);
-        if (servicio.gui_tiposervicio==1000) {
-          $('[name="peso"]').prop('required', false);
-          $('label[for="peso"]').html(function(_, oldHtml) {
-            return oldHtml.replace(
-              /\(\*\)/g,
-              '<span style="font-size:0.8em; color:#6c757d; font-style:italic;">(a convenir)</span>'
-            );
-          });
-        }
-        
-        let clasificacion = 0;
-        if (servicio.ser_clasificacion == 1 && servicio.ser_pendientecobrar == 0) {
-          clasificacion = 1;
-        } else if (servicio.ser_clasificacion == 2) {
-          clasificacion = 2;
-        }
-        $('[name="clasificacion"]').val(clasificacion);
-
-        // imágenes
-        let img1 = document.getElementById("img1");
-        let img2 = document.getElementById("img2");
-        let modal = document.getElementById("modal");
-        let modalImg = document.getElementById("modal-img");
-
-        img1.src = "../../imagesguias/_Recogida.jpg";
-        img2.src = "../../imgServicios/" + servicio.ser_img_recog;
-
-        let urlPagina = servicio.ima_ruta+'&vis=adm';
-        img1.addEventListener("click", () => {
-          window.open(urlPagina,"VentanaEmergente",
-            "width=800,height=600,top=100,left=100,resizable=yes,scrollbars=yes"
-          );
-        });
-        img2.addEventListener("click", () => {
-          if (img2.src) {
-            modal.style.display = "flex";
-            modalImg.src = img2.src;
-          }
-        });
-        modal.addEventListener("click", () => {
-          modal.style.display = "none";
-          modalImg.src = "";
-        });
-
-      } else {
-        alert('No se encontró la info del servicio.');
-      }
-    },
-    error: function () {
-      alert('Error al buscar la info del servicio.');
-    }
-  });
+  // Mostramos el modal
+  const modal = new bootstrap.Modal(document.getElementById('modalVerComprobante'));
+  modal.show();
 }
 
-$(document).on('click', '.validar-remesa', function () {
-    let id = $(this).data('id');
 
-    $('#formValidarRemesas')[0].reset();
-    $('#modalValidarRemesas').modal('show');
-    $('[name="id_param"]').val(id);
-    
+// 📦 Detectar clic en el botón "Enviar"
+$(document).on('click', '.btn-enviar-comprobante', function () {
+  const celular = $(this).data('celular') || '';
+  const correo = $(this).data('correo') || '';
+  const idhojadevida = $(this).data('id') || '';
+  const jsonData = $(this).data('json') || '';
 
+  // llenar el modal
+  $('#celular').val(celular);
+  $('#correo').val(correo);
+  $('#idhojadevida').val(idhojadevida);
+  $('#jsonData').val(jsonData); // ← añadimos esto
+
+  // abrir modal
+  $('#modalEnviarComprobante').modal('show');
 });
 
 
+// 📩 Enviar correo
+$('#formEnviarComprobante').on('submit', function (e) {
+  e.preventDefault();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("formValidarRemesas");
+  const datos = {
+    ajax: true,
+    accion: 'enviarComprobanteCorreo',
+    idhojadevida: $('#idhojadevida').val(),
+    celular: $('#celular').val(),
+    correo: $('#correo').val(),
+    jsonData: $('#jsonData').val() // ← se envía el JSON codificado
+  };
 
-  form.addEventListener("submit", function(e){
-    e.preventDefault(); // evita recarga
-
-    const formData = new FormData(form);
-
-    // Validaciones opcionales
-    const descripcion = formData.get("descripcion");
-    if (!descripcion) {
-      alert("Por favor debe escribir una descripción.");
-      return;
+  $.ajax({
+    url: '/nueva_plataforma/controller/LiquidacionesController.php',
+    type: 'POST',
+    data: datos,
+    success: function (response) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Comprobante enviado correctamente',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      $('#modalEnviarComprobante').modal('hide');
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar comprobante',
+        text: error
+      });
     }
-
-    $.ajax({
-      url: "/nueva_plataforma/controller/DescargasOficinaController.php",
-      type: "POST",
-      data: formData,
-      contentType: false,
-      processData: false,
-      dataType: "json",
-      success: function(data) {
-        // Reiniciar formulario
-        form.reset();
-
-        // 🔄 Recargar DataTable
-        $('#tablaRemesasOficina').DataTable().ajax.reload(null, false);
-
-        // ✅ Cerrar el modal
-        $('#modalValidarRemesas').modal('hide');
-
-        alert("Datos enviados correctamente");
-      },
-      error: function(xhr, status, error) {
-        console.error("Error en la solicitud:", error);
-        alert("Error inesperado al guardar el servicio.");
-      }
-    });
-
   });
 });
-  function imprimirCodigos() {
-    // Capturar valores de los filtros
-    let operario = document.getElementById("filtroOperador").value;
-    let fecha = document.getElementById("filtroFecha").value;
-    let ciudad = document.getElementById("filtroCiudad").value;
-    
-    
-    let destino = "../../phpqrcode/ticket3.php?param33=" + operario + "&param34=" + fecha + "&param36=" + ciudad + "&modulo=5";
-    
-    // abrir en nueva pestaña
-    window.open(destino, '_blank');
+
+// 💬 Enviar por WhatsApp
+$('#btnEnviarWhatsapp').on('click', function () {
+  const datos = {
+    ajax: true,
+    accion: 'enviarComprobanteCelular',
+    idhojadevida: $('#idhojadevida').val(),
+    celular: $('#celular').val(),
+    correo: $('#correo').val(),
+    jsonData: $('#jsonData').val() // ← también se envía aquí
+  };
+
+  $.ajax({
+    url: '/nueva_plataforma/controller/LiquidacionesController.php',
+    type: 'POST',
+    data: datos,
+    success: function (response) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Comprobante enviado correctamente',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      $('#modalEnviarComprobante').modal('hide');
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar comprobante',
+        text: error
+      });
+    }
+  });
+});
+ 
+
+
+// 👀 Ver examen médico (generar y abrir el PDF)
+$(document).on('click', '.btn-ver-examen', function () {
+  const jsonData = $(this).data('json');
+  const datos = JSON.parse(decodeURIComponent(jsonData));
+
+  // Crear un objeto FormData con los datos
+  const formData = new FormData();
+  for (const key in datos) {
+    formData.append(key, datos[key]);
   }
+
+  // Enviar por POST y abrir el PDF
+  fetch('../view/Pdfs/ExamenesMedicosLiqui.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.blob())
+  .then(blob => {
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank'); // Abrir el PDF en nueva pestaña
+  })
+  .catch(error => console.error('Error al generar PDF:', error));
+});
+
+// 📤 Enviar examen médico (abrir modal)
+$(document).on('click', '.btn-enviar-examen', function () {
+  const id = $(this).data('id');
+  const correo = $(this).data('correo');
+  const celular = $(this).data('celular');
+
+  // Rellenamos los datos en el modal
+  $('#idhojadevidaExamen').val(id);
+  $('#correoExamen').val(correo);
+  $('#celularExamen').val(celular);
+
+  // Mostramos el modal
+  $('#modalEnviarExamen').modal('show');
+});
+
+
+
+
+// 📩 Enviar examen médico por correo
+$('#formEnviarExamen').on('submit', function (e) {
+  e.preventDefault();
+
+  const datos = {
+    ajax: true,
+    accion: 'enviarExamenesCorreo',
+    idhojadevida: $('#idhojadevidaExamen').val(),
+    celular: $('#celularExamen').val(),
+    correo: $('#correoExamen').val()
+  };
+
+  $.ajax({
+    url: '/nueva_plataforma/controller/LiquidacionesController.php',
+    type: 'POST',
+    data: datos,
+    success: function (response) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Examen médico enviado correctamente por correo',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      $('#modalEnviarExamen').modal('hide');
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar examen médico por correo',
+        text: error
+      });
+    }
+  });
+});
+
+
+// 💬 Enviar examen médico por WhatsApp
+$('#btnEnviarExamenWhatsapp').on('click', function () {
+  const datos = {
+    ajax: true,
+    accion: 'enviarExamenesCelular',
+    idhojadevida: $('#idhojadevidaExamen').val(),
+    celular: $('#celularExamen').val(),
+    correo: $('#correoExamen').val()
+  };
+
+  $.ajax({
+    url: '/nueva_plataforma/controller/LiquidacionesController.php',
+    type: 'POST',
+    data: datos,
+    success: function (response) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Examen médico enviado correctamente por WhatsApp',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      $('#modalEnviarExamen').modal('hide');
+    },
+    error: function (xhr, status, error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al enviar examen médico por WhatsApp',
+        text: error
+      });
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
 </script>
 </body>
 </html>

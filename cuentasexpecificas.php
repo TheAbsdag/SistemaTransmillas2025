@@ -167,13 +167,14 @@ function bloquearTextoArea(area) {
     }
 }
 let datosusertabla = [];
-	function selecionado1(id,telefono,consecutivo) {
+	function selecionado1(id,telefono,consecutivo,telefonoRemi) {
 			var checkbox = document.getElementById(id + "s1");
 			var contrato = "Prestacion";
 			const data = {
 				id: id,
 				telefono: telefono,
-				consecutivo: consecutivo
+				consecutivo: consecutivo,
+				telefonoRemi: telefonoRemi
 			};
 
 			if (checkbox.checked) {
@@ -187,24 +188,58 @@ let datosusertabla = [];
 			console.log("Datos User tabla:", datosusertabla);
 	}
 
-	function sendWhatsapp() {
+	async function sendWhatsapp() {
+
 		const mensaje = document.getElementById("mensajeExtra").value;
-		// const palabraClave = "encuentra";
+		const seleccion = document.getElementById("mensajeFijo").value;
 
-		// // Dividir el texto a partir de la palabra
-		// let mensaje = "";
-		// if (texto.includes(palabraClave)) {
-		// mensaje = texto.split(palabraClave)[1].trim();
-		// }
-		// Recorre cada elemento del arreglo global
-		datosusertabla.forEach(({ id, telefono,consecutivo }) => {
-			console.log(`Procesando ID: ${id}, Teléfono: ${telefono}, Mensaje: ${mensaje}, consecutivo: ${consecutivo}`);
+		for (const { id, telefono, consecutivo, telefonoRemi } of datosusertabla) {
 
-			// Aquí llamas tu función que envía el WhatsApp
-			enviarAlertaWhat( telefono, 37, consecutivo,mensaje);
-		});
+			console.log(`Procesando ID: ${id}, Teléfono: ${telefono}`);
+
+			var telefonoPrueba = "3125215864";
+			// 🟢 OPCIÓN 1 — Encomienda (NO valida Navidad)
+			if (seleccion === "1") {
+
+				enviarAlertaWhat(telefono, 37, consecutivo, mensaje);
+				continue;
+			}
+
+			// 🎄 OPCIÓN 2 — MENSAJE NAVIDAD
+			if (seleccion === "2") {
+
+				// 🔍 Verificar destinatario
+				const respDestino = await verificarMensaje37(telefonoPrueba);
+
+				if (!respDestino.ya_enviado) {
+					enviarAlertaWhat(
+						telefonoPrueba,
+						37,
+						"Siempre sera nuestra prioridad, Le deseamos una feliz navidad🎄 y un prospero año nuevo✨, transmillas",
+						"a su servicio"
+					);
+				} else {
+					console.log(`🎄 Mensaje Navidad YA enviado a ${telefonoPrueba}`);
+				}
+
+				// 🔍 Verificar remitente
+				const respRemi = await verificarMensaje37(telefonoPrueba);
+
+				if (!respRemi.ya_enviado) {
+					enviarAlertaWhat(
+						telefonoPrueba,
+						37,
+						"Siempre sera nuestra prioridad, Le deseamos una feliz navidad🎄 y un prospero año nuevo✨, transmillas",
+						"a su servicio"
+					);
+				} else {
+					console.log(`🎄 Mensaje Navidad YA enviado a ${telefonoPrueba}`);
+				}
+			}
+		}
+
 		datosusertabla = [];
-		alert('Todas las alertas han sido enviadas');
+		alert('Proceso de envío finalizado');
 	}
 
 	async function enviarAlertaWhat( telefono, tipo, texto1,texto2) {
@@ -294,5 +329,18 @@ let datosusertabla = [];
 
     divSeleccionados.appendChild(item);
   }
+	async function verificarMensaje37(telefono) {
+
+		const formData = new FormData();
+		formData.append('verificar_mensaje_37', true);
+		formData.append('telefono', telefono);
+
+		const response = await fetch('/nueva_plataforma/controller/WhatsappController.php', {
+			method: 'POST',
+			body: formData
+		});
+
+		return await response.json();
+	}
 
 </script>

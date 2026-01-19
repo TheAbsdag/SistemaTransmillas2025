@@ -612,7 +612,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($rw0[0],\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
+										echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16($id_p,\"SeguimientoUser\",\"$rw0[5]\")';  title='Ingreso de Usuario' >Ingreso</td>"; //Ingreso?
 										echo "<td></td>";
 										echo "<td colspan='1' width='0' align='center' >$rw2[1]</td>";
 										echo "<td>V</td>";
@@ -628,9 +628,11 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td></td>";
+										
 
-					
+										if($nivel_acceso==1 or $nivel_acceso==12){
+											$DB->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
+										}
 					
 									}else{
 
@@ -662,7 +664,10 @@ if (($muestra1 == false and $muestra2 == true)) {
 												echo "<td></td>";
 												echo "<td></td>";
 												echo "<td></td>";
-												echo "<td></td>";
+												
+												if($nivel_acceso==1 or $nivel_acceso==12){
+													$DB->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
+												}
 								}
 								
 							}
@@ -1068,7 +1073,10 @@ if (($muestra1 == false and $muestra2 == true)) {
 										echo "<td></td>";
 										echo "<td></td>";
 										echo "<td></td>";
-										echo "<td></td>";
+										
+										if($nivel_acceso==1 or $nivel_acceso==12){
+											$DB->edites($rw1[4]."_".$idSegui, "borraseguser", 2,0);
+										}
 									
 					}else{
 						$va++; $p=$va%2;

@@ -24,7 +24,14 @@ include("declara.php");
 		$idprecios=1;
 	}
     
-    $sql3="SELECT `idprecios`, `pre_kilo`, `con_precios` FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios  WHERE con_tipo='normal'  and `pre_idciudadori`='$parametro2'  and `pre_idciudaddes`='$parametro3'  and pre_tiposervicio='$parametro4' and con_idprecios='$idprecios'";
+    $sql3="SELECT `idprecios`, `pre_kilo`, `con_precios` 
+    FROM `precios` inner join `configuracionkilos` on con_idprecioskilos=idprecios  
+    WHERE con_tipo='normal'  
+    and `pre_idciudadori`='$parametro2'  
+    and `pre_idciudaddes`='$parametro3'  
+    and pre_tiposervicio='$parametro4' 
+    and con_idprecios='$idprecios'
+     AND pre_estado = 1";
 			$DB->Execute($sql3);
 			$rw2=mysqli_fetch_row($DB->Consulta_ID); 
 

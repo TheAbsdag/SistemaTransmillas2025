@@ -278,7 +278,7 @@ form button:hover {
 				<input type="password" placeholder="Password" name="pass" id="pass">
 				<input type="button" value="Login" onClick="form1.submit();">
 		<!--<a href="registro.php">Solicitar Usuario Nuevo</a><br>-->
-		<a href="recupera.php" style='color:#FFFFFF'>¿Olvido su contrase&ntilde;a?</a><br> 
+		<!-- <a href="recupera.php" style='color:#FFFFFF'>¿Olvido su contrase&ntilde;a?</a><br>  -->
 		</form>        
 	</div>
 	<ul class="bg-bubbles">

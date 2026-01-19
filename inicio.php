@@ -188,8 +188,12 @@ if($nivel_acceso==6){
 		//	echo "<td align='center' ><a  onclick='pop_dis24($id_p,\"Asignar Paquete\",$rw1[13])';  style='cursor: pointer;' title='Asignar Paquete' ><img src='img/paquete.png'></a></td>";
 			//echo "<td align='center' >	<a  onclick='pop_dis1($id_p, \"Seguimiento Datos\")';  style='cursor: pointer;' title='Editar Datos' ><img src='img/informacion.jpg'></a></td>";		
 		echo "<td align='center' >";
-			echo "<a href='ticketfactura.php?id_param=$id_p&pagina2=imprimirasignar.php' target='_blank'><img src='img/imprimir.png'></a></td>";	
-	
+					if ($nivel_acceso==1) {
+					echo "<a href='ticketfactura.php?id_param=$id_p&pagina2=imprimirasignar.php' target='_blank'><img src='img/imprimir.png'></a>";	
+
+					}
+			echo "</td>";	
+					
 /* 			echo "<td align='center'  data-toggle='tooltip' data-placement='top'  title='' ><a  onclick='generarcodigo($id_p)';  target='_blank'  style='cursor: pointer;' title='Imprimir Codigo' >
 			<img src='img/codigo.png'></a>";
 			echo '</td>';  */
@@ -362,7 +366,11 @@ if($nivel_acceso==6){
 							} 
 							$colorfoto="";
 							// $confotor="<a href='$recogidag&vis=adm'' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";enviarAlertaWhat(\"".$rw1[12]."\",\"".$rw1[3]."\",24,\"".$rw1[0]."\",\"".$recogidasg."\")
-							 echo "<a href='$recogidasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia hh</a>";
+							
+							//  echo "<a href='$recogidasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+							 echo "<a href='https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=".$rw1[11]."R' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+
+							 
 							 echo"<button onclick='pop_dis5($id_p,\"Enviar Guia R\")' class='whatsapp-button'>Whatsapp</button>";
 							 
 						}
@@ -424,7 +432,10 @@ if($nivel_acceso==6){
 									$colorfoto="";
 									// $confotor="<a href='$entrgasg&vis=adm'' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
 									// echo "<a href='$entrgasg&vis=adm' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia E</a></td>";
-									echo "<a href='$entrgasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+									
+									// echo "<a href='$entrgasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+									echo "<a href='https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=".$rw1[11]."E' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+									
 									echo"<button onclick='pop_dis5($id_p,\"Enviar Guia E\")' class='whatsapp-button'>Whatsapp</button>";
 									
 								}
@@ -458,7 +469,11 @@ if($nivel_acceso==6){
 				//	echo "<td align='center' ><a  onclick='pop_dis24($id_p,\"Asignar Paquete\",$rw1[13])';  style='cursor: pointer;' title='Asignar Paquete' ><img src='img/paquete.png'></a></td>";
 					//echo "<td align='center' >	<a  onclick='pop_dis1($id_p, \"Seguimiento Datos\")';  style='cursor: pointer;' title='Editar Datos' ><img src='img/informacion.jpg'></a></td>";		
 					echo "<td align='center' >";
-					echo "<a href='ticketfactura.php?id_param=$id_p&pagina2=imprimirasignar.php' target='_blank'><img src='img/imprimir.png'></a></td>";	
+					if ($nivel_acceso==1) {
+						echo "<a href='ticketfactura.php?id_param=$id_p&pagina2=imprimirasignar.php' target='_blank'><img src='img/imprimir.png'></a>";	
+
+					}
+						echo "</td>";	
 			
 					echo "<td align='center'  data-toggle='tooltip' data-placement='top'  title='' ><a  onclick='generarcodigo($id_p)';  target='_blank'  style='cursor: pointer;' title='Imprimir Codigo' >
 					<img src='img/codigo.png'></a>";
@@ -599,7 +614,7 @@ include("footer.php");
 		window.open("ratificafirmadigital.php?idguia="+idguia+"&imprimir="+imprimir+"&id_param="+id_param+"", "popup", "width=600,height=400");
 	}
 
-	async function enviarAlertaWhat(numguia, tipo, idservi,imagen1) {
+	async function enviarAlertaWhat(numguia, tipo, idservi,imagen1,id) {
 		var telefono = document.getElementById('tele').value;
     // URL de la API
     const url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
@@ -610,7 +625,8 @@ include("footer.php");
         telefono: telefono,    // Número de teléfono
         tipo_alerta: tipo,     // Tipo de alerta
         id_guia: idservi,
-		imagen1: imagen1      // ID de la guía
+		imagen1: imagen1,
+		id: id     
     };
 
     try {

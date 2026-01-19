@@ -819,7 +819,7 @@ $('#filtroCiudad').on('change', function () {
 });
  
 let lector;
-
+// Captura del codigo qr
 document.addEventListener("DOMContentLoaded", () => {
   const modalEscaneo = document.getElementById('modalEscaneo');
 

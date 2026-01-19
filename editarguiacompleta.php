@@ -82,7 +82,7 @@ $param10 = str_replace('&0&','&&', $param10);
 
 		if($param28==2){
 
-		   echo$sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito WHERE con_tipo='Credito' and `pre_idciudadori`='$param4'  and `pre_idciudades`='$param11' and pre_tiposervicio='$param37' and pre_idcredito='$param113' and con_idprecios='$idprecios'";
+		   echo$sql3="SELECT `pre_preciokilo`,`con_precios` FROM `precios_credito`  inner join `configuracionkilos` on con_idprecioskilos=idprecioscredito WHERE con_tipo='Credito' and `pre_idciudadori`='$param4'  and `pre_idciudades`='$param11' and pre_tiposervicio='$param37' and pre_idcredito='$param113' and con_idprecios='$idprecios' and pre_estado=1";
 		  $DB->Execute($sql3);
 		  $rw2=mysqli_fetch_row($DB->Consulta_ID);
 

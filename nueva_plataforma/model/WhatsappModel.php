@@ -1,7 +1,7 @@
 <?php
 require_once "../config/database.php";
 
-class UsuarioModel {
+class WhatsappModel {
     private $db;
 
     public function __construct() {
@@ -80,5 +80,33 @@ class UsuarioModel {
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $stmt->close();
+    }
+    public function yaSeEnvioMensajeTipo37($telefono, $fecha = '')
+    {
+        date_default_timezone_set('America/Bogota');
+
+        if ($fecha == '') {
+            $fecha = date('Y-m-d');
+        }
+
+        $telefono = $this->db->real_escape_string($telefono);
+        $fecha    = $this->db->real_escape_string($fecha);
+
+        $sql = "
+            SELECT id
+            FROM registro
+            WHERE telefono_wa = '$telefono'
+            AND id_servicio = 37
+            LIMIT 1
+        ";
+
+        // Log
+        $logPath = __DIR__ . '/log_consultas.txt';
+        $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
+        file_put_contents($logPath, $logMessage, FILE_APPEND);
+
+        $result = $this->db->query($sql);
+
+        return ($result && $result->num_rows > 0);
     }
 }

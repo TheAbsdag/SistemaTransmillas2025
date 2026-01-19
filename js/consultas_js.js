@@ -543,6 +543,23 @@ function tipopago(valor, destino, div, nombre, profundidad, para)
 	destino="resultados1.php?param1="+valor+"&cond="+destino+"&param2="+valortservicio+"&param3="+valorprecio;
 	MostrarConsulta2(destino, div);
 
+	try {
+        const iframe = document.getElementById("iframeFirma");
+        if (iframe) {
+            const baseURL = "/nueva_plataforma/view/recogerEntregar/firmar.php";
+            const params = new URLSearchParams({
+                para: para,
+                accion: "guardarFirmaRecogida",
+                tipo_pago: valor
+            });
+            iframe.src = baseURL + "?" + params.toString();
+        } else {
+            console.warn("⚠️ No se encontró el iframe, se omitió la recarga.");
+        }
+    } catch (error) {
+        console.error("Error al actualizar el iframe:", error);
+    }
+
 }
 
 function valorpagar(valor, destino, div, nombre, profundidad, para)
@@ -1400,3 +1417,5 @@ function verificarDinero(selectElement) {
 		  });
     }
 }
+
+

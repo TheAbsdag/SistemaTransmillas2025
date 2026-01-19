@@ -265,6 +265,13 @@ function pop_dis13(id, tabla, cambio=0){
 	$("#myModa23").modal("show"); 
 	MostrarConsulta("detalle_pop.php?id_param="+id+"&tabla="+tabla+"&cambio="+cambio, "llena_sub4");
 }
+function pop_dis113(id, tabla, cambio=0){
+	
+	$("#myModa223").modal("show"); 
+  
+	MostrarConsulta("detalle_pop.php?id_param="+id+"&tabla="+tabla+"&cambio="+cambio, "llena_sub223");
+  $('#myModamensaje').modal('hide');
+}
 
 function pop_dis21(id, tabla){
 	$("#myModal21").modal("show"); 
@@ -313,6 +320,12 @@ function pop_dis133(id, tabla){
 
 	$("#myModa24").modal("show"); 
 	MostrarConsulta("detalle_pop.php?id_param="+id+"&tabla="+tabla, "llena_sub44");
+}
+function pop_dis114(id, tabla){
+
+	$("#myModa114").modal("show"); 
+	MostrarConsulta("detalle_pop.php?id_param="+id+"&tabla="+tabla, "llena_sub114");
+  $('#myModamensaje').modal('hide');
 }
 
 
@@ -642,6 +655,21 @@ Full screen Modal
     </div>
     </form>
 </div>
+<div id="myModa223" class="modal fullscreen-modal fade"  style="z-index: 1051 !important;" >
+	<form name='form223' id='form223' method='post'  enctype='multipart/form-data' >
+    <div class="modal-dialog">
+        <div class="modal-content" >
+            <div class="modal-body"><div id="llena_sub223"></div></div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary pull-left" onclick="guardarRecoger()">
+                    <i class="fa fa-check"></i> Guardar
+                </button>
+            </div> -->
+        </div>
+    </div>
+    </form>
+</div>
 <div id="myModa24" class="modal fullscreen-modal fade" style="z-index: 1051 !important;" >
 	<form name='form12' id='form12' method='post' action='recogerok.php' enctype='multipart/form-data'  onsubmit='return validarguia2();'  >
     <div class="modal-dialog">
@@ -650,6 +678,19 @@ Full screen Modal
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
                 <button type="submit" class="btn btn-primary  pull-left" ><i class="fa fa-check"></i> Guardar</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<div id="myModa114" class="modal fullscreen-modal fade" style="z-index: 1051 !important;" >
+	<form name='form114' id='form114' method='post' action='recogerok.php' enctype='multipart/form-data'  onsubmit='return validarguia2();'  >
+    <div class="modal-dialog">
+        <div class="modal-content" >
+            <div class="modal-body"><div id="llena_sub114"></div></div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                <button type="submit" class="btn btn-primary  pull-left" ><i class="fa fa-check"></i> Guardar</button> -->
             </div>
         </div>
     </div>

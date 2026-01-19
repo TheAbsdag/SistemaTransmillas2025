@@ -112,7 +112,7 @@ $quincena1='Primera';
 	$quincena1='Segunda';
 }
 $startYear = 2024; // Año inicial
-$currentYear = 2025; // Año actual
+$currentYear = 2027; // Año actual
 for ($year = $startYear; $year <= $currentYear; $year++){
 	
 	$años["$year"]="$year";
@@ -239,11 +239,12 @@ var idusuario="ok";
 	 p5=document.getElementById('param35').value;
 	 p6=document.getElementById('param36').value;
      p7=document.getElementById('param37').value;
+	p9=document.getElementById('param39').value;
 
 
 
 
-destino="excelDeNomina.php?param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7;
+destino="excelDeNomina.php?param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7+"&param39="+p9;
 		// location.href=destino;
 		window.open(destino, '_blank');
 
@@ -260,11 +261,11 @@ var idusuario="ok";
 	 p5=document.getElementById('param35').value;
 	 p6=document.getElementById('param36').value;
      p7=document.getElementById('param37').value;
+		p9=document.getElementById('param39').value;
 
 
 
-
-destino="excelPagoNomina.php?param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7;
+destino="excelPagoNomina.php?param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7+"&param39="+p9;
 		// location.href=destino;
 		window.open(destino, '_blank');
 

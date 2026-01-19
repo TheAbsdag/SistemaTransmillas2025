@@ -211,6 +211,47 @@ if(isset($_REQUEST["asc"])){ $asc=$_REQUEST["asc"]; } else {$asc="ASC"; } $asc2=
                 box-shadow: 1px 1px 1px gray;
             }
 
+            .alerta-flotante {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background-color: #f44336; /* rojo tipo alerta */
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: aparecer 0.5s ease-out;
+            z-index: 9999;
+            }
+
+            .alerta-flotante.oculta {
+            animation: desaparecer 0.4s ease-in forwards;
+            }
+
+            .alerta-cerrar {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            }
+
+            @keyframes aparecer {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+            }
+
+            @keyframes desaparecer {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-15px); }
+            }
 		</style>
 <script language="javascript">
 // Función para bloquear el clic derecho
@@ -485,6 +526,7 @@ $activo=true;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
+
                 <div   class="navbar-right">
                     <ul class="nav navbar-nav">
                     <?php 
@@ -676,8 +718,7 @@ $activo=true;
 
                             ?>
                             <li>
-                                <a href="javascript:void(0);" 
-                                onclick="seguimientoruta2('<?= $mensaje ?>','<?= $opcion ?>','<?= $accion ?>')">
+                                <a href="javascript:void(0);"onclick="seguimientoruta2('<?= $mensaje ?>','<?= $opcion ?>','<?= $accion ?>')">
                                     
                                     <span>
                                         Me dirijo a
@@ -816,6 +857,19 @@ $sles="SELECT doc_ruta FROM documentos WHERE doc_tabla='Usuario' AND doc_idviene
 $DB_m->Execute($sles); 
 $imagenusu=$DB_m->recogedato(0);
 $nombre=explode(" ",$id_nombre);
+
+
+$hoy = date('Y-m-d');
+$tarea = "SELECT t.nombre
+                FROM asignaciones a
+                INNER JOIN tareasDiarias t ON a.tarea_id = t.id
+                WHERE a.operador_id = '$id_usuario' 
+                AND a.fecha = '$hoy'
+                ORDER BY a.created_at DESC
+                LIMIT 1";
+
+$DB_m->Execute($tarea);
+$tareaHoy = $DB_m->recogedato(0);
 ?>
 <img src="<?php echo $imagenusu; ?>" class="img-circle" alt="User Image" />
 <p><?php print $id_nombre; ?><small><?php echo $rol_nombre; ?></small></p>
@@ -839,6 +893,20 @@ $nombre=explode(" ",$id_nombre);
             </nav>
         </header>
 
+        <!-- Alerta de tareas asignadas  -->
+         <?php if ($tareaHoy) {
+                
+            ?>
+            <div id="alertaFlotante" class="alerta-flotante">
+                <div class="alerta-contenido">
+                    <span class="alerta-texto">📅 ¡Tienes una tarea asignada para hoy!</span>
+                    <span class="alerta-texto">¡¡<?php echo$tareaHoy;?>!!</span>
+
+                     
+                    <button class="alerta-cerrar" onclick="cerrarAlerta()">×</button>
+                </div>
+            </div>
+         <?php } ?>
             <aside class="left-side sidebar-offcanvas" style="min-height:550px;">
                 <section  class="sidebar" >
                     <div class="user-panel">
@@ -1055,6 +1123,9 @@ function procesarSeguimiento($id_usuario, $DB, $DB1) {
     $tipo = $datos[2] ?? "";
     $idservicioruta = $datos[3] ?? "";
 
+    // Quitar comillas dobles de $direccion
+    $direccion = str_replace('"', '', $direccion);
+
     // --- Preparar retorno ---
     $direccion = addslashes($direccion); // Escapar comillas
     $mensaje = $direccion;
@@ -1088,7 +1159,20 @@ function procesarSeguimiento($id_usuario, $DB, $DB1) {
 
 </ul></section></aside>
 <aside class="right-side" style="min-height:550px;"  > 
-
+<div id="loader" style="
+    display:none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;
+    text-align:center;
+    padding-top:20%;
+">
+    <img src="img/loading.gif" width="120">
+</div>
 
 
 <?php
@@ -1157,10 +1241,214 @@ function procesarSeguimiento($id_usuario, $DB, $DB1) {
 
     }
 
+    function cerrarAlerta() {
+    const alerta = document.getElementById('alertaFlotante');
+    if (alerta) { // Verifica que exista antes de manipularla
+        alerta.classList.add('oculta');
+        setTimeout(() => {
+        if (alerta.parentNode) alerta.remove(); // Solo la elimina si sigue en el DOM
+        }, 400); // la elimina después de la animación
+    }
+    }
 
-    </script>
+    // Mostrarla automáticamente (por ejemplo, al cargar la página)
+    window.addEventListener('load', () => {
+    const alerta = document.getElementById('alertaFlotante');
+    if (alerta) { // Solo ejecuta el cierre si la alerta existe
+        setTimeout(() => cerrarAlerta(), 7000); // se cierra automáticamente
+    }
+    });
+
+function guardarEntregar() {
+
+    const form = document.getElementById("form223");
+
+    // 1️⃣ Validar campos requeridos
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    // 2️⃣ Validar nombre + apellido
+    const nombre = document.getElementById("param82").value.trim();
+
+    if (!nombre.includes(" ")) {
+        alert("Debe ingresar nombre y apellido.");
+        document.getElementById("param82").focus();
+        return;
+    }
+
+    // 3️⃣ Mostrar loader
+    mostrarLoader();
+
+    // 4️⃣ Enviar AJAX
+    const datos = new FormData(form);
+
+    fetch("entregaRecoge.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(response => response.text())
+    .then(data => {
+
+        // Ocultar loader
+        ocultarLoader();
+
+        const texto = data.trim().toUpperCase();
+
+        if (texto.includes("OK")) {
+
+            alert("Guardado exitosamente 😊");
+
+            // Recargar la página
+            // location.reload();
+
+        } else if (texto.includes("NO HAY FIRMA")) {
+
+            alert("Debe firmar o subir el sello");
+
+        } else {
+
+            alert("Ocurrió un error: " + data);
+        }
+    })
+    .catch(error => {
+        ocultarLoader();
+        console.error('Error:', error);
+    });
+}
 
 
+function guardarRecoger() {
+
+    const form = document.getElementById("form114");
+
+    // 1️⃣ Validar campos requeridos (HTML5)
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return; // ❌ No continúa si falta algo
+    }
+
+    // 2️⃣ Validar que param82 tenga nombre + apellido (mínimo 1 espacio)
+    const nombre = document.getElementById("param82").value.trim();
+
+    if (!nombre.includes(" ")) {
+        alert("Debe ingresar nombre y apellido.");
+        document.getElementById("param82").focus();
+        return; // ❌ No enviar si no cumple
+    }
+
+        // 3️⃣ Mostrar loader
+    mostrarLoader();
+    // 3️⃣ Si todo está bien, enviamos por AJAX
+    const datos = new FormData(form);
+
+    fetch("entregaRecoge.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(response => response.text())
+    .then(data => {
+
+        ocultarLoader();
+        const texto = data.trim().toUpperCase();
+
+        if (texto.includes("OK")) {
+            alert("Guardado exitosamente 😊");
+            // $('#myModa114').modal('hide');
+            location.reload();
+
+        } else if (texto.includes("NO HAY FIRMA")) {
+            alert("Debe firmar o subir el sello");
+
+        } else {
+            ocultarLoader();
+            alert("Ocurrió un error: " + data);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function guardarNoEntregar() {
+
+    const form = document.getElementById("form223");
+
+    // 3️⃣ Mostrar loader
+    mostrarLoader();
+    // 3️⃣ Si todo está bien, se envía por AJAX
+    const datos = new FormData(form);
+
+    fetch("entregaRecoge.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(response => response.text())
+    .then(data => {
+
+        ocultarLoader();
+        const texto = data.trim().toUpperCase();
+
+        if (texto.includes("OK")) {
+            
+            alert("Guardado exitosamente 😊");
+            // window.location.href = window.location.href;
+            // $('#myModa223').modal('hide');
+            location.reload();
+        } else if (texto.includes("NO HAY FIRMA")) {
+            
+            alert("Debe firmar o subir el sello");
+
+        } else {
+           
+            alert("Ocurrió un error: " + data);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function guardarNoRecoger() {
+
+    const form = document.getElementById("form114");
+
+    // 3️⃣ Mostrar loader
+    mostrarLoader();
+    // 3️⃣ Si todo está bien, enviamos por AJAX
+    const datos = new FormData(form);
+
+    fetch("entregaRecoge.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(response => response.text())
+    .then(data => {
+        ocultarLoader();
+        const texto = data.trim().toUpperCase();
+
+        if (texto.includes("OK")) {
+
+            alert("Guardado exitosamente 😊");
+            // $('#myModa114').modal('hide');
+            location.reload();
+
+        } else if (texto.includes("NO HAY FIRMA")) {
+            
+            alert("Debe firmar o subir el sello");
+
+        } else {
+            
+            alert("Ocurrió un error: " + data);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function mostrarLoader() {
+    document.getElementById("loader").style.display = "block";
+}
+function ocultarLoader() {
+    document.getElementById("loader").style.display = "none";
+}
+</script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 </html>

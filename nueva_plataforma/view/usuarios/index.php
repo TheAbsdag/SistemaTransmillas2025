@@ -221,7 +221,7 @@ $('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {
 
   if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
     $.ajax({
-      url: '/testSistemaTransmillas/nueva_plataforma/controller/UsuarioController.php',
+      url: '/nueva_plataforma/controller/UsuarioController.php',
       type: 'POST',
       data: {
         eliminar_usuario: true,

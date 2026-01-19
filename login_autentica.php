@@ -123,8 +123,14 @@ else
 	}
 	else {		
 		session_destroy();
-		header("Location:index.php?error_login=8");
-		exit;
+
+
+		if (isset($redirectIfNotLogged)) {
+			header("Location: " . $redirectIfNotLogged);
+		} else {
+			header("Location:index.php?error_login=8");
+			exit;
+		}
 	}
 }
 ?>

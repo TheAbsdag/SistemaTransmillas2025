@@ -1,6 +1,6 @@
-//Desarrollado por Jesus Liñán
+//Desarrollado por Jesus Liï¿½ï¿½n
 //ribosomatic.com
-//Puedes hacer lo que quieras con el código
+//Puedes hacer lo que quieras con el cï¿½digo
 //pero visita la web cuando te acuerdes
 
 function objetoAjax(){

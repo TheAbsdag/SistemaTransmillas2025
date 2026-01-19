@@ -292,8 +292,10 @@ $DB->Execute($sql); $va=0;
 
 
 
-					$recogida="<a href='{$urlImagen}' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a> <br>  <br> <a href='del_admin.php?id_param=$rw2[0]&tabla=Elimina Archivo2&ruta=$rw2[2]' title='Eliminar' 
-					onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'>Eliminar <i class='fa fa-trash-o'></i></a>";
+					// $recogida="<a href='{$urlImagen}' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a> <br>  <br> <a href='del_admin.php?id_param=$rw2[0]&tabla=Elimina Archivo2&ruta=$rw2[2]' title='Eliminar' 
+					// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'>Eliminar <i class='fa fa-trash-o'></i></a>";
+					$recogida="<a href='https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=".$rw1[3]."R' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a> <br>  <br> <a href='del_admin.php?id_param=$rw2[0]&tabla=Elimina Archivo2&ruta=$rw2[2]' title='Eliminar' 
+					onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'>Eliminar <i class='fa fa-trash-o'></i></a>";		
 
 					$validarecogida="SI";
 
@@ -328,7 +330,9 @@ $DB->Execute($sql); $va=0;
 
 
 
-					$entrega="<a href='{$urlImagene}' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagene."' target='_blank'>✏️</a>  <br>  <br> <a href='del_admin.php?id_param=$rw2e[0]&tabla=Elimina Archivo2&ruta=$rw2e[2]' title='Eliminar' 
+					// $entrega="<a href='{$urlImagene}' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagene."' target='_blank'>✏️</a>  <br>  <br> <a href='del_admin.php?id_param=$rw2e[0]&tabla=Elimina Archivo2&ruta=$rw2e[2]' title='Eliminar' 
+					// onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'>Eliminar <i class='fa fa-trash-o'></i></a>";
+					$entrega="<a href='https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=".$rw1[3]."E' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagene."' target='_blank'>✏️</a>  <br>  <br> <a href='del_admin.php?id_param=$rw2e[0]&tabla=Elimina Archivo2&ruta=$rw2e[2]' title='Eliminar' 
 					onClick='return confirm(\"".utf8_encode("Est&aacute; seguro de eliminar este registro?")."\")'>Eliminar <i class='fa fa-trash-o'></i></a>";
 					$validaentrega="SI";
 
@@ -434,7 +438,7 @@ $DB->Execute($sql); $va=0;
 							}
 
 				echo "<td align='center' >";
-				echo "<a href='{$urlImagen}' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a></td>";	
+				echo "<a href='https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=".$rw1[3]."R' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a></td>";	
 
 				if($nivel_acceso==1 or $nivel_acceso==9 or $nivel_acceso==10){
 				
@@ -522,7 +526,7 @@ $DB->Execute($sql); $va=0;
 										}
 				
 							echo "<td align='center' >";
-							echo "<a href='{$urlImagen}' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a></td>";	
+							echo "<a href='https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=".$rw1[3]."E' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia</a><br><a href='https://sistema.transmillas.com/editarImg.php?img=".$urlImagen."' target='_blank'>✏️</a></td>";	
 				
 							if($nivel_acceso==1 or $nivel_acceso==9 or $nivel_acceso==10){
 							
