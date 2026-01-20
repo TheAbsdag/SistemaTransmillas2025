@@ -25,7 +25,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 30px;
 }
+
 
 /* Card */
 .container {
@@ -89,8 +91,8 @@ form input[type="button"] {
   background: linear-gradient(#0f4c81, #0b3c6f);
 }
 
-form input[type="button"]:hover {
-  background: linear-gradient(#135c99, #0b3c6f);
+form input[type="button"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3);
 }
 
 /* Error */
@@ -99,6 +101,10 @@ form span {
   margin-bottom: 10px;
   color: #dc2626;
   font-size: 13px;
+}
+form input {
+  background: #f8fbff;
+  border: 1px solid #cbd5e1;
 }
 
 </style>
