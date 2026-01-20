@@ -204,7 +204,7 @@ function getFingerprint() {
 $(document).ready(function () {
 
   $.ajax({
-    url: '/DispositivosController.php',
+    url: 'DispositivosController.php',
     type: 'POST',
     dataType: 'json',
     data: {
@@ -253,7 +253,7 @@ function vincularDispositivo() {
   const fingerprint = getFingerprint();
 
   $.ajax({
-    url: '/DispositivosController.php',
+    url: 'DispositivosController.php',
     type: 'POST',
     dataType: 'json',
     data: {
