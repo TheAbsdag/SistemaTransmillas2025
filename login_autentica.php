@@ -74,7 +74,7 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 		switch ($estadoDispositivo) {
 
 			case 'NO_VINCULADO':
-				header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO".$sqlDispositivo);
+				header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
 				exit;
 
 			case 'PENDIENTE':
