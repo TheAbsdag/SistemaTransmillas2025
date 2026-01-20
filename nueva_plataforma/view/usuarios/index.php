@@ -10,23 +10,18 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../assets/css/usuarios.css">
 
-<style>
-thead.azul-blanco th {
-  background-color: #01468c; /* Tu azul exacto */
-  color: white;
-}
-.mi-header {
-        background-color: #00458D; /* Naranja por ejemplo */
-        color: white;
-}
-</style>
+
+
 <body>
 <div class="container-fluid mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
-    <div class="card-header text-center mi-header">
-      <h3 class="mb-0">Usuarios</h3>
-    </div>
+  <div class="card-header mi-header d-flex align-items-center justify-content-between">
+    <h3 class="mb-0">
+      <i class="fas fa-users me-2"></i> Usuarios
+    </h3>
+  </div>
     <div class="card-body">
       <div class="row mb-3 align-items-end">
           <div class="col-md-4">
@@ -51,7 +46,7 @@ thead.azul-blanco th {
 
       <div class="table-responsive">
         <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
-          <thead class="table-primary">
+          <thead class="thead-modern">
             <tr>
                 <th>Rol</th>
                 <th>Nombre</th>
@@ -59,6 +54,7 @@ thead.azul-blanco th {
                 <th>Usuario</th>
                 <th>Profesión</th>
                 <th>Contrato</th>
+                <th>Dispositivos</th>
                 <th>Ver en sistema</th>
                 <th>Ver en nómina</th>
                 <th>Estado</th>
@@ -70,6 +66,40 @@ thead.azul-blanco th {
           <tbody></tbody>
         </table>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DISPOSITIVOS -->
+<div class="modal fade" id="modalDispositivos" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-laptop"></i> Dispositivos del usuario
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm text-center" id="tablaDispositivos">
+            <thead class="table-light">
+              <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Último acceso</th>
+                <th>IP</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -89,153 +119,9 @@ thead.azul-blanco th {
   <!-- ✅ DataTables desde CDN -->
    
 
-<script>
-$(document).ready(function () {
-  const tabla = $('#tablaUsuarios').DataTable({
-    ajax: {
-      url: '/nueva_plataforma/controller/UsuarioController.php',
-      type: 'POST',
-      data: function (d) {
-        d.ajax = true;
-        d.rol = $('#filtroRol').val();
-        d.estado = $('#filtroEstado').val();
-      },
-      dataSrc: ''
-    },
-    columns: [
-      { data: 'rol_nombre' },
-      { data: 'usu_nombre' },
-       { data: 'usu_identificacion' },
-      { data: 'usu_usuario' },
-      { data: 'usu_nivelacademico' },
-      { data: 'usu_tipocontrato' },
-      // 🔁 Interactivo: usu_filtro → Ver en sistema
-         // 🔁 Interactivo: usu_filtro → Ver en sistema
-      {
-        data: 'usu_filtro',
-        render: function (data, type, row) {
-          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
-          return `
-            <select class="form-select form-select-sm cambiar-campo ${clase}"
-                    data-id="${row.idusuarios}"
-                    data-campo="usu_filtro">
-              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-            </select>
-          `;
-        }
-      },
-      {
-        data: 'usu_ver_nomina',
-        render: function (data, type, row) {
-          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
-          return `
-            <select class="form-select form-select-sm cambiar-campo ${clase}"
-                    data-id="${row.idusuarios}"
-                    data-campo="usu_ver_nomina">
-              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-            </select>
-          `;
-        }
-      },
-      {
-        data: 'usu_estado',
-        render: function (data, type, row) {
-          const clase = data == 1 ? 'bg-success text-white' : 'bg-danger text-white';
-          return `
-            <select class="form-select form-select-sm cambiar-campo ${clase}"
-                    data-id="${row.idusuarios}"
-                    data-campo="usu_estado">
-              <option value="1" ${data == 1 ? 'selected' : ''}>Activo</option>
-              <option value="0" ${data == 0 ? 'selected' : ''}>Inactivo</option>
-            </select>
-          `;
-        }
-      },
-      {
-        data: null,
-        orderable: false,
-        searchable: false,
-        render: function (data, type, row) {
-          return `
-            <a href="../../cambio_admin.php?id_param=${row.idusuarios}&tabla=Usuario&condecion=" 
-              class="btn btn-sm btn-outline-primary" title="Editar" target="_blank">
-              <i class="fas fa-edit"></i>
-            </a>
-          `;
-        }
-      },
-      {
-        data: null,
-        orderable: false,
-        searchable: false,
-        render: function (data, type, row) {
-          return `
-            <button class="btn btn-sm btn-danger eliminar-usuario"
-                    title="Eliminar"
-                    data-id="${row.idusuarios}">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          `;
-        }
-      }
-      ]
-  });
+<script src="../assets/js/usuarios.js"></script>
 
-  $('#filtroRol, #filtroEstado').on('change', function () {
-    tabla.ajax.reload();
-  });
-});
 
-// 🔁 Detectar cambios en cualquier campo editable
-$('#tablaUsuarios tbody').on('change', '.cambiar-campo', function () {
-  const id = $(this).data('id');
-  const campo = $(this).data('campo');
-  const valor = $(this).val();
 
-  // if(id == "usu_estado" and valor==0){
-  //   alert('Está apunto de desactivar al usuario, recuerde colocar fecha de finalizacion en la hoja de vida si aun no lo ha hecho');
-
-  // }
-
-  $.ajax({
-    url: '/nueva_plataforma/controller/UsuarioController.php',
-    type: 'POST',
-    data: {
-      actualizar_campo: true,
-      id: id,
-      campo: campo,
-      valor: valor
-    },
-    success: function (res) {
-      $('#tablaUsuarios').DataTable().ajax.reload(null, false);
-    },
-    error: function () {
-      alert("Hubo un error al actualizar.");
-    }
-  });
-});
-$('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {
-  const id = $(this).data('id');
-
-  if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-    $.ajax({
-      url: '/nueva_plataforma/controller/UsuarioController.php',
-      type: 'POST',
-      data: {
-        eliminar_usuario: true,
-        id: id
-      },
-      success: function (res) {
-        $('#tablaUsuarios').DataTable().ajax.reload(null, false);
-      },
-      error: function () {
-        alert('Error al eliminar el usuario.');
-      }
-    });
-  }
-});
-</script>
 </body>
 </html>

@@ -13,26 +13,22 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-<style>
-thead.azul-blanco th {
-  background-color: #01468c; /* Tu azul exacto */
-  color: white;
-}
-.mi-header {
-        background-color: #00458D; /* Naranja por ejemplo */
-        color: white;
-}
+<link rel="stylesheet" href="../assets/css/usuarios.css">
 
-</style>
 <body>
 <div class="container-fluid mt-4">
   <div class="card shadow p-3 mb-4 bg-body rounded">
-    <div class="card-header text-center mi-header">
-        <div class="container-fluid">
-            <!-- Botón de regreso -->
-            <button class="btn btn-light" onclick="history.back()">⬅ Volver</button>
-        </div>
-      <h3 class="mb-0">Cargos</h3>
+
+
+    <div class="card-header mi-header d-flex align-items-center justify-content-between">
+      <!-- Botón de regreso -->
+      <button class="btn btn-light">
+        <i class="fas fa-arrow-left me-1"></i> Volver
+      </button>
+
+      <h3 class="mb-0">
+        <i class="fas fa-id-badge me-2"></i> Cargos
+      </h3>
     </div>
 
     <div class="card-body">
@@ -61,7 +57,7 @@ thead.azul-blanco th {
 
       <div class="table-responsive">
         <table id="tablaUsuarios" class="table table-hover table-bordered align-middle text-center">
-          <thead class="table-primary">
+          <thead class="thead-modern">
             <tr>
                 <th>Cargo</th>
                 <th>Tipo de Contrato</th>

@@ -21,6 +21,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_usuario'])) 
     echo json_encode(['ok' => true]);
     exit;
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['listar_dispositivos'])) {
+    $idUsuario = $_POST['idusuario'];
+    $dispositivos = $modelo->listarDispositivos($idUsuario);
+    echo json_encode($dispositivos);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['autorizar_dispositivo'])) {
+    $modelo->autorizarDispositivo($_POST['id']);
+    echo json_encode(['ok' => true]);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bloquear_dispositivo'])) {
+    $modelo->bloquearDispositivo($_POST['id']);
+    echo json_encode(['ok' => true]);
+    exit;
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     $rol = $_POST['rol'] ?? '';
     $estado = $_POST['estado'] ?? '';

@@ -50,4 +50,28 @@ class UsuarioModel {
         $stmt->execute();
         $stmt->close();
     }
+    public function listarDispositivos($idUsuario) {
+        $sql = "SELECT id, device_name, device_type, last_login, ip_last, authorized
+                FROM user_devices
+                WHERE user_id = ? AND active = 1
+                ORDER BY created_at DESC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        return $res->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function autorizarDispositivo($id) {
+        $stmt = $this->db->prepare("UPDATE user_devices SET authorized = 1 WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+    }
+
+    // public function bloquearDispositivo($id) {
+    //     $stmt = $this->db->prepare("UPDATE user_devices SET active = 0 WHERE id = ?");
+    //     $stmt->bind_param("i", $id);
+    //     $stmt->execute();
+    // }
 }
