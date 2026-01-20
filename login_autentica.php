@@ -33,6 +33,7 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 	echo "joseli".$row["rol_nombre"]; */
 	 $numusu=$DBss->numregistros();            
 	
+	 $deviceId = $_POST['device_id'] ?? null;
 	if($numusu>0){
 
 		$estadoDispositivo = 'NO_VINCULADO';
