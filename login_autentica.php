@@ -7,7 +7,7 @@ require("connection/sql_transact.php");
 require("connection/llenatablas.php");
 require("connection/PasswordHash.php");
 require("definirvar.php");
-// require_once "nueva_plataforma/model/DispositivosModel.php";
+require_once __DIR__ . '/nueva_plataforma/model/DispositivosModel.php';
 date_default_timezone_set("America/Bogota");
 
 
@@ -51,33 +51,33 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 //		if($check){
 	
 
-			// session_name("projecst2344fsdfd");
-			// $modeloDispositivo = new Dispositivos();
+			session_name("projecst2344fsdfd");
+			$modeloDispositivo = new Dispositivos();
 
-			// //Comprobar Dispositivo
-			// $estadoDispositivo = $modeloDispositivo->verificarDispositivoLogin(
-			// 	$row['idusuarios'],
-			// 	$deviceId
-			// );
+			//Comprobar Dispositivo
+			$estadoDispositivo = $modeloDispositivo->verificarDispositivoLogin(
+				$row['idusuarios'],
+				$deviceId
+			);
 
-			// switch ($estadoDispositivo) {
+			switch ($estadoDispositivo) {
 
-			// 	case 'NO_VINCULADO':
-			// 		header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
-			// 		exit;
+				case 'NO_VINCULADO':
+					header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
+					exit;
 
-			// 	case 'PENDIENTE':
-			// 		header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
-			// 		exit;
+				case 'PENDIENTE':
+					header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
+					exit;
 
-			// 	case 'BLOQUEADO':
-			// 		header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
-			// 		exit;
+				case 'BLOQUEADO':
+					header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
+					exit;
 
-			// 	case 'AUTORIZADO':
-			// 		// continuar login normal
-			// 		break;
-			// }
+				case 'AUTORIZADO':
+					// continuar login normal
+					break;
+			}
 
 			session_start(); 
 			$id_ses=session_id();		
