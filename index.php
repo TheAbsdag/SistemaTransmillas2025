@@ -4,8 +4,8 @@
 <title>Transmillas </title >
 <link rel="shortcut icon" href="images/Logo Google Nuevo.png" />
 <style>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 * {
   box-sizing: border-box;
@@ -16,136 +16,91 @@
 body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f3c78, #0a2a52);
-  color: #fff;
-  overflow: hidden;
-}
-
-/* Wrapper */
-.wrapper {
-  position: absolute;
-  inset: 0;
+  background: linear-gradient(
+    135deg,
+    #0b3c6f 0%,
+    #0f4c81 60%,
+    #0b3c6f 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Main Card */
+/* Card */
 .container {
   width: 100%;
   max-width: 420px;
-  padding: 45px 35px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 22px;
-  box-shadow:
-    0 30px 60px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.08);
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 35px 30px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.25);
   text-align: center;
-  z-index: 2;
 }
 
 /* Brand */
 .brand img {
-  width: 70px;
-  margin-bottom: 12px;
+  width: 65px;
+  margin-bottom: 10px;
 }
 
 .brand h1 {
-  font-size: 26px;
-  letter-spacing: 3px;
+  font-size: 22px;
   font-weight: 600;
+  letter-spacing: 2px;
+  color: #0b3c6f;
 }
 
 .brand p {
-  font-size: 14px;
-  opacity: 0.75;
-  margin-bottom: 30px;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 25px;
 }
 
-/* Form */
-form span {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 14px;
-}
-
+/* Inputs */
 form input[type="text"],
 form input[type="password"] {
   width: 100%;
-  padding: 15px 16px;
-  margin-bottom: 15px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.12);
-  color: #fff;
-  font-size: 15px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  border: 1px solid #d9e2ec;
+  font-size: 14px;
   outline: none;
-  transition: all .3s ease;
-}
-
-form input::placeholder {
-  color: rgba(255,255,255,.65);
+  transition: border .2s ease, box-shadow .2s ease;
 }
 
 form input:focus {
-  background: rgba(255,255,255,0.2);
-  border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239,68,68,.25);
+  border-color: #0b3c6f;
+  box-shadow: 0 0 0 3px rgba(11,60,111,.15);
 }
 
 /* Button */
 form input[type="button"] {
   width: 100%;
-  padding: 15px;
-  margin-top: 5px;
-  border-radius: 14px;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 6px;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   color: white;
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  transition: all .3s ease;
+  background: linear-gradient(#0f4c81, #0b3c6f);
 }
 
 form input[type="button"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(239,68,68,.45);
+  background: linear-gradient(#135c99, #0b3c6f);
 }
 
-/* Background accents */
-.bg-bubbles {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+/* Error */
+form span {
+  display: block;
+  margin-bottom: 10px;
+  color: #dc2626;
+  font-size: 13px;
 }
 
-.bg-bubbles li {
-  position: absolute;
-  list-style: none;
-  width: 60px;
-  height: 60px;
-  background: rgba(255,255,255,0.08);
-  bottom: -160px;
-  border-radius: 50%;
-  animation: float 30s infinite linear;
-}
-
-.bg-bubbles li:nth-child(odd) {
-  background: rgba(255,255,255,0.12);
-}
-
-/* Animation */
-@keyframes float {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-  100% {
-    transform: translateY(-900px) rotate(360deg);
-  }
-}
 </style>
 
 
@@ -155,11 +110,11 @@ form input[type="button"]:hover {
   <body>
     <div class="wrapper">
 	<div class="container" >
-    <div class="brand">
-      <img src="images/logo-transmillas.png" alt="Transmillas">
-      <h1>TRANSMILLAS</h1>
-      <p>Sistema de Gestión</p>
-    </div>
+        <div class="brand">
+          <img src="images/logo-transmillas.png">
+          <h1>TRANSMILLAS</h1>
+          <p>Plataforma Administrativa</p>
+        </div>
 		
         <form name="form1" method="post" action="login_autentica.php?ingreso='desarrollo'" class="form-2">
         <?php  
