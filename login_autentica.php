@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/nueva_plataforma/model/DispositivosModel.php';
+$modelo = new Dispositivos();
+echo 'OK';
+exit;
 require("connection/conectarse.php");
 require("connection/arrays.php");
 require("connection/funciones.php");
@@ -7,7 +11,7 @@ require("connection/sql_transact.php");
 require("connection/llenatablas.php");
 require("connection/PasswordHash.php");
 require("definirvar.php");
-require_once __DIR__ . '/nueva_plataforma/model/DispositivosModel.php';
+
 date_default_timezone_set("America/Bogota");
 
 
