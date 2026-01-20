@@ -111,7 +111,7 @@ form span {
     <div class="wrapper">
 	<div class="container" >
         <div class="brand">
-          <img src="images/logo-transmillas.png">
+          <img src="images/Logo Google Nuevo.png">
           <h1>TRANSMILLAS</h1>
           <p>Plataforma Administrativa</p>
         </div>
