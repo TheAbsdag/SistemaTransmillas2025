@@ -2,7 +2,7 @@
 require_once __DIR__ . '/nueva_plataforma/model/DispositivosModel.php';
 // $modelo = new Dispositivos();
 // echo 'OK';
-exit;
+// exit;
 require("connection/conectarse.php");
 require("connection/arrays.php");
 require("connection/funciones.php");
