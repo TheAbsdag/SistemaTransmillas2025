@@ -204,7 +204,7 @@ function getFingerprint() {
 $(document).ready(function () {
 
   $.ajax({
-    url: 'testSistemaTransmillas/nueva_plataforma/controller/DispositivosController.php',
+    url: 'nueva_plataforma/controller/DispositivosController.php',
     type: 'POST',
     dataType: 'json',
     data: {
@@ -253,7 +253,7 @@ function vincularDispositivo() {
   const fingerprint = getFingerprint();
 
   $.ajax({
-    url: 'testSistemaTransmillas/nueva_plataforma/controller/DispositivosController.php',
+    url: 'nueva_plataforma/controller/DispositivosController.php',
     type: 'POST',
     dataType: 'json',
     data: {
