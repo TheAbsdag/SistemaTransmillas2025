@@ -1,8 +1,4 @@
 <?php
-require_once __DIR__ . '/nueva_plataforma/model/DispositivosModel.php';
-// $modelo = new Dispositivos();
-// echo 'OK';
-// exit;
 require("connection/conectarse.php");
 require("connection/arrays.php");
 require("connection/funciones.php");
@@ -11,14 +7,12 @@ require("connection/sql_transact.php");
 require("connection/llenatablas.php");
 require("connection/PasswordHash.php");
 require("definirvar.php");
-
 date_default_timezone_set("America/Bogota");
 
 
 echo $huella_digital = $_POST['huella_digital'];
 if (isset($_POST["user"]) && isset($_POST["pass"])) 
 {
-	$deviceId = $_POST['device_id'] ?? null;
 	
 	$DBss = new DB_mssql;
 	$DBss->conectar();
@@ -41,6 +35,60 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 	
 	if($numusu>0){
 
+		$estadoDispositivo = 'NO_VINCULADO';
+
+		if ($deviceId) {
+
+			$deviceIdEscaped = mysqli_real_escape_string(
+				$DBss->Conexion_ID,
+				$deviceId
+			);
+
+			$idUsuario = (int)$row['idusuarios'];
+
+			$sqlDispositivo = "
+				SELECT authorized, active
+				FROM user_devices
+				WHERE user_id = $idUsuario
+				AND device_id = '$deviceIdEscaped'
+				LIMIT 1
+			";
+
+			$DBss->Execute($sqlDispositivo);
+
+			if ($DBss->numregistros() > 0) {
+
+				$disp = mysqli_fetch_array($DBss->Consulta_ID);
+
+				if ((int)$disp['active'] === 0) {
+					$estadoDispositivo = 'BLOQUEADO';
+				} elseif ((int)$disp['authorized'] === 0) {
+					$estadoDispositivo = 'PENDIENTE';
+				} else {
+					$estadoDispositivo = 'AUTORIZADO';
+				}
+			}
+		}
+
+		switch ($estadoDispositivo) {
+
+			case 'NO_VINCULADO':
+				header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
+				exit;
+
+			case 'PENDIENTE':
+				header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
+				exit;
+
+			case 'BLOQUEADO':
+				header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
+				exit;
+
+			case 'AUTORIZADO':
+				break;
+		}
+
+
 		$row = mysqli_fetch_array($DBss->Consulta_ID); 
 		$storedPassword = $row['usu_pass'];
 		$salt = "citas2344fsdfd";
@@ -56,33 +104,6 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 	
 
 			session_name("projecst2344fsdfd");
-			$modeloDispositivo = new Dispositivos();
-
-			//Comprobar Dispositivo
-			$estadoDispositivo = $modeloDispositivo->verificarDispositivoLogin(
-				$row['idusuarios'],
-				$deviceId
-			);
-
-			switch ($estadoDispositivo) {
-
-				case 'NO_VINCULADO':
-					header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
-					exit;
-
-				case 'PENDIENTE':
-					header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
-					exit;
-
-				case 'BLOQUEADO':
-					header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
-					exit;
-
-				case 'AUTORIZADO':
-					// continuar login normal
-					break;
-			}
-
 			session_start(); 
 			$id_ses=session_id();		
 			session_cache_limiter('nocache,private');
