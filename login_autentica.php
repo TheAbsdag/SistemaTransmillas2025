@@ -7,12 +7,14 @@ require("connection/sql_transact.php");
 require("connection/llenatablas.php");
 require("connection/PasswordHash.php");
 require("definirvar.php");
+require_once "nueva_plataforma/model/DispositivosModel.php";
 date_default_timezone_set("America/Bogota");
 
 
 echo $huella_digital = $_POST['huella_digital'];
 if (isset($_POST["user"]) && isset($_POST["pass"])) 
 {
+	$deviceId = $_POST['device_id'] ?? null;
 	
 	$DBss = new DB_mssql;
 	$DBss->conectar();
@@ -50,6 +52,33 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 	
 
 			session_name("projecst2344fsdfd");
+			$modeloDispositivo = new Dispositivos();
+
+			//Comprobar Dispositivo
+			$estadoDispositivo = $modeloDispositivo->verificarDispositivoLogin(
+				$row['idusuarios'],
+				$deviceId
+			);
+
+			switch ($estadoDispositivo) {
+
+				case 'NO_VINCULADO':
+					header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
+					exit;
+
+				case 'PENDIENTE':
+					header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
+					exit;
+
+				case 'BLOQUEADO':
+					header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
+					exit;
+
+				case 'AUTORIZADO':
+					// continuar login normal
+					break;
+			}
+
 			session_start(); 
 			$id_ses=session_id();		
 			session_cache_limiter('nocache,private');
