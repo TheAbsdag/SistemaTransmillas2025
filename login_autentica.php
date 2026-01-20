@@ -33,61 +33,61 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 	echo "joseli".$row["rol_nombre"]; */
 	 $numusu=$DBss->numregistros();            
 	
-	 $deviceId = $_POST['device_id'] ?? null;
-	if($numusu>0){
+	//  $deviceId = $_POST['device_id'] ?? null;
+	// if($numusu>0){
 
-		$estadoDispositivo = 'NO_VINCULADO';
+	// 	$estadoDispositivo = 'NO_VINCULADO';
 
-		if ($deviceId) {
+	// 	if ($deviceId) {
 
-			$deviceIdEscaped = mysqli_real_escape_string(
-				$DBss->Conexion_ID,
-				$deviceId
-			);
+	// 		$deviceIdEscaped = mysqli_real_escape_string(
+	// 			$DBss->Conexion_ID,
+	// 			$deviceId
+	// 		);
 
-			$idUsuario = (int)$row['idusuarios'];
+	// 		$idUsuario = (int)$row['idusuarios'];
 
-			$sqlDispositivo = "
-				SELECT authorized, active
-				FROM user_devices
-				WHERE user_id = $idUsuario
-				AND device_id = '$deviceIdEscaped'
-				LIMIT 1
-			";
+	// 		$sqlDispositivo = "
+	// 			SELECT authorized, active
+	// 			FROM user_devices
+	// 			WHERE user_id = $idUsuario
+	// 			AND device_id = '$deviceIdEscaped'
+	// 			LIMIT 1
+	// 		";
 
-			$DBss->Execute($sqlDispositivo);
+	// 		$DBss->Execute($sqlDispositivo);
 
-			if ($DBss->numregistros() > 0) {
+	// 		if ($DBss->numregistros() > 0) {
 
-				$disp = mysqli_fetch_array($DBss->Consulta_ID);
+	// 			$disp = mysqli_fetch_array($DBss->Consulta_ID);
 
-				if ((int)$disp['active'] === 0) {
-					$estadoDispositivo = 'BLOQUEADO';
-				} elseif ((int)$disp['authorized'] === 0) {
-					$estadoDispositivo = 'PENDIENTE';
-				} else {
-					$estadoDispositivo = 'AUTORIZADO';
-				}
-			}
-		}
+	// 			if ((int)$disp['active'] === 0) {
+	// 				$estadoDispositivo = 'BLOQUEADO';
+	// 			} elseif ((int)$disp['authorized'] === 0) {
+	// 				$estadoDispositivo = 'PENDIENTE';
+	// 			} else {
+	// 				$estadoDispositivo = 'AUTORIZADO';
+	// 			}
+	// 		}
+	// 	}
 
-		switch ($estadoDispositivo) {
+	// 	switch ($estadoDispositivo) {
 
-			case 'NO_VINCULADO':
-				header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
-				exit;
+	// 		case 'NO_VINCULADO':
+	// 			header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
+	// 			exit;
 
-			case 'PENDIENTE':
-				header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
-				exit;
+	// 		case 'PENDIENTE':
+	// 			header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
+	// 			exit;
 
-			case 'BLOQUEADO':
-				header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
-				exit;
+	// 		case 'BLOQUEADO':
+	// 			header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
+	// 			exit;
 
-			case 'AUTORIZADO':
-				break;
-		}
+	// 		case 'AUTORIZADO':
+	// 			break;
+	// 	}
 
 
 		$row = mysqli_fetch_array($DBss->Consulta_ID); 
