@@ -4,7 +4,7 @@
 <title>Transmillas </title >
 <link rel="shortcut icon" href="images/Logo Google Nuevo.png" />
 <style>
-
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
 * {
@@ -16,26 +16,9 @@
 body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  background-color: #0f172a;
+  background: linear-gradient(135deg, #0f3c78, #0a2a52);
   color: #fff;
   overflow: hidden;
-}
-
-/* Background responsive */
-@media (min-width: 768px) {
-  body {
-    background-image: url('images/Fondos de pantalla_Nueva.png');
-    background-size: cover;
-    background-position: center;
-  }
-}
-
-@media (max-width: 767px) {
-  body {
-    background-image: url('images/Fondos de celular-Nueva.png');
-    background-size: cover;
-    background-position: center;
-  }
 }
 
 /* Wrapper */
@@ -47,41 +30,55 @@ body {
   justify-content: center;
 }
 
-/* Card glass */
+/* Main Card */
 .container {
   width: 100%;
-  max-width: 380px;
-  padding: 40px 30px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-radius: 18px;
-  box-shadow: 0 25px 50px rgba(0,0,0,.35);
+  max-width: 420px;
+  padding: 45px 35px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 22px;
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
   text-align: center;
   z-index: 2;
 }
 
-/* Title */
-.container h1 {
-  font-size: 32px;
+/* Brand */
+.brand img {
+  width: 70px;
+  margin-bottom: 12px;
+}
+
+.brand h1 {
+  font-size: 26px;
+  letter-spacing: 3px;
   font-weight: 600;
+}
+
+.brand p {
+  font-size: 14px;
+  opacity: 0.75;
   margin-bottom: 30px;
 }
 
 /* Form */
-form {
-  position: relative;
+form span {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
 }
 
-/* Inputs */
 form input[type="text"],
 form input[type="password"] {
   width: 100%;
-  padding: 14px 16px;
+  padding: 15px 16px;
   margin-bottom: 15px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.12);
   color: #fff;
   font-size: 15px;
   outline: none;
@@ -89,42 +86,36 @@ form input[type="password"] {
 }
 
 form input::placeholder {
-  color: rgba(255,255,255,.7);
+  color: rgba(255,255,255,.65);
 }
 
 form input:focus {
-  background: rgba(255,255,255,0.25);
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 3px rgba(56,189,248,.25);
+  background: rgba(255,255,255,0.2);
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.25);
 }
 
 /* Button */
 form input[type="button"] {
   width: 100%;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 15px;
+  margin-top: 5px;
+  border-radius: 14px;
   border: none;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  color: #0f172a;
-  background: linear-gradient(135deg, #38bdf8, #22d3ee);
+  color: white;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
   transition: all .3s ease;
 }
 
 form input[type="button"]:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(56,189,248,.45);
+  box-shadow: 0 15px 35px rgba(239,68,68,.45);
 }
 
-/* Error message */
-form span {
-  display: block;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-
-/* Background bubbles */
+/* Background accents */
 .bg-bubbles {
   position: absolute;
   inset: 0;
@@ -134,16 +125,16 @@ form span {
 .bg-bubbles li {
   position: absolute;
   list-style: none;
-  width: 40px;
-  height: 40px;
-  background: rgba(255,255,255,0.12);
-  bottom: -150px;
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,0.08);
+  bottom: -160px;
   border-radius: 50%;
-  animation: float 25s infinite linear;
+  animation: float 30s infinite linear;
 }
 
 .bg-bubbles li:nth-child(odd) {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.12);
 }
 
 /* Animation */
@@ -152,9 +143,11 @@ form span {
     transform: translateY(0) rotate(0deg);
   }
   100% {
-    transform: translateY(-800px) rotate(360deg);
+    transform: translateY(-900px) rotate(360deg);
   }
 }
+</style>
+
 
 
 </style>
@@ -162,6 +155,11 @@ form span {
   <body>
     <div class="wrapper">
 	<div class="container" >
+    <div class="brand">
+      <img src="images/logo-transmillas.png" alt="Transmillas">
+      <h1>TRANSMILLAS</h1>
+      <p>Sistema de Gestión</p>
+    </div>
 		
         <form name="form1" method="post" action="login_autentica.php?ingreso='desarrollo'" class="form-2">
         <?php  
