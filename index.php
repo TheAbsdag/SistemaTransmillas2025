@@ -7,105 +7,146 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* BODY + BACKGROUND IMAGE */
 body {
   font-family: 'Inter', sans-serif;
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #0b3c6f 0%,
-    #0f4c81 60%,
-    #0b3c6f 100%
-  );
+  background-image: url('images/Fondos de pantalla_Nueva.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 30px;
 }
 
+/* OVERLAY OSCURO */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(11, 60, 111, 0.85),
+    rgba(11, 60, 111, 0.85)
+  );
+  z-index: 0;
+}
 
-/* Card */
+/* WRAPPER */
+.wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* CARD LOGIN */
 .container {
   width: 100%;
   max-width: 420px;
   background: #ffffff;
-  border-radius: 10px;
-  padding: 35px 30px;
-  box-shadow: 0 15px 35px rgba(0,0,0,.25);
+  border-radius: 14px;
+  padding: 40px 35px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.35);
   text-align: center;
 }
 
-/* Brand */
+/* BRAND */
 .brand img {
-  width: 65px;
-  margin-bottom: 10px;
+  width: 70px;
+  margin-bottom: 12px;
 }
 
 .brand h1 {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   color: #0b3c6f;
 }
 
 .brand p {
   font-size: 13px;
   color: #64748b;
-  margin-bottom: 25px;
+  margin-bottom: 28px;
 }
 
-/* Inputs */
+/* ERROR MESSAGE */
+form span {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #dc2626;
+}
+
+/* INPUTS */
 form input[type="text"],
 form input[type="password"] {
   width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  border-radius: 6px;
-  border: 1px solid #d9e2ec;
+  padding: 13px 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
   font-size: 14px;
+  background: #f8fbff;
   outline: none;
-  transition: border .2s ease, box-shadow .2s ease;
+  transition: all 0.2s ease;
+}
+
+form input::placeholder {
+  color: #94a3b8;
 }
 
 form input:focus {
   border-color: #0b3c6f;
-  box-shadow: 0 0 0 3px rgba(11,60,111,.15);
+  box-shadow: 0 0 0 3px rgba(11,60,111,0.15);
+  background: #ffffff;
 }
 
-/* Button */
+/* BUTTON */
 form input[type="button"] {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   margin-top: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  color: white;
+  color: #ffffff;
   background: linear-gradient(#0f4c81, #0b3c6f);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 
-form input[type="button"] {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.3);
+form input[type="button"]:hover {
+  background: linear-gradient(#135c99, #0b3c6f);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
-/* Error */
-form span {
-  display: block;
-  margin-bottom: 10px;
-  color: #dc2626;
-  font-size: 13px;
+/* REMOVE OLD BUBBLES / DOTS */
+.bg-bubbles {
+  display: none !important;
 }
-form input {
-  background: #f8fbff;
-  border: 1px solid #cbd5e1;
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .container {
+    padding: 35px 25px;
+  }
+
+  .brand h1 {
+    font-size: 22px;
+  }
 }
+
+
 
 </style>
 
