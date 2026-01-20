@@ -46,7 +46,7 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 
 			$idUsuario = (int)$row['idusuarios'];
 
-			$sqlDispositivo = "
+			echo$sqlDispositivo = "
 				SELECT authorized, active
 				FROM user_devices
 				WHERE user_id = $idUsuario
