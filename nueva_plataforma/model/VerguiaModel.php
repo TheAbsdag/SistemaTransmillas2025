@@ -75,6 +75,7 @@ class VerguiaModel
         $guia['pago_info']       = $this->obtenerPagoServicio($idServicio);
         $guia['credito_detalle'] = $this->obtenerCreditoServicio($idServicio);
         $guia['firmas']          = $this->obtenerFirmas($idServicio);
+        $guia['ubicaciones'] = $this->obtenerUbicacionesServicio($idServicio);
         $guia['totales']         = $this->calcularTotalesGuia($guia, $guia['tipo_servicio']);
 
         return $guia;
@@ -291,4 +292,33 @@ class VerguiaModel
             'valor_flete_fmt'     => number_format($valorFlete, 0, ".", "."),
         ];
     }
+    public function obtenerUbicacionesServicio($idServicio)
+    {
+        $sql = "SELECT tipo_evento, latitud, longitud, fecha_registro
+                FROM servicios_ubicaciones
+                WHERE idservicios = ?
+                ORDER BY fecha_registro DESC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $idServicio);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $ubicaciones = [
+            'RECOGIDA' => null,
+            'ENTREGA'  => null
+        ];
+
+        while ($row = $result->fetch_assoc()) {
+            if ($row['tipo_evento'] === 'RECOGIDA' && !$ubicaciones['RECOGIDA']) {
+                $ubicaciones['RECOGIDA'] = $row;
+            }
+            if ($row['tipo_evento'] === 'ENTREGA' && !$ubicaciones['ENTREGA']) {
+                $ubicaciones['ENTREGA'] = $row;
+            }
+        }
+
+        return $ubicaciones;
+    }
+
 }

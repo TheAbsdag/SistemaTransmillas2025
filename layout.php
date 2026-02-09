@@ -396,34 +396,48 @@ $activo=true;
         $controlUsoMensaje='';
 
        } else{
+
         
-        $sql="SELECT seg_motivo,seg_fechafinalizo from seguimiento_user where  seg_idusuario='$id_usuario' and seg_fechaingreso like '%$fechaactual%' order by seg_fechaingreso asc";
-        $DB->Execute($sql); 
-        $ingresoU=mysqli_fetch_row($DB->Consulta_ID);
+        
+            $sql="SELECT seg_motivo,seg_fechafinalizo from seguimiento_user where  seg_idusuario='$id_usuario' and seg_fechaingreso like '%$fechaactual%' order by seg_fechaingreso asc";
+            $DB->Execute($sql); 
+            $ingresoU=mysqli_fetch_row($DB->Consulta_ID);
 
-        if ($ingresoU!="") {
-            if ($ingresoU[0]=="Ingreso") {
-                if ( is_null($ingresoU[1])) {
-                    // echo"No ha salido";
-                    $controlDeUso="";
-                    $controlUsoMensaje='';
-
-                }else{
-                    if ($nivel_acceso==5 ) {
+            if ($ingresoU!="") {
+                if ($ingresoU[0]=="Ingreso") {
+                    if ( is_null($ingresoU[1])) {
+                        // echo"No ha salido";
                         $controlDeUso="";
                         $controlUsoMensaje='';
+
                     }else{
-                        $controlDeUso='style="pointer-events: none; opacity: 0.4;"';
-                        $controlUsoMensaje='pointer-events: none; opacity: 0.4;';
-                        echo'<script language="javascript">mostrarAlerta();</script>';
-                        echo'<script language="javascript">bloquearClickDerecho();</script>'; 
-                        echo'<script language="javascript">bloquearDobleClic();</script>';
-                        $activo=false; 
+                        if ($nivel_acceso==5 ) {
+                            $controlDeUso="";
+                            $controlUsoMensaje='';
+                        }else{
+                            $controlDeUso='style="pointer-events: none; opacity: 0.4;"';
+                            $controlUsoMensaje='pointer-events: none; opacity: 0.4;';
+                            echo'<script language="javascript">mostrarAlerta();</script>';
+                            echo'<script language="javascript">bloquearClickDerecho();</script>'; 
+                            echo'<script language="javascript">bloquearDobleClic();</script>';
+                            $activo=false; 
 
-                     }
+                        }
+                    }
+                    
+
+                }else{
+                    $controlDeUso='style="pointer-events: none; opacity: 0.4;"';
+                    echo'<script language="javascript">mostrarAlerta();</script>';
+                    $controlUsoMensaje='pointer-events: none; opacity: 0.4;';
+                    echo'<script language="javascript">bloquearClickDerecho();</script>'; 
+                    echo'<script language="javascript">bloquearDobleClic();</script>'; 
+                    $activo=false; 
+
+
+
+                    // echo"___si__".$ingresoU[0];
                 }
-                
-
             }else{
                 $controlDeUso='style="pointer-events: none; opacity: 0.4;"';
                 echo'<script language="javascript">mostrarAlerta();</script>';
@@ -433,20 +447,12 @@ $activo=true;
                 $activo=false; 
 
 
-
-                // echo"___si__".$ingresoU[0];
+                // echo"_____".$ingresoU[0];
             }
-        }else{
-            $controlDeUso='style="pointer-events: none; opacity: 0.4;"';
-            echo'<script language="javascript">mostrarAlerta();</script>';
-            $controlUsoMensaje='pointer-events: none; opacity: 0.4;';
-            echo'<script language="javascript">bloquearClickDerecho();</script>'; 
-            echo'<script language="javascript">bloquearDobleClic();</script>'; 
-            $activo=false; 
 
 
-            // echo"_____".$ingresoU[0];
-        }
+
+
        }
 
 
@@ -1448,6 +1454,25 @@ function mostrarLoader() {
 function ocultarLoader() {
     document.getElementById("loader").style.display = "none";
 }
+
+  (function () {
+
+    function getDeviceId() {
+      if (!localStorage.getItem('device_id')) {
+        localStorage.setItem('device_id', crypto.randomUUID());
+      }
+      return localStorage.getItem('device_id');
+    }
+
+    // Cuando cargue la página, asignamos el device_id al hidden
+    document.addEventListener('DOMContentLoaded', function () {
+      var input = document.getElementById('device_id');
+      if (input) {
+        input.value = getDeviceId();
+      }
+    });
+
+  })();
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>

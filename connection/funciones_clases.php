@@ -1481,12 +1481,12 @@ function validaexistencia(valor, div, tipo)
 			echo "<select name='$nombrecampo' id='$nombrecampo' onChange='$cond'  class='form-control' type='number' $req>
 			<option value=''>Seleccione...</option>
 			<option value='0'>Carga via terrestre</option>";
-			echo "<option  value='1000'>A convenir</option>";
+			
 			$LT->llenaselect($sql,0,1, $valor, $DB);
+			echo "<option  value='1000'>A convenir</option>";
 			echo "</select>";
 
 			break;	
-
 			case 280:
 
 				if($label==""){ $label="Seleccione"; }

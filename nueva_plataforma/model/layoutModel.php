@@ -1,6 +1,7 @@
 <?php
 require_once "../config/database.php";
 
+
 class menu {
     private $db;
 

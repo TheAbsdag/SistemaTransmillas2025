@@ -948,7 +948,7 @@ class RecogerModel
             $sqlSer = "UPDATE servicios SET
                 ser_recogida='NO RECOGIDO',
                 ser_motivo='$motivo',
-                ser_descllamada='$motivo',
+                ser_descllamada=CONCAT(IFNULL(ser_descllamada, ''), '<br>', '$motivo'),
                 ser_estado='5',
                 ser_img_evidencia='$evidencia',
                 ser_fechafinal='$ahora'

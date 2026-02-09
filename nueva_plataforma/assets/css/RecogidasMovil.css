@@ -1,0 +1,332 @@
+body {
+    background-color: #f4f6f9;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+.card-body {
+    padding: 1.8rem;
+}
+.mi-header {
+    background: #0b4f8a; /* tu azul */
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+}
+
+.mi-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+form h5 {
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: .4rem;
+    border-bottom: 2px solid #e3e6ea;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.form-control,
+.form-select {
+    border-radius: 8px;
+    min-height: 42px;
+    font-size: 0.9rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0b4f8a;
+    box-shadow: 0 0 0 0.15rem rgba(11, 79, 138, 0.25);
+}
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #495057;
+}
+.row {
+    margin-bottom: 0.75rem;
+}
+.form-select + .form-control {
+    margin-top: 6px;
+}
+#respuesta {
+    min-height: 42px;
+    background: #f8f9fa;
+    border: 1px dashed #ced4da;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+input[type="file"] {
+    font-size: 0.85rem;
+}
+h5.text-primary + input[type="number"] {
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+button.btn-success {
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-weight: 600;
+}
+@media (max-width: 992px) {
+    .card-body {
+        padding: 1.2rem;
+    }
+}
+@media (max-width: 576px) {
+
+    .mi-header h3 {
+        font-size: 1.05rem;
+    }
+
+    form h5 {
+        font-size: 0.95rem;
+    }
+
+    label {
+        font-size: 0.8rem;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 0.85rem;
+    }
+
+    .text-end {
+        text-align: center !important;
+    }
+
+    button.btn-success {
+        width: 100%;
+    }
+}
+
+
+/* =========================
+   MODAL FIRMA - ESTILO AZUL
+   ========================= */
+
+#modalFirma .modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+}
+
+/* CABECERA AZUL */
+#modalFirma .modal-header {
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+  color: #fff;
+  padding: 14px 18px;
+  border-bottom: none;
+}
+
+/* TÍTULO */
+#modalFirma .modal-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* CUERPO */
+#modalFirma .modal-body {
+  background-color: #f8f9fa;
+  padding: 18px;
+}
+
+/* LABELS */
+#modalFirma label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+/* INPUTS */
+#modalFirma input.form-control {
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* FOOTER */
+#modalFirma .modal-footer {
+  background-color: #f1f3f5;
+  border-top: none;
+  padding: 12px 16px;
+}
+
+/* BOTONES */
+#modalFirma .btn {
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+}
+
+/* BOTÓN WHATSAPP */
+#btnEnviarFirma {
+  background-color: #25D366;
+  border-color: #25D366;
+  color: #fff;
+}
+
+#btnEnviarFirma:hover {
+  background-color: #1ebe5d;
+  border-color: #1ebe5d;
+}
+
+/* BOTÓN FINALIZAR */
+#btnFinalizar {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.spinner-busqueda {
+  position: absolute;
+  right: 10px;
+  top: 38px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #0d6efd;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+  display: none;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.input-con-spinner {
+  position: relative;
+}
+
+ body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* HEADER AZUL DEL MÓDULO */
+  .mi-header {
+    background-color: #0b4a8b !important;
+    color: white !important;
+    border-bottom: 0;
+  }
+
+  .mi-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  /* TARJETA PRINCIPAL */
+  .card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  }
+
+  .card-body {
+    padding: 25px;
+  }
+
+  /* TÍTULOS DE SECCIÓN */
+  h5.text-primary {
+    color: #0b4a8b !important;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-left: 4px solid #0b4a8b;
+    padding-left: 8px;
+  }
+
+  /* INPUTS MÁS LIMPIOS */
+  .form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #d0d7de;
+    font-size: 14px;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #0b4a8b;
+    box-shadow: 0 0 0 0.15rem rgba(11, 74, 139, 0.15);
+  }
+
+  label {
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  hr {
+    margin: 25px 0;
+    opacity: 0.15;
+  }
+
+  /* BOTÓN PRINCIPAL */
+  .btn-success {
+    background-color: #0b4a8b !important;
+    border: none;
+    padding: 10px 22px;
+    font-weight: 500;
+  }
+
+  .btn-success:hover {
+    background-color: #083766 !important;
+  }
+
+  /* MODAL ESTILO SISTEMA */
+  .modal-header {
+    background-color: #0b4a8b;
+    color: white;
+  }
+
+  .modal-title {
+    font-weight: 600;
+  }
+
+  .modal-content {
+    border-radius: 8px;
+    border: none;
+  }
+
+  /* BOTONES DEL MODAL */
+  .btn-outline-primary {
+    border-color: #0b4a8b;
+    color: #0b4a8b;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #0b4a8b;
+    color: white;
+  }
+
+  .btn-dark {
+    background-color: #343a40;
+    border: none;
+  }
+
+  /* SPINNER MÁS SUAVE */
+  .spinner-busqueda {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cfd8e3;
+    border-top: 2px solid #0b4a8b;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    position: absolute;
+    right: 12px;
+    top: 38px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }

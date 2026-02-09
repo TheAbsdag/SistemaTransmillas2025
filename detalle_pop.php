@@ -3518,12 +3518,13 @@ else if ($tabla == "Editar datos") {
 		</div></td>";
 
     if ($bloC == 2) {
-        $FB->llena_texto("Ciudad:", 00, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, $bloC);
+        $FB->llena_texto("Ciudad:", 00, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` )", "", "$param4", 1, $bloC);
         echo'<input type="hidden" id="param4" name="param4" value="'.$param4.'">';
     }else {
-        $FB->llena_texto("Ciudad:", 4, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` $cond6)", "", "$param4", 1, 0);
+        $FB->llena_texto("Ciudad:", 4, 2, $DB, "(SELECT `idciudades`,`ciu_nombre` FROM `ciudades` )", "", "$param4", 1, 0);
 
     }
+   
 
     @$direcc = explode("&", $rw[5]);
     @$param5 = $direcc[0];
@@ -4400,8 +4401,8 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
             $FB->titulo_azul1("Novedades de Factura:",1,0,0);
 
 
-            $sql="SELECT `idhojadevida`,`hoj_telefono1`, `hoj_telefono2`,   `hoj_email` FROM `hojadevidacliente` left join creditos on idcreditos=hoj_clientecredito where cre_nombre='$id_param' and hoj_estado='Activo' ORDER BY  hoj_nombre asc ";
-            $sql="SELECT   `cont_celular`, `cont_correo`FROM `contactofacturacion` WHERE  cont_idhojavida=$idhojadevida";
+           $sql="SELECT `idhojadevida`,hoj_nit,`hoj_telefono1`, `hoj_telefono2`,   `hoj_email`,hoj_cedula,hoj_razonsocial,hoj_direccionrf,hoj_fechanaradicacion,hoj_fechanacorte,hoj_novedadesfactura FROM `hojadevidacliente` left join creditos on idcreditos=hoj_clientecredito where cre_nombre='$id_param' and hoj_estado='Activo' ORDER BY  hoj_nombre asc ";
+            // echo $sql="SELECT   `cont_celular`, `cont_correo`FROM `contactofacturacion` WHERE  cont_idhojavida=$idhojadevida";
 
             $DB->Execute($sql); $va=(($compag-1)*$CantidadMostrar); 
                 while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -4411,13 +4412,13 @@ $rw = mysqli_fetch_array($DB->Consulta_ID);
                     if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
                     echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
                     //if($rw1[1]==0){$rw1[1]='NO';}
-                    $telefonos=$rw1[4]." - ".$rw1[5];
+                    $telefonos=$rw1[2]." - ".$rw1[3];
                     echo "<td>".$va."</td>
                     <td>".$rw1[1]."</td>
-                    <td>".$rw1[2]."</td>
-                    <td>".$rw1[3]."</td>
-                    <td>".$telefonos."</td>
+                    <td>".$rw1[5]."</td>
                     <td>".$rw1[6]."</td>
+                    <td>".$telefonos."</td>
+                    <td>".$rw1[4]."</td>
                     <td>".$rw1[7]."</td>
                     <td>".$rw1[8]."</td>
                     <td>".$rw1[9]."</td>

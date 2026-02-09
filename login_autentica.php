@@ -31,11 +31,64 @@ if (isset($_POST["user"]) && isset($_POST["pass"]))
 	/* printf("Errormessage: %s\n", $DBss->Execute($query));
 	$row = mysqli_fetch_array($DBss->Consulta_ID); 
 	echo "joseli".$row["rol_nombre"]; */
-	 $numusu=$DBss->numregistros();            
-	
+	$numusu=$DBss->numregistros();            
+	$row = mysqli_fetch_array($DBss->Consulta_ID); 
+	 $deviceId = trim($_POST['device_id'] ?? '');
 	if($numusu>0){
 
-		$row = mysqli_fetch_array($DBss->Consulta_ID); 
+		// $estadoDispositivo = 'NO_VINCULADO';
+
+		// if ($deviceId) {
+
+		// 	// $deviceIdEscaped = mysqli_real_escape_string(
+		// 	// 	$DBss->Conexion_ID,
+		// 	// 	$deviceId
+		// 	// );
+
+		// 	$idUsuario = (int)$row['idusuarios'];
+
+		// 	$sqlDispositivo = "
+		// 		SELECT authorized, active
+		// 		FROM user_devices
+		// 		WHERE user_id = $idUsuario
+		// 		AND device_id = '$deviceId'
+		// 		LIMIT 1
+		// 	";
+
+		// 	$DBss->Execute($sqlDispositivo);
+
+		// 	if ($DBss->numregistros() > 0) {
+
+		// 		$disp = mysqli_fetch_array($DBss->Consulta_ID);
+
+		// 		if ((int)$disp['active'] === 0) {
+		// 			$estadoDispositivo = 'BLOQUEADO';
+		// 		} elseif ((int)$disp['authorized'] === 0) {
+		// 			$estadoDispositivo = 'PENDIENTE';
+		// 		} else {
+		// 			$estadoDispositivo = 'AUTORIZADO';
+		// 		}
+		// 	}
+		// }
+
+		// switch ($estadoDispositivo) {
+
+		// 	case 'NO_VINCULADO':
+		// 		header("Location: index.php?error_login=DISPOSITIVO_NO_VINCULADO");
+		// 		exit;
+
+		// 	case 'PENDIENTE':
+		// 		header("Location: index.php?error_login=DISPOSITIVO_PENDIENTE");
+		// 		exit;
+
+		// 	case 'BLOQUEADO':
+		// 		header("Location: index.php?error_login=DISPOSITIVO_BLOQUEADO");
+		// 		exit;
+
+		// 	case 'AUTORIZADO':
+		// 		break;
+		// }
+		
 		$storedPassword = $row['usu_pass'];
 		$salt = "citas2344fsdfd";
 		$postedPassword=mysqli_real_escape_string($DBss->Conexion_ID,md5($_POST['pass']));

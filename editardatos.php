@@ -529,8 +529,9 @@ echo "<td style='background-color: #F5B7B1;'>Tipo de servicio(*)</td>
 $sql="SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$rw[4] and pre_idciudaddes=$rw[11] and pre_estado=1 order by tip_nom";
 echo '<select name="param37" id="param37" onchange="valorpagaredit(this.value,20,\"llega_sub2\",\"total valor\",1,1)" class="form-control" type="number" required="">';
 // echo "<option  value='0'" . $aux . ">Carga via terrestre</option>";
-echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
+
 $LT->llenaselect($sql,0,1, $valortservicio, $DB);
+echo "<option  value='1000' " . $aux2 . " >A convenir</option>";
 echo "</select>";
 echo "</td>";
 

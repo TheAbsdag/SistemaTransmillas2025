@@ -150,6 +150,7 @@
 
       <!-- ACTION -->
       <div class="d-flex justify-content-end">
+        <input type="hidden" name="device_id" id="device_id">
         <button
           id="btnVincular"
           class="btn btn-primary btn-action"
@@ -204,7 +205,7 @@ function getFingerprint() {
 $(document).ready(function () {
 
   $.ajax({
-    url: 'DispositivosController.php',
+    url: '/nueva_plataforma/controller/DispositivosController.php',
     type: 'POST',
     dataType: 'json',
     data: {
@@ -253,7 +254,7 @@ function vincularDispositivo() {
   const fingerprint = getFingerprint();
 
   $.ajax({
-    url: 'DispositivosController.php',
+    url: '/nueva_plataforma/controller/DispositivosController.php',
     type: 'POST',
     dataType: 'json',
     data: {
@@ -271,6 +272,24 @@ function vincularDispositivo() {
   });
 }
 
+  (function () {
+
+    function getDeviceId() {
+      if (!localStorage.getItem('device_id')) {
+        localStorage.setItem('device_id', crypto.randomUUID());
+      }
+      return localStorage.getItem('device_id');
+    }
+
+    // Cuando cargue la página, asignamos el device_id al hidden
+    document.addEventListener('DOMContentLoaded', function () {
+      var input = document.getElementById('device_id');
+      if (input) {
+        input.value = getDeviceId();
+      }
+    });
+
+  })();
 </script>
 
 </body>

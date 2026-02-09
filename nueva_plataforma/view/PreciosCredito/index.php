@@ -913,105 +913,111 @@ $(document).ready(function () {
   });
 
   // Guardar cambios edición (original)
-  $('#btnGuardarCambios').on('click', function () {
+$('#btnGuardarCambios').on('click', function () {
 
-    if ($('#edit_credito').val() === "") {
-      Swal.fire("Error", "Debe seleccionar un crédito", "error");
-      return;
-    }
-    if ($('#edit_origen').val() === "") {
-      Swal.fire("Error", "Debe seleccionar una ciudad origen", "error");
-      return;
-    }
-    if ($('#edit_destino').val() === "") {
-      Swal.fire("Error", "Debe seleccionar una ciudad destino", "error");
-      return;
-    }
-    if ($('#edit_pre_preciokilo').val() === "") {
-      Swal.fire("Error", "Debe ingresar el precio de los primeros Kg", "error");
-      return;
-    }
-    if ($('#edit_servicio').val() === "") {
-      Swal.fire("Error", "Debe seleccionar un servicio", "error");
-      return;
-    }
+  if ($('#edit_credito').val() === "") {
+    Swal.fire("Error", "Debe seleccionar un crédito", "error");
+    return;
+  }
+  if ($('#edit_origen').val() === "") {
+    Swal.fire("Error", "Debe seleccionar una ciudad origen", "error");
+    return;
+  }
+  if ($('#edit_destino').val() === "") {
+    Swal.fire("Error", "Debe seleccionar una ciudad destino", "error");
+    return;
+  }
+  if ($('#edit_pre_preciokilo').val() === "") {
+    Swal.fire("Error", "Debe ingresar el precio de los primeros Kg", "error");
+    return;
+  }
+  if ($('#edit_servicio').val() === "") {
+    Swal.fire("Error", "Debe seleccionar un servicio", "error");
+    return;
+  }
 
-    const defaultVal = v => v === "" ? 0 : v;
-    
-    const datosBase = {
-      credito: $('#edit_credito').val(),
-      origen: $('#edit_origen').val(),
-      destino: $('#edit_destino').val(),
-      servicio: $('#edit_servicio').val(),
-      FechaInicial: $('#FechaInicial').val(),
-      FechaFinal: $('#FechaFinal').val()
-      
+  const defaultVal = v => v === "" ? 0 : v;
 
+  const datosBase = {
+    credito: $('#edit_credito').val(),
+    origen: $('#edit_origen').val(),
+    destino: $('#edit_destino').val(),
+    servicio: $('#edit_servicio').val(),
+    FechaInicial: $('#FechaInicial').val(),
+    FechaFinal: $('#FechaFinal').val()
+  };
 
-    };
+  const datos = {
+    actualizar_registro: true,
+    id: $('#edit_id').val(),
+    pre_idcredito: $('#edit_credito').val(),
+    pre_idciudadori: $('#edit_origen').val(),
+    pre_idciudades: $('#edit_destino').val(),
+    pre_preciokilo: $('#edit_pre_preciokilo').val(),
+    pre_tiposervicio: $('#edit_servicio').val(),
+    precio_6_20: defaultVal($('#edit_precio_6_20').val()),
+    precio_21_50: defaultVal($('#edit_precio_21_50').val()),
+    precio_51_100: defaultVal($('#edit_precio_51_100').val()),
+    precio_101_150: defaultVal($('#edit_precio_101_150').val()),
+    precio_151_200: defaultVal($('#edit_precio_151_200').val()),
+    precio_201_250: defaultVal($('#edit_precio_201_250').val()),
+    pre_fecha_ini: $('#FechaInicial').val(),
+    pre_fecha_fin: $('#FechaFinal').val(),
+    editar_precio: $('#chk_editar_precio').is(':checked') ? 1 : 0
+  };
 
-    // Primero validamos que no exista duplicado (BACKEND)
-    $.ajax({
-      url: '/nueva_plataforma/controller/PreciosCreditoController.php',
-      type: 'POST',
-      data: {
-        validar_existencia: true,
-        ...datosBase
-      },
-      success: function (res) {
-        const data = JSON.parse(res);
-        if (data.existe) {
-          // OJO: ajustar controlador para que "existe" sea TRUE solo si incluye precios
-          Swal.fire("Error", "Ya existe un registro con estos datos (fecha inicial, fecha final )", "error");
-          return;
-        }
+  // 🔹 SI NO está marcado → editar directo sin validar
+  if (!$('#chk_editar_precio').is(':checked')) {
+    actualizarRegistro(datos);
+    return;
+  }
 
-        const datos = {
-          actualizar_registro: true,
-          id: $('#edit_id').val(),
-          pre_idcredito: $('#edit_credito').val(),
-          pre_idciudadori: $('#edit_origen').val(),
-          pre_idciudades: $('#edit_destino').val(),
-          pre_preciokilo: $('#edit_pre_preciokilo').val(),
-          pre_tiposervicio: $('#edit_servicio').val(),
-          precio_6_20: defaultVal($('#edit_precio_6_20').val()),
-          precio_21_50: defaultVal($('#edit_precio_21_50').val()),
-          precio_51_100: defaultVal($('#edit_precio_51_100').val()),
-          precio_101_150: defaultVal($('#edit_precio_101_150').val()),
-          precio_151_200: defaultVal($('#edit_precio_151_200').val()),
-          precio_201_250: defaultVal($('#edit_precio_201_250').val()),
-          pre_fecha_ini: $('#FechaInicial').val(),
-          pre_fecha_fin: $('#FechaFinal').val(),
-          editar_precio: $('#chk_editar_precio').is(':checked') ? 1 : 0
-          
-        };
-
-        $.ajax({
-          url: '/nueva_plataforma/controller/PreciosCreditoController.php',
-          type: 'POST',
-          data: datos,
-          success: function (res) {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
-            modal.hide();
-            tabla.ajax.reload(null, false);
-            Swal.fire({
-              icon: 'success',
-              title: 'Registro actualizado correctamente',
-              timer: 1500,
-              showConfirmButton: false
-            });
-          },
-          error: function () {
-            Swal.fire('Error', 'No se pudo actualizar', 'error');
-          }
-        });
-      },
-      error: function () {
-        Swal.fire('Error', 'No se pudo validar la existencia', 'error');
+  // 🔹 SI está marcado → validar duplicado antes de crear nueva versión
+  $.ajax({
+    url: '/nueva_plataforma/controller/PreciosCreditoController.php',
+    type: 'POST',
+    data: {
+      validar_existencia: true,
+      ...datosBase
+    },
+    success: function (res) {
+      const data = JSON.parse(res);
+      if (data.existe) {
+        Swal.fire("Error", "Ya existe un registro con estos datos y rango de fechas", "error");
+        return;
       }
-    });
-
+      actualizarRegistro(datos);
+    },
+    error: function () {
+      Swal.fire('Error', 'No se pudo validar la existencia', 'error');
+    }
   });
+
+});
+
+// 🔹 Función reutilizable para actualizar
+function actualizarRegistro(datos) {
+  $.ajax({
+    url: '/nueva_plataforma/controller/PreciosCreditoController.php',
+    type: 'POST',
+    data: datos,
+    success: function (res) {
+      const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditar'));
+      modal.hide();
+      tabla.ajax.reload(null, false);
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro actualizado correctamente',
+        timer: 1500,
+        showConfirmButton: false
+      });
+    },
+    error: function () {
+      Swal.fire('Error', 'No se pudo actualizar', 'error');
+    }
+  });
+}
+
 
   // Eliminar
   $('#tablaUsuarios tbody').on('click', '.eliminar-usuario', function () {

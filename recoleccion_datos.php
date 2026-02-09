@@ -68,7 +68,7 @@ timer =setTimeout(buscar(nombres),2000);
 					//document.getElementById("param1").value=respuesta.cli_iddocumento;
 					document.getElementById("param2").value=respuesta.cli_telefono;
 					document.getElementById("param3").value=respuesta.cli_email;
-					//document.getElementById("param4").value=respuesta.cli_idciudad;
+					document.getElementById("param4").value=respuesta.cli_idciudad;
 					document.getElementById("param4").value='';
 
 					var res = respuesta.cli_direccion.split("&");
@@ -136,7 +136,7 @@ timer =setTimeout(buscar(nombres),2000);
 				cambio_ajax2(documento, 14, 'clientesdir', 'telefono', 1, cliente.cli_nombre);
 								
 				document.getElementById("param3").value = cliente.cli_email;
-				document.getElementById("param4").value = '';
+				document.getElementById("param4").value = cliente.cli_idciudad;
 
 				// ✅ Protegemos el .split() para que no falle si la dirección no viene
 				let direccion = cliente.cli_direccion || '';
@@ -211,7 +211,7 @@ timer =setTimeout(buscar(nombres),2000);
 					
 					var res = respuesta.cli_direccion.split("&");
 					if (typeof res[4] === 'undefined') { res[4]=''; }
-					//document.getElementById("param4").value=respuesta.cli_idciudad;
+					document.getElementById("param4").value=respuesta.cli_idciudad;
 					document.getElementById("param4").value='';
 					document.getElementById("param5").value=res[0];
 					document.getElementById("param51").value=res[1];

@@ -1,7 +1,7 @@
 <?php
 
-// $directorio = __DIR__ . '/imgServicios'; // Cambia si la ruta es diferente
-$directorio = __DIR__ . '/imgNoEntregas';
+$directorio = __DIR__ . '/imgServicios'; // Cambia si la ruta es diferente
+// $directorio = __DIR__ . '/imgNoEntregas';
 $fecha_limite = strtotime('2024-12-31'); // Fecha límite
 
 // Abrimos el directorio

@@ -55,6 +55,7 @@ $tipoServicio  = $guia['tipo_servicio'];
 $pagoInfo      = $guia['pago_info'];
 $creditoNombre = $guia['credito_detalle'];
 $firmas        = $guia['firmas'];
+$ubicaciones = $guia['ubicaciones'];
 
 // Tipo de pago / estado visual
 $colorTP = "";

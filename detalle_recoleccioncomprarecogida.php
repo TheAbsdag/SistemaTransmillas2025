@@ -40,10 +40,10 @@ if ($cro == "Compra" or $cro == "Recogida") {
 
 	if ($paramservici != '' && $paramservici != null) {
 
-		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici' and pre_estado=1";
+		 echo$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios_credito` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudades=$param21 and pre_idcredito='$paramservici' and pre_estado=1";
 	} else {
 
-		 $sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 and pre_estado=1 order by tip_nom";
+		 echo$sql = "SELECT `pre_tiposervicio`,`tip_nom` FROM `precios` inner join tiposervicio on idtiposervicio = `pre_tiposervicio` and pre_idciudadori=$param20 and pre_idciudaddes=$param21 and pre_estado=1 order by tip_nom";
 	}
 
 	$LT->llenaselect($sql, 0, 1, $idservicio, $DB);

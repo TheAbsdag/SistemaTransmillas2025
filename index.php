@@ -166,8 +166,8 @@ form input[type="button"]:hover {
         <form name="form1" method="post" action="login_autentica.php?ingreso='desarrollo'" class="form-2">
         <?php  
         include("mensaje_error.php");
-        if (isset($_REQUEST['error_login'])){ $error=$_REQUEST['error_login']; echo "<span style='color:#FFFFFF'>".$error_login_ms[$error]."</span>"; }
-		echo "<br><br><br>";
+        if (isset($_REQUEST['error_login'])){ $error=$_REQUEST['error_login']; echo "<span>".$error_login_ms[$error]."</span>"; }
+		    echo "<br><br><br>";
         ?>
 				<input type="text" placeholder="Usuario" name="user" id="user">
 				<input type="password" placeholder="Password" name="pass" id="pass">

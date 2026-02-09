@@ -498,10 +498,22 @@
                             <?php endif; ?>
                         </div>
                         <?php if (!empty($firmas['Recogida'])): ?>
-                            <div class="small text-muted mt-1">
+                        <div class="small text-muted mt-1 d-flex align-items-center gap-2 flex-wrap">
+                            <span>
                                 <?= htmlspecialchars($firmas['Recogida']['nombre']) ?> ·
                                 Tel: <?= htmlspecialchars($firmas['Recogida']['telefono']) ?>
-                            </div>
+                            </span>
+
+                            <?php if (!empty($ubicaciones['RECOGIDA'])): 
+                                $lat = $ubicaciones['RECOGIDA']['latitud'];
+                                $lng = $ubicaciones['RECOGIDA']['longitud'];
+                                $mapUrl = "https://www.google.com/maps?q={$lat},{$lng}";
+                            ?>
+                                <a href="<?= $mapUrl ?>" target="_blank" class="text-danger" title="Ver ubicación de recogida en mapa">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </a>
+                            <?php endif; ?>
+                        </div>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
@@ -525,10 +537,22 @@
                             <?php endif; ?>
                         </div>
                         <?php if (!empty($firmas['Entrega'])): ?>
-                            <div class="small text-muted mt-1">
+                        <div class="small text-muted mt-1 d-flex align-items-center gap-2 flex-wrap">
+                            <span>
                                 <?= htmlspecialchars($firmas['Entrega']['nombre']) ?> ·
                                 Tel: <?= htmlspecialchars($firmas['Entrega']['telefono']) ?>
-                            </div>
+                            </span>
+
+                            <?php if (!empty($ubicaciones['ENTREGA'])): 
+                                $lat = $ubicaciones['ENTREGA']['latitud'];
+                                $lng = $ubicaciones['ENTREGA']['longitud'];
+                                $mapUrl = "https://www.google.com/maps?q={$lat},{$lng}";
+                            ?>
+                                <a href="<?= $mapUrl ?>" target="_blank" class="text-primary" title="Ver ubicación de entrega en mapa">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </a>
+                            <?php endif; ?>
+                        </div>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?> 

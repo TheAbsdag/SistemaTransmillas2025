@@ -880,7 +880,7 @@ $conde0="and(hoj_fechatermino IS NULL OR hoj_fechatermino = '' OR ('$fechaactual
 if($param36=='Completo') {
 	$conde0="";
 }
-$sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado`,hoj_sede,hoj_fechatermino,hoj_cuen,hoj_tcuenta,hoj_firma,hoj_estado,hoj_fech_año_act FROM hojadevida
+$sql="SELECT `idhojadevida`,  `hoj_nombre`, `hoj_apellido`,hoj_cargo, `hoj_tipocontrato`,`hoj_cedula`,`hoj_fechaingreso`, `sed_nombre`,`hoj_fechanacimiento`, `hoj_cedula`,`hoj_direccion`, `hoj_celular`, `hoj_estado`,hoj_sede,hoj_fechatermino,hoj_cuen,hoj_tcuenta,hoj_firma,hoj_estado,hoj_fech_año_act,hoj_fechacontrato,hoj_fech_año_act FROM hojadevida
 INNER JOIN sedes ON hoj_sede = idsedes
 WHERE idhojadevida > 0  $conde0 $conde5 $conde4 $conde
 ORDER BY hoj_nombre ASC";
@@ -1140,7 +1140,7 @@ ORDER BY hoj_nombre ASC";
 							if($fin==31 and $param36=='Segunda' or $fin==31 and $param36=='Completo' ){
 
 								// echo"segunda  $fin==31 and $param36=='Segunda' or $fin==31 and $param36=='Completo'";
-									if ($rw4[0]<=0 ) {
+									if ($rw4[0]<=1 ) {
 										// or $mesdeingreso==true  si este fue el mes que imngreso la persona
 										$dia31=0;
 
@@ -1912,7 +1912,7 @@ ORDER BY hoj_nombre ASC";
 
 					}
 
-					$tabla.="<td>$rw1[6]</td>";
+					$tabla.="<td>$rw1[20]</td>";
 					$tabla.="<td>$terminaContrato</td>";
 
 					$totalDevengTodos=$totalDevengTodos+$TotalDevengado;

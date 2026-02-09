@@ -76,10 +76,10 @@ if($param36=='Primera'){
 
 }
 
-function diasHastaFinDeAno() {
+function diasHastaFinDeAno($ano) {
     // Definimos la fecha de inicio como mañana a las 00:00:00
     $mañana = new DateTime('tomorrow'); 
-    $finDeAno = new DateTime(date('Y-12-31'));
+    $finDeAno = new DateTime(date($ano.'-12-31'));
 
     // Si hoy fuera 31 de diciembre, mañana sería 1 de enero.
     // Esta validación evita errores si ejecutas el código el último día del año.
@@ -326,7 +326,7 @@ ORDER BY hoj_nombre ASC";
 			if($param36=='Segunda'){
 				// Ejemplo de uso
 
-				$DiasRestantes = diasHastaFinDeAno();
+				$DiasRestantes = diasHastaFinDeAno($ano);
 				// echo"Otro$totalDiasPrima+$DiasRestantes __";
 				$totalDiasPrima=$totalDiasPrima+$DiasRestantes;
 

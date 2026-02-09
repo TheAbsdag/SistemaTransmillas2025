@@ -512,7 +512,6 @@ function aplicarReglasTipoPago(s) {
         <option value="1">Contado</option>
         <option value="2">Crédito</option>
         <option value="3">Al Cobro</option>
-        <option value="4">Pendiente x Cobrar</option>
       `;
       select.disabled = false;
       if (s.ser_clasificacion) {

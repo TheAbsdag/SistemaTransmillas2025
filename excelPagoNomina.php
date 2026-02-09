@@ -96,7 +96,7 @@ $param38= $_GET['param38'];
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-function descargar(p3,p4,p5,p6,p7){
+function descargar(p3,p4,p5,p6,p7,p9){
 
 var variable = "descargar"; // Variable que deseas enviar
 
@@ -105,7 +105,7 @@ let p8 = document.getElementById("tipoPago").value;
 var variableCodificada = encodeURIComponent(variable);
 
 // Abrir el enlace en una nueva página
-window.open("excelPagoNomina.php?variable=" + variableCodificada+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7+"&param38="+p8, "_blank");
+window.open("excelPagoNomina.php?variable=" + variableCodificada+"&param33="+p3+"&param34="+p4+"&param35="+p5+"&param36="+p6+"&param37="+p7+"&param38="+p8+"&param39="+p9, "_blank");
 
 
     
@@ -130,7 +130,7 @@ window.location.href = "excelPagoNomina.php?variable=" + variableCodificada+"&pa
 <div class="topbar">
 
 
-    <button onclick="descargar('<?echo$param33;?>','<?echo$param34;?>','<?echo$param35;?>','<?echo$param36;?>','<?echo$param37;?>')">Descargar</button>
+    <button onclick="descargar('<?echo$param33;?>','<?echo$param34;?>','<?echo$param35;?>','<?echo$param36;?>','<?echo$param37;?>','<?echo$param39;?>')">Descargar</button>
     <select id="tipoPago" onchange="cambiar(this.value,'<?php echo $param33; ?>','<?php echo $param34; ?>','<?php echo $param35; ?>','<?php echo $param36; ?>','<?php echo $param37; ?>')">
         <option value="" <?php echo ($param38 == '') ? 'selected' : ''; ?>>Todos...</option>
         <option value="TRANSFERENCIA" <?php echo ($param38 == 'TRANSFERENCIA') ? 'selected' : ''; ?>>TRANSFERENCIA</option>
@@ -1074,7 +1074,7 @@ function diasSegundaQuince($year, $month) {
                             
                             if($fin==31 and $param36=='Segunda' or $fin==31 and $param36=='Completo' ){
                                 
-                                    if ($rw4[0]<=0 ) {
+                                    if ($rw4[0]<=1 ) {
                                         $dia31=0;
                                     }else{
                                         if ($param36=='Segunda') {

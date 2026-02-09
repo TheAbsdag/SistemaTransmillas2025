@@ -221,6 +221,24 @@ public function sortearTareasDelDia($fecha = '', $operadoresSeleccionados, $tare
                 return !in_array($op['idusuarios'], $ids_asignados_semana);
             }));
         }
+        // 🚨 Último fallback: todos ya hicieron esta tarea esta semana
+        if (empty($disponibles)) {
+            file_put_contents(
+                $logFile,
+                "🚨 Sin operadores disponibles sin repetir tarea semanal. Se permite repetir tarea.\n",
+                FILE_APPEND
+            );
+
+            // Intentar primero no repetir operador en el día
+            $disponibles = array_values(array_filter($operadores, function($op) use ($operadoresAsignadosHoy) {
+                return !in_array($op['idusuarios'], $operadoresAsignadosHoy);
+            }));
+
+            // Si igual no hay, usar todos
+            if (empty($disponibles)) {
+                $disponibles = $operadores;
+            }
+        }
 
         shuffle($disponibles);
         $seleccionados = array_slice($disponibles, 0, $cantidad);

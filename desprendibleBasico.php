@@ -36,6 +36,7 @@ $descriprestamos=$_GET["descriprestamos"];
 $valorAjusteB=$_GET["valorAjuste"];
 $tipoAjusteB=$_GET["tipoAjuste"];
 $descripcionAjusteB=$_GET["descripcionAjuste"];
+$otros=$_GET["otros"];
 
 $ajustessumB=0;
 $ajustesresB=0;
@@ -164,7 +165,7 @@ $fechafin=$_GET["fechafin"];
 
         $this->SetX(+20);
         $this->SetFont('Arial', 'B', 10); // Establecer fuente en negrita
-        $this->Cell(100, 7, 'No DAVIVIENDA    ', 1);
+        $this->Cell(100, 7, ' ', 1);
         $this->SetFont('Arial', 'B', 10); // Establecer fuente en negrita
         $this->Cell(35, 7, ''.$sede.'', 1);
         $this->Ln(); // Salto de línea
@@ -400,8 +401,32 @@ $pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
 $pdf->Cell(40, 5, ''.$ajustesresB.'', 1);
 $pdf->Ln(); // Salto de línea
 
+$cedula=$_GET["cedula"];
+if($cedula=="1073711329")
+{// Lista 10
+$totalotros = number_format($otros, 0, ',', '.');
+
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(60, 5, 'OTROS DEVENGOS', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(35, 5, ''.$totalotros.'', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(55, 5, '', 1);
+$pdf->SetFont('Arial', '', 10); // Restaurar fuente normal
+$pdf->Cell(40, 5, '', 1);
+$pdf->Ln(); // Salto de línea
+
+$totaldeveng_formateado = number_format($totaldeveng+$valorlicencias+$otros, 0, ',', '.');
+$valorTotal=($totaldeveng+$ajustessumB+$valorlicencias+$otros)-($totaldeduccion+$ajustesresB);
+
+}else{
 $totaldeveng_formateado = number_format($totaldeveng+$valorlicencias, 0, ',', '.');
 $valorTotal=($totaldeveng+$ajustessumB+$valorlicencias)-($totaldeduccion+$ajustesresB);
+
+
+}
+
+
 
 // if (isset($_GET["otros"])) {
 //     $otrsodv=$_GET["otros"];
@@ -465,16 +490,23 @@ $pdf->Cell(190, 10, 'TOTAL                                                      
 // $pdf->Cell(95, 10, ' VALOR A PAGAR ', 1);
 
 
-$locale = 'es_CO'; // Define el locale para el idioma y formato de moneda colombiano
-$fmt = new NumberFormatter($locale, NumberFormatter::SPELLOUT); // Crea una instancia de NumberFormatter
+$locale = 'es_CO';
+$fmt = new NumberFormatter($locale, NumberFormatter::SPELLOUT);
 
-$valorEnLetras = $fmt->formatCurrency($valorTotal, 'COP');
+// ⚠️ SPELLOUT usa format(), NO formatCurrency()
+$valorEnLetras = $fmt->format($valorTotal);
 
-
-// Elimina la palabra "coma" y lo que le sigue
+// Quitar decimales
 $valorEnLetras = preg_replace('/\bcoma\b.*$/i', '', $valorEnLetras);
 
-$valorEnLetras_en_mayusculas = strtoupper($valorEnLetras);
+// Agregar moneda manualmente
+$valorEnLetras .= ' pesos';
+
+// Mayúsculas
+$valorEnLetras_en_mayusculas = mb_strtoupper($valorEnLetras, 'UTF-8');
+
+// 🔥 CONVERTIR A ISO-8859-1 PARA FPDF
+$valorEnLetras_en_mayusculas = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $valorEnLetras_en_mayusculas);
 
 
 

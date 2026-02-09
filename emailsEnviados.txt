@@ -4154,3 +4154,1972 @@ _
 _
 _
 _
+_
+_
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6279 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6466 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6652 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6741 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6879 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7372 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 7689 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7619 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7620 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7905 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7993 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8289 Vencida  Se envia al correo gerencia.general@tusenlaceslogisticos.com Alerta <br> 
+
+IdFactura 8190 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8555 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8665 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8666 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8886 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8989 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9306 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9368 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9396 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9380 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9480 Vencida  Se envia al correo smatarrazzo@bethany.org Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9502 Vencida  Se envia al correo cartera@comprolab.com Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9503 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9583 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6279 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6466 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6652 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6741 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6879 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7372 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7619 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 7620 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7689 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 7993 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 7905 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8289 Vencida  Se envia al correo gerencia.general@tusenlaceslogisticos.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8190 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8555 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8666 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8665 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8886 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8989 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9306 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9368 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9396 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9380 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9480 Vencida  Se envia al correo smatarrazzo@bethany.org Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9583 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9502 Vencida  Se envia al correo cartera@comprolab.com Alerta <br> 
+
+IdFactura 9503 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6279 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6466 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6652 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6879 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6741 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7372 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 7620 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7619 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 7689 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 7993 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 7905 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8289 Vencida  Se envia al correo gerencia.general@tusenlaceslogisticos.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8190 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8555 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8666 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8665 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8886 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8989 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9306 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9368 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9396 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9380 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9480 Vencida  Se envia al correo smatarrazzo@bethany.org Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9503 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9502 Vencida  Se envia al correo cartera@comprolab.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9583 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 7993 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8289 Vencida  Se envia al correo gerencia.general@tusenlaceslogisticos.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 6279 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 8190 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9396 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7372 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9503 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 9368 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6741 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7905 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7689 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9480 Vencida  Se envia al correo smatarrazzo@bethany.org Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+_
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6741 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 7993 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8289 Vencida  Se envia al correo gerencia.general@tusenlaceslogisticos.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9368 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9396 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9583 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 7905 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8989 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7993 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 7372 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7619 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 7905 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7372 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6279 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 8555 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8665 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6466 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9433 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+_
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9396 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9433 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9583 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7620 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8555 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7079 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 8666 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9503 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9433 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9502 Vencida  Se envia al correo cartera@comprolab.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo  compras1@wmimpresores.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9306 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9380 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8665 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 8886 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 6879 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6652 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6466 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 6741 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6881 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7619 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8989 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8793 Vencida  Se envia al correo servicioalcliente@intelisolutions.com.co Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9433 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9458 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9459 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9495 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9496 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9583 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo  compras1@wmimpresores.com Alerta <br> 
+
+IdFactura 9627 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6471 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6466 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 6972 Vencida  Se envia al correo agrofuturo.tame@hotmail.com Alerta <br> 
+
+IdFactura 6648 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 6986 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6867 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6279 Vencida  Se envia al correo translacorbucaramanga@hotmail.com Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 8886 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6660 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 6274 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9665 Vencida  Se envia al correo cartera@comprolab.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 9306 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9380 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9100 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 9503 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9666 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 9627 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo  compras1@wmimpresores.com Alerta <br> 
+
+IdFactura 9502 Vencida  Se envia al correo cartera@comprolab.com Alerta <br> 
+
+IdFactura 9703 Vencida  Se envia al correo compras@detectacorp.com Alerta <br> 
+
+IdFactura 7118 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 7351 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8555 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7620 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 8891 Vencida  Se envia al correo a.corresponsales@prindel.com.co Alerta <br> 
+
+IdFactura 8989 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7619 Vencida  Se envia al correo milenacastro@mcsconsultoria.com Alerta <br> 
+
+IdFactura 8665 Vencida  Se envia al correo fyriano@independence.com.co Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 6412 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 6549 Vencida  Se envia al correo hugo.mora@transportehm.com.co Alerta <br> 
+
+IdFactura 7478 Vencida  Se envia al correo suimtec@gmail.com Alerta <br> 
+
+IdFactura 7565 Vencida  Se envia al correo finanzas@quattro.com.co Alerta <br> 
+
+IdFactura 7715 Vencida  Se envia al correo rmoreno@colvapor.com Alerta <br> 
+
+IdFactura 7735 Vencida  Se envia al correo lpoveda@unoadataservicios.com Alerta <br> 
+
+IdFactura 7935 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 7977 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 8051 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8099 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 8102 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8138 Vencida  Se envia al correo proveedores@colmaquinas.com Alerta <br> 
+
+IdFactura 8141 Vencida  Se envia al correo contabilidadtos.sas@gmail.com Alerta <br> 
+
+IdFactura 8255 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8285 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 8291 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 8316 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8317 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8405 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8424 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8654 Vencida  Se envia al correo recepcionfacturaciongenersa@sagas.com.co Alerta <br> 
+
+IdFactura 8728 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8835 Vencida  Se envia al correo seguridad@isvi.com Alerta <br> 
+
+IdFactura 8845 Vencida  Se envia al correo facturaelectronica@tinformatica.com Alerta <br> 
+
+IdFactura 8969 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8971 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8973 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 8976 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9028 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9079 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9082 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9166 Vencida  Se envia al correo marco.castiblanco@gmail.com Alerta <br> 
+
+IdFactura 9184 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9189 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9191 Vencida  Se envia al correo 813007077@factureinbox.com Alerta <br> 
+
+IdFactura 9225 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9332 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9334 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9381 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9487 Vencida  Se envia al correo contadorwco@weg.net Alerta <br> 
+
+IdFactura 9500 Vencida  Se envia al correo contabilidad@aerocargombm.com Alerta <br> 
+
+IdFactura 9572 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9579 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9585 Vencida  Se envia al correo 830138228@factureinbox.co Alerta <br> 
+
+IdFactura 9595 Vencida  Se envia al correo  compras1@wmimpresores.com Alerta <br> 
+
+IdFactura 9627 Vencida  Se envia al correo facturacionproveedores@flexilatina.com Alerta <br> 
+
+IdFactura 9703 Vencida  Se envia al correo compras@detectacorp.com Alerta <br> 
+
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+IdFactura 6599 Vencida  Se envia al correo gloria.murcia@alcaravan.org.co Alerta <br> 
+
+IdFactura 6599 Vencida  Se envia al correo GRECURSOS@ALCARAVAN.ORG.CO Alerta <br> 
+
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+IdFactura 9595 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9638 Vencida  Se envia al correo melissa.hernandez@twm-sa.com Alerta <br> 
+
+IdFactura 9651 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9660 Vencida  Se envia al correo acount@datapower.group.com Alerta <br> 
+
+IdFactura 9660 Vencida  Se envia al correo vpreciado@datapowergroup.com Alerta <br> 
+
+IdFactura 9699 Vencida  Se envia al correo contabilidad@remeinternacional.com Alerta <br> 
+
+IdFactura 9703 Vencida  Se envia al correo contabilidad@detectacorp.com Alerta <br> 
+
+IdFactura 9784 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 9791 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9805 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9812 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9826 Vencida  Se envia al correo 900779576@factureinbox.co Alerta <br> 
+
+IdFactura 9827 Vencida  Se envia al correo gerencia@sumayan.com Alerta <br> 
+
+IdFactura 9932 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 9933 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+_
+_
+IdFactura 9997 Vencida  Se envia al correo melissa.hernandez@twm-sa.com Alerta <br> 
+
+IdFactura 9998 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 10071 Vencida  Se envia al correo contador@wmimpresores.com Alerta <br> 
+
+IdFactura 10095 Vencida  Se envia al correo recepcionfacturas@automatizacion.com.co Alerta <br> 
+
+IdFactura 10108 Vencida  Se envia al correo facturacion@esiarca.com Alerta <br> 
+
+IdFactura 10110 Vencida  Se envia al correo contadorite@lte-sas.com Alerta <br> 
+
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
+_
