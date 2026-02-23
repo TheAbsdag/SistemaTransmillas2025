@@ -151,9 +151,21 @@ class DB_mssql  /* La clase DB_mssql se encarga de gestionar todas las conexione
 		return mysqli_field_name($this->Consulta_ID, $numcampo);
 	}
 	/* Este m&eacute;todo cierra una consulta de la base de datos */
+	// function cerrarconsulta()
+	// {
+	// 	mysqli_close($this->Conexion_ID);
+	// }
 	function cerrarconsulta()
 	{
-		mysqli_close($this->Conexion_ID);
+		if (!empty($this->Conexion_ID)) {
+			@mysqli_close($this->Conexion_ID);
+			$this->Conexion_ID = 0;
+		}
+	}
+
+	function __destruct()
+	{
+		$this->cerrarconsulta();
 	}
 
 	function edites2($id_p, $nom, $sin, $condecion)

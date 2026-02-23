@@ -40,35 +40,52 @@ class recogerEntregarModel{
             file_put_contents($rutaArchivo, $imagen);
 
 
-            // 🔹 Guardar firma del cliente (INSERT seguro con bind_param)
-            $sqlInsert = "INSERT INTO firma_clientes (id_guia, tipo_firma, firma_clientes,fecha_registro )
-                        VALUES (?, ?, ?,?)";
-            $stmtInsert = $this->db->prepare($sqlInsert);
-
-            // Verificamos que la preparación no falle
-            if (!$stmtInsert) {
-                error_log("❌ Error al preparar la consulta: " . $this->db->error);
-                return false;
-            }
-
-            // Asignamos los valores
             $tipoFirma = 'Entrega';
 
-            // Vinculamos los parámetros: id_guia (int), tipo_firma (string), firma_clientes (string)
-            $stmtInsert->bind_param('isss', $idservicio, $tipoFirma, $rutaArchivoGuardar,$fechaHoraColombia);
-
-
-
-            // Ejecutamos la sentencia
-            $stmtInsert->execute();
-
-            // Verificamos si se insertó correctamente
-            if ($stmtInsert->affected_rows > 0) {
-                return true;
-            } else {
-                error_log("⚠️ No se insertó ninguna fila para id_guia $idservicio");
+            // Verificar si ya existe firma para ese servicio y tipo.
+            $sqlCheck = "SELECT id FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+            $stmtCheck = $this->db->prepare($sqlCheck);
+            if (!$stmtCheck) {
+                error_log("❌ Error al preparar consulta de verificación: " . $this->db->error);
                 return false;
             }
+
+            $stmtCheck->bind_param('is', $idservicio, $tipoFirma);
+            $stmtCheck->execute();
+            $resultCheck = $stmtCheck->get_result();
+            $activoFirma=0;
+            if ($resultCheck && $resultCheck->num_rows > 0) {
+                // Ya existe -> actualizar.
+                $rowCheck = $resultCheck->fetch_assoc();
+                $idFirma = (int)$rowCheck['id'];
+
+                $sqlUpdate = "UPDATE firma_clientes
+                              SET firma_clientes = ?, fecha_registro = ?, activo_para_firmar = ?
+                              WHERE id = ?";
+                $stmtUpdate = $this->db->prepare($sqlUpdate);
+                if (!$stmtUpdate) {
+                    error_log("❌ Error al preparar UPDATE: " . $this->db->error);
+                    return false;
+                }
+
+                $stmtUpdate->bind_param('ssii', $rutaArchivoGuardar, $fechaHoraColombia,$activoFirma, $idFirma);
+                $stmtUpdate->execute();
+                return ($stmtUpdate->affected_rows >= 0);
+            }
+
+            // No existe -> insertar.
+            $sqlInsert = "INSERT INTO firma_clientes (id_guia, tipo_firma, firma_clientes,fecha_registro,activo_para_firmar)
+                          VALUES (?, ?, ?, ?,?)";
+            $stmtInsert = $this->db->prepare($sqlInsert);
+            
+            if (!$stmtInsert) {
+                error_log("❌ Error al preparar INSERT: " . $this->db->error);
+                return false;
+            }
+
+            $stmtInsert->bind_param('isssi', $idservicio, $tipoFirma, $rutaArchivoGuardar, $fechaHoraColombia,$activoFirma);
+            $stmtInsert->execute();
+            return ($stmtInsert->affected_rows > 0);
 
         } catch (Exception $e) {
             error_log("❌ Error al guardar la firma: " . $e->getMessage());

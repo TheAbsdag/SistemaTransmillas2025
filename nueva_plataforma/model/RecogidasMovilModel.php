@@ -400,10 +400,10 @@ class RecogidasMovilModel {
     {
                 try {
 
-                        $this->logServicio('INICIO guardarRecogida', [
-                            'variableunica' => $data['variableunica'] ?? null,
-                            'usuario' => $session['usuario_id'] ?? null
-                        ]);
+                        // $this->logServicio('INICIO guardarRecogida', [
+                        //     'variableunica' => $data['variableunica'] ?? null,
+                        //     'usuario' => $session['usuario_id'] ?? null
+                        // ]);
                     // --------------------------------------------------
                     // 0) Datos base
                     // --------------------------------------------------
@@ -496,10 +496,10 @@ class RecogidasMovilModel {
                     }
 
                     if (!empty($ya)) {
-                        $this->logServicio('DUPLICADO variableunica', [
-                            'variableunica' => $variableunica,
-                            'guia' => $ya
-                        ]);
+                        // $this->logServicio('DUPLICADO variableunica', [
+                        //     'variableunica' => $variableunica,
+                        //     'guia' => $ya
+                        // ]);
                         return ['ok' => false, 'mensaje' => 'Ya existe un registro', 'guia' => $ya];
                     }
                     // --------------------------------------------------
@@ -585,10 +585,10 @@ class RecogidasMovilModel {
                                     WHERE idclientesdir='" . (int)$id_param2 . "'";
                         $this->db->query($sqlUpDir);
                     }
-                    $this->logServicio('CLIENTE REMITENTE', [
-                        'idclientes' => $id_param,
-                        'idclientesdir' => $id_param2
-                    ]);
+                    // $this->logServicio('CLIENTE REMITENTE', [
+                    //     'idclientes' => $id_param,
+                    //     'idclientesdir' => $id_param2
+                    // ]);
 
                     // Insert clientesservicios (igual)
                     $sqlCliServ = "INSERT INTO clientesservicios (cli_nombre, cli_telefono, cli_idciudad, cli_direccion, cli_idclientes, cli_principal)
@@ -650,10 +650,10 @@ class RecogidasMovilModel {
                             $this->db->query($sqlUpDirD);
                         }
                     }
-                    $this->logServicio('DESTINATARIO PROCESADO', [
-                        'telefono' => $param8,
-                        'ciudad' => $param11
-                    ]);
+                    // $this->logServicio('DESTINATARIO PROCESADO', [
+                    //     'telefono' => $param8,
+                    //     'ciudad' => $param11
+                    // ]);
 
                     // --------------------------------------------------
                     // 6) Consecutivo / planilla (igual)
@@ -689,10 +689,10 @@ class RecogidasMovilModel {
                         $param16 = $planilla; // igual
                     }
 
-                    $this->logServicio('PLANILLA', [
-                        'planilla' => $planilla,
-                        'consecutivo' => $idconsecutivo
-                    ]);
+                    // $this->logServicio('PLANILLA', [
+                    //     'planilla' => $planilla,
+                    //     'consecutivo' => $idconsecutivo
+                    // ]);
 
                     // --------------------------------------------------
                     // 7) Precio (aquí tienes 2 opciones)
@@ -750,12 +750,12 @@ class RecogidasMovilModel {
                     // 📍 Guardar ubicación GPS de la recogida
                     $this->guardarUbicacionServicio($idser, $id_usuario, "RECOGIDA",$data);
 
-                    $this->logServicio('SERVICIO INSERTADO', [
-                        'idservicio' => $idser,
-                        'guia' => $param16,
-                        'precio' => $precio,
-                        'estado' => $estado
-                    ]);
+                    // $this->logServicio('SERVICIO INSERTADO', [
+                    //     'idservicio' => $idser,
+                    //     'guia' => $param16,
+                    //     'precio' => $precio,
+                    //     'estado' => $estado
+                    // ]);
                     // --------------------------------------------------
                     // 10) rel_sercli (igual)
                     // --------------------------------------------------
@@ -815,10 +815,10 @@ class RecogidasMovilModel {
                             $this->db->query($sqlRelCre);
                         }
                         if ($param28 === '2') {
-                            $this->logServicio('SERVICIO A CRÉDITO', [
-                                    'idservicio' => $idser,
-                                    'idcredito' => $idcredito
-                                ]);
+                            // $this->logServicio('SERVICIO A CRÉDITO', [
+                            //         'idservicio' => $idser,
+                            //         'idcredito' => $idcredito
+                            //     ]);
                             }
                     }
 
@@ -926,37 +926,70 @@ class RecogidasMovilModel {
                                     '" . (int)$id_usuario . "'
                                 )";
                     $this->db->query($sqlFirma);
+
+
+                    
                     $link="$idser&accion=guardarFirmaRecogida&tipo_pago=$param28";
                     
-                    $this->reEnviarFirmaWhat($this->escape($param93), 44, (int)$idser ,$link);
+                    // $this->reEnviarFirmaWhat($this->escape($param93), 44, (int)$idser ,$link);
 
 
-                    $this->logRecogido("Datos serviciosdia encontrados, preparando envío de WhatsApp...");
-                    $numguia    = $planilla;
-                    $telefono   = $this->escape($param93);
-                    $idservicio = $idser;
+                    // $this->logRecogido("Datos serviciosdia encontrados, preparando envío de WhatsApp...");
+                    // $numguia    = $planilla;
+                    // $telefono   = $this->escape($param93);
+                    // $idservicio = $idser;
 
-                    $resLink  = $this->guardarLinkServicio(
-                        $idservicio,
-                        "Recogida",
-                        $numguia,
-                        $this->escape($param26),
-                        $this->escape($param27),
-                        $param18,
-                        $valorsinseguro
-                    );
-                    $linkGuia = $resLink['url'] ?? '';
+                    // $resLink  = $this->guardarLinkServicio(
+                    //     $idservicio,
+                    //     "Recogida",
+                    //     $numguia,
+                    //     $this->escape($param26),
+                    //     $this->escape($param27),
+                    //     $param18,
+                    //     $valorsinseguro
+                    // );
+                    // $linkGuia = $resLink['url'] ?? '';
 
-                    $this->logRecogido("Link generado: $linkGuia");
-                    // --------------------------------------------------
-                    // 16) DEVOLVER GUIA
-                    // --------------------------------------------------
-                    $this->logServicio('FIN guardarRecogida OK', [
-                        'idservicio' => $idser,
-                        'guia' => $param16,
-                        'planilla' => $planilla,
-                        'link' => $link
+                    // $this->logRecogido("Link generado: $linkGuia");
+                    // 📸 Procesar imagen del servicio
+                    // if (!empty($param91['name'])) {
+                    //     $this->encolarProceso('procesar_imagen_servicio', $idser, [
+                    //         'tmp_name' => $param91['tmp_name'],
+                    //         'nombre'   => $param91['name']
+                    //     ]);
+                    // }
+
+                    // 📸 Procesar imagen de transacción
+                    if (!empty($param40['name'])) {
+                        $this->encolarProceso('procesar_imagen_pago', $idser, [
+                            'tmp_name' => $param40['tmp_name'],
+                            'nombre'   => $param40['name']
+                        ]);
+                    }
+
+                    // 🔗 Generar link de guía
+                    $this->encolarProceso('generar_link_guia', $idser, [
+                        'peso' => $param26,
+                        'volumen' => $param27,
+                        'seguro' => $param18,
+                        'valor' => $valorsinseguro
                     ]);
+
+                    // 📲 Enviar WhatsApp firma
+                    $this->encolarProceso('whatsapp_firma', $idser, [
+                        'telefono' => $param93,
+                        'link' => "$idser&accion=guardarFirmaRecogida&tipo_pago=$param28"
+                    ]);
+
+                    // 📲 Enviar WhatsApp guía
+                    // $this->encolarProceso('whatsapp_guia', $idser, [
+                    //     'telefono' => $param93,
+                    //     'guia' => $planilla
+                    // ]);
+
+                    // ===============================
+                    // RESPUESTA RÁPIDA
+                    // ===============================
                     return [
                         'ok' => true,
                         'idservicio' => (int)$idser,
@@ -964,15 +997,31 @@ class RecogidasMovilModel {
                         'planilla' => $planilla,
                         'link' => $link
                     ];
+                    // --------------------------------------------------
+                    // 16) DEVOLVER GUIA
+                    // --------------------------------------------------
+                    // $this->logServicio('FIN guardarRecogida OK', [
+                    //     'idservicio' => $idser,
+                    //     'guia' => $param16,
+                    //     'planilla' => $planilla,
+                    //     'link' => $link
+                    // ]);
+                    // return [
+                    //     'ok' => true,
+                    //     'idservicio' => (int)$idser,
+                    //     'guia' => $param16,
+                    //     'planilla' => $planilla,
+                    //     'link' => $link
+                    // ];
 
             } catch (\Throwable $e) {
 
-            $this->logServicio('ERROR CRÍTICO guardarRecogida', [
-                'mensaje' => $e->getMessage(),
-                'archivo' => $e->getFile(),
-                'linea' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
+            // $this->logServicio('ERROR CRÍTICO guardarRecogida', [
+            //     'mensaje' => $e->getMessage(),
+            //     'archivo' => $e->getFile(),
+            //     'linea' => $e->getLine(),
+            //     'trace' => $e->getTraceAsString()
+            // ]);
 
             return [
                 'ok' => false,
@@ -1003,7 +1052,7 @@ class RecogidasMovilModel {
             $precision = isset($data['precision_gps']) ? (float)$data['precision_gps'] : 0;
 
             if ($latitud == 0 || $longitud == 0) {
-                $this->logServicio('GPS NO ENVIADO', ['idservicio' => $idservicios]);
+                // $this->logServicio('GPS NO ENVIADO', ['idservicio' => $idservicios]);
                 return;
             }
 
@@ -1024,12 +1073,12 @@ class RecogidasMovilModel {
 
             $this->db->query($sql);
 
-            $this->logServicio('GPS GUARDADO', [
-                'servicio' => $idservicios,
-                'evento' => $tipoEvento,
-                'lat' => $latitud,
-                'lng' => $longitud
-            ]);
+            // $this->logServicio('GPS GUARDADO', [
+            //     'servicio' => $idservicios,
+            //     'evento' => $tipoEvento,
+            //     'lat' => $latitud,
+            //     'lng' => $longitud
+            // ]);
 
         } catch (\Throwable $e) {
             $this->logServicio('ERROR GPS', ['mensaje' => $e->getMessage()]);
@@ -1247,7 +1296,7 @@ class RecogidasMovilModel {
         ];
     }
     public function logEntrega($msg) {
-        $logFile = __DIR__ . "../logs/logs_WF.log";
+        $logFile = __DIR__ . "/logs/logs_WF.log";
         $fecha = date("Y-m-d H:i:s");
         file_put_contents($logFile, "[$fecha] $msg\n", FILE_APPEND);
     }
@@ -1255,6 +1304,11 @@ class RecogidasMovilModel {
 
     public function guardarFirmaRecogida($idservicio, $firmaBase64)
     {
+        $stmtCheck = null;
+        $stmtUpdate = null;
+        $stmtInsert = null;
+        $stmtTel = null;
+        $stmtGuia = null;
         date_default_timezone_set('America/Bogota');
         $fechaHoraColombia = date('Y-m-d H:i:s');
         $logFile = __DIR__ . '/debug_guardar_firma.log';
@@ -1407,6 +1461,13 @@ class RecogidasMovilModel {
             file_put_contents($logFile, "❌ Excepción: " . $e->getMessage() . "\n", FILE_APPEND);
             return false;
         } finally {
+            // Cerrar statements abiertos
+            if ($stmtCheck instanceof mysqli_stmt) { $stmtCheck->close(); }
+            if ($stmtUpdate instanceof mysqli_stmt) { $stmtUpdate->close(); }
+            if ($stmtInsert instanceof mysqli_stmt) { $stmtInsert->close(); }
+            if ($stmtTel instanceof mysqli_stmt) { $stmtTel->close(); }
+            if ($stmtGuia instanceof mysqli_stmt) { $stmtGuia->close(); }
+
             file_put_contents($logFile, "=== FIN guardarFirmaRecogida() ===\n\n", FILE_APPEND);
         }
     }
@@ -1469,4 +1530,14 @@ class RecogidasMovilModel {
         ];
     }
 
+    private function encolarProceso($tipo, $idservicio, $datos = [])
+        {
+            $json = $this->escape(json_encode($datos, JSON_UNESCAPED_UNICODE));
+            $sql = "INSERT INTO cola_procesos (tipo, idservicio, datos, fecha_creado)
+                    VALUES ('{$this->escape($tipo)}', '".(int)$idservicio."', '$json', NOW())";
+            $this->db->query($sql);
+        }
+        public function getDB() {
+            return $this->db;
+        }
 }

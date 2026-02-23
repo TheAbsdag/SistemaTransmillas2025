@@ -314,76 +314,44 @@ function llena_datosord2(ord, asc,tabla)
 	destino="<?php echo $_SERVER['PHP_SELF']; ?>?ord="+ord+"&asc="+asc+"&tabla="+tabla;
 	location.href=destino;
 }
-function  buscarnotificaciones(tipo){
-    datos = {"tipo":tipo};
-    var numerogastos;
-		$.ajax({
-				url: "notificaciones.php",
-				type: "POST",
-				data: datos,
-				async: false,
-				success: function(result) {
-				//	alert(result);
-					if(result!=null){
-                       
-						numerogastos= result.gastossede;
-						numeroperador= result.gastosoperador;
-						numeroremesas= result.gastosremesas;
-						cierrecaja= result.cierrecaja;
-						seguimiento= result.seguimiento;
-						pendientes= result.pendientes;
-						faltantes= result.faltantes;
-						alertassede= result.alertassede;
-					//	alert(numerogastos);
-                    if(alertassede!='' && alertassede>0 ){
-							var divvalor= document.getElementById("notif28");
-                            divvalor.innerHTML='<div class="noti_bubble">'+alertassede+'</div>';
+function buscarnotificaciones(tipo){
 
-						}
-                    if(faltantes!='' && faltantes>0 ){
-							var divvalor= document.getElementById("notif27");
-                            divvalor.innerHTML='<div class="noti_bubble">'+faltantes+'</div>';
+    $.ajax({
+        url: "notificaciones.php",
+        type: "POST",
+        data: { tipo: tipo },
+        dataType: "json",
+        async: true, // 🔥 YA NO BLOQUEA
+        success: function(result) {
 
-						}
-                    if(pendientes!='' && pendientes>0 ){
-							var divvalor= document.getElementById("notif26");
-                            divvalor.innerHTML='<div class="noti_bubble">'+pendientes+'</div>';
-						}
-                    if(seguimiento!='' && seguimiento>0 ){
-							var divvalor= document.getElementById("notif25");
-                            divvalor.innerHTML='<div class="noti_bubble">'+seguimiento+'</div>';
-						}
-						if(numerogastos!='' && numerogastos>0 ){
-							var divvalor= document.getElementById("notif");
-                            divvalor.innerHTML='<div class="noti_bubble">'+numerogastos+'</div>';
-						}
+            if(!result) return;
 
-                        if(numeroperador!='' && numeroperador>0 ){
-							var divvalor2= document.getElementById("notif22");
-                            divvalor2.innerHTML='<div class="noti_bubble">'+numeroperador+'</div>';
-                        }
-                        
-                        if(numeroremesas!='' && numeroremesas>0 ){
-							var divvalor3= document.getElementById("notif23");
-                            divvalor3.innerHTML='<div class="noti_bubble">'+numeroremesas+'</div>';
-						}
-                        console.log(cierrecaja);
-                        if(cierrecaja!='' && cierrecaja>0 ){
-							var divvalor4= document.getElementById("notif24");
-                            divvalor4.innerHTML='<div class="noti_bubble">'+cierrecaja+'</div>';
-						}
+            const asignar = (id, valor) => {
+                if(valor && valor > 0){
+                    document.getElementById(id).innerHTML =
+                        '<div class="noti_bubble">'+valor+'</div>';
+                }
+            };
 
-                        trueorfalse=false;
+            asignar("notif28", result.alertassede);
+            asignar("notif27", result.faltantes);
+            asignar("notif26", result.pendientes);
+            asignar("notif25", result.seguimiento);
+            asignar("notif",   result.gastossede);
+            asignar("notif22", result.gastosoperador);
+            asignar("notif23", result.gastosremesas);
+            asignar("notif24", result.cierrecaja);
 
-					}else {
-						trueorfalse=true;
-					}	
-				}
-            });
-           // console.log('josee111');
-            clearTimeout(timer2);
-    timer2=setTimeout(function(){buscarnotificaciones(tipo)},1200000); // 3000ms = 3s
+        },
+        error: function(){
+            console.warn("Error cargando notificaciones");
+        }
+    });
 
+    clearTimeout(timer2);
+    timer2 = setTimeout(function(){
+        buscarnotificaciones(tipo)
+    }, 1200000); // cada 20 min
 }
 
 

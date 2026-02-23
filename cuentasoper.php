@@ -173,7 +173,7 @@ $conde2="and usu_idsede=$id_sedes";
 
 $FB->llena_texto("Sede:",1,2,$DB,"(SELECT `idsedes`,`sed_nombre` FROM sedes where idsedes>0 $conde4 )", "cambio4(\"param2\",\"param1\",\"cuentasoper.php\")", "$id_sedes", 1, 1);
 $FB->llena_texto("Fecha de Busqueda:", 4, 10, $DB, "", "", "$fechaactual", 4, 0);
-$FB->llena_texto("Operario:",2,2, $DB, "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) $conde2 	AND roles_idroles IN (2,3,5,8)", "", "$param2", 1, 1);
+$FB->llena_texto("Operario:",2,2, $DB, "SELECT `idusuarios`,`usu_nombre` FROM `usuarios` WHERE  (usu_estado=1 or usu_filtro=1) $conde2 	AND roles_idroles IN (2,3,5,8,10)", "", "$param2", 1, 1);
 echo '<td class="text">Escanear Código: </td><td align="right" ><div class="form-group">
 <div class="input-group">
 	<div class="input-group-addon"><i class="fa fa-barcode"></i></div>

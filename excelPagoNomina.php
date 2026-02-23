@@ -765,35 +765,44 @@ function diasSegundaQuince($year, $month) {
 
                       $totalDevengPres=$totalDevengPres+$totalQuincena;
                     
+                    $nombre=$rw11[1];
+                    // Reemplazar ñ y Ñ por n y N
+                    if (strpos($nombre, 'ñ') !== false || strpos($nombre, 'Ñ') !== false) {
+                        $nombre = str_replace(['ñ', 'Ñ'], ['n', 'N'], $nombre);
+                    }
+                    $apellido=$rw11[2];
+                    // Reemplazar ñ y Ñ por n y N
+                    if (strpos($apellido, 'ñ') !== false || strpos($apellido, 'Ñ') !== false) {
+                        $apellido = str_replace(['ñ', 'Ñ'], ['n', 'N'], $apellido);
+                    }
+  
+                    if ($rw1[16]=="DAVIPLATA") {
+                        $tipoCuenta="DP";
+                    }else if ($rw1[16]=="AHORROS") {
+                        $tipoCuenta="CA";
+                    }
+                    
+                    if ($rw1[17]=="DAVIVIENDA" or $rw1[17]=="DAVIPLATA") {
+                        $codigoBanco="51";
+                    }
+                    if($rw11[0]==16 or $rw11[0]==158){
+                    $nombre="LILIANA";    
+                    $apellido="WALTEROS AGUDELO";
+                    $Cedula="35510501";
+                    $tipoCuenta="CA";
+                    $codigoBanco="51";
 
-
+                    }
                       echo "<tr>";
                     
                       echo "<td>1</td>";//tipo identificacion
                       echo "<td>$rw11[5]</td>";//Numero identificacion
-                      $nombre=$rw11[1];
-                      // Reemplazar ñ y Ñ por n y N
-                      if (strpos($nombre, 'ñ') !== false || strpos($nombre, 'Ñ') !== false) {
-                            $nombre = str_replace(['ñ', 'Ñ'], ['n', 'N'], $nombre);
-                        }
+
                       echo "<td>$nombre</td>";//Nombre
 
-                      $apellido=$rw11[2];
-                    // Reemplazar ñ y Ñ por n y N
-                      if (strpos($apellido, 'ñ') !== false || strpos($apellido, 'Ñ') !== false) {
-                            $apellido = str_replace(['ñ', 'Ñ'], ['n', 'N'], $apellido);
-                        }
+
                       echo "<td>$apellido</td>";//Apellido
-  
-                      if ($rw1[16]=="DAVIPLATA") {
-                          $tipoCuenta="DP";
-                      }else if ($rw1[16]=="AHORROS") {
-                          $tipoCuenta="CA";
-                      }
-                      
-                      if ($rw1[17]=="DAVIVIENDA" or $rw1[17]=="DAVIPLATA") {
-                          $codigoBanco="51";
-                      }
+
                       echo "<td>$codigoBanco</td>";
                       
                       echo "<td>$tipoCuenta</td>";
@@ -1654,36 +1663,50 @@ function diasSegundaQuince($year, $month) {
                         $valorAPagarotrosTodos= $valorAPagarotrosTodos+$totalOtrosAPagar;
                         $TotalDevengoyOtrosTodos= $TotalDevengoyOtrosTodos+$TotalDevengoyOtros;
             
-                                  echo "<tr>";
-                    
-                      echo "<td>1</td>";//tipo identificacion
-                      echo "<td>$rw16[5]</td>";//Numero identificacion
-                      $nombre=$rw16[1];
+                        $Cedula=$rw16[5];
+                        $nombre=$rw16[1];
                       // Reemplazar ñ y Ñ por n y N
-                      if (strpos($nombre, 'ñ') !== false || strpos($nombre, 'Ñ') !== false) {
+                        if (strpos($nombre, 'ñ') !== false || strpos($nombre, 'Ñ') !== false) {
                             $nombre = str_replace(['ñ', 'Ñ'], ['n', 'N'], $nombre);
                         }
-                      echo "<td>$nombre</td>";//Nombre
-
-                      $apellido=$rw16[2];
+                        $apellido=$rw16[2];
                     // Reemplazar ñ y Ñ por n y N
-                      if (strpos($apellido, 'ñ') !== false || strpos($apellido, 'Ñ') !== false) {
+                        if (strpos($apellido, 'ñ') !== false || strpos($apellido, 'Ñ') !== false) {
                             $apellido = str_replace(['ñ', 'Ñ'], ['n', 'N'], $apellido);
                         }
-                      echo "<td>$apellido</td>";//Apellido
+
                         $tipoCuenta="";
                         $codigoBanco="";  
-                      if ($rw1[16]=="DAVIPLATA") {
-                          $tipoCuenta="DP";
-                           $codigoBanco="51";
-                      }else if ($rw1[16]=="AHORROS") {
-                          $tipoCuenta="CA";
-                      }
-                      if ($rw1[17]=="DAVIVIENDA" or $rw1[17]=="DAVIPLATA") {
-                          $codigoBanco="51";
-                      }elseif ($rw1[17]=="BBVA"){
-                            $codigoBanco="13";
-                        }
+                    if ($rw1[16]=="DAVIPLATA") {
+                        $tipoCuenta="DP";
+                        $codigoBanco="51";
+                    }else if ($rw1[16]=="AHORROS") {
+                        $tipoCuenta="CA";
+                    }
+                    if ($rw1[17]=="DAVIVIENDA" or $rw1[17]=="DAVIPLATA") {
+                        $codigoBanco="51";
+                    }elseif ($rw1[17]=="BBVA"){
+                        $codigoBanco="13";
+                    }
+                    if($rw16[0]==16 or $rw16[0]==158){
+                    $nombre="LILIANA";    
+                    $apellido="WALTEROS AGUDELO";
+                    $Cedula="35510501";
+                    $tipoCuenta="CA";
+                    $codigoBanco="51";
+
+                    }
+                    echo "<tr>";
+                    
+                      echo "<td>1</td>";//tipo identificacion
+                      echo "<td>$Cedula</td>";//Numero identificacion
+
+                      echo "<td>$nombre</td>";//Nombre
+
+
+                      echo "<td>$apellido</td>";//Apellido
+
+                    
                       echo "<td>$codigoBanco</td>";
                       
                       echo "<td>$tipoCuenta</td>";

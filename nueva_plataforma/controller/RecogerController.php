@@ -1,6 +1,6 @@
 <?php
 // controller/RecogerController.php
-
+require("../../login_autentica.php"); // ESTE archivo debe tener session_start()
 require_once "../model/RecogerModel.php";
 
 $modelo = new RecogerModel();
@@ -164,6 +164,246 @@ if (isset($_POST['accion']) && $_POST['accion'] === 'calcularValorTotal') {
     echo json_encode($resp);
     exit;
 }
+
+/* ============================================================
+   ACCIÓN: Cargar sello
+   ============================================================ */
+
+if (isset($_POST['accion']) && $_POST['accion'] === 'guardarSello') {
+
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    header('Content-Type: application/json');
+
+    $session = $_SESSION ?? [];
+    $usuario = $session['usuario_id'] ?? null;
+
+    if (empty($usuario)) {
+        // logController('ACCESO DENEGADO guardarSello', [
+        //     'motivo' => 'Sesión no válida'
+        // ]);
+
+        echo json_encode([
+            'ok' => false,
+            'mensaje' => 'Sesión expirada'
+        ]);
+        exit;
+    }
+
+    // logController('REQUEST guardarSello', [
+    //     'post_keys' => array_keys($_POST),
+    //     'usuario'   => $usuario
+    // ]);
+
+    try {
+
+        // 🔎 VALIDAR ID SERVICIO
+        if (empty($_POST['idservicio']) || !is_numeric($_POST['idservicio'])) {
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'ID de servicio inválido'
+            ]);
+            exit;
+        }
+
+        $idservicio = intval($_POST['idservicio']);
+
+        // 🔎 VALIDAR IMAGEN BASE64
+        if (empty($_POST['firmaBase64'])) {
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'No se recibió la imagen del sello'
+            ]);
+            exit;
+        }
+
+        $firmaBase64 = $_POST['firmaBase64'];
+
+        if (strpos($firmaBase64, 'data:image') !== 0) {
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'Formato de imagen inválido'
+            ]);
+            exit;
+        }
+
+        // 🔥 LLAMAR AL MODELO
+        $guardado = $modelo->guardarFirmaRecogida($idservicio, $firmaBase64);
+
+        if (!$guardado) {
+            // logController('ERROR guardarSello modelo', [
+            //     'idservicio' => $idservicio
+            // ]);
+
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'No se pudo guardar el sello'
+            ]);
+            exit;
+        }
+
+        // logController('SELLO GUARDADO OK', [
+        //     'idservicio' => $idservicio
+        // ]);
+
+        echo json_encode([
+            'ok' => true,
+            'mensaje' => 'Sello guardado correctamente'
+        ]);
+        exit;
+
+    } catch (Throwable $e) {
+
+        // logController('EXCEPCIÓN guardarSello', [
+        //     'mensaje' => $e->getMessage(),
+        //     'linea'   => $e->getLine()
+        // ]);
+
+        echo json_encode([
+            'ok' => false,
+            'mensaje' => 'Error interno al guardar sello'
+        ]);
+        exit;
+    }
+}
+if (isset($_POST['accion']) && $_POST['accion'] === 'enviarLinkFirma') {
+
+    header('Content-Type: application/json');
+
+    $session = $_SESSION ?? [];
+    $usuario = $session['usuario_id'] ?? null;
+
+    if (empty($usuario)) {
+        logController('ACCESO DENEGADO enviarLinkFirma', [
+            'motivo' => 'Sesión no válida'
+        ]);
+
+        echo json_encode([
+            'ok' => false,
+            'mensaje' => 'Sesión expirada'
+        ]);
+        exit;
+    }
+
+    logController('REQUEST enviarLinkFirma', [
+        'post' => $_POST,
+        'usuario' => $usuario
+    ]);
+
+    try {
+
+        // 🔎 Validaciones básicas
+        $idservicio = $_POST['idservicio'] ?? null;
+        $nombre     = trim($_POST['nombre'] ?? '');
+        $telefono   = trim($_POST['telefono'] ?? '');
+        $tipopago       = trim($_POST['tipopago'] ?? '');
+
+        $link="$idservicio&accion=guardarFirmaRecogida&tipo_pago=$tipopago";
+
+        if (empty($idservicio) || !is_numeric($idservicio)) {
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'ID de servicio inválido'
+            ]);
+            exit;
+        }
+
+        if (empty($telefono)) {
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'Teléfono requerido'
+            ]);
+            exit;
+        }
+
+        // if (empty($link)) {
+        //     echo json_encode([
+        //         'ok' => false,
+        //         'mensaje' => 'Link de firma requerido'
+        //     ]);
+        //     exit;
+        // }
+
+        $idservicio = intval($idservicio);
+
+        // 🔥 Tipo de alerta (usa el mismo que tu sistema ya maneje)
+        $tipoAlerta = 44; // 👈 AJUSTA SI TU SISTEMA USA OTRO CÓDIGO
+
+        // 🔥 Llamar al modelo
+        $resp = $modelo->reEnviarFirmaWhat($telefono, $tipoAlerta, $idservicio, $link);
+
+        if (!$resp['ok']) {
+            logController('ERROR API reenviar firma', [
+                'respuesta' => $resp
+            ]);
+
+            echo json_encode([
+                'ok' => false,
+                'mensaje' => 'No se pudo enviar el mensaje de WhatsApp'
+            ]);
+            exit;
+        }
+
+        logController('REENVÍO FIRMA OK', [
+            'idservicio' => $idservicio,
+            'telefono'   => $telefono
+        ]);
+
+        echo json_encode([
+            'ok' => true,
+            'mensaje' => 'Link enviado correctamente'
+        ]);
+        exit;
+
+    } catch (Throwable $e) {
+
+        logController('EXCEPCIÓN enviarLinkFirma', [
+            'mensaje' => $e->getMessage(),
+            'linea'   => $e->getLine()
+        ]);
+
+        echo json_encode([
+            'ok' => false,
+            'mensaje' => 'Error interno al reenviar link'
+        ]);
+        exit;
+    }
+}
+/* ============================================================
+   ACCIÓN: CONSULTAR ESTADO DE FIRMA
+   ============================================================ */
+if (isset($_GET['accion']) && $_GET['accion'] === 'consultarEstadoFirma') {
+
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    $firmada = ($id > 0) ? $modelo->existeFirmaEntregaPublica($id) : false;
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+        'ok' => true,
+        'firmada' => (bool)$firmada
+    ]);
+    exit;
+}
+function logController(string $mensaje, array $contexto = [])
+{
+    $logDir  = __DIR__ . 'logs';
+    $logFile = $logDir . '/controller_' . date('Y-m-d') . '.log';
+
+    if (!is_dir($logDir)) {
+        mkdir($logDir, 0775, true);
+    }
+
+    $linea = '[' . date('Y-m-d H:i:s') . '] ' . $mensaje;
+
+    if (!empty($contexto)) {
+        $linea .= ' | ' . json_encode($contexto, JSON_UNESCAPED_UNICODE);
+    }
+
+    file_put_contents($logFile, $linea . PHP_EOL, FILE_APPEND);
+}
+
 
 // Ninguna acción coincide
 echo "Acción no válida en RecogerController.";

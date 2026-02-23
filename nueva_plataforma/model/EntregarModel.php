@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 require_once "../config/database.php";
 
@@ -34,6 +34,7 @@ class EntregarModel {
         $res = $this->query($sql);
         return ($res && $res->num_rows > 0);
     }
+    
 
     
 
@@ -366,6 +367,8 @@ class EntregarModel {
 
         $res12 = $this->query($sql12);
         $rw12 = ($res12 ? $res12->fetch_row() : null);
+        $this->guardarUbicacionServicio($idservicio, $id_usuario, "ENTREGA",$data);
+
 
         if ($rw12) {
             $this->logEntrega("Datos WhatsApp encontrados. Enviando notificaciones...");
@@ -889,6 +892,304 @@ public function guardarNoEntregar($data, $files, $ctx = [])
             "response" => $respDecoded
         ];
     }
+    public function guardarFirmaRecogida($idservicio, $firmaBase64)
+    {
+        $stmtCheck = null;
+        $stmtUpdate = null;
+        $stmtInsert = null;
+        $stmtTel = null;
+        $stmtGuia = null;
+        date_default_timezone_set('America/Bogota');
+        $fechaHoraColombia = date('Y-m-d H:i:s');
+        $logFile = __DIR__ . '/debug_guardar_firma.log';
+        file_put_contents($logFile, "[" . date('Y-m-d H:i:s') . "] === INICIO guardarFirmaRecogida() ===\n", FILE_APPEND);
+
+        try {
+            file_put_contents($logFile, "🟡 Paso 1: Recibido idservicio=$idservicio\n", FILE_APPEND);
+
+            // 1️⃣ Convertir base64 a imagen (compatible con varios formatos)
+            if (preg_match('/^data:image\/(\w+);base64,/', $firmaBase64, $type)) {
+                $firmaData = substr($firmaBase64, strpos($firmaBase64, ',') + 1);
+                $type = strtolower($type[1]); // jpg, jpeg, png, webp...
+
+                $firmaData = str_replace(' ', '+', $firmaData);
+                $imagen = base64_decode($firmaData);
+
+                if ($imagen === false) {
+                    file_put_contents($logFile, "❌ Error al decodificar base64\n", FILE_APPEND);
+                    return false;
+                }
+
+                // Validar extensión permitida
+                if (!in_array($type, ['jpg','jpeg','png','webp'])) {
+                    file_put_contents($logFile, "❌ Tipo de imagen no permitido: $type\n", FILE_APPEND);
+                    return false;
+                }
+
+            } else {
+                file_put_contents($logFile, "❌ Base64 inválido\n", FILE_APPEND);
+                return false;
+            }
+
+            if ($imagen === false) {
+                file_put_contents($logFile, "❌ Error al decodificar base64\n", FILE_APPEND);
+                return false;
+            }
+
+            // 2️⃣ Crear carpeta si no existe
+            $rutaCarpeta = __DIR__ . '/../../firmas_clientes/';
+            if (!file_exists($rutaCarpeta)) {
+                if (!mkdir($rutaCarpeta, 0777, true)) {
+                    file_put_contents($logFile, "❌ Error al crear carpeta\n", FILE_APPEND);
+                    return false;
+                }
+            }
+
+            // 3️⃣ Guardar archivo
+            $nombreArchivo = 'firma_' . $idservicio . '_' . time() . '.png';
+            $rutaArchivo = $rutaCarpeta . $nombreArchivo;
+            $rutaArchivoGuardar = "firmas_clientes/" . $nombreArchivo;
+
+            if (file_put_contents($rutaArchivo, $imagen) === false) {
+                file_put_contents($logFile, "❌ Error al guardar imagen\n", FILE_APPEND);
+                return false;
+            }
+
+            file_put_contents($logFile, "✅ Imagen guardada: $rutaArchivoGuardar\n", FILE_APPEND);
+
+            $tipoFirma = 'Entrega';
 
 
+            // 🔎 4️⃣ Verificar si ya existe firma para ese servicio y tipo
+            $sqlCheck = "SELECT id FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+            $stmtCheck = $this->db->prepare($sqlCheck);
+            $stmtCheck->bind_param('is', $idservicio, $tipoFirma);
+            $stmtCheck->execute();
+            $result = $stmtCheck->get_result();
+
+            if ($result->num_rows > 0) {
+                // ✏️ YA EXISTE → HACER UPDATE
+                $row = $result->fetch_assoc();
+                $idFirma = $row['id'];
+
+                file_put_contents($logFile, "🟠 Firma existente encontrada (ID=$idFirma), actualizando...\n", FILE_APPEND);
+                $activoParaFirma=0;
+                $sqlUpdate = "UPDATE firma_clientes 
+                            SET firma_clientes = ?, fecha_registro = ? , activo_para_firmar = ?
+                            WHERE id = ?";
+                $stmtUpdate = $this->db->prepare($sqlUpdate);
+                
+                $stmtUpdate->bind_param('ssii', $rutaArchivoGuardar, $fechaHoraColombia,$activoParaFirma, $idFirma);
+
+
+                if (!$stmtUpdate->execute()) {
+                    file_put_contents($logFile, "❌ Error en UPDATE: " . $stmtUpdate->error . "\n", FILE_APPEND);
+                    return false;
+                }
+                                // 🔎 Obtener teléfono desde firma_clientes
+                $sqlTel = "SELECT telefono FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+                $stmtTel = $this->db->prepare($sqlTel);
+                $stmtTel->bind_param('is', $idservicio, $tipoFirma);
+                $stmtTel->execute();
+                $resTel = $stmtTel->get_result();
+                $telefono = ($resTel->num_rows > 0) ? $resTel->fetch_assoc()['telefono'] : null;
+
+                // 🔎 Obtener número de guía desde servicios
+                $sqlGuia = "SELECT ser_consecutivo FROM servicios WHERE idservicios = ? LIMIT 1";
+                $stmtGuia = $this->db->prepare($sqlGuia);
+                $stmtGuia->bind_param('i', $idservicio);
+                $stmtGuia->execute();
+                $resGuia = $stmtGuia->get_result();
+                $numguia = ($resGuia->num_rows > 0) ? $resGuia->fetch_assoc()['ser_consecutivo'] : null;
+
+
+                // $this->enviarGuiaWhat( $telefono, 42, $numguia."R");
+
+                file_put_contents($logFile, "✅ Firma actualizada correctamente\n", FILE_APPEND);
+                return true;
+
+            } else {
+                // ➕ NO EXISTE → INSERTAR
+                $activoParaFirma=0;
+                file_put_contents($logFile, "🟢 No existe firma previa, insertando nueva...\n", FILE_APPEND);
+
+                $sqlInsert = "INSERT INTO firma_clientes (id_guia, tipo_firma, firma_clientes, fecha_registro,activo_para_firmar) 
+                            VALUES (?, ?, ?, ?,?)";
+                $stmtInsert = $this->db->prepare($sqlInsert);
+                
+                $stmtInsert->bind_param('isssi', $idservicio, $tipoFirma, $rutaArchivoGuardar, $fechaHoraColombia,$activoParaFirma);
+
+
+                if (!$stmtInsert->execute()) {
+                    file_put_contents($logFile, "❌ Error en INSERT: " . $stmtInsert->error . "\n", FILE_APPEND);
+                    return false;
+                }
+
+                // 🔎 Obtener teléfono desde firma_clientes
+                // $sqlTel = "SELECT telefono FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+                // $stmtTel = $this->db->prepare($sqlTel);
+                // $stmtTel->bind_param('is', $idservicio, $tipoFirma);
+                // $stmtTel->execute();
+                // $resTel = $stmtTel->get_result();
+                // $telefono = ($resTel->num_rows > 0) ? $resTel->fetch_assoc()['telefono'] : null;
+
+                // 🔎 Obtener número de guía desde servicios
+                // $sqlGuia = "SELECT ser_consecutivo FROM servicios WHERE idservicios = ? LIMIT 1";
+                // $stmtGuia = $this->db->prepare($sqlGuia);
+                // $stmtGuia->bind_param('i', $idservicio);
+                // $stmtGuia->execute();
+                // $resGuia = $stmtGuia->get_result();
+                // $numguia = ($resGuia->num_rows > 0) ? $resGuia->fetch_assoc()['ser_consecutivo'] : null;
+                // $this->enviarGuiaWhat( $telefono, 42, $numguia."R");
+                file_put_contents($logFile, "✅ Firma insertada correctamente\n", FILE_APPEND);
+                return true;
+            }
+
+            
+            
+        } catch (Exception $e) {
+            file_put_contents($logFile, "❌ Excepción: " . $e->getMessage() . "\n", FILE_APPEND);
+            return false;
+        } finally {
+            // Cerrar statements abiertos
+            if ($stmtCheck instanceof mysqli_stmt) { $stmtCheck->close(); }
+            if ($stmtUpdate instanceof mysqli_stmt) { $stmtUpdate->close(); }
+            if ($stmtInsert instanceof mysqli_stmt) { $stmtInsert->close(); }
+            if ($stmtTel instanceof mysqli_stmt) { $stmtTel->close(); }
+            if ($stmtGuia instanceof mysqli_stmt) { $stmtGuia->close(); }
+
+            file_put_contents($logFile, "=== FIN guardarFirmaRecogida() ===\n\n", FILE_APPEND);
+        }
+    }
+    public function reEnviarFirmaWhat($telefono, $tipo, $idservi,$link)
+    {
+        // $this->logEntrega("=== enviarAlertaWhat() ===");
+        // $this->logEntrega("Datos: tel=$telefono, tipo=$tipo, id=$idservi");
+
+        $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+
+        $payload = [
+            "telefono"     => "$telefono",
+            "id"     => "$idservi",
+            "tipo_alerta"  => "$tipo",
+            "texto1"      => "$idservi",
+            "texto2"      => "$link",
+            "texto3"      => "Entregado"
+
+        ];
+
+        $jsonData = json_encode($payload);
+
+        $this->logEntrega("Payload enviado: $jsonData");
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $jsonData,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Authorization: Bearer MiSuperToken123'
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+
+        if ($response === false) {
+            $error = curl_error($curl);
+            curl_close($curl);
+
+            $this->logEntrega("ERROR cURL: $error");
+
+            return [
+                "ok" => false,
+                "error" => $error
+            ];
+        }
+
+        curl_close($curl);
+
+        $this->logEntrega("Respuesta API: $response");
+
+        $respDecoded = json_decode($response, true);
+
+        return [
+            "ok" => true,
+            "response" => $respDecoded
+        ];
+    }
+
+    private function guardarUbicacionServicio(
+        int $idservicios,
+        int $idusuario,
+        string $tipoEvento,
+        array $data
+    ): void {
+        try {
+            $latitud   = isset($data['latitud']) ? (float)$data['latitud'] : 0;
+            $longitud  = isset($data['longitud']) ? (float)$data['longitud'] : 0;
+            $precision = isset($data['precision_gps']) ? (float)$data['precision_gps'] : 0;
+
+            if ($latitud == 0 || $longitud == 0) {
+                // $this->logServicio('GPS NO ENVIADO', ['idservicio' => $idservicios]);
+                return;
+            }
+
+            $fecha = date("Y-m-d H:i:s");
+
+            $sql = "INSERT INTO servicios_ubicaciones (
+                        idservicios, idusuario, tipo_evento,
+                        latitud, longitud, precision_metros, fecha_registro
+                    ) VALUES (
+                        '".(int)$idservicios."',
+                        '".(int)$idusuario."',
+                        '".$this->escape($tipoEvento)."',
+                        '".$this->escape($latitud)."',
+                        '".$this->escape($longitud)."',
+                        '".$this->escape($precision)."',
+                        '".$this->escape($fecha)."'
+                    )";
+
+            $this->db->query($sql);
+
+            // $this->logServicio('GPS GUARDADO', [
+            //     'servicio' => $idservicios,
+            //     'evento' => $tipoEvento,
+            //     'lat' => $latitud,
+            //     'lng' => $longitud
+            // ]);
+
+        } catch (\Throwable $e) {
+            // $this->logServicio('ERROR GPS', ['mensaje' => $e->getMessage()]);
+        }
+    }
+
+
+    public function existeFirmaEntregaPublica($idservicio) {
+    $id = (int)$idservicio;
+
+    $sql = "SELECT activo_para_firmar, firma_clientes
+            FROM firma_clientes
+            WHERE tipo_firma='Entrega' AND id_guia='$id'
+            ORDER BY id DESC
+            LIMIT 1";
+
+    $res = $this->query($sql);
+
+    if (!$res || $res->num_rows === 0) {
+        return false;
+    }
+
+    $row = $res->fetch_assoc();
+
+    // Si ya quedó en 0, se considera firmada.
+    if (isset($row['activo_para_firmar']) && (int)$row['activo_para_firmar'] === 0) {
+        return true;
+    }
+
+    // Respaldo: si hay ruta/valor de firma guardada.
+    return !empty($row['firma_clientes']);
+}
 }

@@ -14,6 +14,8 @@ $param35 = $_GET['param35'];
 $param36 = $_GET['param36'];
 
 $param37 = $_GET['param37'];
+
+
 ?>
 <style>
     /* Estilos básicos para la barra superior */
@@ -552,7 +554,9 @@ if ($activoEnNomina) {
         //   echo "<td>No ".$rw1[16]."</td>";
 
       $valordediastrabajados=0;
-      $sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros` FROM `cargo` WHERE idcargo='$rw1[3]'";
+        // $sql2="SELECT  `idcargo`, `car_Cargo`, `car_Salario`, `car_Auxilio`, `car_otros` FROM `cargo` WHERE idcargo='$rw1[3]'";
+	    $sql2="SELECT  `idcargo`, `car_Cargo`, `salario`, `auxilio`, `otros`,car_Recogida,car_ValorRecogida,des_salud,des_pension FROM `cargo`INNER JOIN salarios_cargos on idcargo=id_relCargo  WHERE idcargo='$rw1[3]' and anio='$ano'";
+      
       $DB1->Execute($sql2);
       $cargosaldo=mysqli_fetch_row($DB1->Consulta_ID);
       if($idusuario>=1){
@@ -872,11 +876,18 @@ $pago1=0;
 
 //SALUD Y PENSION
 
-$Salud=26000;
-$Pension=26000;
+// $Salud=26000;
+// $Pension=26000;
 
-$saludPorDia=26000/15;
-$pensionPorDia=26000/15;
+// $saludPorDia=26000/15;
+// $pensionPorDia=26000/15;
+    $Salud=$cargosaldo[7];
+    $Pension=$cargosaldo[8];
+    
+    
+
+    $saludPorDia=$Salud/30;
+    $pensionPorDia=$Pension/30;
 
 if ($terminaContrato=="" and $mesdeingreso==false) {
 	if($param36=='Completo'){

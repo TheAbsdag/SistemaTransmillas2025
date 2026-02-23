@@ -16,4 +16,12 @@
 </aside></div>
 </body>
 </html>
-<?php $DB->cerrarconsulta(); ?>
+
+<?php
+// $DB->cerrarconsulta();
+foreach (['DB', 'DB1', 'DB_m', 'DB_m1', 'DB_m2'] as $varName) {
+    if (isset($GLOBALS[$varName]) && is_object($GLOBALS[$varName]) && method_exists($GLOBALS[$varName], 'cerrarconsulta')) {
+        $GLOBALS[$varName]->cerrarconsulta();
+    }
+}
+?>

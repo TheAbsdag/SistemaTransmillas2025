@@ -39,7 +39,7 @@ if ($isAjax && ($_POST['accion'] ?? '') === 'guardarRecogida') {
     ]);
 
     try {
-        $variableunica = date('YmdHis') . $id_usuario . mt_rand(1000, 9999);
+        $variableunica = date('YmdHis') . $usuario . mt_rand(1000, 9999);
         $_POST['variableunica'] = $variableunica;
 
         $resultado = $modelo->guardarRecogidaConLogicaVieja(
@@ -87,9 +87,6 @@ if ($isAjax && ($_POST['accion'] ?? '') === 'guardarRecogida') {
         exit;
     }
 }
-
-
-
 
 if ($isAjax && $_POST['accion'] === 'obtenerCreditos') {
 

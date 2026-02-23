@@ -4,58 +4,58 @@ require("login_autentica.php");
 include("layout.php");
 //include("cabezote4.php"); 
 
-function contarCorreosNoLeidos() {
-    $resultado = [
-        'ok' => false,
-        'total' => 0,
-        'error' => null
-    ];
+// function contarCorreosNoLeidos() {
+//     $resultado = [
+//         'ok' => false,
+//         'total' => 0,
+//         'error' => null
+//     ];
 
-    $correo = 'facturaciontransmillas@gmail.com';
-    $password = 'qxlh uxsh ilgp xojp'; // contraseña de aplicación
+//     $correo = 'facturaciontransmillas@gmail.com';
+//     $password = 'qxlh uxsh ilgp xojp'; // contraseña de aplicación
 
-    if (!$password) {
-        $resultado['error'] = 'La variable MAIL_PASSWORD no existe o está vacía';
-        return $resultado;
-    }
+//     if (!$password) {
+//         $resultado['error'] = 'La variable MAIL_PASSWORD no existe o está vacía';
+//         return $resultado;
+//     }
 
-    $inbox = imap_open(
-        '{imap.gmail.com:993/imap/ssl}INBOX',
-        $correo,
-        $password
-    );
+//     $inbox = imap_open(
+//         '{imap.gmail.com:993/imap/ssl}INBOX',
+//         $correo,
+//         $password
+//     );
 
-    if (!$inbox) {
-        $resultado['error'] = imap_last_error();
-        return $resultado;
-    }
+//     if (!$inbox) {
+//         $resultado['error'] = imap_last_error();
+//         return $resultado;
+//     }
 
-    $emails = imap_search($inbox, 'UNSEEN');
+//     $emails = imap_search($inbox, 'UNSEEN');
 
-    if ($emails === false) {
-        $resultado['error'] = 'No se encontraron correos no leídos (o búsqueda fallida)';
-        imap_close($inbox);
-        return $resultado;
-    }
+//     if ($emails === false) {
+//         $resultado['error'] = 'No se encontraron correos no leídos (o búsqueda fallida)';
+//         imap_close($inbox);
+//         return $resultado;
+//     }
 
-    $resultado['ok'] = true;
-    $resultado['total'] = count($emails);
+//     $resultado['ok'] = true;
+//     $resultado['total'] = count($emails);
 
-    imap_close($inbox);
-    return $resultado;
-}
+//     imap_close($inbox);
+//     return $resultado;
+// }
 
-$respuesta = contarCorreosNoLeidos();
+// $respuesta = "ok";
 
-if (!$respuesta['ok']) {
-    // SOLO PARA DEPURACIÓN
-    // echo "❌ Error IMAP: " . $respuesta['error'];
+// if (!$respuesta['ok']) {
+//     // SOLO PARA DEPURACIÓN
+//     // echo "❌ Error IMAP: " . $respuesta['error'];
     $cantidad=0;
 
-} else {
-    // echo "📩 Correos no leídos: " . $respuesta['total'];
-    $cantidad=$respuesta['total'];
-}
+// } else {
+//     // echo "📩 Correos no leídos: " . $respuesta['total'];
+//     $cantidad=$respuesta['total'];
+// }
 
 
 
@@ -290,7 +290,7 @@ echo "<td><button type='button' class='btn btn-warning' onclick='llena_datos(2, 
 <td><button type='button' class='btn btn-primary' onclick='crearfaactura();'>Crear Factura Externa</button>
 <button type='button' class='btn btn-success' onclick='llena_datos(3, $nivel_acceso, \"id_nombre\", \"ASC\");'>Crear PRE-Factura</button></td></tr>";
 $aumento=0;
-$sqlalert="SELECT DISTINCT rs.rel_nom_credito FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE DATE(s.ser_fecharegistro) BETWEEN '$inicio' AND '$fin' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito";
+$sqlalert="SELECT DISTINCT rs.rel_nom_credito FROM servicios s INNER JOIN rel_sercli rsc ON s.idservicios = rsc.ser_idservicio INNER JOIN clientesservicios cs ON cs.idclientesdir = rsc.ser_idclientes INNER JOIN ciudades c ON c.idciudades = cs.cli_idciudad INNER JOIN rel_sercre rs ON rs.idservicio = s.idservicios WHERE s.ser_fecharegistro BETWEEN '$inicio 00:00:00' AND '$fin 23:59:59' AND s.ser_clasificacion = 2 AND s.ser_estado >= 3 AND s.ser_estado != 100 AND (s.ser_numerofactura IS NULL ) ORDER BY rs.rel_nom_credito";
 $DB1->Execute($sqlalert);
 while ($rw1 = mysqli_fetch_row($DB1->Consulta_ID)) {
                 $sinfactura.=" ".$rw1[0];

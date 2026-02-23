@@ -813,6 +813,7 @@ class RecogerModel
             throw new Exception("Error actualizando servicios: " . $conn->error);
         }
 
+        $this->guardarUbicacionServicio($id_param2, $id_usuario, "RECOGIDA",$data);
         // =========================
         // Actualizar firma_clientes
         // =========================
@@ -932,6 +933,7 @@ class RecogerModel
         if ($idservicio <= 0) {
             return ["ok" => false, "msg" => "ID de servicio inválido"];
         }
+        $id_nombre          = $POST['nombre'] ?? '';
 
         $motivo = $this->esc($POST['motivo'] ?? '');
         $ahora  = date("Y-m-d H:i:s");
@@ -943,12 +945,12 @@ class RecogerModel
             if (isset($FILES['foto_evidencia'])) {
                 $evidencia = $this->guardarImagen($FILES['foto_evidencia'], "./../../imgNoRecogidas");
             }
-
+            $descripcion=$id_nombre.": ".$motivo;
             // Actualiza servicios
             $sqlSer = "UPDATE servicios SET
                 ser_recogida='NO RECOGIDO',
                 ser_motivo='$motivo',
-                ser_descllamada=CONCAT(IFNULL(ser_descllamada, ''), '<br>', '$motivo'),
+                ser_descllamada='$descripcion',
                 ser_estado='5',
                 ser_img_evidencia='$evidencia',
                 ser_fechafinal='$ahora'
@@ -1060,7 +1062,7 @@ class RecogerModel
 
 
         public function logEntrega($msg) {
-            $logFile = __DIR__ . "/logs_WF.log";
+            $logFile = __DIR__ . "logs_WF.log";
             $fecha = date("Y-m-d H:i:s");
             file_put_contents($logFile, "[$fecha] $msg\n", FILE_APPEND);
         }
@@ -1268,273 +1270,571 @@ class RecogerModel
         "adicional" => $preadicional
     ];
 }
-private function logCalculo($mensaje)
-{
-    $ruta = __DIR__ . "/log_calculos.txt";
-    $fecha = date("[Y-m-d H:i:s] ");
+    private function logCalculo($mensaje)
+    {
+        $ruta = __DIR__ . "/log_calculos.txt";
+        $fecha = date("[Y-m-d H:i:s] ");
 
-    file_put_contents($ruta, $fecha . $mensaje . PHP_EOL, FILE_APPEND);
-}
-
-
-
-public function calcularValorConLogicaVieja(
-    $param7,      // kilos
-    $param8,      // kilos adicionales / volumen
-    $param2,      // ciudad origen
-    $param3,      // ciudad destino
-    $valortservicio,//tipo de servicio
-    $param6,      // valor declarado (con puntos)
-    $idcredito,   //Cliente
-    $param1,      // crédito? (1 = crédito)
-    $param4=0,
-    $param5=0,
-    $precioinicialkilos=5,
-    $tipoPago=0
-) {
-    // =========================
-    // 1. LOG inicial
-    // =========================
-    $this->logCalculo("======== INICIO CÁLCULO ========");
-    $this->logCalculo("PARAMETROS: kilos=$param7, vol=$param8, origen=$param2, destino=$param3, servicio=$valortservicio, credito=$idcredito, tipoCredito=$param1");
-
-    // =========================
-    // 2. Buscar rango de precios
-    // =========================
-    $kilos = $param7;
-
-    $sqlPrecios = "
-        SELECT idprecioskilos 
-        FROM precioskilos 
-        WHERE '$kilos' BETWEEN pre_inicial AND prec_final
-    ";
-
-    $this->logCalculo("SQL precios: $sqlPrecios");
-
-    $resPrecios = $this->db->query($sqlPrecios);
-
-    if (!$resPrecios) {
-        $this->logCalculo("ERROR ejecutando SQL precios: " . $this->db->error);
+        file_put_contents($ruta, $fecha . $mensaje . PHP_EOL, FILE_APPEND);
     }
 
-    $confipre = ($resPrecios ? $resPrecios->fetch_row() : [0]);
-    $idprecios = isset($confipre[0]) ? $confipre[0] : 0;
 
-    $this->logCalculo("ID precios encontrado: $idprecios");
 
-    if ($idprecios == 0 || $idprecios == '') {
-        $idprecios = 1;
-        $this->logCalculo("ID precios forzado a 1");
-    }
+    public function calcularValorConLogicaVieja(
+        $param7,      // kilos
+        $param8,      // kilos adicionales / volumen
+        $param2,      // ciudad origen
+        $param3,      // ciudad destino
+        $valortservicio,//tipo de servicio
+        $param6,      // valor declarado (con puntos)
+        $idcredito,   //Cliente
+        $param1,      // crédito? (1 = crédito)
+        $param4=0,
+        $param5=0,
+        $precioinicialkilos=5,
+        $tipoPago=0
+    ) {
+        // =========================
+        // 1. LOG inicial
+        // =========================
+        $this->logCalculo("======== INICIO CÁLCULO ========");
+        $this->logCalculo("PARAMETROS: kilos=$param7, vol=$param8, origen=$param2, destino=$param3, servicio=$valortservicio, credito=$idcredito, tipoCredito=$param1");
 
-    // =========================
-    // 3. Tipo de servicio
-    // =========================
-    $sql33 = "
-        SELECT tip_preciokilo, tip_precioadicional 
-        FROM tiposervicio 
-        WHERE idtiposervicio = '$valortservicio'
-    ";
+        // =========================
+        // 2. Buscar rango de precios
+        // =========================
+        $kilos = $param7;
 
-    $this->logCalculo("SQL tipo servicio: $sql33");
-
-    $res33 = $this->db->query($sql33);
-    if (!$res33) {
-        $this->logCalculo("ERROR ejecutando SQL tipo servicio: " . $this->db->error);
-    }
-
-    $rw7 = ($res33 ? $res33->fetch_row() : [0, 0]);
-
-    $this->logCalculo("Precios tipo servicio: kilo={$rw7[0]}, adicional={$rw7[1]}");
-
-    $preciokilo = 0;
-    $precioadicional = 0;
-
-    // =========================
-    // 4. Condiciones de lógica
-    // =========================
-    $this->logCalculo("Condiciónes ".$valortservicio."== 0 && ".$param1." != 1 && ".$tipoPago."!=2");
-    if ($valortservicio == 0 && $param1 != 1 && $tipoPago!=2) {
-        $this->logCalculo("Condición: servicio normal SIN crédito");
-
-        $sql = "
-            SELECT p.idprecios, p.pre_kilo, c.con_precios 
-            FROM precios p 
-            INNER JOIN configuracionkilos c 
-                ON c.con_idprecioskilos = p.idprecios 
-            WHERE c.con_tipo = 'normal' 
-              AND p.pre_idciudadori  = '$param2' 
-              AND p.pre_idciudaddes  = '$param3' 
-              AND p.pre_tiposervicio = '$valortservicio' 
-              AND c.con_idprecios    = '$idprecios'
-              AND pre_estado         =  1
+        $sqlPrecios = "
+            SELECT idprecioskilos 
+            FROM precioskilos 
+            WHERE '$kilos' BETWEEN pre_inicial AND prec_final
         ";
 
-        $this->logCalculo("SQL normal: $sql");
+        $this->logCalculo("SQL precios: $sqlPrecios");
+
+        $resPrecios = $this->db->query($sqlPrecios);
+
+        if (!$resPrecios) {
+            $this->logCalculo("ERROR ejecutando SQL precios: " . $this->db->error);
+        }
+
+        $confipre = ($resPrecios ? $resPrecios->fetch_row() : [0]);
+        $idprecios = isset($confipre[0]) ? $confipre[0] : 0;
+
+        $this->logCalculo("ID precios encontrado: $idprecios");
+
+        if ($idprecios == 0 || $idprecios == '') {
+            $idprecios = 1;
+            $this->logCalculo("ID precios forzado a 1");
+        }
+
+        // =========================
+        // 3. Tipo de servicio
+        // =========================
+        $sql33 = "
+            SELECT tip_preciokilo, tip_precioadicional 
+            FROM tiposervicio 
+            WHERE idtiposervicio = '$valortservicio'
+        ";
+
+        $this->logCalculo("SQL tipo servicio: $sql33");
+
+        $res33 = $this->db->query($sql33);
+        if (!$res33) {
+            $this->logCalculo("ERROR ejecutando SQL tipo servicio: " . $this->db->error);
+        }
+
+        $rw7 = ($res33 ? $res33->fetch_row() : [0, 0]);
+
+        $this->logCalculo("Precios tipo servicio: kilo={$rw7[0]}, adicional={$rw7[1]}");
+
+        $preciokilo = 0;
+        $precioadicional = 0;
+
+        // =========================
+        // 4. Condiciones de lógica
+        // =========================
+        $this->logCalculo("Condiciónes ".$valortservicio."== 0 && ".$param1." != 1 && ".$tipoPago."!=2");
+        if ($valortservicio == 0 && $param1 != 1 && $tipoPago!=2) {
+            $this->logCalculo("Condición: servicio normal SIN crédito");
+
+            $sql = "
+                SELECT p.idprecios, p.pre_kilo, c.con_precios 
+                FROM precios p 
+                INNER JOIN configuracionkilos c 
+                    ON c.con_idprecioskilos = p.idprecios 
+                WHERE c.con_tipo = 'normal' 
+                AND p.pre_idciudadori  = '$param2' 
+                AND p.pre_idciudaddes  = '$param3' 
+                AND p.pre_tiposervicio = '$valortservicio' 
+                AND c.con_idprecios    = '$idprecios'
+                AND pre_estado         =  1
+            ";
+
+            $this->logCalculo("SQL normal: $sql");
+
+            $res = $this->db->query($sql);
+            if (!$res) {
+                $this->logCalculo("ERROR SQL normal: " . $this->db->error);
+            }
+
+            $rw = ($res ? $res->fetch_row() : [0, 0, 0]);
+
+            $preciokilo      = $rw[1];
+            $precioadicional = $rw[2];
+
+        } else if ($rw7[0] >= 10 && $param1 != 1 && $tipoPago!=2) {
+            $this->logCalculo("Condición: carga especial SIN crédito");
+            $preciokilo      = $rw7[0];
+            $precioadicional = $rw7[1];
+
+        } else if ($param1 == 1 && $tipoPago==2) {
+            $this->logCalculo("Condición: CON crédito");
+
+            $sql3 = "
+                SELECT pc.pre_preciokilo, c.con_precios 
+                FROM precios_credito pc
+                INNER JOIN configuracionkilos c 
+                    ON c.con_idprecioskilos = pc.idprecioscredito 
+                WHERE c.con_tipo = 'Credito' 
+                AND pc.pre_idciudadori   = '$param2' 
+                AND pc.pre_idciudades    = '$param3' 
+                AND pc.pre_tiposervicio  = '$valortservicio' 
+                AND pc.pre_idcredito     = '$idcredito' 
+                AND c.con_idprecios      = '$idprecios'
+                AND pre_estado         =  1
+
+            ";
+            if (!empty($Origen)) {
+                $sql3 .= " AND pc.pre_idciudadori = '$Origen'";
+            }
+
+            $this->logCalculo("SQL crédito: $sql3");
+
+            $res3 = $this->db->query($sql3);
+            if (!$res3) {
+                $this->logCalculo("ERROR SQL crédito: " . $this->db->error);
+            }
+
+            $rw2 = ($res3 ? $res3->fetch_row() : [0, 0]);
+
+            $preciokilo      = $rw2[0];
+            $precioadicional = $rw2[1];
+
+        } else {
+            $this->logCalculo("Condición: caso por defecto");
+            $this->logCalculo("Condición: servicio normal SIN crédito");
+
+            $sql = "
+                SELECT p.idprecios, p.pre_kilo, c.con_precios 
+                FROM precios p 
+                INNER JOIN configuracionkilos c 
+                    ON c.con_idprecioskilos = p.idprecios 
+                WHERE c.con_tipo = 'normal' 
+                AND p.pre_idciudadori  = '$param2' 
+                AND p.pre_idciudaddes  = '$param3' 
+                AND p.pre_tiposervicio = '$valortservicio' 
+                AND c.con_idprecios    = '$idprecios'
+                AND pre_estado         =  1
+            ";
+
+            $this->logCalculo("SQL normal: $sql");
+
+            $res = $this->db->query($sql);
+            if (!$res) {
+                $this->logCalculo("ERROR SQL normal: " . $this->db->error);
+            }
+
+            $rw = ($res ? $res->fetch_row() : [0, 0, 0]);
+
+            $preciokilo      = $rw[1];
+            $precioadicional = $rw[2];
+            // misma consulta que arriba
+        }
+
+        $this->logCalculo("Precio kilo final: $preciokilo");
+        $this->logCalculo("Precio adicional final: $precioadicional");
+
+        // =========================
+        // 5. Cálculos intermedios
+        // =========================
+        $kilosvolumen = $param7 + $param8;
+        $this->logCalculo("Kilos + Volumen = $kilosvolumen");
+
+        if ($param7 > $precioinicialkilos) {
+            $this->logCalculo("Cálculo: excede kilos iniciales");
+            $precio1 = ($kilosvolumen - $precioinicialkilos) * $precioadicional;
+            $precio  = $preciokilo + $precio1;
+        } else {
+            $this->logCalculo("Cálculo: dentro de kilos iniciales");
+            $precio1 = $param8 * $precioadicional;
+            $precio  = $preciokilo + $precio1;
+        }
+
+        $this->logCalculo("Subtotal precio = $precio");
+
+        // =========================
+        // 6. Limpieza
+        // =========================
+        $param4 = str_replace(".", "", $param4);
+        $param5 = str_replace(".", "", $param5);
+        $param6 = str_replace(".", "", $param6);
+
+        // =========================
+        // 7. Préstamo
+        // =========================
+        $sqlPrestamo = "
+            SELECT pre_porcentaje 
+            FROM prestamo 
+            WHERE pre_inicio < '$param4' 
+            AND pre_final >= '$param4'
+        ";
+
+        $this->logCalculo("SQL préstamo: $sqlPrestamo");
+
+        $resPrestamo = $this->db->query($sqlPrestamo);
+
+        if (!$resPrestamo) {
+            $this->logCalculo("ERROR SQL préstamo: " . $this->db->error);
+        }
+
+        $rowPrestamo = ($resPrestamo ? $resPrestamo->fetch_row() : [0]);
+        $porprestamo = $rowPrestamo[0];
+
+        $this->logCalculo("Porcentaje préstamo: $porprestamo");
+
+        $dosporcentaje = explode(" ", $porprestamo);
+
+        if (isset($dosporcentaje[1]) && $dosporcentaje[1] == '%') {
+            $porprestamo = ($param4 * $dosporcentaje[0]) / 100;
+        }
+
+        $pordeclarado = (intval($param6) * 1) / 100;
+
+        $this->logCalculo("Por prestamo: $porprestamo");
+        $this->logCalculo("Por declarado: $pordeclarado");
+
+        // =========================
+        // 8. Total
+        // =========================
+        $valorapagar = $precio + $pordeclarado + $porprestamo;
+
+        $this->logCalculo("TOTAL = $valorapagar");
+        $this->logCalculo("======== FIN CÁLCULO ========");
+
+        return [
+            "ok" => true,
+            "prekilo" => (float)$preciokilo,
+            "adicional" => (float)$precioadicional,
+            "pordeclarado" => (float)$pordeclarado,
+            "porprestamo" => (float)$porprestamo,
+            "total" => (float)$valorapagar,
+            "kilosvolumen" => (float)$kilosvolumen,
+            "idprecios" => (int)$idprecios,
+            "valorsinseguro" => (float)$precio,
+
+
+        ];
+    }
+    public function guardarFirmaRecogida($idservicio, $firmaBase64)
+    {
+        $stmtCheck = null;
+        $stmtUpdate = null;
+        $stmtInsert = null;
+        $stmtTel = null;
+        $stmtGuia = null;
+        date_default_timezone_set('America/Bogota');
+        $fechaHoraColombia = date('Y-m-d H:i:s');
+        $logFile = __DIR__ . '/debug_guardar_firma.log';
+        file_put_contents($logFile, "[" . date('Y-m-d H:i:s') . "] === INICIO guardarFirmaRecogida() ===\n", FILE_APPEND);
+
+        try {
+            file_put_contents($logFile, "🟡 Paso 1: Recibido idservicio=$idservicio\n", FILE_APPEND);
+
+            // 1️⃣ Convertir base64 a imagen (compatible con varios formatos)
+            if (preg_match('/^data:image\/(\w+);base64,/', $firmaBase64, $type)) {
+                $firmaData = substr($firmaBase64, strpos($firmaBase64, ',') + 1);
+                $type = strtolower($type[1]); // jpg, jpeg, png, webp...
+
+                $firmaData = str_replace(' ', '+', $firmaData);
+                $imagen = base64_decode($firmaData);
+
+                if ($imagen === false) {
+                    file_put_contents($logFile, "❌ Error al decodificar base64\n", FILE_APPEND);
+                    return false;
+                }
+
+                // Validar extensión permitida
+                if (!in_array($type, ['jpg','jpeg','png','webp'])) {
+                    file_put_contents($logFile, "❌ Tipo de imagen no permitido: $type\n", FILE_APPEND);
+                    return false;
+                }
+
+            } else {
+                file_put_contents($logFile, "❌ Base64 inválido\n", FILE_APPEND);
+                return false;
+            }
+
+            if ($imagen === false) {
+                file_put_contents($logFile, "❌ Error al decodificar base64\n", FILE_APPEND);
+                return false;
+            }
+
+            // 2️⃣ Crear carpeta si no existe
+            $rutaCarpeta = __DIR__ . '/../../firmas_clientes/';
+            if (!file_exists($rutaCarpeta)) {
+                if (!mkdir($rutaCarpeta, 0777, true)) {
+                    file_put_contents($logFile, "❌ Error al crear carpeta\n", FILE_APPEND);
+                    return false;
+                }
+            }
+
+            // 3️⃣ Guardar archivo
+            $nombreArchivo = 'firma_' . $idservicio . '_' . time() . '.png';
+            $rutaArchivo = $rutaCarpeta . $nombreArchivo;
+            $rutaArchivoGuardar = "firmas_clientes/" . $nombreArchivo;
+
+            if (file_put_contents($rutaArchivo, $imagen) === false) {
+                file_put_contents($logFile, "❌ Error al guardar imagen\n", FILE_APPEND);
+                return false;
+            }
+
+            file_put_contents($logFile, "✅ Imagen guardada: $rutaArchivoGuardar\n", FILE_APPEND);
+
+            $tipoFirma = 'Recogida';
+
+
+            // 🔎 4️⃣ Verificar si ya existe firma para ese servicio y tipo
+            $sqlCheck = "SELECT id FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+            $stmtCheck = $this->db->prepare($sqlCheck);
+            $stmtCheck->bind_param('is', $idservicio, $tipoFirma);
+            $stmtCheck->execute();
+            $result = $stmtCheck->get_result();
+
+            if ($result->num_rows > 0) {
+                // ✏️ YA EXISTE → HACER UPDATE
+                $row = $result->fetch_assoc();
+                $idFirma = $row['id'];
+
+                file_put_contents($logFile, "🟠 Firma existente encontrada (ID=$idFirma), actualizando...\n", FILE_APPEND);
+                $activoParaFirma=0;
+                $sqlUpdate = "UPDATE firma_clientes 
+                            SET firma_clientes = ?, fecha_registro = ? , activo_para_firmar = ?
+                            WHERE id = ?";
+                $stmtUpdate = $this->db->prepare($sqlUpdate);
+                
+                $stmtUpdate->bind_param('ssii', $rutaArchivoGuardar, $fechaHoraColombia,$activoParaFirma, $idFirma);
+
+
+                if (!$stmtUpdate->execute()) {
+                    file_put_contents($logFile, "❌ Error en UPDATE: " . $stmtUpdate->error . "\n", FILE_APPEND);
+                    return false;
+                }
+                                // 🔎 Obtener teléfono desde firma_clientes
+                $sqlTel = "SELECT telefono FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+                $stmtTel = $this->db->prepare($sqlTel);
+                $stmtTel->bind_param('is', $idservicio, $tipoFirma);
+                $stmtTel->execute();
+                $resTel = $stmtTel->get_result();
+                $telefono = ($resTel->num_rows > 0) ? $resTel->fetch_assoc()['telefono'] : null;
+
+                // 🔎 Obtener número de guía desde servicios
+                $sqlGuia = "SELECT ser_consecutivo FROM servicios WHERE idservicios = ? LIMIT 1";
+                $stmtGuia = $this->db->prepare($sqlGuia);
+                $stmtGuia->bind_param('i', $idservicio);
+                $stmtGuia->execute();
+                $resGuia = $stmtGuia->get_result();
+                $numguia = ($resGuia->num_rows > 0) ? $resGuia->fetch_assoc()['ser_consecutivo'] : null;
+
+
+                // $this->enviarGuiaWhat( $telefono, 42, $numguia."R");
+
+                file_put_contents($logFile, "✅ Firma actualizada correctamente\n", FILE_APPEND);
+                return true;
+
+            } else {
+                // ➕ NO EXISTE → INSERTAR
+                $activoParaFirma=0;
+                file_put_contents($logFile, "🟢 No existe firma previa, insertando nueva...\n", FILE_APPEND);
+
+                $sqlInsert = "INSERT INTO firma_clientes (id_guia, tipo_firma, firma_clientes, fecha_registro,activo_para_firmar) 
+                            VALUES (?, ?, ?, ?,?)";
+                $stmtInsert = $this->db->prepare($sqlInsert);
+                
+                $stmtInsert->bind_param('isssi', $idservicio, $tipoFirma, $rutaArchivoGuardar, $fechaHoraColombia,$activoParaFirma);
+
+
+                if (!$stmtInsert->execute()) {
+                    file_put_contents($logFile, "❌ Error en INSERT: " . $stmtInsert->error . "\n", FILE_APPEND);
+                    return false;
+                }
+
+                // 🔎 Obtener teléfono desde firma_clientes
+                // $sqlTel = "SELECT telefono FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
+                // $stmtTel = $this->db->prepare($sqlTel);
+                // $stmtTel->bind_param('is', $idservicio, $tipoFirma);
+                // $stmtTel->execute();
+                // $resTel = $stmtTel->get_result();
+                // $telefono = ($resTel->num_rows > 0) ? $resTel->fetch_assoc()['telefono'] : null;
+
+                // 🔎 Obtener número de guía desde servicios
+                // $sqlGuia = "SELECT ser_consecutivo FROM servicios WHERE idservicios = ? LIMIT 1";
+                // $stmtGuia = $this->db->prepare($sqlGuia);
+                // $stmtGuia->bind_param('i', $idservicio);
+                // $stmtGuia->execute();
+                // $resGuia = $stmtGuia->get_result();
+                // $numguia = ($resGuia->num_rows > 0) ? $resGuia->fetch_assoc()['ser_consecutivo'] : null;
+                // $this->enviarGuiaWhat( $telefono, 42, $numguia."R");
+                file_put_contents($logFile, "✅ Firma insertada correctamente\n", FILE_APPEND);
+                return true;
+            }
+
+            
+            
+        } catch (Exception $e) {
+            file_put_contents($logFile, "❌ Excepción: " . $e->getMessage() . "\n", FILE_APPEND);
+            return false;
+        } finally {
+            // Cerrar statements abiertos
+            if ($stmtCheck instanceof mysqli_stmt) { $stmtCheck->close(); }
+            if ($stmtUpdate instanceof mysqli_stmt) { $stmtUpdate->close(); }
+            if ($stmtInsert instanceof mysqli_stmt) { $stmtInsert->close(); }
+            if ($stmtTel instanceof mysqli_stmt) { $stmtTel->close(); }
+            if ($stmtGuia instanceof mysqli_stmt) { $stmtGuia->close(); }
+
+            file_put_contents($logFile, "=== FIN guardarFirmaRecogida() ===\n\n", FILE_APPEND);
+        }
+    }
+    public function reEnviarFirmaWhat($telefono, $tipo, $idservi,$link)
+    {
+        $this->logEntrega("=== enviarAlertaWhat() ===");
+        $this->logEntrega("Datos: tel=$telefono, tipo=$tipo, id=$idservi");
+
+        $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+
+        $payload = [
+            "telefono"     => "$telefono",
+            "id"     => "$idservi",
+            "tipo_alerta"  => "$tipo",
+            "texto1"      => "$idservi",
+            "texto2"      => "$link",
+            "texto3"      => "Recogido"
+
+        ];
+
+        $jsonData = json_encode($payload);
+
+        $this->logEntrega("Payload enviado: $jsonData");
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $jsonData,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Authorization: Bearer MiSuperToken123'
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+
+        if ($response === false) {
+            $error = curl_error($curl);
+            curl_close($curl);
+
+            $this->logEntrega("ERROR cURL: $error");
+
+            return [
+                "ok" => false,
+                "error" => $error
+            ];
+        }
+
+        curl_close($curl);
+
+        $this->logEntrega("Respuesta API: $response");
+
+        $respDecoded = json_decode($response, true);
+
+        return [
+            "ok" => true,
+            "response" => $respDecoded
+        ];
+    }
+
+
+    private function guardarUbicacionServicio(
+        int $idservicios,
+        int $idusuario,
+        string $tipoEvento,
+        array $data
+    ): void {
+        try {
+            $latitud   = isset($data['latitud']) ? (float)$data['latitud'] : 0;
+            $longitud  = isset($data['longitud']) ? (float)$data['longitud'] : 0;
+            $precision = isset($data['precision_gps']) ? (float)$data['precision_gps'] : 0;
+
+            if ($latitud == 0 || $longitud == 0) {
+                // $this->logServicio('GPS NO ENVIADO', ['idservicio' => $idservicios]);
+                return;
+            }
+
+            $fecha = date("Y-m-d H:i:s");
+
+            $sql = "INSERT INTO servicios_ubicaciones (
+                        idservicios, idusuario, tipo_evento,
+                        latitud, longitud, precision_metros, fecha_registro
+                    ) VALUES (
+                        '".(int)$idservicios."',
+                        '".(int)$idusuario."',
+                        '".$this->escape($tipoEvento)."',
+                        '".$this->escape($latitud)."',
+                        '".$this->escape($longitud)."',
+                        '".$this->escape($precision)."',
+                        '".$this->escape($fecha)."'
+                    )";
+
+            $this->db->query($sql);
+
+            // $this->logServicio('GPS GUARDADO', [
+            //     'servicio' => $idservicios,
+            //     'evento' => $tipoEvento,
+            //     'lat' => $latitud,
+            //     'lng' => $longitud
+            // ]);
+
+        } catch (\Throwable $e) {
+            // $this->logServicio('ERROR GPS', ['mensaje' => $e->getMessage()]);
+        }
+    }
+
+    public function existeFirmaEntregaPublica($idservicio) {
+        $id = (int)$idservicio;
+
+        $sql = "SELECT activo_para_firmar, firma_clientes
+                FROM firma_clientes
+                WHERE tipo_firma='Recoger' AND id_guia='$id'
+                ORDER BY id DESC
+                LIMIT 1";
 
         $res = $this->db->query($sql);
-        if (!$res) {
-            $this->logCalculo("ERROR SQL normal: " . $this->db->error);
+
+        if (!$res || $res->num_rows === 0) {
+            return false;
         }
 
-        $rw = ($res ? $res->fetch_row() : [0, 0, 0]);
+        $row = $res->fetch_assoc();
 
-        $preciokilo      = $rw[1];
-        $precioadicional = $rw[2];
-
-    } else if ($rw7[0] >= 10 && $param1 != 1 && $tipoPago!=2) {
-        $this->logCalculo("Condición: carga especial SIN crédito");
-        $preciokilo      = $rw7[0];
-        $precioadicional = $rw7[1];
-
-    } else if ($param1 == 1 && $tipoPago==2) {
-        $this->logCalculo("Condición: CON crédito");
-
-        $sql3 = "
-            SELECT pc.pre_preciokilo, c.con_precios 
-            FROM precios_credito pc
-            INNER JOIN configuracionkilos c 
-                ON c.con_idprecioskilos = pc.idprecioscredito 
-            WHERE c.con_tipo = 'Credito' 
-              AND pc.pre_idciudadori   = '$param2' 
-              AND pc.pre_idciudades    = '$param3' 
-              AND pc.pre_tiposervicio  = '$valortservicio' 
-              AND pc.pre_idcredito     = '$idcredito' 
-              AND c.con_idprecios      = '$idprecios'
-              AND pre_estado         =  1
-
-        ";
-        if (!empty($Origen)) {
-            $sql3 .= " AND pc.pre_idciudadori = '$Origen'";
+        // Si ya quedó en 0, se considera firmada.
+        if (isset($row['activo_para_firmar']) && (int)$row['activo_para_firmar'] === 0) {
+            return true;
         }
 
-        $this->logCalculo("SQL crédito: $sql3");
-
-        $res3 = $this->db->query($sql3);
-        if (!$res3) {
-            $this->logCalculo("ERROR SQL crédito: " . $this->db->error);
-        }
-
-        $rw2 = ($res3 ? $res3->fetch_row() : [0, 0]);
-
-        $preciokilo      = $rw2[0];
-        $precioadicional = $rw2[1];
-
-    } else {
-        $this->logCalculo("Condición: caso por defecto");
-         $this->logCalculo("Condición: servicio normal SIN crédito");
-
-        $sql = "
-            SELECT p.idprecios, p.pre_kilo, c.con_precios 
-            FROM precios p 
-            INNER JOIN configuracionkilos c 
-                ON c.con_idprecioskilos = p.idprecios 
-            WHERE c.con_tipo = 'normal' 
-              AND p.pre_idciudadori  = '$param2' 
-              AND p.pre_idciudaddes  = '$param3' 
-              AND p.pre_tiposervicio = '$valortservicio' 
-              AND c.con_idprecios    = '$idprecios'
-              AND pre_estado         =  1
-        ";
-
-        $this->logCalculo("SQL normal: $sql");
-
-        $res = $this->db->query($sql);
-        if (!$res) {
-            $this->logCalculo("ERROR SQL normal: " . $this->db->error);
-        }
-
-        $rw = ($res ? $res->fetch_row() : [0, 0, 0]);
-
-        $preciokilo      = $rw[1];
-        $precioadicional = $rw[2];
-        // misma consulta que arriba
+        // Respaldo: si hay ruta/valor de firma guardada.
+        return !empty($row['firma_clientes']);
     }
-
-    $this->logCalculo("Precio kilo final: $preciokilo");
-    $this->logCalculo("Precio adicional final: $precioadicional");
-
-    // =========================
-    // 5. Cálculos intermedios
-    // =========================
-    $kilosvolumen = $param7 + $param8;
-    $this->logCalculo("Kilos + Volumen = $kilosvolumen");
-
-    if ($param7 > $precioinicialkilos) {
-        $this->logCalculo("Cálculo: excede kilos iniciales");
-        $precio1 = ($kilosvolumen - $precioinicialkilos) * $precioadicional;
-        $precio  = $preciokilo + $precio1;
-    } else {
-        $this->logCalculo("Cálculo: dentro de kilos iniciales");
-        $precio1 = $param8 * $precioadicional;
-        $precio  = $preciokilo + $precio1;
-    }
-
-    $this->logCalculo("Subtotal precio = $precio");
-
-    // =========================
-    // 6. Limpieza
-    // =========================
-    $param4 = str_replace(".", "", $param4);
-    $param5 = str_replace(".", "", $param5);
-    $param6 = str_replace(".", "", $param6);
-
-    // =========================
-    // 7. Préstamo
-    // =========================
-    $sqlPrestamo = "
-        SELECT pre_porcentaje 
-        FROM prestamo 
-        WHERE pre_inicio < '$param4' 
-          AND pre_final >= '$param4'
-    ";
-
-    $this->logCalculo("SQL préstamo: $sqlPrestamo");
-
-    $resPrestamo = $this->db->query($sqlPrestamo);
-
-    if (!$resPrestamo) {
-        $this->logCalculo("ERROR SQL préstamo: " . $this->db->error);
-    }
-
-    $rowPrestamo = ($resPrestamo ? $resPrestamo->fetch_row() : [0]);
-    $porprestamo = $rowPrestamo[0];
-
-    $this->logCalculo("Porcentaje préstamo: $porprestamo");
-
-    $dosporcentaje = explode(" ", $porprestamo);
-
-    if (isset($dosporcentaje[1]) && $dosporcentaje[1] == '%') {
-        $porprestamo = ($param4 * $dosporcentaje[0]) / 100;
-    }
-
-    $pordeclarado = (intval($param6) * 1) / 100;
-
-    $this->logCalculo("Por prestamo: $porprestamo");
-    $this->logCalculo("Por declarado: $pordeclarado");
-
-    // =========================
-    // 8. Total
-    // =========================
-    $valorapagar = $precio + $pordeclarado + $porprestamo;
-
-    $this->logCalculo("TOTAL = $valorapagar");
-    $this->logCalculo("======== FIN CÁLCULO ========");
-
-    return [
-        "ok" => true,
-        "prekilo" => (float)$preciokilo,
-        "adicional" => (float)$precioadicional,
-        "pordeclarado" => (float)$pordeclarado,
-        "porprestamo" => (float)$porprestamo,
-        "total" => (float)$valorapagar,
-        "kilosvolumen" => (float)$kilosvolumen,
-        "idprecios" => (int)$idprecios,
-        "valorsinseguro" => (float)$precio,
-
-
-    ];
-}
-
-
 }

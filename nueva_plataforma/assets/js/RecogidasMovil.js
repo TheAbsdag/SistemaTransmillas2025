@@ -341,7 +341,14 @@ function buscarCliente(tipo, valor) {
   }
 
   inputDocumento?.addEventListener("keyup", () => debounceBuscarCliente("documento", inputDocumento));
-  inputTelefonoRem?.addEventListener("keyup", () => debounceBuscarCliente("telefono", inputTelefonoRem));
+  // inputTelefonoRem?.addEventListener("keyup", () => debounceBuscarCliente("telefono", inputTelefonoRem));
+  inputTelefonoRem?.addEventListener("blur", function () {
+  const valor = this.value.trim();
+  if (valor.length >= 8) {
+    buscarCliente("telefono", valor);
+  }
+});
+  
 
   /* =========================
      AUTOCOMPLETE DESTINATARIO
@@ -820,37 +827,6 @@ function cerrarCargando() {
   Swal.close();
 }
 
-document.getElementById("btnEnviarFirma").addEventListener("click", function () {
-  const idservicio = document.getElementById("idservicio_firma").value;
-  const nombre = document.getElementById("nombre_receptor").value;
-  const telefono = document.getElementById("telefono_receptor").value;
-
-  if (!telefono) {
-    alert("Debe ingresar el teléfono del receptor");
-    return;
-  }
-
-  const fd = new FormData();
-  fd.append("accion", "enviarLinkFirma");
-  fd.append("idservicio", idservicio);
-  fd.append("nombre", nombre);
-  fd.append("telefono", telefono);
-
-  fetch("../controller/RecogidasMovilController.php", {
-    method: "POST",
-    body: fd
-  })
-  .then(r => r.json())
-  .then(resp => {
-    if (!resp.ok) {
-      alert(resp.mensaje || "No se pudo enviar el link");
-      return;
-    }
-
-    alert("Link enviado por WhatsApp ✔");
-  });
-});
-
 document.getElementById("btnFinalizar").addEventListener("click", function () {
 
   // 🔒 cerrar modal
@@ -1247,3 +1223,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+

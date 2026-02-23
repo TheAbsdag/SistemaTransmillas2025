@@ -2,7 +2,7 @@
 
 $directorio = __DIR__ . '/imgServicios'; // Cambia si la ruta es diferente
 // $directorio = __DIR__ . '/imgNoEntregas';
-$fecha_limite = strtotime('2024-12-31'); // Fecha límite
+$fecha_limite = strtotime('2025-11-30'); // Fecha límite
 
 // Abrimos el directorio
 if (is_dir($directorio)) {
