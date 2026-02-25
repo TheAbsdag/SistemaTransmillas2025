@@ -138,35 +138,48 @@ $totalcontado=0;
 		$id_p=$rw1[0];
 
         $sqlrecogida="SELECT ima_ruta,ima_tipo,idimagenguias,ima_fecha from imagenguias where ima_tipo='Entrega' and  ima_idservicio=$id_p ";
-        $DB1->Execute($sqlrecogida); 
-        $guiasi=mysqli_fetch_row($DB1->Consulta_ID);
-        $foto=$guiasi[0];
-		if ($foto=='') {
-			$colorfoto="#e74c3c";
-			$confoto="Sin foto";
-		}else {
-			if ($guiasi[3]<"2024-12-01") {
+
+			if ($guiasi[3]<"2024-12-01"){
+
+			    $DB1->Execute($sqlrecogida); 
+				$guiasi=mysqli_fetch_row($DB1->Consulta_ID);
+				$foto=$guiasi[0];
+				if ($foto=='') {
+					$colorfoto="#e74c3c";
+					$confoto="Sin foto";
+				}else {
 				$colorfoto="";
 				$confoto="https://4226-186-28-196-131.ngrok-free.app/SistemaTransmillas/$foto";
+				}
 				
 			}elseif ($guiasi[3]<="2025-02-13") {
+
+				$DB1->Execute($sqlrecogida); 
+				$guiasi=mysqli_fetch_row($DB1->Consulta_ID);
+				$foto=$guiasi[0];
+				if ($foto=='') {
+					$colorfoto="#e74c3c";
+					$confoto="Sin foto";
+				}else {
 				$colorfoto="";
-				
 				$confoto="https://sistema.transmillas.com/$foto";
+				}
+
 			}else{
 
-				if (strpos($foto, 'ticketfacturacorreoimprimir') !== false) {
-					$confoto="$foto&vis=adm";
-				}else{
-					$confoto="https://sistema.transmillas.com/$foto";
+			    $pLink=$rw1[11]."E";
+				// if (strpos($foto, 'ticketfacturacorreoimprimir') !== false) {
+				// 	$confoto="$foto&vis=adm";
+				// }else{
+					$confoto="https://sistema.transmillas.com/nueva_plataforma/controller/VerguiaController.php?guia=$pLink";
 
-				}
+				// }
 				
 				
 			}
 
 
-		}
+		
 
 
 

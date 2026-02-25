@@ -48,6 +48,7 @@ $idguias='';
 $html1= "";
 $totalcontado=0;
 $guiafacturadas=0;
+
 $DB->Execute($sql); $va=0; 
 
 	while($rw1=mysqli_fetch_row($DB->Consulta_ID))
@@ -92,22 +93,36 @@ $DB->Execute($sql); $va=0;
 		<td>".$rw1[16]."</td>
 		<td>".$rw1[17]."</td>
 		";
-		$sqlrecogida ="SELECT ima_ruta,ima_tipo,idimagenguias,ima_fecha from imagenguias where ima_tipo like '%Recogida%' and  ima_idservicio=$id_p ";
-		$DB1->Execute($sqlrecogida); 
-		$guiasir=mysqli_fetch_row($DB1->Consulta_ID);
-		$recogidag=$guiasir[0];
-		if ($recogidag=='') {
-			$colorfoto="#e74c3c";
-			$confotor="Sin foto";
-		}else {
+			$sqlrecogida ="SELECT ima_ruta,ima_tipo,idimagenguias,ima_fecha from imagenguias where ima_tipo like '%Recogida%' and  ima_idservicio=$id_p ";
 			if ($guiasir[3]<"2024-12-01") {
-				$colorfoto="";
-				$confotor="<a href=' https://8b55-190-24-125-143.ngrok-free.app/SistemaTransmillas/$recogidag' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
-				
+
+					
+					$DB1->Execute($sqlrecogida); 
+					$guiasir=mysqli_fetch_row($DB1->Consulta_ID);
+					$recogidag=$guiasir[0];
+					if ($recogidag=='') {
+						$colorfoto="#e74c3c";
+						$confotor="Sin foto";
+					}else {
+						$colorfoto="";
+						$confotor="<a href=' https://8b55-190-24-125-143.ngrok-free.app/SistemaTransmillas/$recogidag' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+						
+					}
+
 			}elseif ($guiasir[3]<="2025-02-13") {
-				$colorfoto="";
-				$confotor="<a href='$recogidag' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
-				
+
+					$DB1->Execute($sqlrecogida); 
+					$guiasir=mysqli_fetch_row($DB1->Consulta_ID);
+					$recogidag=$guiasir[0];
+					if ($recogidag=='') {
+						$colorfoto="#e74c3c";
+						$confotor="Sin foto";
+					}else {
+						$colorfoto="";
+						$confotor="<a href='$recogidag' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+						
+					}
+
 			}else{
 				$colorfoto="";
 				if (strpos($recogidag, 'ticketfacturacorreoimprimir') !== false) {
@@ -118,24 +133,38 @@ $DB->Execute($sql); $va=0;
 			}
 
 
-		}
+		
 
 		$confoto="";
 		$sqlentrega="SELECT ima_ruta,ima_tipo,idimagenguias,ima_fecha from imagenguias where ima_tipo like '%Entrega%' and  ima_idservicio=$id_p ";
-		$DB1->Execute($sqlentrega); 
-		$guiasi=mysqli_fetch_row($DB1->Consulta_ID);
-		$entrgasg=$guiasi[0];
-		if ($entrgasg=='') {
-			$colorfoto="#e74c3c";
-			$confoto="Sin foto";
-		}else {
+
 			if ($guiasi[3]<"2024-12-01") {
-				$colorfoto="";
-				$confoto="<a href='  https://8b55-190-24-125-143.ngrok-free.app/SistemaTransmillas/$entrgasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
-				
+
+				$DB1->Execute($sqlentrega); 
+				$guiasi=mysqli_fetch_row($DB1->Consulta_ID);
+				$entrgasg=$guiasi[0];
+				if ($entrgasg=='') {
+					$colorfoto="#e74c3c";
+					$confoto="Sin foto";
+				}else {
+						$colorfoto="";
+						$confoto="<a href='  https://8b55-190-24-125-143.ngrok-free.app/SistemaTransmillas/$entrgasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+						
+				}
+
 			}elseif ($guiasi[3]<="2025-02-13") {
-				$colorfoto="";
-				$confoto="<a href='$entrgasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+
+				$DB1->Execute($sqlentrega); 
+				$guiasi=mysqli_fetch_row($DB1->Consulta_ID);
+				$entrgasg=$guiasi[0];
+				if ($entrgasg=='') {
+					$colorfoto="#e74c3c";
+					$confoto="Sin foto";
+				}else {
+					$colorfoto="";
+					$confoto="<a href='$entrgasg' target='_blank'>&nbsp;<i class='fa fa-camera-retro fa-lg'></i>&nbsp;Ver Foto Guia </a>";
+				}
+				
 			}else{
 				$colorfoto="";
 				if (strpos($entrgasg, 'ticketfacturacorreoimprimir') !== false) {
@@ -150,7 +179,7 @@ $DB->Execute($sql); $va=0;
 			} 
 
 
-		}
+		
 		$html1.= "<td align='center'  bgcolor='$colorfoto'>";
 		$html1.= "$confotor";
 		$html1.= "</td>";
