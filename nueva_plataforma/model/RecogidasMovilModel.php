@@ -1,5 +1,6 @@
 <?php
-require_once "../config/database.php";
+// require_once "../config/database.php";
+require_once __DIR__ . '/../config/database.php';
 
 class RecogidasMovilModel {
     private $db;
@@ -103,7 +104,7 @@ class RecogidasMovilModel {
 
     private function logCalculo($mensaje)
     {
-        $ruta = __DIR__ . "../logs/log_calculos.txt";
+        $ruta = __DIR__ . "/../logs/log_calculos.txt";
         $fecha = date("[Y-m-d H:i:s] ");
 
         file_put_contents($ruta, $fecha . $mensaje . PHP_EOL, FILE_APPEND);
@@ -257,7 +258,7 @@ class RecogidasMovilModel {
                 
 
             ";
-            if (!empty($Origen)) {
+            if (isset($Origen) && !empty($Origen)) {
                 $sql3 .= " AND pc.pre_idciudadori = '$Origen'";
             }
 
@@ -1541,3 +1542,4 @@ class RecogidasMovilModel {
             return $this->db;
         }
 }
+

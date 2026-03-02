@@ -1,6 +1,6 @@
 <?php 
 require("login_autentica.php"); 
-include("layout.php");
+include("layaut2.php");
 
 $fechaactual=date("Y-m-d");
 
@@ -11,9 +11,7 @@ $param38=$_REQUEST["param38"];
 <head>
 
 	</head>
-<body onLoad="llena_datos(0,<?php echo $nivel_acceso;?> , '', 'ASC'); 
- cambio_ajax2(<?php echo $id_sedes;?>, 16, 'llega_sub1', 'param33', 1, 0); 
-">
+<body onLoad="llena_datos(0,<?php echo $nivel_acceso;?> , '', 'ASC');">
 <script>
 
 

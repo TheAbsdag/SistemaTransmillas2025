@@ -1,0 +1,13 @@
+# Archivos SQL
+*.sql
+connection/*.sql
+
+# Logs
+*.log
+logs/
+error_log.txt
+emailsEnviados.txt
+
+# Archivos temporales
+*.tmp
+

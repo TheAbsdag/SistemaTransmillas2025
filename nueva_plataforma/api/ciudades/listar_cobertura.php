@@ -37,7 +37,7 @@ try {
 
     $sql = "SELECT idciudades, ciu_nombre
             FROM ciudades
-            WHERE inner_estados = 1
+            WHERE inner_estados = 1 and ciu_pagina='si'
             ORDER BY idciudades ASC";
 
     $result = $db->query($sql);

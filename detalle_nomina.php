@@ -1234,53 +1234,47 @@ ORDER BY hoj_nombre ASC";
 							}elseif($fin==29 and $param36=='Segunda' or $fin==29 and $param36=='Completo' ){
 
 
+									if ($rw4[0]<=0 or $mesdeingreso==true){
+										$dia29=0;
+
+										# code...
+									}else{
+
+
+										$dia29=1;
+									}
+
+									$diassitrabajo=$rw4[0]+$diasDescanso+$dia29;
+									$diassitrabajoParaSumar=$rw4[0]+$diasDescanso+$dia29;
+									$diassitrabajoConAuxilio=$rw4[0]+$dia29;
+									$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
+								// }
+
+							}elseif($fin==28 and $param36=='Segunda' or $fin==28 and $param36=='Completo' ){
+
 								if ($rw4[0]<=0 or $mesdeingreso==true){
 									$dia29=0;
-
-									# code...
 								}else{
-
-
-									$dia29=1;
+									$dia29=2;
 								}
 
 								$diassitrabajo=$rw4[0]+$diasDescanso+$dia29;
 								$diassitrabajoParaSumar=$rw4[0]+$diasDescanso+$dia29;
 								$diassitrabajoConAuxilio=$rw4[0]+$dia29;
 								$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
-							// }
 
-						}elseif($fin==28 and $param36=='Segunda' or $fin==28 and $param36=='Completo' ){
-
-
-							if ($rw4[0]<=0 or $mesdeingreso==true){
-								$dia29=0;
-
-								# code...
 							}else{
 
-
-								$dia29=2;
+										$diassitrabajo=$rw4[0]+$diasDescanso;
+										$diassitrabajoParaSumar=$rw4[0]+$diasDescanso;
+										$diassitrabajoConAuxilio=$rw4[0];
+										$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
 							}
 
-							$diassitrabajo=$rw4[0]+$diasDescanso+$dia29;
-							$diassitrabajoParaSumar=$rw4[0]+$diasDescanso+$dia29;
-							$diassitrabajoConAuxilio=$rw4[0]+$dia29;
-							$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
-						// }
-
-					}else{
-
-								$diassitrabajo=$rw4[0]+$diasDescanso;
-								$diassitrabajoParaSumar=$rw4[0]+$diasDescanso;
-								$diassitrabajoConAuxilio=$rw4[0];
-								$diassitrabajoParaMostrar=$rw4[0]+$diasDescanso;
-					}
-
-					if ($rw1[1]=="EDGAR EDUARDO CONDUC") {
-						$diassitrabajoParaSumar=$diassitrabajoParaSumar-1;
-						$diassitrabajoParaMostrar=$diassitrabajoParaMostrar-1;
-					}
+							if ($rw1[1]=="EDGAR EDUARDO CONDUC") {
+								$diassitrabajoParaSumar=$diassitrabajoParaSumar-1;
+								$diassitrabajoParaMostrar=$diassitrabajoParaMostrar-1;
+							}
 
 				}
 

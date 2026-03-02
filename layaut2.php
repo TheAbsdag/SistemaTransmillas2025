@@ -976,6 +976,10 @@ $condeno='';
 }
 
  $submenusPorPadre = array();
+ $layout_badges_sql_ms = 0;
+ $layout_menu_items = 0;
+ $layout_submenu_items = 0;
+ $t_menu_sub = microtime(true);
  $sqlSubmenus = "SELECT m.men_nombre, m.men_url, m.idmenu, m.men_descripcion, m.men_predecesor
                  FROM menu m
                  INNER JOIN permisos p
@@ -986,19 +990,26 @@ $condeno='';
                  AND m.men_orden!=0
                  ORDER BY m.men_predecesor, m.men_orden";
  $DB_m1->Execute($sqlSubmenus);
+ if($layout_profile){ $layout_extra['menu_submenus_query_ms'] = (microtime(true) - $t_menu_sub) * 1000; }
  while($rw_sub=mysqli_fetch_row($DB_m1->Consulta_ID)){
      $idPadre = (int)$rw_sub[4];
      if(!isset($submenusPorPadre[$idPadre])){
          $submenusPorPadre[$idPadre] = array();
      }
      $submenusPorPadre[$idPadre][] = $rw_sub;
+     $layout_submenu_items++;
  }
 
  $menuIconById = array();
  $menuIconCacheKey = "menu_icons_rol_" . $nivel_acceso;
  if(isset($_SESSION[$menuIconCacheKey]) && is_array($_SESSION[$menuIconCacheKey])){
      $menuIconById = $_SESSION[$menuIconCacheKey];
+     if($layout_profile){
+         $layout_extra['menu_icons_query_ms'] = 0;
+         $layout_extra['menu_icons_cache_hit'] = 1;
+     }
  }else{
+     $t_menu_icons = microtime(true);
      $sqlMenuIcons = "SELECT d.doc_idviene, d.doc_ruta
                       FROM documentos d
                       INNER JOIN (
@@ -1011,16 +1022,22 @@ $condeno='';
                       AND t.doc_fecha = d.doc_fecha
                       WHERE d.doc_tabla='Menu' AND d.doc_version=1";
      $DB_m2->Execute($sqlMenuIcons);
+     if($layout_profile){ $layout_extra['menu_icons_query_ms'] = (microtime(true) - $t_menu_icons) * 1000; }
      while($rw_icon=mysqli_fetch_row($DB_m2->Consulta_ID)){
          $menuIconById[(int)$rw_icon[0]] = $rw_icon[1];
      }
      $_SESSION[$menuIconCacheKey] = $menuIconById;
+     if($layout_profile){ $layout_extra['menu_icons_cache_hit'] = 0; }
  }
 
+ $t_menu_parents = microtime(true);
  $sql="SELECT men_nombre, men_url, idmenu, men_descripcion FROM menu INNER JOIN permisos ON idmenu=menu_idmenu AND men_predecesor=0 AND roles_idroles='$nivel_acceso' AND men_orden!=0 AND per_consultar=1 $condeno ORDER BY men_orden ";
 $DB_m->Execute($sql); $va=0;
+if($layout_profile){ $layout_extra['menu_parents_query_ms'] = (microtime(true) - $t_menu_parents) * 1000; }
+$t_menu_loop = microtime(true);
 while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
 {
+    $layout_menu_items++;
 	$id_menu=$rw_m[2]; if($rw_m[1]=="configuracion.php") { $link="#"; $class="treeview"; } else { $link=$rw_m[1];  $class="sidebar-menu"; } 
     $menuIconHtml = "<td align='center'></td>";
     if(isset($menuIconById[(int)$id_menu]) && $menuIconById[(int)$id_menu]!=""){
@@ -1033,7 +1050,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
    
             if($link=="telefonosweb.php" ){
                 $sql2="SELECT count(*) FROM `telefonospagina` WHERE  tel_estado = 'Sin validar' ";
+                $t_badge = microtime(true);
                 $DB_m2->Execute($sql2);
+                if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
                 $ntele=mysqli_fetch_row($DB_m2->Consulta_ID);
 
                 echo "<li class='$class'><a href='$link' title='$rw_m[3]'>";
@@ -1050,7 +1069,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
                 }else{
                     $sql1="SELECT count(*)  FROM `tareas` LEFT JOIN (select `pro_comentario`, `pro_fecha`, `usu_nombre`,(CASE WHEN pro_estado IS Null THEN 'Por Realizar' else pro_estado END) as estado,pro_idtareas from programartareas left join usuarios on idusuarios=pro_idusuario where pro_fecha BETWEEN '$fechaactual 00:00:00' AND '$fechaactual 23:59:59'  ) t1 ON t1.pro_idtareas=idtareas WHERE idtareas>=0 and tar_diassemana like '%$dia%' and ((tar_idoperario='$id_usuario') or (tar_idoperario='0' and tar_idsede is NUll and tar_idrol='$nivel_acceso') or (tar_idoperario='0' and tar_idrol is NUll and tar_idsede='$id_sedes') or (tar_idoperario='0' and tar_idrol='$nivel_acceso' and tar_idsede='$id_sedes')) and tar_estado='Activo'  and (CASE WHEN t1.estado IS Null THEN 'Por Realizar' else t1.estado END)='Por Realizar'";
                 }
+                $t_badge = microtime(true);
                 $DB1->Execute($sql1); 
+                if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
                 $cantAlertas=$DB1->recogedato(0);
                         echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
                         echo $menuIconHtml;
@@ -1061,7 +1082,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
             }
             else if($link=="reportealertas.php" ){  
                 $sql1 = "SELECT count(*) as sede FROM `reportealertas` inner join sedes on rep_idsede=idsedes WHERE idreportealertas>=0 and idsedes=$id_sedes  and rep_fechavencimiento<='$fechaactual 23:59:59' ";
+                $t_badge = microtime(true);
                 $DB1->Execute($sql1); 
+                if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
                 $cantAlertas=$DB1->recogedato(0);
                         echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
                         echo $menuIconHtml;
@@ -1073,7 +1096,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
                 $sql1 = "SELECT count(*) FROM `reclamos` inner join servicios on rec_idservicio=idservicios WHERE idreclamos>0 and `rec_estado`= 'Confirmar'";
 
                 // $sql1 = "SELECT count(rec_tipo) FROM `reclamos` WHERE rec_estado='confirmar' ";
+                $t_badge = microtime(true);
                 $DB1->Execute($sql1); 
+                if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
                 $reclamos=$DB1->recogedato(0);
                         echo "<li $controlDeUso class='$class'><a href='$link?param34=Confirmar' title='$rw_m[3]'>";
                         echo $menuIconHtml;
@@ -1085,7 +1110,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
  
         else if($link=="confirmacioncambios.php" && $id_sedes==1){
             $sql1 = "SELECT count(*) FROM `modificaciones` WHERE mod_userverificado='' ";
+            $t_badge = microtime(true);
             $DB1->Execute($sql1); 
+            if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
             $canttrancambios=$DB1->recogedato(0);
                     echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
                     echo $menuIconHtml;
@@ -1096,7 +1123,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
 
         }else if($link=="confirmacionpagos.php" ){
             $sql1 = "SELECT count(*) FROM `pagoscuentas` WHERE pag_userverifica='' and pag_tipopago!=''";
+            $t_badge = microtime(true);
             $DB1->Execute($sql1); 
+            if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
             $canttranferencias=$DB1->recogedato(0);
                     echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
                     echo $menuIconHtml;
@@ -1107,7 +1136,9 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
 
         }else if($link=="cotizaciones.php" ){
             $sqlc = "SELECT COUNT(*) FROM `cotozaciones` where cot_id_ingresa='1919' and cot_estado='';";
+            $t_badge = microtime(true);
             $DB1->Execute($sqlc); 
+            if($layout_profile){ $layout_badges_sql_ms += (microtime(true) - $t_badge) * 1000; }
             $cotizacionesW=$DB1->recogedato(0);
                     echo "<li $controlDeUso class='$class'><a href='$link' title='$rw_m[3]'>";
                     echo $menuIconHtml;
@@ -1171,6 +1202,12 @@ while($rw_m=mysqli_fetch_row($DB_m->Consulta_ID))
 
 } 
 
+if($layout_profile){
+    $layout_extra['menu_loop_ms'] = (microtime(true) - $t_menu_loop) * 1000;
+    $layout_extra['menu_badges_sql_ms'] = $layout_badges_sql_ms;
+    $layout_extra['menu_items'] = $layout_menu_items;
+    $layout_extra['menu_subitems'] = $layout_submenu_items;
+}
 if($layout_profile){ $layout_marks['menu'] = microtime(true); }
 
 function procesarSeguimiento($id_usuario, $DB, $DB1) {

@@ -22,27 +22,31 @@ function objetoAjax(){
 
 function espera() 
 { 
-    divResultado.innerHTML = ajax.responseText; 
+    if(divResultado){ divResultado.innerHTML = ajax.responseText; }
 } 
 function espera2() 
 { 
-    divResultado1.innerHTML = ajax1.responseText; 
+    if(divResultado1){ divResultado1.innerHTML = ajax1.responseText; }
 } 
 function espera3() 
 { 
-    divResultado3.innerHTML = ajax3.responseText; 
+    if(divResultado3){ divResultado3.innerHTML = ajax3.responseText; }
 } 
 function espera4() 
 { 
-    divResultado4.innerHTML = ajax4.responseText; 
+    if(divResultado4){ divResultado4.innerHTML = ajax4.responseText; }
 } 
 function espera5() 
 { 
-    divResultado5.innerHTML = ajax5.responseText; 
+    if(divResultado5){ divResultado5.innerHTML = ajax5.responseText; }
 }
 
 function MostrarConsulta(datos, otro){
 	divResultado = document.getElementById(otro);
+	if(!divResultado){
+		console.warn("MostrarConsulta: no existe contenedor #" + otro);
+		return false;
+	}
 	showdiv(otro);
 	ajax=objetoAjax();
 	evalScripts: true;
@@ -63,6 +67,10 @@ function MostrarConsulta(datos, otro){
 function MostrarConsulta2(datos1, otro1){
 	
 	divResultado1 = document.getElementById(otro1);
+	if(!divResultado1){
+		console.warn("MostrarConsulta2: no existe contenedor #" + otro1);
+		return false;
+	}
 	showdiv(otro1);
 	ajax1=objetoAjax();
 	ajax1.open("GET", datos1);
@@ -82,6 +90,10 @@ function MostrarConsulta2(datos1, otro1){
 
 function MostrarConsulta3(datos3, otro3){
 	divResultado3 = document.getElementById(otro3);
+	if(!divResultado3){
+		console.warn("MostrarConsulta3: no existe contenedor #" + otro3);
+		return false;
+	}
 	showdiv(otro3);
 	ajax3=objetoAjax();
 	ajax3.open("GET", datos3);
@@ -100,6 +112,10 @@ function MostrarConsulta3(datos3, otro3){
 
 function MostrarConsulta4(datos4, otro4){
 	divResultado4 = document.getElementById(otro4);
+	if(!divResultado4){
+		console.warn("MostrarConsulta4: no existe contenedor #" + otro4);
+		return false;
+	}
 	showdiv(otro4);
 	ajax4=objetoAjax();
 	ajax4.open("GET", datos4);
@@ -118,6 +134,10 @@ function MostrarConsulta4(datos4, otro4){
 
 function MostrarConsulta2a(datos1, otro1){
 	divResultado1 = document.getElementById(otro1);
+	if(!divResultado1){
+		console.warn("MostrarConsulta2a: no existe contenedor #" + otro1);
+		return false;
+	}
 	ajax1=objetoAjax();
 	ajax1.open("GET", datos1);
 	ajax1.onreadystatechange=function() {
@@ -135,6 +155,10 @@ function MostrarConsulta2a(datos1, otro1){
 
 function MostrarConsulta3a(datos3, otro3){
 	divResultado3 = document.getElementById(otro3);
+	if(!divResultado3){
+		console.warn("MostrarConsulta3a: no existe contenedor #" + otro3);
+		return false;
+	}
 	ajax3=objetoAjax();
 	ajax3.open("GET", datos3);
 	ajax3.onreadystatechange=function() {
@@ -152,6 +176,10 @@ function MostrarConsulta3a(datos3, otro3){
 
 function MostrarConsulta4a(datos4, otro4){
 	divResultado4 = document.getElementById(otro4);
+	if(!divResultado4){
+		console.warn("MostrarConsulta4a: no existe contenedor #" + otro4);
+		return false;
+	}
 	ajax4=objetoAjax();
 	ajax4.open("GET", datos4);
 	ajax4.onreadystatechange=function() {
@@ -169,6 +197,10 @@ function MostrarConsulta4a(datos4, otro4){
 
 function MostrarConsulta5(datos5, otro5){
 	divResultado5 = document.getElementById(otro5);
+	if(!divResultado5){
+		console.warn("MostrarConsulta5: no existe contenedor #" + otro5);
+		return false;
+	}
 	showdiv(otro5);
 	ajax5=objetoAjax();
 	ajax5.open("GET", datos5);
@@ -187,8 +219,13 @@ function MostrarConsulta5(datos5, otro5){
 
 function showdiv(hideShow) {
 	if (document.getElementById) { // DOM3 = IE5, NS6 
-		document.getElementById(hideShow).style.display = 'block'; 
-		document.getElementById(hideShow).style.visibility = 'visible'; 
+		var el = document.getElementById(hideShow);
+		if(!el){
+			console.warn("showdiv: no existe elemento #" + hideShow);
+			return false;
+		}
+		el.style.display = 'block'; 
+		el.style.visibility = 'visible'; 
 	} 
 	else { 
 		if (document.layers) { // Netscape 4 
