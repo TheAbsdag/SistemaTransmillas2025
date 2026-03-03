@@ -332,13 +332,15 @@
    
 
 <script>
+
+  const dirPage = 'nueva_plataforma/controller/CargosController.php';
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     processing: true,    // Muestra "procesando..."
     serverSide: true,    // Activa server-side
     
     ajax: {
-      url: '/nueva_plataforma/controller/CargosController.php',
+      url: dirPage,
       type: 'POST',
       data: function (d) {
         d.tipo_contrato = $('#filtroContrato').val(); // 👈 nuevo
@@ -400,7 +402,7 @@ $(document).on('click', '.btn-editar', function () {
     let idcargo = $(this).data('id');
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'GET',
         data: { accion: 'ver_cargo', idcargo: idcargo },
         dataType: 'json',
@@ -438,7 +440,7 @@ $(document).on('submit', '#formEditarCliente', function(e) {
     formData.push({ name: "creditos_asignados", value: creditosSeleccionados.join(',') });
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'POST',
         data: $.param(formData), // convertir a string
         dataType: 'json',
@@ -470,7 +472,7 @@ $(document).on('click', '.btn-editar', function () {
     const idcargo = $(this).data('id');
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'GET',
         data: {
             accion: 'obtener_cargo',
@@ -565,7 +567,7 @@ $('#btnGuardarCargo').on('click', function () {
     };
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'POST',
         data: data,
         dataType: 'json',
@@ -612,7 +614,7 @@ $('#btnGuardarSalario').on('click', function () {
     }
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'POST',
         data: data,
         dataType: 'json',
@@ -650,7 +652,7 @@ $(document).on('click', '.btn-eliminar-salario', function () {
     }
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'POST',
         data: {
             accion: 'eliminar_salario',
@@ -684,7 +686,7 @@ $(document).on('click', '.btn-eliminar-cargo', function () {
     }
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'POST',
         data: {
             accion: 'eliminar_cargo',
@@ -744,7 +746,7 @@ $('#btnGuardarNuevoCargo').on('click', function () {
     }
 
     $.ajax({
-        url: '/nueva_plataforma/controller/CargosController.php',
+        url: dirPage,
         type: 'POST',
         data: data,
         dataType: 'json',
