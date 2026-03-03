@@ -333,7 +333,7 @@
 
 <script>
 
-  const dirPage = '../../controller/CargosController.php';
+  const dirPage = window.location.pathname;
 $(document).ready(function () {
   const tabla = $('#tablaUsuarios').DataTable({
     processing: true,    // Muestra "procesando..."
