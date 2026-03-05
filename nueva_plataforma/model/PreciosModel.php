@@ -954,7 +954,7 @@ class Precios {
      */
     public function enviarAlertaWhat($telefono, $tipo, $data)
     {
-        $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+        $url = "https://bot.transmillas.com/whatsapp/Alertas/alertas.php";
 
         $payload = [
             "telefono" => $telefono,

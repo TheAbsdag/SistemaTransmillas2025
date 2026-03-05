@@ -264,7 +264,7 @@ class serviciosAuto {
         }
     }
     public function enviarAlertaWhat($telefono, $tipo) {
-        $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+        $url = "https://bot.transmillas.com/whatsapp/Alertas/alertas.php";
 
         $data = array(
             "telefono" => $telefono,

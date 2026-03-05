@@ -1157,7 +1157,7 @@ class RecogerModel
         $this->logEntrega("=== enviarAlertaWhat() ===");
         $this->logEntrega("Datos: tel=$telefono, tipo=$tipo, id=$idservi");
 
-        $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+        $url = "https://bot.transmillas.com/whatsapp/Alertas/alertas.php";
 
         $payload = [
             "telefono"     => "$telefono",
@@ -1711,7 +1711,7 @@ class RecogerModel
         $this->logEntrega("=== enviarAlertaWhat() ===");
         $this->logEntrega("Datos: tel=$telefono, tipo=$tipo, id=$idservi");
 
-        $url = "https://www.transmillas.com/ChatbotTransmillas/alertas.php";
+        $url = "https://bot.transmillas.com/whatsapp/Alertas/alertas.php";
 
         $payload = [
             "telefono"     => "$telefono",
