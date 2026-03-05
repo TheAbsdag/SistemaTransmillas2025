@@ -369,7 +369,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
-        const dirPage = window.location.pathname;
+        const dirPage = <?= json_encode($ajaxEndpoint ?? '') ?> || window.location.pathname;
+        $.fn.dataTable.ext.errMode = 'none';
 
         // Inicializar DataTable
         let tabla = $('#tablaSeguimiento').DataTable({
@@ -386,6 +387,15 @@
                     d.operario = $('#operario').val();
                     d.motivo = $('#motivo').val();
                     d.tipo_contrato = $('#tipo_contrato').val();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('Error AJAX DataTable:', {
+                        status: xhr.status,
+                        textStatus: textStatus,
+                        errorThrown: errorThrown,
+                        responseText: xhr.responseText
+                    });
+                    alert('Error cargando tabla. Revisa consola y logs del servidor.');
                 }
             },
             columns: [
@@ -428,6 +438,18 @@
                 }
             },
             scrollX: true
+        });
+
+        $('#tablaSeguimiento').on('xhr.dt', function (e, settings, json, xhr) {
+            console.log('Respuesta DataTable:', json);
+            if (json && json.error) {
+                console.error('DataTable error:', json.error, json.debug || {});
+                alert('DataTable: ' + json.error);
+            }
+        });
+
+        $('#tablaSeguimiento').on('error.dt', function (e, settings, techNote, message) {
+            console.error('DataTable error.dt:', { techNote, message });
         });
 
         function recargarTabla() {

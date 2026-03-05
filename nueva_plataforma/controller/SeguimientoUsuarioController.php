@@ -212,4 +212,4 @@ $sedes = $modelo->getSedes();
 $motivos = $modelo->getMotivosIngreso();
 $tiposContrato = $modelo->getTiposContrato();
 
-include "../view/seguimientousuario/index.php";
+include "../view/SeguimientoUsuario/index.php";
