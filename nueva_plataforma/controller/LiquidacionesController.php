@@ -1,5 +1,5 @@
 <?php
-
+require("../../login_autentica.php"); // ESTE archivo debe tener session_start()
 require_once "../model/LiquidacionesModel.php";
 
 $modelo = new LiquidacionesModel();

@@ -1,13 +1,5 @@
 <?php 
-if (!isset($_POST['sede']) || !isset($_POST['acceso'])) {
-    echo "<script>
-            alert('No tiene acceso a esta página');
-            window.close(); // cierra la pestaña
-          </script>";
-    exit;
 
-
-}
  date_default_timezone_set('America/Bogota'); 
 ?>
 <!DOCTYPE html>

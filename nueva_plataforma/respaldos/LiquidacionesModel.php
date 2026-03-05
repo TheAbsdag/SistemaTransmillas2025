@@ -18,7 +18,6 @@ class LiquidacionesModel{
 public function datosHojaDeVida($filtroAno = '', $filtroSede = '', $filtroOperador = '', $filtroEstado = '') {
     date_default_timezone_set('America/Bogota');
     $hoy = date("Y-m-d");
-    $anioConsulta = ($filtroAno !== '' && is_numeric($filtroAno)) ? intval($filtroAno) : intval(date("Y"));
     $conde1 = $conde2 = $conde4 = '';
     $joinEstado = ''; // <- aquí irá el ajuste en el JOIN
 
@@ -98,11 +97,8 @@ public function datosHojaDeVida($filtroAno = '', $filtroSede = '', $filtroOperad
                     ELSE hv.hoj_fech_año_act
                 END AS hoj_fechaInicial,
                 c.car_cargo,
-                sc.salario AS car_salario,
-                sc.auxilio AS car_Auxilio,
-                sc.otros AS car_otros,
-                sc.des_salud,
-                sc.des_pension,
+                c.car_salario,
+                c.car_Auxilio,
 
                 CASE
                     WHEN YEAR(IF(hv.hoj_fech_año_act IS NULL OR hv.hoj_fech_año_act = '', hv.hoj_fechaingreso, hv.hoj_fech_año_act)) = YEAR(CURDATE()) THEN 
@@ -149,7 +145,6 @@ public function datosHojaDeVida($filtroAno = '', $filtroSede = '', $filtroOperad
             FROM hojadevida hv
             INNER JOIN sedes s ON hv.hoj_sede = s.idsedes
             INNER JOIN cargo c ON hv.hoj_cargo = c.idcargo
-            INNER JOIN salarios_cargos sc ON sc.id_relCargo = c.idcargo AND sc.anio = '$anioConsulta'
             $joinEstado
             WHERE hv.idhojadevida > 0 
             AND hv.hoj_estado = 'Activo'
