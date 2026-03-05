@@ -110,18 +110,23 @@ if($tipo==1){
         // 🔥 EVITAMOS UNION + PHP LOOP
         $sql="SELECT COUNT(*)
               FROM usuarios u
+              LEFT JOIN (
+                    SELECT s.ser_idresponsable AS idusuario
+                    FROM servicios s
+                    WHERE s.ser_estado IN (3,9)
+                      AND s.ser_fechaasignacion BETWEEN '$inicioDia' AND '$finDia'
+                      AND s.ser_idresponsable IS NOT NULL
+                    UNION
+                    SELECT s.ser_idusuarioguia AS idusuario
+                    FROM servicios s
+                    WHERE s.ser_estado IN (3,9)
+                      AND s.ser_fechaasignacion BETWEEN '$inicioDia' AND '$finDia'
+                      AND s.ser_idusuarioguia IS NOT NULL
+              ) su ON su.idusuario = u.idusuarios
               WHERE u.usu_estado=1
               AND u.roles_idroles=3
               $consda
-              AND NOT EXISTS (
-                    SELECT 1 FROM servicios s
-                    WHERE (s.ser_estado IN (3,9))
-                    AND (
-                        s.ser_idresponsable=u.idusuarios
-                        OR s.ser_idusuarioguia=u.idusuarios
-                    )
-                    AND s.ser_fechaasignacion BETWEEN '$inicioDia' AND '$finDia'
-              )";
+              AND su.idusuario IS NULL";
         $DB1->Execute($sql);
         $seguimiento = mysqli_fetch_row($DB1->Consulta_ID)[0];
     }

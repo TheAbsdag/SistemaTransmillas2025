@@ -179,7 +179,7 @@ while($rw0=mysqli_fetch_row($DB->Consulta_ID))
 
 							$fechabusqueda=substr("$rw1[3]",0,10);
 							$imprimir=1;
-							$sql1="SELECT seg_alcohol,`seg_fechaingreso`, `seg_horaalmuerzo`, `seg_horaregreso`, `seg_idzona`,seg_motivo,seg_descr,seg_fechafinalizo,idseguimiento_user,seg_horaoficina,seg_compañero from seguimiento_user where seg_fechaalcohol like '$fechabusqueda%'  and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
+							$sql1="SELECT seg_alcohol,`seg_fechaingreso`, `seg_horaalmuerzo`, `seg_horaregreso`, `seg_idzona`,seg_motivo,seg_descr,seg_fechafinalizo,idseguimiento_user,seg_horaoficina,seg_compañero from seguimiento_user where seg_fechaalcohol>='$fechabusqueda 00:00:00' and seg_fechaalcohol<='$fechabusqueda 23:59:59' and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
 							$DB1->Execute($sql1); 
 							$rw2=mysqli_fetch_row($DB1->Consulta_ID);
 								$compara=$rw2[5];
@@ -500,7 +500,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 			// Preparar la consulta SQL e insertar en la base de datos
 		   
 			// Incrementar la fecha para la próxima iteración
-	$sql="SELECT idusuarios,usu_nombre,preestado,prefechaingreso,idpreoperacinal,usu_tipocontrato,prevehiculo,usu_fechalicencia,usu_identificacion FROM `pre-operacional` inner join usuarios on idusuarios=preidusuario  where  (usu_estado=1 or usu_filtro=1)  and prefechaingreso like '%$fechaSola%'   $conde  $conde2   $conde4 $conde5 and roles_idroles!='6' ORDER BY prefechaingreso  asc ";
+	$sql="SELECT idusuarios,usu_nombre,preestado,prefechaingreso,idpreoperacinal,usu_tipocontrato,prevehiculo,usu_fechalicencia,usu_identificacion FROM `pre-operacional` inner join usuarios on idusuarios=preidusuario  where  (usu_estado=1 or usu_filtro=1)  and prefechaingreso>='$fechaSola 00:00:00' and prefechaingreso<='$fechaSola 23:59:59'   $conde  $conde2   $conde4 $conde5 and roles_idroles!='6' ORDER BY prefechaingreso  asc ";
 		$DB1->Execute($sql); 
 		$totalasignadas=0;
 		$rw1=mysqli_fetch_row($DB1->Consulta_ID);
@@ -578,7 +578,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 					//echo $rw1[3];
 					 $fechabusqueda=substr("$rw1[3]",0,10);
 					 $imprimir=1;
-					 $sql1="SELECT seg_alcohol,`seg_fechaingreso`, `seg_horaalmuerzo`, `seg_horaregreso`, `seg_idzona`,seg_motivo,seg_descr,seg_fechafinalizo,idseguimiento_user,seg_horaoficina,seg_compañero from seguimiento_user where seg_fechaalcohol like '$fechabusqueda%'  and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
+					 $sql1="SELECT seg_alcohol,`seg_fechaingreso`, `seg_horaalmuerzo`, `seg_horaregreso`, `seg_idzona`,seg_motivo,seg_descr,seg_fechafinalizo,idseguimiento_user,seg_horaoficina,seg_compañero from seguimiento_user where seg_fechaalcohol>='$fechabusqueda 00:00:00' and seg_fechaalcohol<='$fechabusqueda 23:59:59' and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
 					$DB->Execute($sql1); 
 					$rw2=mysqli_fetch_row($DB->Consulta_ID);
 					 $compara=$rw2[5];
@@ -604,7 +604,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 							if($rw2[5]=="Vacaciones"){ 
 
 								if ($motivoingresoo == false ) {
-									if($param32="Vacaciones"){
+									if($param32=="Vacaciones"){
 										$color="#FFC300";
 										echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 										echo "<td>$alerta".$rw1[1]."</td>";
@@ -677,7 +677,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 								
 								if($rw2[5]=="descanso"){
 									if ($motivoingresoo == false ) {
-										if($param32="Vacaciones"){
+										if($param32=="Vacaciones"){
 									    $color="#82E0AA";
 										echo "<tr class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 										echo "<td>$alerta".$rw1[1]."</td>";
@@ -785,7 +785,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 					
 								//echo "<td colspan='1' width='0' align='center' ><a id='link'  onclick='pop_dis16(\"$rw2[8]\",\"pruebaalcohol\",\"$rw1[3]\")';  title='Prueba de alcohol' >$rw2[0]   </td>";
 								echo $ver ;
-								$sqlw="SELECT idseguimiento_user, count(*) from seguimiento_user where seg_fechaalcohol like '$fechabusqueda%'  and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
+								$sqlw="SELECT idseguimiento_user, count(*) from seguimiento_user where seg_fechaalcohol>='$fechabusqueda 00:00:00' and seg_fechaalcohol<='$fechabusqueda 23:59:59' and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
 								$DB->Execute($sqlw); 
 								$rww=mysqli_fetch_row($DB->Consulta_ID);
 								if ($rww[0]>0) {
@@ -1034,7 +1034,7 @@ if (($muestra1 == false and $muestra2 == true)) {
 			
 			 $fechabusqueda=substr("$rw1[3]",0,10);
 			 $imprimir=1;
-			 $sql1="SELECT seg_alcohol,`seg_fechaingreso`, `seg_horaalmuerzo`, `seg_horaregreso`, `seg_idzona`,seg_motivo,seg_descr,seg_fechafinalizo,idseguimiento_user,seg_horaoficina from seguimiento_user where seg_fechaalcohol like '$fechabusqueda%'  and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
+			 $sql1="SELECT seg_alcohol,`seg_fechaingreso`, `seg_horaalmuerzo`, `seg_horaregreso`, `seg_idzona`,seg_motivo,seg_descr,seg_fechafinalizo,idseguimiento_user,seg_horaoficina from seguimiento_user where seg_fechaalcohol>='$fechabusqueda 00:00:00' and seg_fechaalcohol<='$fechabusqueda 23:59:59' and seg_idusuario='$id_p' $conde1 order by seg_fechaingreso asc";
 			$DB->Execute($sql1); 
 			$rw2=mysqli_fetch_row($DB->Consulta_ID);
 			 $compara=$rw2[5];

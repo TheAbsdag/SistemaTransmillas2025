@@ -17,7 +17,7 @@ var genviar2;
 function agregarguia(idguia,prestamo,flete,manifiesto,idservicio)
 {
 total=document.getElementById('param1').value;
-valortotal=parseInt(total)+parseInt(prestamo)+parseInt(flete);
+valortotal=Number(total || 0)+Number(prestamo || 0)+Number(flete || 0);
 document.getElementById("param1").value=valortotal;
 //console.log(genviar2);
 var paramguia=idservicio;
@@ -40,7 +40,7 @@ function borrarguia(idguia,prestamo,flete,idservicio)
 	$("#"+guia+"2").remove();
 
 	total=document.getElementById('param1').value;
-	valortotal=parseInt(total)-parseInt(prestamo)-parseInt(flete);
+	valortotal=Number(total || 0)-Number(prestamo || 0)-Number(flete || 0);
 	document.getElementById("param1").value=valortotal;
 	//var genviar2=document.getElementById("param9").value;
 	//genviar2=genviar.split(",");
@@ -68,6 +68,11 @@ function guardarfactura(dato)
 		destino="nuevo_adminok.php?param1="+p1+"&param2="+p2+"&param4="+p4+"&param5="+p5+"&param8="+p8+"&param9="+genviar2+"&param10="+p10+"&param11="+p11+"&tabla=editarprefactura";
 		document.location.href=destino;
 	}else{
+		valorFactura = Number(p1 || 0);
+		if(p1=='' || !Number.isFinite(valorFactura) || valorFactura<=0){
+			alert('El Valor de la Factura debe ser mayor a 0');
+			return false;
+		}
 		if(p2==''){
 			alert('Digite un Numero de Factura');
 		}else{
@@ -82,7 +87,7 @@ function guardarfactura(dato)
 }
 
 </script>
-<body onload="setTimeout('myFunction()',1000);">
+<body>
 <?php 
 
 	if($param4!=''){  $fechaactual1=$param4;}else{ $fechaactual1=$fechaactual; }
@@ -139,14 +144,28 @@ include("footer.php");
 		MostrarConsulta4(destino, "destino_vesr");
 
 		function myFunction(){
-			total=document.getElementById('param7').value;
-			valortotal=parseInt(total);
-			document.getElementById("param1").value=valortotal;
-			var  genviar=document.getElementById("param9").value;
-			genviar2=genviar.split(",");
+			var totalInput=document.getElementById('param7');
+			var valorFacturaInput=document.getElementById("param1");
+			var serviciosInput=document.getElementById("param9");
+			if(!totalInput || !valorFacturaInput || !serviciosInput){
+				return false;
+			}
+			total=totalInput.value;
+			valortotal=Number(total || 0);
+			valorFacturaInput.value=Number.isFinite(valortotal) ? valortotal : 0;
+			var  genviar=serviciosInput.value || '';
+			genviar2=genviar ? genviar.split(",").filter(Boolean) : [];
 
-			document.getElementById("param9").value=genviar2;
+			serviciosInput.value=genviar2.join(",");
+			return true;
 		}
+		var intentosInit=0;
+		var timerInitFactura=setInterval(function(){
+			intentosInit++;
+			if(myFunction() || intentosInit>=40){
+				clearInterval(timerInitFactura);
+			}
+		},200);
 	//	sleep(2000);
 	function copyColumnToClipboard(columnIndex) {
             const table = document.getElementById('agregar');

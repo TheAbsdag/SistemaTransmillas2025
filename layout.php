@@ -355,7 +355,12 @@ function llena_datosord2(ord, asc,tabla)
 //         buscarnotificaciones(tipo)
 //     }, 1200000); // cada 20 min
 // }
+let notificacionesEnCurso = false;
 function buscarnotificaciones(tipo){
+    if (document.hidden || notificacionesEnCurso) {
+        return;
+    }
+    notificacionesEnCurso = true;
 
     $.ajax({
         url: "notificaciones.php",
@@ -387,6 +392,9 @@ function buscarnotificaciones(tipo){
         },
         error: function(){
             console.warn("Error cargando notificaciones");
+        },
+        complete: function(){
+            notificacionesEnCurso = false;
         }
     });
 
@@ -1276,11 +1284,11 @@ function procesarSeguimiento($id_usuario, $DB, $DB1) {
 
 <?php if($nivel_acceso==1 or $nivel_acceso==2 or $nivel_acceso==10 or $nivel_acceso==12 or $nivel_acceso==5){ ?>
 <script>
-window.addEventListener("load", function() {
-    setTimeout(function(){
-        iniciarNotificaciones(1);
-    }, 3000);
-});
+// window.addEventListener("load", function() {
+//     setTimeout(function(){
+//         iniciarNotificaciones(1);
+//     }, 2000);
+// });
 </script>
 <?php } ?>
 
