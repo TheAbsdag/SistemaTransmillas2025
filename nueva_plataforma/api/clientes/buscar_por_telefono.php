@@ -77,16 +77,6 @@ try {
     $stmt->execute();
     $result = $stmt->get_result();
     $cliente = $result ? $result->fetch_assoc() : null;
-    if ($cliente !== null) {
-        // Reemplazar & por espacio
-        $cliente['cli_direccion'] = str_replace('&', ' ', $cliente['cli_direccion']);
-
-        // Quitar múltiples espacios
-        $cliente['cli_direccion'] = preg_replace('/\s+/', ' ', $cliente['cli_direccion']);
-
-        // Limpiar bordes
-        $cliente['cli_direccion'] = trim($cliente['cli_direccion']);
-    }
     $stmt->close();
 
     echo json_encode([
@@ -102,3 +92,4 @@ try {
         'detalle' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
 }
+

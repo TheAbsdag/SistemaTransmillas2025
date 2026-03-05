@@ -1,4 +1,4 @@
-ï»¿<?php
+<?php
 
 require_once "../config/database.php";
 
@@ -7,7 +7,7 @@ class EntregarModel {
     private $db;
 
     public function __construct() {
-        $this->db = (new Database())->connect(); // nueva conexiÃ³n
+        $this->db = (new Database())->connect(); // nueva conexión
     }
 
     /* =====================================================
@@ -48,7 +48,7 @@ class EntregarModel {
             return "";
         }
 
-        // Validar si se subiÃ³
+        // Validar si se subió
         if (!is_uploaded_file($file["tmp_name"])) {
             return "";
         }
@@ -160,14 +160,14 @@ class EntregarModel {
             return ["ok" => false, "msg" => "NO HAY FIRMA"];
         }
         elseif (empty($_POST['id_usuario'])) {
-            // No viene o viene vacÃ­o
+            // No viene o viene vacío
             return ["ok" => false, "msg" => "Error faltan datos recargue e intente nuevamente"];
         }
 
         $this->logEntrega("Firma validada correctamente.");
 
         /* ===============================
-        PROCESAR MÃ‰TODO PAGO
+        PROCESAR MÉTODO PAGO
         =============================== */
         if ($param30 != "0") {
             $arr = explode("|", $param30);
@@ -175,12 +175,12 @@ class EntregarModel {
             $cuenta   = $arr[1] ?? "";
             $namePago = $arr[2] ?? "";
             $tranf = ",cue_transferencia='$namePago' ";
-            $this->logEntrega("MÃ©todo pago: tipopago=$tipopago, cuenta=$cuenta, transferencia=$namePago");
+            $this->logEntrega("Método pago: tipopago=$tipopago, cuenta=$cuenta, transferencia=$namePago");
         } else {
             $tipopago = 0;
             $cuenta = "";
             $tranf = "";
-            $this->logEntrega("MÃ©todo pago: CONTADO");
+            $this->logEntrega("Método pago: CONTADO");
         }
 
         /* ===============================
@@ -229,11 +229,11 @@ class EntregarModel {
             $fotoEntrega = $this->guardarImagen($files["param87"], "./../../imgServicios/");
             $this->logEntrega("Foto guardada: $fotoEntrega");
         } else {
-            $this->logEntrega("No llegÃ³ la foto de entrega.");
+            $this->logEntrega("No llegó la foto de entrega.");
         }
 
         /* ===============================
-        PROCESAR SEGÃšN COBRAR
+        PROCESAR SEGÚN COBRAR
         =============================== */
         $porcobrar = $data["cambios"] ?? 0;
         $this->logEntrega("porcobrar = $porcobrar");
@@ -261,7 +261,7 @@ class EntregarModel {
             $this->query($sql3);
             $this->logEntrega("SQL3 ejecutado.");
 
-            /* DEVOLUCIÃ“N */
+            /* DEVOLUCIÓN */
             if ($param19 >= 1) {
                 $valDev = str_replace(".", "", $param19);
                 $sql4 = "INSERT INTO abonosguias
@@ -269,7 +269,7 @@ class EntregarModel {
                         VALUES
                         ('$fechatiempo','$valDev','$idservicio','$id_usuario','$id_sedes','devolucion')";
                 $this->query($sql4);
-                $this->logEntrega("DEVOLUCIÃ“N registrada.");
+                $this->logEntrega("DEVOLUCIÓN registrada.");
             }
 
             /* SERVICIOS */
@@ -283,10 +283,10 @@ class EntregarModel {
             $this->query($sql1);
             $this->logEntrega("SQL1 ejecutado.");
 
-            /* IMG TRANSACCIÃ“N */
+            /* IMG TRANSACCIÓN */
             if ($tipopago > 1 && ($cambios == "" or $cambios == 0)) {
 
-                $this->logEntrega("Guardando imagen de transacciÃ³n...");
+                $this->logEntrega("Guardando imagen de transacción...");
 
                 $imgTrans = $this->guardarImagen($files["img_transaccion"], "./../../img_transacciones/");
 
@@ -310,7 +310,7 @@ class EntregarModel {
 
             if ($tipopago > 1) {
                 $imgTrans = $this->guardarImagen($files["img_transaccion"], "./../../img_transacciones/");
-                $this->logEntrega("Foto de transacciÃ³n guardada: $imgTrans");
+                $this->logEntrega("Foto de transacción guardada: $imgTrans");
 
                 $this->query("DELETE FROM pagoscuentas WHERE pag_idservicio='$idservicio'");
                 $this->logEntrega("Pagos eliminados.");
@@ -439,7 +439,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         }
 
         if (!isset($files["foto_evidencia"]) || $files["foto_evidencia"]["error"] !== UPLOAD_ERR_OK) {
-            $this->logErrorLocal("Imagen invÃ¡lida o con error.");
+            $this->logErrorLocal("Imagen inválida o con error.");
             $img_evidencia = "";
         } else {
             $this->logErrorLocal("Intentando guardar imagen en ./imgNoEntregas/ ...");
@@ -572,17 +572,17 @@ public function guardarNoEntregar($data, $files, $ctx = [])
 
     } catch (Throwable $e) {
 
-        $this->logErrorLocal("EXCEPCIÃ“N FATAL: " . $e->getMessage());
+        $this->logErrorLocal("EXCEPCIÓN FATAL: " . $e->getMessage());
         return ["ok" => false, "error" => $e->getMessage()];
     }
 }
     /**
-     * Buscar datos de un servicio y calcular totales igual que en el cÃ³digo viejo
+     * Buscar datos de un servicio y calcular totales igual que en el código viejo
      */
     public function buscarEntrega($idservicio) {
         $idservicio = (int)$idservicio;
 
-        // 1) Traer datos base del servicio + guÃ­a (tu SELECT original)
+        // 1) Traer datos base del servicio + guía (tu SELECT original)
         $sql = "SELECT 
                     s.ser_paquetedescripcion,
                     s.ser_valorprestamo,
@@ -613,7 +613,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         }
 
         $rw = $res->fetch_row();
-        // Ãndices segÃºn tu cÃ³digo original:
+        // Índices según tu código original:
         // 0=ser_paquetedescripcion
         // 1=ser_valorprestamo
         // 2=ser_valorabono
@@ -636,27 +636,27 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         // 2) Normalizar y preparar datos
         // -----------------------------
 
-        // Map de tipo de pago (AJÃšSTALO a tu real)
+        // Map de tipo de pago (AJÚSTALO a tu real)
         $tipopago = [
             1 => 'Contado',
-            2 => 'CrÃ©dito',
+            2 => 'Crédito',
             3 => 'Al Cobro',
             4 => 'Otro'
         ];
 
-        // Valor prÃ©stamo vacÃ­o = 0
+        // Valor préstamo vacío = 0
         if ($rw[1] == '' || $rw[1] === null) {
             $rw[1] = 0;
         }
 
-        // mapear clasificaciÃ³n a texto tipo pago
+        // mapear clasificación a texto tipo pago
         $tipoPago = isset($tipopago[$rw[4]]) ? $tipopago[$rw[4]] : $rw[4];
 
-        // devolver recibido a texto (aunque en el front tÃº ya lo manejas, igual lo mandamos)
+        // devolver recibido a texto (aunque en el front tú ya lo manejas, igual lo mandamos)
         $devolverRecibidoTexto = ($rw[6] == 1) ? 'SI' : 'NO';
 
         // -----------------------------
-        // 3) CÃ¡lculo de seguro (1% del declarado)
+        // 3) Cálculo de seguro (1% del declarado)
         // -----------------------------
 
         // quitar puntos para operar
@@ -669,7 +669,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         $seguro = (intval($vrDeclarado) * 1) / 100; // 1% del declarado
 
         // -----------------------------
-        // 4) Buscar porcentaje de prÃ©stamo en tabla prestamo
+        // 4) Buscar porcentaje de préstamo en tabla prestamo
         // -----------------------------
 
         $porprestamo = 0;
@@ -681,7 +681,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
                    LIMIT 1";
         $resPor = $this->db->query($sqlPor);
         if ($resPor && $rowPor = $resPor->fetch_row()) {
-            $pre_porcentaje = $rowPor[0]; // puede ser "3 %" segÃºn tu cÃ³digo
+            $pre_porcentaje = $rowPor[0]; // puede ser "3 %" según tu código
 
             $dosporcentaje = explode(" ", $pre_porcentaje);
             if (isset($dosporcentaje[1]) && $dosporcentaje[1] == '%') {
@@ -690,7 +690,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         }
 
         // -----------------------------
-        // 5) CÃ¡lculo de totales como en tu cÃ³digo
+        // 5) Cálculo de totales como en tu código
         // -----------------------------
 
         $totalprestamo = $valorPrestamo + $porprestamo;
@@ -705,7 +705,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         $devolucion    = $totalfinal * -1;
 
         // -----------------------------
-        // 6) Formateos como en el cÃ³digo viejo
+        // 6) Formateos como en el código viejo
         // -----------------------------
         $porprestamoFormat  = number_format($porprestamo, 0, ".", ".");
         $valorPrestamoFormat= number_format($valorPrestamo, 0, ".", ".");
@@ -905,9 +905,9 @@ public function guardarNoEntregar($data, $files, $ctx = [])
         file_put_contents($logFile, "[" . date('Y-m-d H:i:s') . "] === INICIO guardarFirmaRecogida() ===\n", FILE_APPEND);
 
         try {
-            file_put_contents($logFile, "ðŸŸ¡ Paso 1: Recibido idservicio=$idservicio\n", FILE_APPEND);
+            file_put_contents($logFile, "?? Paso 1: Recibido idservicio=$idservicio\n", FILE_APPEND);
 
-            // 1ï¸âƒ£ Convertir base64 a imagen (compatible con varios formatos)
+            // 1?? Convertir base64 a imagen (compatible con varios formatos)
             if (preg_match('/^data:image\/(\w+);base64,/', $firmaBase64, $type)) {
                 $firmaData = substr($firmaBase64, strpos($firmaBase64, ',') + 1);
                 $type = strtolower($type[1]); // jpg, jpeg, png, webp...
@@ -916,51 +916,51 @@ public function guardarNoEntregar($data, $files, $ctx = [])
                 $imagen = base64_decode($firmaData);
 
                 if ($imagen === false) {
-                    file_put_contents($logFile, "âŒ Error al decodificar base64\n", FILE_APPEND);
+                    file_put_contents($logFile, "? Error al decodificar base64\n", FILE_APPEND);
                     return false;
                 }
 
-                // Validar extensiÃ³n permitida
+                // Validar extensión permitida
                 if (!in_array($type, ['jpg','jpeg','png','webp'])) {
-                    file_put_contents($logFile, "âŒ Tipo de imagen no permitido: $type\n", FILE_APPEND);
+                    file_put_contents($logFile, "? Tipo de imagen no permitido: $type\n", FILE_APPEND);
                     return false;
                 }
 
             } else {
-                file_put_contents($logFile, "âŒ Base64 invÃ¡lido\n", FILE_APPEND);
+                file_put_contents($logFile, "? Base64 inválido\n", FILE_APPEND);
                 return false;
             }
 
             if ($imagen === false) {
-                file_put_contents($logFile, "âŒ Error al decodificar base64\n", FILE_APPEND);
+                file_put_contents($logFile, "? Error al decodificar base64\n", FILE_APPEND);
                 return false;
             }
 
-            // 2ï¸âƒ£ Crear carpeta si no existe
+            // 2?? Crear carpeta si no existe
             $rutaCarpeta = __DIR__ . '/../../firmas_clientes/';
             if (!file_exists($rutaCarpeta)) {
                 if (!mkdir($rutaCarpeta, 0777, true)) {
-                    file_put_contents($logFile, "âŒ Error al crear carpeta\n", FILE_APPEND);
+                    file_put_contents($logFile, "? Error al crear carpeta\n", FILE_APPEND);
                     return false;
                 }
             }
 
-            // 3ï¸âƒ£ Guardar archivo
+            // 3?? Guardar archivo
             $nombreArchivo = 'firma_' . $idservicio . '_' . time() . '.png';
             $rutaArchivo = $rutaCarpeta . $nombreArchivo;
             $rutaArchivoGuardar = "firmas_clientes/" . $nombreArchivo;
 
             if (file_put_contents($rutaArchivo, $imagen) === false) {
-                file_put_contents($logFile, "âŒ Error al guardar imagen\n", FILE_APPEND);
+                file_put_contents($logFile, "? Error al guardar imagen\n", FILE_APPEND);
                 return false;
             }
 
-            file_put_contents($logFile, "âœ… Imagen guardada: $rutaArchivoGuardar\n", FILE_APPEND);
+            file_put_contents($logFile, "? Imagen guardada: $rutaArchivoGuardar\n", FILE_APPEND);
 
             $tipoFirma = 'Entrega';
 
 
-            // ðŸ”Ž 4ï¸âƒ£ Verificar si ya existe firma para ese servicio y tipo
+            // ?? 4?? Verificar si ya existe firma para ese servicio y tipo
             $sqlCheck = "SELECT id FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
             $stmtCheck = $this->db->prepare($sqlCheck);
             $stmtCheck->bind_param('is', $idservicio, $tipoFirma);
@@ -968,11 +968,11 @@ public function guardarNoEntregar($data, $files, $ctx = [])
             $result = $stmtCheck->get_result();
 
             if ($result->num_rows > 0) {
-                // âœï¸ YA EXISTE â†’ HACER UPDATE
+                // ?? YA EXISTE ? HACER UPDATE
                 $row = $result->fetch_assoc();
                 $idFirma = $row['id'];
 
-                file_put_contents($logFile, "ðŸŸ  Firma existente encontrada (ID=$idFirma), actualizando...\n", FILE_APPEND);
+                file_put_contents($logFile, "?? Firma existente encontrada (ID=$idFirma), actualizando...\n", FILE_APPEND);
                 $activoParaFirma=0;
                 $sqlUpdate = "UPDATE firma_clientes 
                             SET firma_clientes = ?, fecha_registro = ? , activo_para_firmar = ?
@@ -983,10 +983,10 @@ public function guardarNoEntregar($data, $files, $ctx = [])
 
 
                 if (!$stmtUpdate->execute()) {
-                    file_put_contents($logFile, "âŒ Error en UPDATE: " . $stmtUpdate->error . "\n", FILE_APPEND);
+                    file_put_contents($logFile, "? Error en UPDATE: " . $stmtUpdate->error . "\n", FILE_APPEND);
                     return false;
                 }
-                                // ðŸ”Ž Obtener telÃ©fono desde firma_clientes
+                                // ?? Obtener teléfono desde firma_clientes
                 $sqlTel = "SELECT telefono FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
                 $stmtTel = $this->db->prepare($sqlTel);
                 $stmtTel->bind_param('is', $idservicio, $tipoFirma);
@@ -994,7 +994,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
                 $resTel = $stmtTel->get_result();
                 $telefono = ($resTel->num_rows > 0) ? $resTel->fetch_assoc()['telefono'] : null;
 
-                // ðŸ”Ž Obtener nÃºmero de guÃ­a desde servicios
+                // ?? Obtener número de guía desde servicios
                 $sqlGuia = "SELECT ser_consecutivo FROM servicios WHERE idservicios = ? LIMIT 1";
                 $stmtGuia = $this->db->prepare($sqlGuia);
                 $stmtGuia->bind_param('i', $idservicio);
@@ -1005,13 +1005,13 @@ public function guardarNoEntregar($data, $files, $ctx = [])
 
                 // $this->enviarGuiaWhat( $telefono, 42, $numguia."R");
 
-                file_put_contents($logFile, "âœ… Firma actualizada correctamente\n", FILE_APPEND);
+                file_put_contents($logFile, "? Firma actualizada correctamente\n", FILE_APPEND);
                 return true;
 
             } else {
-                // âž• NO EXISTE â†’ INSERTAR
+                // ? NO EXISTE ? INSERTAR
                 $activoParaFirma=0;
-                file_put_contents($logFile, "ðŸŸ¢ No existe firma previa, insertando nueva...\n", FILE_APPEND);
+                file_put_contents($logFile, "?? No existe firma previa, insertando nueva...\n", FILE_APPEND);
 
                 $sqlInsert = "INSERT INTO firma_clientes (id_guia, tipo_firma, firma_clientes, fecha_registro,activo_para_firmar) 
                             VALUES (?, ?, ?, ?,?)";
@@ -1021,11 +1021,11 @@ public function guardarNoEntregar($data, $files, $ctx = [])
 
 
                 if (!$stmtInsert->execute()) {
-                    file_put_contents($logFile, "âŒ Error en INSERT: " . $stmtInsert->error . "\n", FILE_APPEND);
+                    file_put_contents($logFile, "? Error en INSERT: " . $stmtInsert->error . "\n", FILE_APPEND);
                     return false;
                 }
 
-                // ðŸ”Ž Obtener telÃ©fono desde firma_clientes
+                // ?? Obtener teléfono desde firma_clientes
                 // $sqlTel = "SELECT telefono FROM firma_clientes WHERE id_guia = ? AND tipo_firma = ? LIMIT 1";
                 // $stmtTel = $this->db->prepare($sqlTel);
                 // $stmtTel->bind_param('is', $idservicio, $tipoFirma);
@@ -1033,7 +1033,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
                 // $resTel = $stmtTel->get_result();
                 // $telefono = ($resTel->num_rows > 0) ? $resTel->fetch_assoc()['telefono'] : null;
 
-                // ðŸ”Ž Obtener nÃºmero de guÃ­a desde servicios
+                // ?? Obtener número de guía desde servicios
                 // $sqlGuia = "SELECT ser_consecutivo FROM servicios WHERE idservicios = ? LIMIT 1";
                 // $stmtGuia = $this->db->prepare($sqlGuia);
                 // $stmtGuia->bind_param('i', $idservicio);
@@ -1041,14 +1041,14 @@ public function guardarNoEntregar($data, $files, $ctx = [])
                 // $resGuia = $stmtGuia->get_result();
                 // $numguia = ($resGuia->num_rows > 0) ? $resGuia->fetch_assoc()['ser_consecutivo'] : null;
                 // $this->enviarGuiaWhat( $telefono, 42, $numguia."R");
-                file_put_contents($logFile, "âœ… Firma insertada correctamente\n", FILE_APPEND);
+                file_put_contents($logFile, "? Firma insertada correctamente\n", FILE_APPEND);
                 return true;
             }
 
             
             
         } catch (Exception $e) {
-            file_put_contents($logFile, "âŒ ExcepciÃ³n: " . $e->getMessage() . "\n", FILE_APPEND);
+            file_put_contents($logFile, "? Excepción: " . $e->getMessage() . "\n", FILE_APPEND);
             return false;
         } finally {
             // Cerrar statements abiertos
@@ -1184,7 +1184,7 @@ public function guardarNoEntregar($data, $files, $ctx = [])
 
     $row = $res->fetch_assoc();
 
-    // Si ya quedÃ³ en 0, se considera firmada.
+    // Si ya quedó en 0, se considera firmada.
     if (isset($row['activo_para_firmar']) && (int)$row['activo_para_firmar'] === 0) {
         return true;
     }
