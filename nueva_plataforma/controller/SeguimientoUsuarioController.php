@@ -6,12 +6,12 @@ require_once "../model/SeguimientoUsuarioModel.php";
 ob_start(); // Inicia buffer de salida
 $captured_errors = []; // Almacenará los errores
 
-set_error_handler(function($errno, $errstr, $errfile, $errline) use (&$captured_errors) {
+set_error_handler(function ($errno, $errstr, $errfile, $errline) use (&$captured_errors) {
     $captured_errors[] = [
-        'type'    => $errno,
+        'type' => $errno,
         'message' => $errstr,
-        'file'    => $errfile,
-        'line'    => $errline
+        'file' => $errfile,
+        'line' => $errline
     ];
     return true; // Evita que PHP muestre el error
 });
@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
 
     try {
         // Validar y sanitizar entradas
-        $draw   = isset($_POST['draw']) ? intval($_POST['draw']) : 0;
-        $start  = isset($_POST['start']) ? intval($_POST['start']) : 0;
+        $draw = isset($_POST['draw']) ? intval($_POST['draw']) : 0;
+        $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
         $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
         $search = $_POST['search']['value'] ?? '';
         $orderColumnIndex = $_POST['order'][0]['column'] ?? 0;
@@ -39,11 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
         // Filtros personalizados
         $filtros = [
             'fecha_inicio' => $_POST['fecha_inicio'] ?? date('Y-m-d'),
-            'fecha_fin'    => $_POST['fecha_fin'] ?? date('Y-m-d'),
-            'sede'         => $_POST['sede'] ?? '',
-            'operario'     => $_POST['operario'] ?? '',
-            'motivo'       => $_POST['motivo'] ?? '',
-            'tipo_contrato'=> $_POST['tipo_contrato'] ?? ''
+            'fecha_fin' => $_POST['fecha_fin'] ?? date('Y-m-d'),
+            'sede' => $_POST['sede'] ?? '',
+            'operario' => $_POST['operario'] ?? '',
+            'motivo' => $_POST['motivo'] ?? '',
+            'tipo_contrato' => $_POST['tipo_contrato'] ?? ''
         ];
 
         // Obtener datos del modelo
@@ -73,6 +73,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
             "error" => "Ocurrió un error interno"
         ]);
     }
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion'])) {
+    $accion = $_POST['accion'];
+    $response = ['success' => false, 'message' => 'Acción no válida'];
+
+    switch ($accion) {
+        case 'guardar_ingreso_popup':
+            $idSeguimiento = intval($_POST['id_seguimiento'] ?? 0);
+            $idUsuario = intval($_POST['operario'] ?? 0);
+            $fecha = $_POST['fecha'] ?? date('Y-m-d');
+            $motivo = $_POST['motivo'] ?? '';
+            $descripcion = $_POST['descripcion'] ?? '';
+            $zona = intval($_POST['zona'] ?? 0);
+            $prueba = $_POST['prueba'] ?? 'No aplica';
+            $imagen = $_FILES['imagen'] ?? null;
+
+            $data = [
+                'operario' => $idUsuario,
+                'fecha' => $fecha,
+                'motivo' => $motivo,
+                'descripcion' => $descripcion,
+                'zona' => $zona,
+                'prueba' => $prueba
+            ];
+
+            if ($idSeguimiento > 0) {
+                // Actualizar registro existente
+                $ok = $modelo->actualizarIngreso($idSeguimiento, $data, $imagen, $_SESSION['usuario_id']);
+            } else {
+                // Insertar nuevo
+                $ok = $modelo->insertarIngreso($data, $imagen, $_SESSION['usuario_id']);
+            }
+
+            if ($ok) {
+                $response = ['success' => true, 'message' => 'Ingreso guardado correctamente'];
+            } else {
+                $response = ['message' => 'Error al guardar en la base de datos'];
+            }
+            break;
+
+        case 'guardar_zona':
+            $id = intval($_POST['id']);
+            $zona = intval($_POST['zona']);
+            $ok = $modelo->actualizarZona($id, $zona);
+            $response = ['success' => $ok, 'message' => $ok ? 'Zona actualizada' : 'Error'];
+            break;
+
+        case 'guardar_hora_almuerzo':
+            $id = intval($_POST['id']);
+            $hora = $_POST['hora'];
+            $ok = $modelo->actualizarHoraAlmuerzo($id, $hora);
+            $response = ['success' => $ok, 'message' => $ok ? 'Hora guardada' : 'Error'];
+            break;
+
+        case 'guardar_retorno_almuerzo':
+            $id = intval($_POST['id']);
+            $hora = $_POST['hora'];
+            $ok = $modelo->actualizarRetornoAlmuerzo($id, $hora);
+            $response = ['success' => $ok, 'message' => $ok ? 'Retorno guardado' : 'Error'];
+            break;
+
+        case 'guardar_retorno_oficina':
+            $id = intval($_POST['id']);
+            $hora = $_POST['hora'];
+            $ok = $modelo->actualizarRetornoOficina($id, $hora);
+            $response = ['success' => $ok, 'message' => $ok ? 'Retorno guardado' : 'Error'];
+            break;
+
+        case 'guardar_companero':
+            $id = intval($_POST['id']);
+            $companero = intval($_POST['companero']);
+            $ok = $modelo->actualizarCompanero($id, $companero);
+            $response = ['success' => $ok, 'message' => $ok ? 'Compañero actualizado' : 'Error'];
+            break;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($response);
     exit;
 }
 
@@ -205,11 +285,128 @@ if (isset($_POST['accion']) && $_POST['accion'] === 'guardar_licencia') {
 }
 
 // --------------------------------------------------------------------
+// AGREGAR LICENCIA / PERMISO
+// --------------------------------------------------------------------
+if (isset($_GET['accion']) && $_GET['accion'] === 'get_all_operarios') {
+    $operarios = $modelo->getTodosOperarios();
+    header('Content-Type: application/json');
+    echo json_encode($operarios);
+    exit;
+}
+
+// --------------------------------------------------------------------
+// OBTENER DATOS PARA FORMULARIO EN POPUP (según tipo: zona, horaalmuerzo, horaretorno, horaoficina, trabaja_con, etc.)
+// --------------------------------------------------------------------
+// Obtener formulario popup
+if (isset($_GET['accion']) && $_GET['accion'] === 'form_popup') {
+    $tipo = $_GET['tipo'] ?? '';
+    $id = intval($_GET['id'] ?? 0);
+    $param = $_GET['param'] ?? '';
+
+    // Inicializar variables para la vista
+    $idUsuario = 0;
+    $idSeguimiento = 0;
+    $fecha = date('Y-m-d');
+    $sedePredeterminada = $_SESSION['usu_idsede'] ?? 0;
+
+    $data = [];
+    switch ($tipo) {
+        case 'ingreso_manual':
+            // Obtener motivos filtrados (solo ingreso)
+            $motivos = $modelo->getMotivosIngreso('ingreso');
+
+            // Obtener zonas de la sede predeterminada (usuario actual o la del operario)
+            $sedePredeterminada = $_SESSION['usu_idsede'] ?? 0;
+
+            // Si hay idUsuario, obtener su sede
+            $idUsuario = 0;
+            $idSeguimiento = 0;
+            $fecha = date('Y-m-d');
+            $motivoSeleccionado = '';
+            $descripcion = '';
+            $zonaSeleccionada = 0;
+            $pruebaSeleccionada = 'No aplica';
+            $usuario = null;
+
+            if ($id > 0) {
+                $seguimiento = $modelo->getSeguimientoById($id);
+                if ($seguimiento) {
+                    $idSeguimiento = $seguimiento['idseguimiento_user'];
+                    $idUsuario = $seguimiento['seg_idusuario'];
+                    $fecha = date('Y-m-d', strtotime($seguimiento['seg_fechaingreso']));
+                    $motivoSeleccionado = $seguimiento['seg_motivo'];
+                    $descripcion = $seguimiento['seg_descr'];
+                    $zonaSeleccionada = $seguimiento['seg_idzona'];
+                    $pruebaSeleccionada = $seguimiento['seg_alcohol'];
+                    // Obtener datos del usuario para mostrar nombre
+                    $usuario = $modelo->getOperarioById($idUsuario);
+                } else {
+                    // Es un usuario nuevo
+                    $usuario = $modelo->getOperarioById($id);
+                    if ($usuario) {
+                        $idUsuario = $usuario['idusuarios'];
+                        $sedePredeterminada = $usuario['usu_idsede'];
+                    }
+                }
+            }
+
+            // Obtener zonas de la sede predeterminada
+            $zonas = $modelo->getZonasPorSede($sedePredeterminada);
+
+            // Obtener todas las sedes (para el modal manual)
+            $sedes = $modelo->getSedes(); // Este método ya debe existir
+
+            // Incluir la vista parcial
+            ob_start();
+            ob_start();
+            $vista= __DIR__ . "/../view/SeguimientoUsuario/popups/ingreso.php";
+            if (!file_exists($vista)) {
+                echo "<div class='alert alert-danger'>La vista '$tipo' no existe.</div>";
+                exit;
+            }
+            include $vista;
+            $html = ob_get_clean();
+            echo $html;
+            exit;
+            break;
+        case 'zona':
+            $data['id'] = $id;
+            $data['fecha'] = $param;
+            // Obtener zonas de la sede del usuario actual (necesitas el id_sede)
+            // Podrías obtener la sede del usuario logueado desde la sesión
+            $id_sede_usuario = $_SESSION['usu_idsede'] ?? 0;
+            $data['zonas'] = $modelo->getZonasPorSede($id_sede_usuario);
+            break;
+        case 'hora_almuerzo':
+        case 'retorno_almuerzo':
+        case 'retorno_oficina':
+            $data['id'] = $id;
+            $data['fecha'] = $param;
+            break;
+        case 'companero':
+            $data['id'] = $id;
+            $data['param'] = $param;
+            $data['operarios'] = $modelo->getTodosOperarios();
+            break;
+        // Añade más casos según necesites
+    }
+
+    // Pasar variables a la vista parcial
+    extract($data);
+    ob_start();
+    include "../view/SeguimientoUsuario/popups/$tipo.php";
+    $html = ob_get_clean();
+    echo $html;
+    exit;
+}
+
+// --------------------------------------------------------------------
 // MOSTRAR LA VISTA (index)
 // --------------------------------------------------------------------
 // Obtener datos para los filtros
 $sedes = $modelo->getSedes();
 $motivos = $modelo->getMotivosIngreso();
+$motivosLicencia = $modelo->getMotivosLicencia();
 $tiposContrato = $modelo->getTiposContrato();
 
 include "../view/SeguimientoUsuario/index.php";
