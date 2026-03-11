@@ -7,7 +7,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     $fecha = $_POST['fecha'] ?? '';
     $tipo = $_POST['tipo'] ?? '';
     $usuarios = $modelo->obtenerMensajes($fecha, $tipo);
-    echo json_encode($usuarios);
+    $json = json_encode($usuarios, JSON_UNESCAPED_UNICODE);
+    if ($json === false) {
+        $logPath = __DIR__ . '/../model/log_consultas.txt';
+        $logMessage = "[" . date("Y-m-d H:i:s") . "] ERROR_JSON: " . json_last_error_msg() . "\n";
+        file_put_contents($logPath, $logMessage, FILE_APPEND);
+        echo '[]';
+        exit;
+    }
+    echo $json;
     exit;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['actualizar_campo'])) {

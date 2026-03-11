@@ -171,8 +171,13 @@ try {
 
     $fechatiempo = date('Y-m-d H:i:s');
 
+    $descripcion= ": Cancelada por Whatsapp";
+
+                
+
+
     $sqlCuenta = "UPDATE cuentaspromotor
-                  SET cue_fecha = ?, cue_estado = 100, cue_idoperador = 0, cue_fecharecogida = '00:00:00'
+                  SET cue_fecha = ?, cue_estado = 1, cue_idoperador = 0, cue_fecharecogida = '00:00:00'
                   WHERE cue_idservicio = ?";
     $stmtCuenta = $db->prepare($sqlCuenta);
     if (!$stmtCuenta) {
@@ -192,7 +197,7 @@ try {
     $stmtCuenta->close();
 
     $sqlServicio = "UPDATE servicios
-                    SET ser_idusuarioregistro = ?, ser_fechafinal = ?, ser_estado = 100, ser_desvaliguia = ?
+                    SET ser_idusuarioregistro = ?, ser_fechafinal = ?, ser_estado = 1, ser_descllamada = ? 
                     WHERE idservicios = ?";
     $stmtServicio = $db->prepare($sqlServicio);
     if (!$stmtServicio) {

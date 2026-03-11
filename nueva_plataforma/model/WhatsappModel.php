@@ -1,20 +1,27 @@
 <?php
-require_once "../config/databaseWhatsapp.php";
+require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/../config/databaseWhatsapp.php";
 
 class WhatsappModel {
     private $db;
+    private $dbMain;
 
     public function __construct() {
-        $this->db = (new Database())->connect();
+        $this->db = (new DatabaseWhatsapp())->connect();
+        $this->dbMain = (new Database())->connect();
     }
 
     public function obtenerMensajes($filtroFecha = '', $filtroTipoMensaje = '') {
-
-        // Establecer zona horaria de Bogotá
         date_default_timezone_set('America/Bogota');
-        // Si no se pasa una fecha, usa la fecha actual
 
-        
+        if ($filtroFecha === '') {
+            $filtroFecha = date('Y-m-d');
+        }
+
+        if ($filtroTipoMensaje === "ServiciosHechos") {
+            return $this->obtenerServiciosHechos($filtroFecha);
+        }
+
         $sql = "SELECT `id`, `fecha_hora`, `mensaje_recibido`,
         `mensaje_enviado`, `id_wa`, `timestamp_wa`,
         `telefono_wa`,id_servicio 
@@ -22,40 +29,85 @@ class WhatsappModel {
         where id>0   
         ";
 
-        if ($filtroFecha !== '') {
-            $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
-        }else{
-            $filtroFecha = date('Y-m-d'); // solo fecha (puedes ajustar a Y-m-d H:i:s si quieres precisión total)
-            $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
-        }
+        $sql .= "AND DATE(fecha_hora) = '" . $this->db->real_escape_string($filtroFecha) . "'";
 
         if ($filtroTipoMensaje !== '') {
-
             if ($filtroTipoMensaje=="Alertas") {
                 $sql .="AND tipo ='Alerta'";
-            }else if ($filtroTipoMensaje=="ChatBot") {
+            } else if ($filtroTipoMensaje=="ChatBot") {
                 $sql .="AND CHAR_LENGTH(mensaje_enviado) > 2 ";
-            }else if ($filtroTipoMensaje=="ServiciosHechos") {
-                $sql .="AND mensaje_enviado like '%Hemos creado tu servicio%'";
-            }else if ($filtroTipoMensaje=="Cotizaciones") {
-                $sql .="AND mensaje_enviado like '%Cotización registrada%'";
-            }else if ($filtroTipoMensaje=="cotizaMinima") {
+            } else if ($filtroTipoMensaje=="Cotizaciones") {
+                $sql .="AND mensaje_enviado like '%Cotizaci�n registrada%'";
+            } else if ($filtroTipoMensaje=="cotizaMinima") {
                 $sql .="AND mensaje_enviado like '%El valor estimado%'";
             }
-            
-        }else {
+        } else {
             $sql .="AND CHAR_LENGTH(mensaje_enviado) > 2 ";
         }
 
         $sql .= "ORDER BY fecha_hora ASC";
 
-        // ✅ Guardar consulta en log para depuración
-        $logPath = __DIR__ . '/log_consultas.txt'; // puedes cambiar el nombre/ruta si quieres
+        $logPath = __DIR__ . '/log_consultas.txt';
         $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
         file_put_contents($logPath, $logMessage, FILE_APPEND);
-        
+
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    private function obtenerServiciosHechos(string $filtroFecha): array
+    {
+        $fecha = $this->dbMain->real_escape_string($filtroFecha);
+        $sql = "SELECT 
+                    s.idservicios AS id,
+                    s.ser_fecharegistro AS fecha_hora,
+                    '' AS mensaje_recibido,
+                    '' AS mensaje_enviado,
+                    '' AS id_wa,
+                    '' AS timestamp_wa,
+                    s.cli_telefono AS telefono_wa,
+                    s.idservicios AS id_servicio
+                FROM serviciosdia s
+                INNER JOIN guias g ON g.gui_idservicio = s.idservicios
+                WHERE g.gui_usucreado = 'whatsapp'
+                AND DATE(s.ser_fecharegistro) = '$fecha'
+                ORDER BY s.ser_fecharegistro ASC";
+
+        $logPath = __DIR__ . '/log_consultas.txt';
+        $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL_SERVICIOS_HECHOS: $sql\n";
+        file_put_contents($logPath, $logMessage, FILE_APPEND);
+
+        $result = $this->dbMain->query($sql);
+        if (!$result) {
+            file_put_contents(
+                $logPath,
+                "[" . date("Y-m-d H:i:s") . "] ERROR_SERVICIOS_HECHOS: " . $this->dbMain->error . "\n",
+                FILE_APPEND
+            );
+            return [];
+        }
+
+        $rows = [];
+        while ($row = $result->fetch_assoc()) {
+            $rows[] = [
+                'id' => $row['id'] ?? '',
+                'fecha_hora' => $row['fecha_hora'] ?? '',
+                'mensaje_recibido' => $row['mensaje_recibido'] ?? '',
+                'mensaje_enviado' => $row['mensaje_enviado'] ?? '',
+                'id_wa' => $row['id_wa'] ?? '',
+                'timestamp_wa' => $row['timestamp_wa'] ?? '',
+                'telefono_wa' => $row['telefono_wa'] ?? '',
+                'id_servicio' => $row['id_servicio'] ?? '',
+            ];
+        }
+
+        file_put_contents(
+            $logPath,
+            "[" . date("Y-m-d H:i:s") . "] FILAS_SERVICIOS_HECHOS: " . count($rows) . "\n",
+            FILE_APPEND
+        );
+
+        return $rows;
     }
 
     public function obtenerRoles() {
@@ -74,6 +126,7 @@ class WhatsappModel {
         $stmt->execute();
         $stmt->close();
     }
+
     public function eliminarUsuario($id) {
         $sql = "DELETE FROM usuarios WHERE idusuarios = ?";
         $stmt = $this->db->prepare($sql);
@@ -81,6 +134,7 @@ class WhatsappModel {
         $stmt->execute();
         $stmt->close();
     }
+
     public function yaSeEnvioMensajeTipo37($telefono, $fecha = '')
     {
         date_default_timezone_set('America/Bogota');
@@ -100,7 +154,6 @@ class WhatsappModel {
             LIMIT 1
         ";
 
-        // Log
         $logPath = __DIR__ . '/log_consultas.txt';
         $logMessage = "[" . date("Y-m-d H:i:s") . "] SQL: $sql\n";
         file_put_contents($logPath, $logMessage, FILE_APPEND);

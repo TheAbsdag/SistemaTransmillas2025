@@ -1844,22 +1844,33 @@ echo$rw2[0];
 		$valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 
 	break;
 	case "doc_Prefactura": 
-				//PAra agregar hoja de vida de una vez al crear el usuario 
-				if (is_uploaded_file($_FILES['param3']['tmp_name'])){
-					$doc = $param2.".xls";
-			  
-					move_uploaded_file($_FILES['param3']['tmp_name'], "./pre_facturas/".$doc);
-					$sql=true;
-				 }else{
-					$doc ="";
-					$sql=false;	
-				 }
 
+		if (is_uploaded_file($_FILES['param3']['tmp_name'])){
 
-		// $sql="UPDATE `facturascreditos` SET   `fac_fecharafacturado`='$param1',fac_preciofinal='$param4' WHERE idfacturascreditos='$param2'";				
-		// $QL->addDocumento1($_FILES["param3"], 3, "facturascreditos", $param2, "facturascreditos", $DB);
+			$doc = $param2.".xls";
+			$ruta = "./pre_facturas/".$doc;
 
-		$valores[7]=$sql; $valores[4]="informecreditos.php"; $valores[8]=1; 
+			// 🔴 Si existe el archivo anterior lo borramos
+			if(file_exists($ruta)){
+				unlink($ruta);
+			}
+
+			// 🟢 Guardamos el nuevo
+			if(move_uploaded_file($_FILES['param3']['tmp_name'], $ruta)){
+				$sql = true;
+			}else{
+				$sql = false;
+			}
+
+		}else{
+			$doc ="";
+			$sql = false;	
+		}
+
+		$valores[7]=$sql; 
+		$valores[4]="informecreditos.php"; 
+		$valores[8]=1; 
+
 	break;
 	
 

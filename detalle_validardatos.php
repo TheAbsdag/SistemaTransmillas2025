@@ -53,7 +53,7 @@ if($param31==""){ $param31="ser_prioridad"; }
 if($param34==""){ $param34=$fechaactual; } 
 if($param33==""){ $param33=$fechainicial; } 
 
-echo$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_esatdollamando,ser_descllamada,gui_usucreado,ser_estado,ser_valorabono,ser_horaentrega,cli_idciudad,ser_ciudadentrega,gui_tiposervicio,rel_nom_credito
+$sql="SELECT `idservicios`,`ser_fechaentrega`,`cli_nombre`, `cli_telefono`,`cli_direccion`, `ser_destinatario`, `ser_telefonocontacto`,`ser_direccioncontacto`,`ciu_nombre`,`ser_prioridad`,ser_fecharegistro,ser_esatdollamando,ser_descllamada,gui_usucreado,ser_estado,ser_valorabono,ser_horaentrega,cli_idciudad,ser_ciudadentrega,gui_tiposervicio,rel_nom_credito
  FROM serviciosdia inner join guias on idservicios=gui_idservicio inner join rel_sercre on idservicio=idservicios where ser_estado in (0,1,5,21) and  date(ser_fecharegistro) >= '$param33' and  date(ser_fecharegistro) <= '$param34'   $conde1 $conde2 ORDER BY ser_fechaentrega,ser_descllamada $asc ";
 
 
@@ -63,7 +63,17 @@ $DB->Execute($sql); $va=0;
 		$id_p=$rw1[0];
 		$va++; $p=$va%2;
 		if($p==0){$color="#FFFFFF";} else{$color="#EFEFEF";}
-		if($rw1[14]==5){ $color="#ec7878"; }elseif($rw1[14]==21){ $color="#F9EE50"; }
+		if($rw1[14]==5){ 
+
+				$color="#ec7878";
+
+			 
+
+		}elseif($rw1[14]==21){ $color="#F9EE50"; }
+		if (strpos($rw1[12], ": Cancelada por Whatsapp") !== false) {
+				$color = "#7FB3D5"; // azul suave elegante
+		}
+
 		echo "<tr  class='text' bgcolor='$color' onmouseover='this.style.backgroundColor=\"#C8C6F9\"' onmouseout='this.style.backgroundColor=\"$color\"'>";
 		$direc1=str_replace("&"," ", $rw1[4]);
 		$direct2=str_replace("&"," ", $rw1[7]);

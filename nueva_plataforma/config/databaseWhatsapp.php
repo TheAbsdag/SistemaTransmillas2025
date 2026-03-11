@@ -15,7 +15,7 @@
 // }
 
 
-class Database {
+class DatabaseWhatsapp {
 
     private static $conn = null;
 
@@ -45,9 +45,9 @@ class Database {
 
             // 🔥 Se registra solo una vez
             register_shutdown_function(function () {
-                if (Database::$conn !== null) {
-                    Database::$conn->close();
-                    Database::$conn = null;
+                if (DatabaseWhatsapp::$conn !== null) {
+                    DatabaseWhatsapp::$conn->close();
+                    DatabaseWhatsapp::$conn = null;
                 }
             });
         }
