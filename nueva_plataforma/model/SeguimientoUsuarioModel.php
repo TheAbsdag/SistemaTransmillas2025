@@ -14,14 +14,55 @@ class SeguimientoUsuarioModel
     }
 
     // ==================== FILTROS Y DATOS AUXILIARES ====================
+
+    // Obtener sedes con operarios activos (excluyendo rol 6)
     public function getSedes()
     {
-        $sql = "SELECT idsedes, sed_nombre FROM sedes WHERE idsedes > 0 ORDER BY sed_nombre";
+        $sql = "SELECT DISTINCT s.idsedes, s.sed_nombre 
+            FROM sedes s
+            INNER JOIN usuarios u ON u.usu_idsede = s.idsedes
+            WHERE u.usu_estado = 1 
+              AND u.usu_filtro = 1 
+              AND u.roles_idroles != 6
+            ORDER BY s.sed_nombre";
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
-    public function getMotivosIngreso()
+    /**
+     * Devuelve el array de motivos de ingreso (valores planos)
+     */
+    public function getMotivosIngresoArray()
+    {
+        return [
+            'Ingreso' => 'Ingreso',
+            'No trabajo' => 'No trabajo',
+            'Sancionado' => 'Sancionado',
+            'Incapacidad' => 'Incapacidad',
+            'Se devolvio' => 'Se devolvio',
+            'Positivo Covid' => 'Positivo Covid',
+            'Cancelacion contrato' => 'Cancelacion contrato',
+            'Abandono de puesto' => 'Abandono de puesto',
+            'Vacaciones' => 'Vacaciones',
+            'descanso' => 'Descanso',
+            'IngresoHoras' => 'Ingreso por horas',
+            'descanso no remunerado' => 'Descanso no remunerado',
+            'dia con sancion' => 'Dia de sancion Ps',
+            'Reposicion por falla' => 'Reposicion por falla',
+            'Festivo en vacaciones' => 'Festivo en vacaciones'
+        ];
+    }
+
+    /**
+     * Para el filtro de motivos (todos) también podemos usar el mismo array
+     */
+    public function getMotivosIngreso($tipo = 'todos')
+    {
+        $todos = $this->getMotivosIngresoArray();
+        return $todos;
+    }
+
+    public function getMotivosLicencia()
     {
         $sql = "SELECT idmotivo_ingreso, mot_nombre FROM motivo_ingreso ORDER BY mot_nombre";
         $result = $this->db->query($sql);
@@ -50,6 +91,17 @@ class SeguimientoUsuarioModel
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    public function getTodosOperarios()
+    {
+        $sql = "SELECT idusuarios, usu_nombre 
+            FROM usuarios 
+            WHERE usu_estado = 1 
+              AND usu_filtro = 1 
+              AND roles_idroles != 6 
+            ORDER BY usu_nombre";
+        $result = $this->db->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
     public function getZonasPorSede($idsede)
@@ -279,6 +331,40 @@ class SeguimientoUsuarioModel
         return $this->companerosCache[$id];
     }
 
+    public function getSeguimientoById($id)
+    {
+        $sql = "SELECT * FROM seguimiento_user WHERE idseguimiento_user = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    /**
+     * Obtiene los datos de un operario para precargar en el modal de ingreso
+     */
+    public function getOperarioById($id)
+    {
+        $sql = "SELECT idusuarios, usu_nombre, usu_idsede FROM usuarios WHERE idusuarios = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function getSedeByUsuario($idUsuario)
+    {
+        $sql = "SELECT usu_idsede FROM usuarios WHERE idusuarios = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['usu_idsede'] ?? 0;
+    }
+
     private function linkPreoperacional($row)
     {
         if (empty($row['idpreoperacinal']))
@@ -310,9 +396,11 @@ class SeguimientoUsuarioModel
     private function linkIngreso($row)
     {
         $param1 = $row['idseguimiento_user'] ?: $row['idusuarios'];
-        $caso = $row['idseguimiento_user'] ? 'Cambio_seguimientoUser' : 'SeguimientoUser';
         $texto = $row['idseguimiento_user'] ? 'Ingreso+' : 'Sin Ingreso';
-        return "<a href='#' onclick='pop_dis16($param1, \"$caso\", \"{$row['usu_idsede']}\")'>$texto</a>";
+        // El parámetro extra puede ser la sede o lo que necesites; aquí paso un string con caso y sede (si quieres)
+        // Si no necesitas más, puedes pasar un parámetro vacío o la fecha.
+        $paramExtra = $row['usu_idsede'] ?? 0;
+        return "<a href='#' onclick='abrirPopup(\"ingreso\", $param1, \"$paramExtra\")'>$texto</a>";
     }
 
     private function linkZona($row, $zonaNombre = null)
@@ -322,7 +410,7 @@ class SeguimientoUsuarioModel
         $zona = htmlspecialchars($zonaNombre ?: $this->getZonaNombre($row['seg_idzona']) ?: '');
         $idSeg = $row['idseguimiento_user'] ?: 0;
         $fecha = $row['prefechaingreso'] ?? $row['fecha'];
-        return "<a href='#' onclick='pop_dis16($idSeg, \"zonatrabajo\", \"{$fecha}\")'>$zona</a>";
+        return "<a href='#' onclick='abrirPopup(\"zona\", $idSeg, \"{$fecha}\")'>$zona</a>";
     }
 
     private function linkCompanero($row)
@@ -331,7 +419,7 @@ class SeguimientoUsuarioModel
             return 'Sin compañero';
         $nombre = $this->getNombreCompanero($row['seg_compañero']);
         $fecha = date('Y-m-d', strtotime($row['fecha']));
-        return "<a href='#' onclick='pop_dis16({$row['idseguimiento_user']}, \"Trabaja con:\", \"{$fecha} _ {$row['idusuarios']}\")'>$nombre</a>";
+        return "<a href='#' onclick='abrirPopup(\"companero\", {$row['idseguimiento_user']}, \"{$fecha} _ {$row['idusuarios']}\")'>$nombre</a>";
     }
 
     private function linkHoraAlmuerzo($row)
@@ -339,7 +427,7 @@ class SeguimientoUsuarioModel
         if (empty($row['idseguimiento_user']))
             return '';
         $hora = $row['seg_horaalmuerzo'] ?: 'Sin Ingresar';
-        return "<a href='#' onclick='pop_dis16({$row['idseguimiento_user']}, \"horaalmuerzo\", \"{$row['prefechaingreso']}\")'>$hora</a>";
+        return "<a href='#' onclick='abrirPopup(\"hora_almuerzo\", {$row['idseguimiento_user']}, \"{$row['prefechaingreso']}\")'>$hora</a>";
     }
 
     private function linkRetornoAlmuerzo($row)
@@ -347,7 +435,7 @@ class SeguimientoUsuarioModel
         if (empty($row['idseguimiento_user']))
             return '';
         $hora = $row['seg_horaregreso'] ?: 'Sin Ingresar';
-        return "<a href='#' onclick='pop_dis16({$row['idseguimiento_user']}, \"horaretorno\", \"{$row['prefechaingreso']}\")'>$hora</a>";
+        return "<a href='#' onclick='abrirPopup(\"retorno_almuerzo\", {$row['idseguimiento_user']}, \"{$row['prefechaingreso']}\")'>$hora</a>";
     }
 
     private function linkRetornoOficina($row)
@@ -355,7 +443,7 @@ class SeguimientoUsuarioModel
         if (empty($row['idseguimiento_user']))
             return '';
         $hora = $row['seg_horaoficina'] ?: 'Sin Ingresar';
-        return "<a href='#' onclick='pop_dis16({$row['idseguimiento_user']}, \"horaoficina\", \"{$row['prefechaingreso']}\")'>$hora</a>";
+        return "<a href='#' onclick='abrirPopup(\"retorno_oficina\", {$row['idseguimiento_user']}, \"{$row['prefechaingreso']}\")'>$hora</a>";
     }
 
     private function linkTemEntrada($row)
@@ -402,6 +490,57 @@ class SeguimientoUsuarioModel
             return '';
         return $this->edites($row['idpreoperacinal'] . '_' . $row['idseguimiento_user'], 'borraseguser', 2, 0);
     }
+
+    public function actualizarZona($id_seguimiento, $zona)
+    {
+        $sql = "UPDATE seguimiento_user SET seg_idzona = ? WHERE idseguimiento_user = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("ii", $zona, $id_seguimiento);
+        return $stmt->execute();
+    }
+
+    public function actualizarHoraAlmuerzo($id_seguimiento, $hora)
+    {
+        $sql = "UPDATE seguimiento_user SET seg_horaalmuerzo = ? WHERE idseguimiento_user = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("si", $hora, $id_seguimiento);
+        return $stmt->execute();
+    }
+
+    public function actualizarRetornoAlmuerzo($id_seguimiento, $hora)
+    {
+        $sql = "UPDATE seguimiento_user SET seg_horaregreso = ? WHERE idseguimiento_user = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("si", $hora, $id_seguimiento);
+        return $stmt->execute();
+    }
+
+    public function actualizarRetornoOficina($id_seguimiento, $hora)
+    {
+        $sql = "UPDATE seguimiento_user SET seg_horaoficina = ? WHERE idseguimiento_user = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("si", $hora, $id_seguimiento);
+        return $stmt->execute();
+    }
+
+    public function actualizarCompanero($id_seguimiento, $companero)
+    {
+        $sql = "UPDATE seguimiento_user SET seg_compañero = ? WHERE idseguimiento_user = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("ii", $companero, $id_seguimiento);
+        return $stmt->execute();
+    }
+    public function getNombreOperario($id)
+    {
+        $sql = "SELECT usu_nombre FROM usuarios WHERE idusuarios = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row ? $row['usu_nombre'] : '';
+    }
+
 
     // Funciones que originalmente estaban en $LT (debes adaptarlas a tu sistema)
     private function llenadocs3($tabla, $id, $version, $ancho, $texto)

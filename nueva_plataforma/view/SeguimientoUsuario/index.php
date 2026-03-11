@@ -109,8 +109,8 @@
                         <label class="form-label">Motivo Ingreso</label>
                         <select name="motivo" id="motivo" class="form-select">
                             <option value="">Todos</option>
-                            <?php foreach ($motivos as $m): ?>
-                                <option value="<?= $m['mot_nombre'] ?>"><?= htmlspecialchars($m['mot_nombre']) ?></option>
+                            <?php foreach ($motivos as $key => $value): ?>
+                                <option value="<?= $key ?>"><?= htmlspecialchars($value) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -182,64 +182,8 @@
                     <h5 class="modal-title">Registrar ingreso de operario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    <form id="formIngreso" enctype="multipart/form-data">
-                        <input type="hidden" name="accion" value="guardar_ingreso">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label>Operario</label>
-                                <select name="operario" id="ing_operario" class="form-select" required></select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Sede</label>
-                                <select name="sede" id="ing_sede" class="form-select" required>
-                                    <option value="">Seleccione</option>
-                                    <?php foreach ($sedes as $s): ?>
-                                        <option value="<?= $s['idsedes'] ?>"><?= htmlspecialchars($s['sed_nombre']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Fecha Ingreso</label>
-                                <input type="date" name="fecha" class="form-control" value="<?= date('Y-m-d') ?>"
-                                    required>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Motivo</label>
-                                <select name="motivo" class="form-select" required>
-                                    <?php foreach ($motivos as $m): ?>
-                                        <option value="<?= $m['mot_nombre'] ?>"><?= htmlspecialchars($m['mot_nombre']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Zona</label>
-                                <select name="zona" id="ing_zona" class="form-select" required></select>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Descripción</label>
-                                <textarea name="descripcion" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Prueba Alcohol</label>
-                                <select name="prueba" class="form-select" required>
-                                    <option value="No aplica">No aplica</option>
-                                    <option value="Negativo">Negativo</option>
-                                    <option value="Positivo">Positivo</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Imagen</label>
-                                <input type="file" name="imagen" class="form-control">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="guardarIngreso()">Guardar</button>
+                <div class="modal-body" id="ingresoModalBody">
+                    <!-- Se cargará vía AJAX -->
                 </div>
             </div>
         </div>
@@ -341,7 +285,7 @@
                             <div class="col-md-6">
                                 <label>Motivo</label>
                                 <select name="motivo" class="form-select" required>
-                                    <?php foreach ($motivos as $m): ?>
+                                    <?php foreach ($motivosLicencia as $m): ?>
                                         <option value="<?= $m['mot_nombre'] ?>"><?= htmlspecialchars($m['mot_nombre']) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -357,6 +301,21 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button class="btn btn-danger" onclick="guardarLicencias()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal genérico para popups -->
+    <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="popupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupModalLabel">Cargando...</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="popupModalBody">
+                    <!-- El contenido se carga vía AJAX -->
                 </div>
             </div>
         </div>
@@ -426,7 +385,7 @@
                 { data: 'fecha_licencia_html' },
                 { data: 'cambio_aceite_html' },
                 <?php if ($_SESSION['usuario_rol'] == 1 || $_SESSION['usuario_rol'] == 12): ?>
-                { data: 'eliminar_html' }
+                                                                            { data: 'eliminar_html' }
             <?php endif; ?>
             ],
             columnDefs: [
@@ -455,6 +414,70 @@
         function recargarTabla() {
             tabla.ajax.reload();
         }
+
+        // Abrir modal de ingreso manual
+        $('#modalIngreso').on('show.bs.modal', function () {
+            $('#ingresoModalBody').html('<div class="text-center"><i class="fas fa-spinner fa-pulse"></i> Cargando...</div>');
+            $.get(window.location.pathname, { accion: 'form_popup', tipo: 'ingreso_manual' }, function (html) {
+                $('#ingresoModalBody').html(html);
+            }).fail(function () {
+                $('#ingresoModalBody').html('<div class="alert alert-danger">Error al cargar el formulario.</div>');
+            });
+        });
+
+        // Para modal de ingreso: cuando cambia la sede, cargar operarios de esa sede
+        $('#ing_sede').on('change', function () {
+            let sede = $(this).val();
+            if (sede) {
+                $.get(dirPage, { accion: 'get_operarios', idsede: sede }, function (data) {
+                    let options = '<option value="">Seleccione</option>';
+                    data.forEach(op => {
+                        options += `<option value="${op.idusuarios}">${op.usu_nombre}</option>`;
+                    });
+                    $('#ing_operario').html(options);
+                });
+            } else {
+                $('#ing_operario').html('<option value="">Seleccione</option>');
+            }
+        });
+
+        // Para modal de vacaciones: cargar todos los operarios al abrir (solo una vez)
+        $('#modalVacaciones').on('show.bs.modal', function () {
+            if ($('#vac_operario option').length <= 1) {
+                $.get(dirPage, { accion: 'get_all_operarios' }, function (data) {
+                    let options = '<option value="">Seleccione</option>';
+                    data.forEach(op => {
+                        options += `<option value="${op.idusuarios}">${op.usu_nombre}</option>`;
+                    });
+                    $('#vac_operario').html(options);
+                });
+            }
+        });
+
+        // Para modal de licencias: cargar todos los operarios al abrir
+        $('#modalLicencias').on('show.bs.modal', function () {
+            if ($('#lic_operario option').length <= 1) {
+                $.get(dirPage, { accion: 'get_all_operarios' }, function (data) {
+                    let options = '<option value="">Seleccione</option>';
+                    data.forEach(op => {
+                        options += `<option value="${op.idusuarios}">${op.usu_nombre}</option>`;
+                    });
+                    $('#lic_operario').html(options);
+                });
+            }
+        });
+
+        $(document).on('submit', '#popupForm', function (e) {
+            e.preventDefault();
+            $.post(window.location.pathname, $(this).serialize(), function (res) {
+                if (res.success) {
+                    $('#popupModal').modal('hide');
+                    tabla.ajax.reload(); // Recarga la DataTable
+                } else {
+                    alert(res.message || 'Error al guardar');
+                }
+            }, 'json');
+        });
 
         // Cuando cambia la sede, cargar operarios en los selects
         $('#sede').on('change', function () {
@@ -569,6 +592,65 @@
                 }
             }, 'json');
         }
+
+        function abrirPopup(tipo, id, param) {
+            $('#popupModal .modal-title').text('Editando: ' + tipo);
+            $('#popupModalBody').html('<div class="text-center"><i class="fas fa-spinner fa-pulse"></i> Cargando...</div>');
+            $('#popupModal').modal('show'); // Mostrar modal inmediatamente con el spinner
+
+            $.get(window.location.pathname, {
+                accion: 'form_popup',
+                tipo: tipo,
+                id: id,
+                param: param
+            }, function (html) {
+                $('#popupModalBody').html(html);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error('Error al cargar popup:', textStatus, errorThrown);
+                $('#popupModalBody').html('<div class="alert alert-danger">Error al cargar el formulario. Ver consola.</div>');
+            });
+        }
+
+        // Manejar envío del formulario dentro del modal
+        $(document).on('submit', '#popupForm', function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        $('#popupModal').modal('hide');
+                        tabla.ajax.reload(); // Recargar DataTable
+                    } else {
+                        alert(res.message || 'Error al guardar');
+                    }
+                },
+                error: function () {
+                    alert('Error de comunicación con el servidor');
+                }
+            });
+        });
+
+        // Cargar operarios al cambiar sede en el modal de ingreso (cuando se usa manualmente)
+        $(document).on('change', '#ing_sede', function () {
+            var sede = $(this).val();
+            if (sede) {
+                $.get(window.location.pathname, { accion: 'get_operarios', idsede: sede }, function (data) {
+                    var options = '<option value="">Seleccione</option>';
+                    data.forEach(function (op) {
+                        options += '<option value="' + op.idusuarios + '">' + op.usu_nombre + '</option>';
+                    });
+                    $('#ing_operario').html(options);
+                });
+            } else {
+                $('#ing_operario').html('<option value="">Seleccione</option>');
+            }
+        });
 
         // Para manejar burbujas de alerta (hover)
         $(document).on('click', '.noti_bubble', function () {
